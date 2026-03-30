@@ -32,7 +32,7 @@ const lineage = [
 
 const currentMembers = [
   {
-    name: "Huu Phong Nguyen",
+    name: "Huu Phong Nguyen, PhD",
     role: "Postdoctoral Fellow",
     photo: null,
   },
