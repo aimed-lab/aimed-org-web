@@ -271,10 +271,21 @@ export default function HomePage() {
               and Healthcare&rdquo; (2019).
             </motion.p>
 
+            <motion.p
+              variants={fadeUp}
+              custom={5}
+              className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300"
+            >
+              As the founding PI of the AI.MED Lab, Prof. Chen previously served as Chief
+              Bioinformatics Officer and Associate Director of the UAB Informatics Institute —
+              the predecessor unit that became today&rsquo;s Department of Biomedical Informatics
+              and Data Science.
+            </motion.p>
+
             {/* Evidence bar */}
             <motion.div
               variants={fadeUp}
-              custom={5}
+              custom={6}
               className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm font-semibold tracking-wide text-slate-500 dark:text-slate-400 md:justify-start"
             >
               {[
@@ -293,7 +304,7 @@ export default function HomePage() {
             {/* CTA buttons */}
             <motion.div
               variants={fadeUp}
-              custom={6}
+              custom={7}
               className="mt-8 flex flex-col gap-4 sm:flex-row md:justify-start justify-center"
             >
               <Link
