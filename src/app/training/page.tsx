@@ -398,7 +398,7 @@ export default function TrainingPage() {
         </div>
       </section>
 
-      {/* Institutional Lineage */}
+      {/* Institutional Lineage of the Lab Director */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -407,7 +407,7 @@ export default function TrainingPage() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
-            Institutional Lineage
+            Institutional Lineage of the Lab Director
           </h2>
           <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
             A journey of scholarship across institutions and borders
