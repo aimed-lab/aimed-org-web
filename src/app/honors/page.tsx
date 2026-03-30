@@ -19,6 +19,13 @@ interface Honor {
 
 const categories = ["All", "International", "National", "Regional", "University"];
 
+/** Split award name into main text and parenthetical footnote */
+function splitAwardName(name: string): { main: string; footnote: string | null } {
+  const match = name.match(/^(.+?)\s*\((.+)\)\s*$/);
+  if (match) return { main: match[1].trim(), footnote: match[2].trim() };
+  return { main: name, footnote: null };
+}
+
 const categoryColors: Record<string, string> = {
   International:
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300",
@@ -204,12 +211,24 @@ export default function HonorsPage() {
                         )}
 
                         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-                          <div className="mb-1 flex items-center gap-2">
-                            <Trophy className="h-5 w-5 text-amber-500" />
-                            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-                              {honor.awardName}
-                            </h3>
-                          </div>
+                          {(() => {
+                            const { main, footnote } = splitAwardName(honor.awardName);
+                            return (
+                              <>
+                                <div className="mb-1 flex items-start gap-2">
+                                  <Trophy className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+                                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                                    {main}
+                                  </h3>
+                                </div>
+                                {footnote && (
+                                  <p className="ml-7 text-[11px] leading-snug text-slate-400 dark:text-slate-500">
+                                    {footnote}
+                                  </p>
+                                )}
+                              </>
+                            );
+                          })()}
                           {honor.issuer && (
                             <p className="mb-2 text-sm font-medium text-blue-600 dark:text-blue-400">
                               {honor.issuer}
