@@ -535,8 +535,94 @@ export default function TrainingPage() {
         </div>
       </section>
 
-      {/* Courses Taught */}
+      {/* NIH T32 Training Program Participation */}
       <section className="bg-slate-50 py-20 dark:bg-zinc-900/50">
+        <div className="mx-auto max-w-6xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
+              NIH Training Program Participation
+            </h2>
+            <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
+              Predoctoral research mentor on NIH T32 institutional training grants at UAB
+            </p>
+          </motion.div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              { name: "Brain Tumor Biology", status: "active" },
+              { name: "Immunology", status: "active", period: "2017–present" },
+              { name: "Rheumatic and Musculoskeletal Diseases", status: "active", period: "2017–present" },
+              { name: "UAB-HudsonAlpha Genomic Medicine", status: "active", period: "2017–present" },
+              { name: "Multifaceted Translational Approach to Mental Illness", status: "pending" },
+              { name: "GeoHealth Predoctoral Training", status: "pending" },
+              { name: "Research Training in Engineered Tissue Constructs and Related Technologies", status: "pending" },
+              { name: "Integrating Computational Biology Analytics into Research on the Basic Mechanisms of Diabetes", status: "pending" },
+            ].map((prog, i) => (
+              <motion.div
+                key={prog.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.05 }}
+                className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+              >
+                <div className="flex items-start gap-3">
+                  <Award className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                      NIH T32: {prog.name}
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                      Predoctoral Research Mentor, UAB
+                      {prog.period && <> &middot; {prog.period}</>}
+                    </p>
+                    <span className={`mt-2 inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                      prog.status === "active"
+                        ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
+                        : "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400"
+                    }`}>
+                      {prog.status === "active" ? "Active" : "Application Pending"}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Additional training programs */}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {[
+              { name: "Masters of Science Biomedical Sciences (MSBMS) Training Faculty", period: "2017–present" },
+              { name: "Graduate Biomedical Sciences (GBS) Doctoral Training Program Faculty", period: "2016–present" },
+            ].map((prog, i) => (
+              <motion.div
+                key={prog.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.05 }}
+                className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+              >
+                <div className="flex items-start gap-3">
+                  <GraduationCap className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{prog.name}</p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">UAB &middot; {prog.period}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Courses Taught */}
+      <section className="py-20">
         <div className="mx-auto max-w-6xl px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

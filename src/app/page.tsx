@@ -41,21 +41,27 @@ const currentPositions = [
     period: "2023–present",
   },
   {
-    role: "Professor (secondary)",
-    dept: "Computer & Information Sciences",
+    role: "Adjunct Professor",
+    dept: "Computer Science",
     org: "UAB College of Arts & Sciences",
     period: "2017–present",
   },
   {
-    role: "Professor (secondary)",
+    role: "Adjunct Professor",
     dept: "Biomedical Engineering",
     org: "UAB College of Engineering",
     period: "2018–present",
   },
   {
-    role: "Faculty, Graduate Program in Immunology",
-    dept: "",
-    org: "UAB School of Medicine",
+    role: "Senior Member",
+    dept: "O'Neal Comprehensive Cancer Center",
+    org: "UAB",
+    period: "2017–present",
+  },
+  {
+    role: "Member",
+    dept: "Immunology Institute",
+    org: "UAB",
     period: "2019–present",
   },
   {
@@ -206,11 +212,11 @@ export default function HomePage() {
           {/* Photo */}
           <motion.div variants={fadeUp} custom={0} className="shrink-0">
             <div className="relative">
-              <div className="h-44 w-44 overflow-hidden rounded-2xl border-4 border-white shadow-xl dark:border-zinc-800 sm:h-56 sm:w-56 md:h-64 md:w-64">
+              <div className="w-44 overflow-hidden rounded-2xl border-4 border-white shadow-xl dark:border-zinc-800 sm:w-56 md:w-64">
                 <img
                   src="/jake-chen-headshot.jpg"
                   alt="Prof. Jake Y. Chen"
-                  className="h-full w-full object-cover"
+                  className="w-full"
                 />
               </div>
               <div className="absolute -bottom-3 -right-3 rounded-xl bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
@@ -237,6 +243,8 @@ export default function HomePage() {
             >
               <p>Triton Endowed Professor of Biomedical Informatics &amp; Data Science</p>
               <p>Founding Director, Systems Pharmacology AI Research Center (SPARC)</p>
+              <p>Adjunct Professor of Computer Science; Adjunct Professor of Biomedical Engineering</p>
+              <p>Senior Member, O&rsquo;Neal Comprehensive Cancer Center; Member, Immunology Institute</p>
               <p>UAB School of Medicine</p>
             </motion.div>
 
@@ -382,16 +390,14 @@ export default function HomePage() {
       {/*  Hero Illustration Banner                                     */}
       {/* ============================================================ */}
       <section className="relative overflow-hidden bg-slate-950">
-        <div className="mx-auto flex max-w-6xl flex-col items-center md:flex-row md:items-center md:gap-8 lg:gap-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-6 md:flex-row md:items-center md:gap-8 md:py-12 lg:gap-12 lg:px-8">
           {/* Image — contained, never cropped */}
-          <div className="relative w-full shrink-0 md:w-5/12">
+          <div className="relative w-2/3 shrink-0 py-8 sm:w-1/2 md:w-5/12 md:py-0">
             <img
               src="/hero-drug-discovery-ai.jpg"
               alt="When Drug Discovery Meets AI"
-              className="mx-auto w-3/4 object-contain sm:w-2/3 md:w-full"
+              className="w-full rounded-lg object-contain"
             />
-            {/* Subtle bottom fade on mobile only */}
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950 to-transparent md:hidden" />
           </div>
           {/* Text */}
           <motion.div
@@ -399,7 +405,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="relative z-10 -mt-10 px-6 pb-12 text-center md:mt-0 md:w-7/12 md:px-8 md:pb-0 md:text-left lg:px-12"
+            className="relative z-10 pb-12 text-center md:w-7/12 md:pb-0 md:text-left"
           >
             <p className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
               Our Vision
