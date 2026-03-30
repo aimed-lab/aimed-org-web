@@ -230,14 +230,15 @@ export default function HomePage() {
               Jake Y. Chen, Ph.D.
             </motion.h1>
 
-            <motion.p
+            <motion.div
               variants={fadeUp}
               custom={2}
-              className="mt-3 text-base leading-relaxed text-slate-500 dark:text-slate-400 sm:text-lg"
+              className="mt-3 space-y-1 text-base text-slate-500 dark:text-slate-400 sm:text-lg"
             >
-              Triton Endowed Professor of Biomedical Informatics &amp; Data Science
-              &nbsp;&middot;&nbsp; Founding Director, SPARC &nbsp;&middot;&nbsp; UAB School of Medicine
-            </motion.p>
+              <p>Triton Endowed Professor of Biomedical Informatics &amp; Data Science</p>
+              <p>Founding Director, Systems Pharmacology AI Research Center (SPARC)</p>
+              <p>UAB School of Medicine</p>
+            </motion.div>
 
             <motion.p
               variants={fadeUp}

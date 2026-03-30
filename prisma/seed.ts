@@ -3314,6 +3314,98 @@ async function main() {
   }
   console.log(`Seeded ${patentsData.length} patents.`)
 
+  // ─── News Items ──────────────────────────────────────────────────
+  const newsItems = [
+    {
+      date: new Date("2025-10-01"),
+      headline: "Jake Chen Receives UF College of Medicine Rising Star Researcher Award in Data Science/AI",
+      summary: "Recognized for pioneering contributions to AI-driven biomedical informatics and systems pharmacology research.",
+      link: null,
+    },
+    {
+      date: new Date("2025-04-01"),
+      headline: "SPARC Representatives Excel at MCBIOS 2024",
+      summary: "Multiple SPARC lab members present cutting-edge research at the Mid-South Conference on Bioinformatics and Computational Biology.",
+      link: "https://www.uab.edu/medicine/informatics/news-events/department-news/sparc-reprsentatives-present-at-mcbios-2024",
+    },
+    {
+      date: new Date("2024-10-01"),
+      headline: "UAB's Jake Chen to Lead NIH Integration Center for Common Fund Data Ecosystems",
+      summary: "UAB awarded $9.5M NIH U54 grant to lead CONNECT, building AI-ready biomedical knowledge networks in collaboration with UCLA and University of Colorado.",
+      link: "https://www.uab.edu/medicine/informatics/news-events/department-news/uab-s-jake-chen-to-lead-new-national-institutes-of-health-s-nih-integration-center-for-the-common-fund-data-ecosystems",
+    },
+    {
+      date: new Date("2024-08-01"),
+      headline: "KDD Health Day: Building Health AI Ecosystem",
+      summary: "Jake Chen co-chairs the Health Day at the 30th ACM KDD Conference in Barcelona, Spain, on Data Harmonization to Knowledge Discovery.",
+      link: null,
+    },
+    {
+      date: new Date("2022-09-01"),
+      headline: "UAB Aims to Boost Use of Artificial Intelligence in Biomedical Research",
+      summary: "UAB News highlights the launch of the Systems Pharmacology AI Research Center (SPARC) and its mission to accelerate AI-driven drug discovery.",
+      link: "https://www.uab.edu/news/research-innovation/uab-aims-to-boost-use-of-artificial-intelligence-in-biomedical-research",
+    },
+    {
+      date: new Date("2021-09-01"),
+      headline: "Chen Recognized by ACM for Outstanding Scientific Contributions to Computing",
+      summary: "Jake Chen named ACM Distinguished Scientist, one of 63 members recognized worldwide for outstanding contributions to computing.",
+      link: "https://www.uab.edu/reporter/people/achievements/item/9691-chen-recognized-by-association-for-computing-machinery-for-outstanding-scientific-contributions-to-computing",
+    },
+    {
+      date: new Date("2021-03-01"),
+      headline: "Jake Chen Elected Fellow of AIMBE",
+      summary: "Inducted into the American Institute for Medical and Biological Engineering College of Fellows, the top 2% of medical and biological engineers.",
+      link: "https://aimbe.org/college-of-fellows/cof-6022/",
+    },
+    {
+      date: new Date("2020-11-01"),
+      headline: "Jake Chen Elected Fellow of AMIA",
+      summary: "Elected Fellow of the American Medical Informatics Association in recognition of sustained contributions to biomedical informatics.",
+      link: null,
+    },
+    {
+      date: new Date("2020-06-01"),
+      headline: "Interdisciplinary Data Science Workshop Continues Virtually",
+      summary: "UAB Reporter covers how Jake Chen's data science workshop adapted from San Diego to virtual format during the pandemic.",
+      link: "https://www.uab.edu/reporter/know-more/research/item/9315-interdisciplinary-data-science-workshop-moves-from-san-diego-to-spare-bedrooms-but-science-continues",
+    },
+    {
+      date: new Date("2019-10-01"),
+      headline: "Named 'Top 100 AI Leaders in Drug Discovery and Healthcare'",
+      summary: "Deep Knowledge Analytics recognizes Jake Chen among the top 100 global AI leaders in drug discovery and advanced healthcare.",
+      link: null,
+    },
+    {
+      date: new Date("2019-01-01"),
+      headline: "Jake Chen Elected Fellow of ACMI",
+      summary: "Elected Fellow of the American College of Medical Informatics, recognizing sustained contributions to the field of medical informatics.",
+      link: null,
+    },
+    {
+      date: new Date("2016-04-01"),
+      headline: "Chen Named Associate Director, Chief Bioinformatics Officer of Informatics Institute",
+      summary: "UAB School of Medicine appoints Jake Chen to lead bioinformatics efforts across the Informatics Institute.",
+      link: "https://www.uab.edu/medicine/news/latest/item/1017-chen-named-associate-director-chief-bioinformatics-officer-of-informatics-institute",
+    },
+    {
+      date: new Date("2012-06-01"),
+      headline: "Grand Challenge Award Winner — Cancer Cell Drug Discovery",
+      summary: "Won the Innocentive.com grand challenge competition among 250,000+ scientists for solving the cancer cell drug discovery challenge.",
+      link: null,
+    },
+    {
+      date: new Date("2011-03-01"),
+      headline: "Named '17 Informatics Experts Worth Listening To'",
+      summary: "HealthTechTopia recognizes Jake Chen as one of 17 informatics experts worth listening to for advancing health IT.",
+      link: null,
+    },
+  ]
+  for (const item of newsItems) {
+    await prisma.newsItem.create({ data: item })
+  }
+  console.log(`Seeded ${newsItems.length} news items.`)
+
   console.log("Seeding complete!")
 }
 
