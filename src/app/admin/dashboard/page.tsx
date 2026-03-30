@@ -21,7 +21,7 @@ import {
 /*  Sample data                                                        */
 /* ------------------------------------------------------------------ */
 const stats = [
-  { label: 'Total Publications', value: 147, icon: BookOpen, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-950/40' },
+  { label: 'Total Publications', value: 147, icon: BookOpen, color: 'text-emerald-700 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/40' },
   { label: 'Total Inquiries', value: 38, icon: Inbox, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/40' },
   { label: 'Pending Reviews', value: 5, icon: ClipboardCheck, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-950/40' },
   { label: 'News Items', value: 12, icon: Newspaper, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-950/40' },
@@ -36,7 +36,7 @@ const inquiries = [
 ];
 
 const quickActions = [
-  { label: 'Add News Item', icon: PlusCircle, color: 'bg-blue-600 hover:bg-blue-700' },
+  { label: 'Add News Item', icon: PlusCircle, color: 'bg-emerald-700 hover:bg-emerald-800' },
   { label: 'Feature Paper', icon: Star, color: 'bg-emerald-600 hover:bg-emerald-700' },
   { label: 'Pin Photo', icon: ImageIcon, color: 'bg-purple-600 hover:bg-purple-700' },
   { label: 'Export Inquiries', icon: Download, color: 'bg-amber-600 hover:bg-amber-700' },
@@ -47,7 +47,7 @@ const quickActions = [
 /* ------------------------------------------------------------------ */
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    New: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+    New: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
     Reviewed: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
     Contacted: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
   };
@@ -84,7 +84,7 @@ export default function AdminDashboardPage() {
   if (authenticated === null) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white dark:bg-zinc-950">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-700 border-t-transparent" />
       </div>
     );
   }
@@ -107,7 +107,7 @@ export default function AdminDashboardPage() {
           </p>
           <button
             onClick={() => router.push('/admin')}
-            className="mt-2 rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+            className="mt-2 rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
           >
             Go to Login
           </button>
@@ -227,7 +227,7 @@ export default function AdminDashboardPage() {
                 }}
                 className={`flex flex-col items-center gap-3 rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
                   dragOver
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
+                    ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/30'
                     : 'border-slate-300 bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800'
                 }`}
               >
@@ -239,7 +239,7 @@ export default function AdminDashboardPage() {
                 <input type="file" className="hidden" id="cv-upload" accept=".pdf,.doc,.docx" />
                 <label
                   htmlFor="cv-upload"
-                  className="mt-2 cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  className="mt-2 cursor-pointer rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800"
                 >
                   Upload CV
                 </label>

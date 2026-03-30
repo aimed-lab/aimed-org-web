@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode for next-themes compatibility with Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-accent: #2563eb;
+  --color-primary: #1E6B52;
+  --color-primary-hover: #175A44;
+  --color-accent: #1E6B52;
 }
 
 @theme inline {
@@ -29,4 +32,11 @@ html {
 ::-webkit-scrollbar-thumb {
   background: #94a3b8;
   border-radius: 4px;
+}
+
+/* Mobile touch-friendly tap targets */
+@media (max-width: 640px) {
+  button, a, select, input {
+    min-height: 44px;
+  }
 }

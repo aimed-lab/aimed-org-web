@@ -72,7 +72,7 @@ function Pill({
       onClick={onClick}
       className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-colors ${
         active
-          ? "bg-blue-600 text-white"
+          ? "bg-emerald-700 text-white"
           : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
       }`}
     >
@@ -137,7 +137,7 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
     >
       <h3
         onClick={() => setOpen(!open)}
-        className="text-base font-semibold leading-snug text-slate-900 dark:text-slate-100 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+        className="text-base font-semibold leading-snug text-slate-900 dark:text-slate-100 cursor-pointer hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
       >
         {pub.title}
       </h3>
@@ -152,7 +152,7 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
         {tags.map((t) => (
           <span
             key={t}
-            className="rounded-full bg-blue-50 dark:bg-blue-950/40 px-2.5 py-0.5 text-[11px] font-medium text-blue-700 dark:text-blue-300"
+            className="rounded-full bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 text-[11px] font-medium text-emerald-800 dark:text-emerald-300"
           >
             {t}
           </span>
@@ -167,36 +167,36 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
       {/* Links */}
       <div className="mt-3 flex flex-wrap items-center gap-3">
         {doiUrl && (
-          <a href={doiUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+          <a href={doiUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
             <ExternalLink className="h-3.5 w-3.5" /> DOI
           </a>
         )}
         {pubmedUrl && (
-          <a href={pubmedUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+          <a href={pubmedUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
             <BookOpen className="h-3.5 w-3.5" /> PubMed
           </a>
         )}
         {pubmedSearchUrl && pub.articleType === "Journal Article" && (
-          <a href={pubmedSearchUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+          <a href={pubmedSearchUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
             <BookOpen className="h-3.5 w-3.5" /> PubMed
           </a>
         )}
-        <a href={scholarUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+        <a href={scholarUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
           <GraduationCap className="h-3.5 w-3.5" /> Scholar
         </a>
         {arxivUrl && (
-          <a href={arxivUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+          <a href={arxivUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
             <FileText className="h-3.5 w-3.5" /> arXiv
           </a>
         )}
         {pub.pdfUrl && (
-          <a href={pub.pdfUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+          <a href={pub.pdfUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
             <FileText className="h-3.5 w-3.5" /> PDF
           </a>
         )}
         <button
           onClick={() => downloadRIS(pub)}
-          className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+          className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline"
         >
           <Download className="h-3.5 w-3.5" /> Cite
         </button>
@@ -277,7 +277,7 @@ export default function PublicationsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-28 md:py-36">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -311,7 +311,7 @@ export default function PublicationsPage() {
               placeholder="Search by title, author, journal, or keyword..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600"
             />
             {query && (
               <button onClick={() => setQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
@@ -353,7 +353,7 @@ export default function PublicationsPage() {
                   <select
                     value={selectedYear ?? ""}
                     onChange={(e) => setSelectedYear(e.target.value ? Number(e.target.value) : null)}
-                    className="rounded-md border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="rounded-md border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   >
                     <option value="">All years</option>
                     {years.map((y) => (
@@ -411,7 +411,7 @@ export default function PublicationsPage() {
       <section className="mx-auto max-w-6xl px-6 pb-24">
         {loading ? (
           <div className="py-20 flex justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
           </div>
         ) : publications.length === 0 ? (
           <div className="py-20 text-center">

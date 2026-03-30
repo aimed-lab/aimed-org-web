@@ -30,7 +30,7 @@ const categoryColors: Record<string, string> = {
   International:
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300",
   National:
-    "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",
+    "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300",
   Regional:
     "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300",
   University:
@@ -106,7 +106,7 @@ export default function HonorsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-28 md:py-36">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -139,7 +139,7 @@ export default function HonorsPage() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-colors ${
                   selectedCategory === cat
-                    ? "bg-blue-600 text-white"
+                    ? "bg-emerald-700 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
                 }`}
               >
@@ -162,7 +162,7 @@ export default function HonorsPage() {
       <section className="mx-auto max-w-6xl px-6 py-10 pb-24">
         {loading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
           </div>
         ) : honors.length === 0 ? (
           <div className="py-20 text-center">
@@ -175,7 +175,7 @@ export default function HonorsPage() {
             {grouped.map(({ category, honors: catHonors }) => (
               <CategorySection key={category} category={category} count={catHonors.length}>
 
-                <div className="relative ml-4 border-l-2 border-blue-200 pl-8 dark:border-blue-800">
+                <div className="relative ml-4 border-l-2 border-emerald-200 pl-8 dark:border-emerald-800">
                   <AnimatePresence>
                     {catHonors.map((honor, i) => (
                       <motion.div
@@ -186,13 +186,13 @@ export default function HonorsPage() {
                         className="relative mb-10 last:mb-0"
                       >
                         {/* Timeline dot */}
-                        <div className="absolute -left-[calc(2rem+5px)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-blue-600 bg-white dark:bg-zinc-950">
-                          <div className="h-2 w-2 rounded-full bg-blue-600" />
+                        <div className="absolute -left-[calc(2rem+5px)] flex h-4 w-4 items-center justify-center rounded-full border-2 border-emerald-700 bg-white dark:bg-zinc-950">
+                          <div className="h-2 w-2 rounded-full bg-emerald-700" />
                         </div>
 
                         {/* Year badge */}
                         {honor.year && (
-                          <span className="mb-2 inline-block rounded-full bg-blue-100 px-3 py-0.5 text-xs font-bold text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">
+                          <span className="mb-2 inline-block rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-bold text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
                             {honor.year}
                           </span>
                         )}
@@ -217,7 +217,7 @@ export default function HonorsPage() {
                             );
                           })()}
                           {honor.issuer && (
-                            <p className="mb-2 text-sm font-medium text-blue-600 dark:text-blue-400">
+                            <p className="mb-2 text-sm font-medium text-emerald-700 dark:text-emerald-400">
                               {honor.issuer}
                             </p>
                           )}

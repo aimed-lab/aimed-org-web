@@ -25,7 +25,7 @@ const pathways = [
     audience: 'High School, Undergraduate & Master\'s Students',
     description:
       'A limited number of internship and volunteer positions are available each year for exceptional students who demonstrate strong analytical skills, self-motivation, and a genuine commitment to biomedical AI research. Candidates must be prepared to dedicate significant time and effort; casual interest is not sufficient.',
-    gradient: 'from-blue-600 to-cyan-500',
+    gradient: 'from-emerald-700 to-teal-500',
   },
   {
     icon: FlaskConical,
@@ -148,7 +148,7 @@ export default function JoinPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 py-24 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 to-teal-800 py-16 sm:py-20 md:py-24 text-white">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
           <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
@@ -160,7 +160,7 @@ export default function JoinPage() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Opportunities at AI.MED</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
               AI.MED attracts exceptional talent committed to advancing biomedical AI at the
               highest level. We set a high bar for excellence -- only a select number of
               positions are available each year for interns, volunteers, visiting scholars,
@@ -196,7 +196,7 @@ export default function JoinPage() {
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                   {p.title}
                 </h3>
-                <p className="mt-1 text-sm font-medium text-blue-600 dark:text-blue-400">
+                <p className="mt-1 text-sm font-medium text-emerald-700 dark:text-emerald-400">
                   {p.audience}
                 </p>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
@@ -204,7 +204,7 @@ export default function JoinPage() {
                 </p>
                 <button
                   onClick={scrollToForm}
-                  className="mt-6 inline-flex w-fit items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                  className="mt-6 inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-700 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-800"
                 >
                   Submit Inquiry
                   <Send className="h-4 w-4" />
@@ -254,7 +254,7 @@ export default function JoinPage() {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-400"
+                  className="mt-4 text-sm font-medium text-emerald-700 hover:underline dark:text-emerald-400"
                 >
                   Submit another inquiry
                 </button>
@@ -276,7 +276,7 @@ export default function JoinPage() {
                   <input
                     name="name"
                     type="text"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                     placeholder="Your full name"
                   />
                   {errors.name && (
@@ -292,7 +292,7 @@ export default function JoinPage() {
                   <input
                     name="email"
                     type="email"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                     placeholder="you@example.com"
                   />
                   {errors.email && (
@@ -308,7 +308,7 @@ export default function JoinPage() {
                   <select
                     name="role"
                     defaultValue=""
-                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                   >
                     <option value="" disabled>
                       Select your role...
@@ -339,7 +339,7 @@ export default function JoinPage() {
                   <select
                     name="interest"
                     defaultValue=""
-                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                   >
                     <option value="" disabled>
                       Select an interest area...
@@ -365,7 +365,7 @@ export default function JoinPage() {
                   <textarea
                     name="message"
                     rows={5}
-                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                     placeholder="Tell us about your background, goals, and how you would like to contribute..."
                   />
                   {errors.message && (
@@ -384,7 +384,7 @@ export default function JoinPage() {
                       name="cv"
                       type="file"
                       accept=".pdf,.doc,.docx"
-                      className="text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-blue-600 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-white hover:file:bg-blue-700 dark:text-slate-400"
+                      className="text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-emerald-700 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-white hover:file:bg-emerald-800 dark:text-slate-400"
                     />
                   </div>
                   <p className="mt-1 text-xs text-slate-400">PDF, DOC, or DOCX (max 10 MB)</p>
@@ -393,7 +393,7 @@ export default function JoinPage() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
                 >
                   Submit Inquiry
                   <Send className="h-4 w-4" />

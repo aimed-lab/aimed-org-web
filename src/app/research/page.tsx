@@ -50,7 +50,7 @@ const lineages: Lineage[] = [
       { title: "C2Maps: A Network Pharmacology Database with Comprehensive Disease-Gene-Drug Connectivity Relationships", year: "2012" },
     ],
     tools: ["C2-Maps", "PAGER-CoV", "WINNER", "BEERE"],
-    color: "blue",
+    color: "sky",
   },
   {
     id: "knowledge-networks",
@@ -153,11 +153,11 @@ const lineages: Lineage[] = [
 ];
 
 const colorMap: Record<string, { bg: string; text: string; border: string; light: string }> = {
-  blue: {
-    bg: "bg-blue-600",
-    text: "text-blue-600 dark:text-blue-400",
-    border: "border-blue-600 dark:border-blue-400",
-    light: "bg-blue-50 dark:bg-blue-950/40",
+  sky: {
+    bg: "bg-sky-600",
+    text: "text-sky-600 dark:text-sky-400",
+    border: "border-sky-600 dark:border-sky-400",
+    light: "bg-sky-50 dark:bg-sky-950/40",
   },
   emerald: {
     bg: "bg-emerald-600",
@@ -255,7 +255,7 @@ function LineageSection({ lineage, index }: { lineage: Lineage; index: number })
               {lineage.representativePapers.map((p) => (
                 <li key={p.title} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
                   <ChevronRight className={`mt-0.5 h-4 w-4 shrink-0 ${c.text}`} />
-                  <Link href={`/publications?search=${encodeURIComponent(p.title.substring(0, 50))}`} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <Link href={`/publications?search=${encodeURIComponent(p.title.substring(0, 50))}`} className="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors">
                     {p.title} <span className="text-slate-400 dark:text-slate-500">({p.year})</span>
                   </Link>
                 </li>
@@ -276,7 +276,7 @@ export default function ResearchPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-28 md:py-36">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -354,7 +354,7 @@ export default function ResearchPage() {
 
           {/* Current Grants */}
           <h3 className="mb-4 text-xl font-bold text-slate-900 dark:text-slate-100">Current Grants</h3>
-          <div className="mb-10 grid gap-4 sm:grid-cols-2">
+          <div className="mb-10 grid gap-3 sm:gap-4 sm:grid-cols-2">
             {[
               { mech: "U54: OD036472", title: "CONNECT: Collaborative Network for Nurturing Ecosystems of Common Fund Team Science", agency: "NIH", role: "Contact MPI", pi: "Jake Y. Chen", period: "2024-2029" },
               { mech: "U24: AG098157", title: "ReCARDO: Using Real-World Data to Derive Common Data Elements for AD/ADRD Research", agency: "NIH", role: "Co-I & UAB Site PI", pi: "Guo-Qiang Zhang", period: "2024-2029" },
@@ -365,7 +365,7 @@ export default function ResearchPage() {
             ].map((g) => (
               <div key={g.mech} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="rounded bg-blue-100 px-2 py-0.5 text-[11px] font-bold text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">{g.mech}</span>
+                  <span className="rounded bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">{g.mech}</span>
                   <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{g.agency}</span>
                 </div>
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 line-clamp-2">{g.title}</h4>
@@ -455,7 +455,7 @@ export default function ResearchPage() {
         viewport={{ once: true, amount: 0.3 }}
         variants={fadeUp}
         custom={0}
-        className="py-20 bg-gradient-to-b from-white to-blue-50 dark:from-zinc-950 dark:to-zinc-900"
+        className="py-20 bg-gradient-to-b from-white to-emerald-50 dark:from-zinc-950 dark:to-zinc-900"
       >
         <div className="mx-auto max-w-3xl px-6 text-center">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Cross-Lineage Synergies</h2>

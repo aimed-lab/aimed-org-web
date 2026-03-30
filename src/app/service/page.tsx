@@ -143,14 +143,14 @@ export default function ServicePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-24">
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/40 px-4 py-2 text-sm font-medium text-blue-800 dark:text-blue-300">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-4 py-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
               <Users className="h-4 w-4" />
               Community leadership
             </div>
@@ -168,7 +168,7 @@ export default function ServicePage() {
       {/* National Committees */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-8 flex items-center gap-2">
-          <Award className="h-5 w-5 text-blue-600" />
+          <Award className="h-5 w-5 text-emerald-700" />
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">National & International Committees</h2>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -193,7 +193,7 @@ export default function ServicePage() {
       <section className="border-t border-slate-100 bg-slate-50/60 py-16 dark:border-zinc-800/50 dark:bg-zinc-900/40">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-8 flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-blue-600" />
+            <Building2 className="h-5 w-5 text-emerald-700" />
             <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Grant Review Panels</h2>
           </div>
           <div className="grid gap-6 lg:grid-cols-2">
@@ -208,7 +208,7 @@ export default function ServicePage() {
                 className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
               >
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-bold text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">
+                  <span className="rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
                     {agency.agency}
                   </span>
                   <span className="text-xs text-slate-500 dark:text-slate-400">{agency.full}</span>
@@ -230,14 +230,14 @@ export default function ServicePage() {
       {/* Journal Editorial */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-8 flex items-center gap-2">
-          <BookOpen className="h-5 w-5 text-blue-600" />
+          <BookOpen className="h-5 w-5 text-emerald-700" />
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Journal Editorial Boards</h2>
         </div>
         <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">
           Ad hoc reviewer for 50+ journals including Nature Reviews Genetics, Science Translational Medicine, PLoS Computational Biology, Nucleic Acids Research, Bioinformatics, and more.
         </p>
         <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-zinc-800">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm min-w-[600px]">
             <thead>
               <tr className="bg-slate-50 dark:bg-zinc-900">
                 <th className="px-4 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">Journal</th>
@@ -277,11 +277,11 @@ export default function ServicePage() {
       <section className="border-t border-slate-100 bg-slate-50/60 py-16 dark:border-zinc-800/50 dark:bg-zinc-900/40">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-8 flex items-center gap-2">
-            <Users className="h-5 w-5 text-blue-600" />
+            <Users className="h-5 w-5 text-emerald-700" />
             <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Conference Organization</h2>
           </div>
           <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-zinc-800">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm min-w-[600px]">
               <thead>
                 <tr className="bg-slate-50 dark:bg-zinc-900">
                   <th className="px-4 py-3 text-left font-semibold text-slate-900 dark:text-slate-100">Conference</th>

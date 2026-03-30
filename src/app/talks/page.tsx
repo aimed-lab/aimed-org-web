@@ -108,14 +108,14 @@ export default function TalksPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-28 md:py-36">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/40 px-4 py-2 text-sm font-medium text-blue-800 dark:text-blue-300">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-4 py-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
               <Mic className="h-4 w-4" />
               Sharing knowledge worldwide
             </div>
@@ -141,7 +141,7 @@ export default function TalksPage() {
                 onClick={() => setSelectedType(type)}
                 className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-colors ${
                   selectedType === type
-                    ? "bg-blue-600 text-white"
+                    ? "bg-emerald-700 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
                 }`}
               >
@@ -183,7 +183,7 @@ export default function TalksPage() {
       <section className="mx-auto max-w-6xl px-6 py-10 pb-24">
         {loading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
           </div>
         ) : talks.length === 0 ? (
           <div className="py-20 text-center">
@@ -198,7 +198,7 @@ export default function TalksPage() {
                 <h2 className="mb-5 text-2xl font-bold text-slate-900 dark:text-slate-100">
                   {year || "Unknown Year"}
                 </h2>
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-3 sm:gap-5 sm:grid-cols-2">
                   <AnimatePresence>
                     {yearTalks.map((talk, i) => (
                       <motion.div
@@ -224,7 +224,7 @@ export default function TalksPage() {
                           )}
                         </div>
                         {talk.venue && (
-                          <p className="mb-2 text-sm font-medium text-blue-600 dark:text-blue-400">
+                          <p className="mb-2 text-sm font-medium text-emerald-700 dark:text-emerald-400">
                             {talk.venue}
                           </p>
                         )}

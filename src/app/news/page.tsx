@@ -75,7 +75,7 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 py-24 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 to-teal-800 py-16 sm:py-20 md:py-24 text-white">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
           <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
@@ -90,7 +90,7 @@ export default function NewsPage() {
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
               News &amp; Updates
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
               Grants, honors, publications, and milestones from
               AI.MED and Prof. Jake Y. Chen.
             </p>
@@ -102,7 +102,7 @@ export default function NewsPage() {
       <section className="mx-auto max-w-4xl px-6 py-20">
         {loading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
           </div>
         ) : news.length === 0 ? (
           <p className="py-20 text-center text-slate-400">No news items found.</p>
@@ -125,8 +125,8 @@ export default function NewsPage() {
                       className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/30">
-                          <Newspaper className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/30">
+                          <Newspaper className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
                         </div>
                         <div className="flex-1">
                           <div className="mb-1 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
@@ -146,7 +146,7 @@ export default function NewsPage() {
                               href={item.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                              className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400"
                             >
                               <ExternalLink className="h-3 w-3" />
                               Read more

@@ -181,7 +181,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-zinc-950 dark:text-slate-100">
       {/* Announcement Strip */}
-      <div className="relative z-30 overflow-hidden border-b border-blue-600/20 bg-blue-600 text-white">
+      <div className="relative z-30 overflow-hidden border-b border-emerald-700/20 bg-emerald-700 text-white">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-center px-4 text-xs font-medium tracking-wide sm:text-sm">
           <Link href="/join" className="flex items-center gap-1.5 transition hover:opacity-80">
             <Sparkles className="h-3.5 w-3.5" />
@@ -201,19 +201,19 @@ export default function HomePage() {
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="relative mx-auto flex max-w-6xl flex-col items-center gap-10 px-6 pb-20 pt-20 md:flex-row md:items-start md:gap-16 md:pt-28"
+          className="relative mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 pb-16 pt-16 sm:px-6 md:flex-row md:items-start md:gap-16 md:pb-20 md:pt-28"
         >
           {/* Photo */}
           <motion.div variants={fadeUp} custom={0} className="shrink-0">
             <div className="relative">
-              <div className="h-56 w-56 overflow-hidden rounded-2xl border-4 border-white shadow-xl dark:border-zinc-800 md:h-64 md:w-64">
+              <div className="h-44 w-44 overflow-hidden rounded-2xl border-4 border-white shadow-xl dark:border-zinc-800 sm:h-56 sm:w-56 md:h-64 md:w-64">
                 <img
                   src="/jake-chen-headshot.jpg"
                   alt="Prof. Jake Y. Chen"
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-3 -right-3 rounded-xl bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
+              <div className="absolute -bottom-3 -right-3 rounded-xl bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
                 <MapPin className="mr-1 inline h-3 w-3" />
                 UAB, Birmingham AL
               </div>
@@ -225,7 +225,7 @@ export default function HomePage() {
             <motion.h1
               variants={fadeUp}
               custom={1}
-              className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
+              className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             >
               Jake Y. Chen, Ph.D.
             </motion.h1>
@@ -276,7 +276,7 @@ export default function HomePage() {
                 "25+ Years",
               ].map((stat) => (
                 <span key={stat} className="flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-700" />
                   {stat}
                 </span>
               ))}
@@ -290,7 +290,7 @@ export default function HomePage() {
             >
               <Link
                 href="/research"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-blue-600 px-7 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-700"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-700 px-7 text-sm font-semibold text-white shadow-lg shadow-emerald-700/25 transition hover:bg-emerald-800"
               >
                 Explore Research
                 <ArrowRight className="h-4 w-4" />
@@ -309,9 +309,9 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  Positions & Leadership                                       */}
       {/* ============================================================ */}
-      <section className="border-t border-slate-100 bg-slate-50/60 py-20 dark:border-slate-800/50 dark:bg-zinc-900/40">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid gap-12 lg:grid-cols-2">
+      <section className="border-t border-slate-100 bg-slate-50/60 py-12 sm:py-16 md:py-20 dark:border-slate-800/50 dark:bg-zinc-900/40">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-8 md:gap-12 lg:grid-cols-2">
             {/* Current Positions */}
             <motion.div
               initial="hidden"
@@ -320,7 +320,7 @@ export default function HomePage() {
               variants={stagger}
             >
               <motion.div variants={fadeUp} custom={0} className="mb-6 flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-blue-600" />
+                <Building2 className="h-5 w-5 text-emerald-700" />
                 <h2 className="text-2xl font-bold tracking-tight">Current Positions</h2>
               </motion.div>
               <div className="space-y-4">
@@ -353,7 +353,7 @@ export default function HomePage() {
               variants={stagger}
             >
               <motion.div variants={fadeUp} custom={0} className="mb-6 flex items-center gap-2">
-                <Briefcase className="h-5 w-5 text-blue-600" />
+                <Briefcase className="h-5 w-5 text-emerald-700" />
                 <h2 className="text-2xl font-bold tracking-tight">Selected Leadership</h2>
               </motion.div>
               <div className="space-y-4">
@@ -381,8 +381,8 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  Research Pillars                                             */}
       {/* ============================================================ */}
-      <section className="py-28">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="py-16 sm:py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -393,7 +393,7 @@ export default function HomePage() {
             <motion.p
               variants={fadeUp}
               custom={0}
-              className="text-sm font-semibold uppercase tracking-widest text-blue-600"
+              className="text-sm font-semibold uppercase tracking-widest text-emerald-700"
             >
               Research Focus
             </motion.p>
@@ -411,7 +411,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.15 }}
             variants={stagger}
-            className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-10 sm:mt-14 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
             {researchPillars.map((pillar, i) => {
               const Icon = pillar.icon;
@@ -422,7 +422,7 @@ export default function HomePage() {
                   custom={i}
                   className="group relative rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-zinc-900"
                 >
-                  <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600/10 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
+                  <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-700/10 text-emerald-700 transition group-hover:bg-emerald-700 group-hover:text-white">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-lg font-semibold leading-snug">
@@ -441,9 +441,9 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  Honors Rail                                                  */}
       {/* ============================================================ */}
-      <section className="overflow-hidden border-t border-slate-100 py-20 dark:border-slate-800/50">
+      <section className="overflow-hidden border-t border-slate-100 py-12 sm:py-16 md:py-20 dark:border-slate-800/50">
         <div className="mx-auto max-w-6xl px-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-blue-600">
+          <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700">
             Honors & Recognition
           </p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -458,7 +458,7 @@ export default function HomePage() {
                 key={`${honor}-${i}`}
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium shadow-sm dark:border-slate-800 dark:bg-zinc-900"
               >
-                <Award className="h-4 w-4 text-blue-600" />
+                <Award className="h-4 w-4 text-emerald-700" />
                 {honor}
               </span>
             ))}
@@ -479,7 +479,7 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  Training & Mentorship                                        */}
       {/* ============================================================ */}
-      <section className="border-t border-slate-100 bg-slate-50/60 py-28 dark:border-slate-800/50 dark:bg-zinc-900/40">
+      <section className="border-t border-slate-100 bg-slate-50/60 py-16 sm:py-20 md:py-28 dark:border-slate-800/50 dark:bg-zinc-900/40">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <motion.div
             initial="hidden"
@@ -490,7 +490,7 @@ export default function HomePage() {
             <motion.div
               variants={fadeUp}
               custom={0}
-              className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 text-blue-600"
+              className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-700/10 text-emerald-700"
             >
               <GraduationCap className="h-6 w-6" />
             </motion.div>
@@ -512,7 +512,7 @@ export default function HomePage() {
                 "A proven track record of placing graduates in top academic, pharma, and tech positions worldwide.",
               ].map((point) => (
                 <li key={point} className="flex gap-3">
-                  <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-blue-600" />
+                  <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-emerald-700" />
                   <span>{point}</span>
                 </li>
               ))}
@@ -520,7 +520,7 @@ export default function HomePage() {
             <motion.div variants={fadeUp} custom={3} className="mt-10">
               <Link
                 href="/join"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-blue-600 px-7 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-700"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-700 px-7 text-sm font-semibold text-white shadow-lg shadow-emerald-700/25 transition hover:bg-emerald-800"
               >
                 Apply to Join <ArrowRight className="h-4 w-4" />
               </Link>
@@ -532,8 +532,8 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  Footer CTA                                                   */}
       {/* ============================================================ */}
-      <section className="py-28">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+      <section className="py-16 sm:py-20 md:py-28">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -561,7 +561,7 @@ export default function HomePage() {
             >
               <Link
                 href="/research"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-blue-600 px-7 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-700"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-700 px-7 text-sm font-semibold text-white shadow-lg shadow-emerald-700/25 transition hover:bg-emerald-800"
               >
                 Explore Research
                 <ArrowRight className="h-4 w-4" />

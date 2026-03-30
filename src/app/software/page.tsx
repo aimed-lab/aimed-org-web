@@ -57,7 +57,7 @@ const categoryConfig: Record<string, { icon: typeof Network; color: string; bgCo
   "Pathway Analysis": { icon: Waypoints, color: "text-emerald-600 dark:text-emerald-400", bgColor: "bg-emerald-50 dark:bg-emerald-900/30" },
   "Single-cell Analysis": { icon: Microscope, color: "text-pink-600 dark:text-pink-400", bgColor: "bg-pink-50 dark:bg-pink-900/30" },
   "Statistical Analysis": { icon: BarChart3, color: "text-amber-600 dark:text-amber-400", bgColor: "bg-amber-50 dark:bg-amber-900/30" },
-  "Knowledge Networks": { icon: Users, color: "text-blue-600 dark:text-blue-400", bgColor: "bg-blue-50 dark:bg-blue-900/30" },
+  "Knowledge Networks": { icon: Users, color: "text-emerald-700 dark:text-emerald-400", bgColor: "bg-emerald-50 dark:bg-emerald-900/30" },
   "Disease Databases": { icon: Database, color: "text-red-600 dark:text-red-400", bgColor: "bg-red-50 dark:bg-red-900/30" },
   "Protein Interactions": { icon: Globe, color: "text-cyan-600 dark:text-cyan-400", bgColor: "bg-cyan-50 dark:bg-cyan-900/30" },
   "Drug Discovery": { icon: FlaskConical, color: "text-orange-600 dark:text-orange-400", bgColor: "bg-orange-50 dark:bg-orange-900/30" },
@@ -66,7 +66,7 @@ const categoryConfig: Record<string, { icon: typeof Network; color: string; bgCo
   "Proteomics": { icon: Microscope, color: "text-fuchsia-600 dark:text-fuchsia-400", bgColor: "bg-fuchsia-50 dark:bg-fuchsia-900/30" },
 };
 
-const defaultConfig = { icon: Code2, color: "text-blue-600 dark:text-blue-400", bgColor: "bg-blue-50 dark:bg-blue-900/30" };
+const defaultConfig = { icon: Code2, color: "text-emerald-700 dark:text-emerald-400", bgColor: "bg-emerald-50 dark:bg-emerald-900/30" };
 
 /* ------------------------------------------------------------------ */
 /*  Animation helpers                                                  */
@@ -120,7 +120,7 @@ export default function SoftwarePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-24 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-emerald-800 to-teal-900 py-16 sm:py-20 md:py-24 text-white">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute left-1/4 top-1/3 h-64 w-64 rounded-full bg-white blur-3xl" />
           <div className="absolute right-1/3 bottom-1/4 h-48 w-48 rounded-full bg-white blur-3xl" />
@@ -138,7 +138,7 @@ export default function SoftwarePage() {
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               Software &amp; Resources
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
               {tools.length} research tools, databases, and platforms developed
               across two decades of biomedical informatics research.
             </p>
@@ -156,7 +156,7 @@ export default function SoftwarePage() {
               onClick={() => setFilter(cat)}
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                 filter === cat
-                  ? "bg-blue-600 text-white shadow-sm"
+                  ? "bg-emerald-700 text-white shadow-sm"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
               }`}
             >
@@ -167,7 +167,7 @@ export default function SoftwarePage() {
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -222,7 +222,7 @@ export default function SoftwarePage() {
                           href={tool.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50"
+                          className="flex items-center gap-1.5 rounded-md bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-800 transition-colors hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
                         >
                           <ExternalLink className="h-3 w-3" />
                           Launch
@@ -273,7 +273,7 @@ export default function SoftwarePage() {
 
           {loading ? (
             <div className="flex justify-center py-10">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+              <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
             </div>
           ) : (
             <div className="space-y-4">
@@ -287,13 +287,13 @@ export default function SoftwarePage() {
                   className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
                 >
                   <div className="flex items-start gap-3">
-                    <Shield className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                    <Shield className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
                     <div>
                       <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">
                         {patent.title}
                       </h3>
                       {patent.year && (
-                        <span className="mt-1 inline-block rounded-full bg-blue-100 px-2.5 py-0.5 text-[11px] font-medium text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">
+                        <span className="mt-1 inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-medium text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
                           {patent.year}
                         </span>
                       )}
@@ -327,7 +327,7 @@ export default function SoftwarePage() {
           </p>
           <a
             href="/join"
-            className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-blue-700"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-8 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-emerald-800"
           >
             Inquire About Opportunities
             <ArrowRight className="h-4 w-4" />

@@ -67,7 +67,7 @@ const traineeTypes = [
   {
     icon: FlaskConical,
     title: "PhD Students",
-    color: "from-blue-500 to-indigo-500",
+    color: "from-emerald-600 to-teal-600",
     items: [
       "World-class mentorship with individualized research plans",
       "Deep research in cutting-edge computational biomedicine",
@@ -169,7 +169,7 @@ const traineeCategories: {
   {
     label: "PhD Students (Advisor/Chair)",
     icon: FlaskConical,
-    color: "from-blue-500 to-indigo-500",
+    color: "from-emerald-600 to-teal-600",
     trainees: [
       { name: "Fuad Al Abir", degree: "PhD, Biomedical Informatics & Data Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 5 },
       { name: "Delower Hossain", degree: "PhD, Computer Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 6 },
@@ -292,7 +292,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
           {q}
         </span>
         {open ? (
-          <ChevronUp className="h-5 w-5 shrink-0 text-blue-600" />
+          <ChevronUp className="h-5 w-5 shrink-0 text-emerald-700" />
         ) : (
           <ChevronDown className="h-5 w-5 shrink-0 text-slate-400" />
         )}
@@ -315,7 +315,7 @@ export default function TrainingPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-24 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-emerald-800 to-teal-900 py-24 text-white">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute left-1/3 top-1/4 h-64 w-64 rounded-full bg-white blur-3xl" />
           <div className="absolute right-1/4 bottom-1/4 h-48 w-48 rounded-full bg-white blur-3xl" />
@@ -333,7 +333,7 @@ export default function TrainingPage() {
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               Training &amp; Mentoring
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
               Join a training lineage spanning three decades and multiple continents -- from Peking University to UAB, we cultivate researchers who change the world.
             </p>
           </motion.div>
@@ -368,7 +368,7 @@ export default function TrainingPage() {
             >
               <div className="rounded-xl border border-slate-200 bg-white px-6 py-4 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <div className="flex items-center justify-center gap-2">
-                  <Building className="h-4 w-4 text-blue-600" />
+                  <Building className="h-4 w-4 text-emerald-700" />
                   <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                     {item.institution}
                   </h3>
@@ -378,14 +378,14 @@ export default function TrainingPage() {
                     <MapPin className="h-3 w-3" />
                     {item.location}
                   </span>
-                  <span className="rounded-full bg-blue-100 px-2 py-0.5 font-medium text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">
+                  <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-medium text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
                     {item.period}
                   </span>
                 </div>
               </div>
               {i < lineage.length - 1 && (
-                <div className="my-1 flex flex-col items-center text-blue-400 dark:text-blue-600">
-                  <div className="h-6 w-0.5 bg-blue-300 dark:bg-blue-700" />
+                <div className="my-1 flex flex-col items-center text-emerald-400 dark:text-emerald-700">
+                  <div className="h-6 w-0.5 bg-emerald-300 dark:bg-emerald-800" />
                   <ArrowRight className="h-4 w-4 rotate-90" />
                 </div>
               )}
@@ -437,7 +437,7 @@ export default function TrainingPage() {
                         key={item}
                         className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400"
                       >
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-700" />
                         {item}
                       </li>
                     ))}
@@ -517,7 +517,7 @@ export default function TrainingPage() {
                         {t.years}
                       </span>
                       {t.pubCount > 0 && (
-                        <span className="ml-auto flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400">
+                        <span className="ml-auto flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400">
                           <FileText className="h-3 w-3" />
                           {t.pubCount} pub{t.pubCount !== 1 ? "s" : ""}
                         </span>
@@ -559,7 +559,7 @@ export default function TrainingPage() {
                 className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
               >
                 <div className="mb-4 flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-blue-600" />
+                  <GraduationCap className="h-5 w-5 text-emerald-700" />
                   <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                     {school.school}
                   </h3>
@@ -622,7 +622,7 @@ export default function TrainingPage() {
           </p>
           <Link
             href="/join"
-            className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-blue-700"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-8 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-emerald-800"
           >
             Apply to Join the Lab
             <ArrowRight className="h-4 w-4" />
