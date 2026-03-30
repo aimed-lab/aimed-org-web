@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, Trophy, Loader2 } from "lucide-react";
+import { Award, Trophy, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -171,22 +171,9 @@ export default function HonorsPage() {
             </p>
           </div>
         ) : (
-          <div className="space-y-12">
+          <div className="space-y-8">
             {grouped.map(({ category, honors: catHonors }) => (
-              <div key={category}>
-                <div className="mb-5 flex items-center gap-3">
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-                    {category}
-                  </h2>
-                  <span
-                    className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      categoryColors[category] ??
-                      "bg-slate-100 text-slate-700 dark:bg-zinc-800 dark:text-slate-300"
-                    }`}
-                  >
-                    {catHonors.length}
-                  </span>
-                </div>
+              <CategorySection key={category} category={category} count={catHonors.length}>
 
                 <div className="relative ml-4 border-l-2 border-blue-200 pl-8 dark:border-blue-800">
                   <AnimatePresence>
@@ -256,11 +243,53 @@ export default function HonorsPage() {
                     ))}
                   </AnimatePresence>
                 </div>
-              </div>
+              </CategorySection>
             ))}
           </div>
         )}
       </section>
+    </div>
+  );
+}
+
+function CategorySection({ category, count, children }: { category: string; count: number; children: React.ReactNode }) {
+  const [open, setOpen] = useState(true);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        className="mb-4 flex w-full items-center gap-3 text-left"
+      >
+        {open ? (
+          <ChevronUp className="h-5 w-5 text-slate-400" />
+        ) : (
+          <ChevronDown className="h-5 w-5 text-slate-400" />
+        )}
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+          {category}
+        </h2>
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+            categoryColors[category] ??
+            "bg-slate-100 text-slate-700 dark:bg-zinc-800 dark:text-slate-300"
+          }`}
+        >
+          {count}
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
