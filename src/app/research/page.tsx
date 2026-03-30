@@ -411,31 +411,25 @@ export default function ResearchPage() {
               Multi-institutional partnerships advancing biomedical AI
             </p>
           </motion.div>
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          {/* Institutional logos */}
+          <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:p-10">
+            <img
+              src="/logos/collaborators.png"
+              alt="Collaborating institutions including UC San Diego, Stanford, Yale, UCSF, UCLA, UT Health Houston, UT Austin, Simon Fraser University, University of South Florida, Université de Montréal, UAB, Indiana University, University of Alabama, Tulane, Emory, University of Florida, University of Virginia, and more"
+              className="w-full object-contain dark:brightness-90 dark:contrast-125"
+            />
+          </div>
+
+          {/* Institution names for additional partners not shown in logo grid */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {[
-              "UC San Diego",
-              "UCLA",
-              "UCSF",
-              "Stanford University",
-              "Yale University",
-              "University of Virginia",
-              "UT Health Houston",
-              "UT Austin",
-              "Simon Fraser University",
-              "University of South Florida",
-              "Universit\u00e9 de Montr\u00e9al",
-              "University of Alabama at Birmingham",
-              "Indiana University",
-              "University of Alabama",
-              "Tulane University",
               "University of Colorado",
-              "University of Florida",
-              "Emory University",
               "Purdue University",
               "University of Minnesota",
               "Medical University of South Carolina",
               "Oregon Health & Science University",
               "University of Wisconsin-Madison",
+              "Georgetown University",
             ].map((inst) => (
               <span
                 key={inst}

@@ -379,6 +379,60 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
+      {/*  Hero Illustration Banner                                     */}
+      {/* ============================================================ */}
+      <section className="relative overflow-hidden bg-slate-950">
+        <div className="mx-auto flex max-w-6xl flex-col items-center md:flex-row md:items-center md:gap-8 lg:gap-12">
+          {/* Image — contained, never cropped */}
+          <div className="relative w-full shrink-0 md:w-5/12">
+            <img
+              src="/hero-drug-discovery-ai.jpg"
+              alt="When Drug Discovery Meets AI"
+              className="mx-auto w-3/4 object-contain sm:w-2/3 md:w-full"
+            />
+            {/* Subtle bottom fade on mobile only */}
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950 to-transparent md:hidden" />
+          </div>
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="relative z-10 -mt-10 px-6 pb-12 text-center md:mt-0 md:w-7/12 md:px-8 md:pb-0 md:text-left lg:px-12"
+          >
+            <p className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
+              Our Vision
+            </p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Where Drug Discovery<br className="hidden sm:block" /> Meets AI
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-slate-300">
+              Through{" "}
+              <a
+                href="https://sites.uab.edu/sparc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-emerald-400 underline underline-offset-2 hover:text-emerald-300 transition-colors"
+              >
+                SPARC
+              </a>
+              , we build intelligent systems that bridge computational innovation and
+              clinical impact — accelerating how new therapies are discovered,
+              validated, and delivered to patients.
+            </p>
+            <Link
+              href="/research"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-emerald-600"
+            >
+              Explore Our Research
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
       {/*  Research Pillars                                             */}
       {/* ============================================================ */}
       <section className="py-16 sm:py-20 md:py-28">

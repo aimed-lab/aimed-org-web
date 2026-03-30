@@ -32,36 +32,14 @@ const lineage = [
 
 const traineeTypes = [
   {
-    icon: School,
-    title: "High School Students",
-    color: "from-pink-500 to-rose-500",
+    icon: Briefcase,
+    title: "Postdoctoral Researchers",
+    color: "from-purple-500 to-violet-500",
     items: [
-      "Summer research exposure programs",
-      "Introduction to computational biology concepts",
-      "Hands-on coding workshops in Python / R",
-      "Poster presentation at end-of-program symposium",
-    ],
-  },
-  {
-    icon: BookOpen,
-    title: "Undergraduates",
-    color: "from-amber-500 to-orange-500",
-    items: [
-      "Hands-on research with real biomedical datasets",
-      "Publication opportunities as co-author",
-      "Coding mentorship (Python, R, bioinformatics pipelines)",
-      "Preparation for graduate school or industry careers",
-    ],
-  },
-  {
-    icon: GraduationCap,
-    title: "Master's Students",
-    color: "from-emerald-500 to-teal-500",
-    items: [
-      "Thesis-level research in AI and biomedicine",
-      "Industry preparation and networking",
-      "Methods training in ML, NLP, and knowledge graphs",
-      "Collaborative lab environment with senior mentors",
+      "Collaborative research on funded projects",
+      "Grant writing mentorship (K-awards, R01 preparation)",
+      "Career development toward faculty or industry leadership",
+      "Access to multi-institutional collaborator network",
     ],
   },
   {
@@ -76,14 +54,36 @@ const traineeTypes = [
     ],
   },
   {
-    icon: Briefcase,
-    title: "Postdoctoral Researchers",
-    color: "from-purple-500 to-violet-500",
+    icon: GraduationCap,
+    title: "Master's Students",
+    color: "from-emerald-500 to-teal-500",
     items: [
-      "Collaborative research on funded projects",
-      "Grant writing mentorship (K-awards, R01 preparation)",
-      "Career development toward faculty or industry leadership",
-      "Access to multi-institutional collaborator network",
+      "Thesis-level research in AI and biomedicine",
+      "Industry preparation and networking",
+      "Methods training in ML, NLP, and knowledge graphs",
+      "Collaborative lab environment with senior mentors",
+    ],
+  },
+  {
+    icon: BookOpen,
+    title: "Undergraduates",
+    color: "from-amber-500 to-orange-500",
+    items: [
+      "Hands-on research with real biomedical datasets",
+      "Publication opportunities as co-author",
+      "Coding mentorship (Python, R, bioinformatics pipelines)",
+      "Preparation for graduate school or industry careers",
+    ],
+  },
+  {
+    icon: School,
+    title: "High School Students",
+    color: "from-pink-500 to-rose-500",
+    items: [
+      "Summer research exposure programs",
+      "Introduction to computational biology concepts",
+      "Hands-on coding workshops in Python / R",
+      "Poster presentation at end-of-program symposium",
     ],
   },
 ];
@@ -267,6 +267,10 @@ const traineeCategories: {
     icon: School,
     color: "from-pink-500 to-rose-500",
     trainees: [
+      { name: "Ayla Zhang", degree: "The Altamont School, Birmingham", years: "2024-2025", current: true, role: "High School", pubCount: 1 },
+      { name: "April Cao", degree: "Hoover High School, Birmingham", years: "2024-2025", current: true, role: "High School", pubCount: 1 },
+      { name: "Adrian Gu", degree: "Vestavia Hills High School, Birmingham", years: "2024-2025", current: true, role: "High School", pubCount: 1 },
+      { name: "Eric Gong", degree: "Mountain Brook High School, Birmingham", years: "2022-2023", current: false, role: "High School", pubCount: 1 },
       { name: "Prahasith Veluvolu", degree: "Park Tudor High School, Indianapolis", years: "Summer 2012", current: false, role: "High School", pubCount: 0 },
       { name: "Sina Reinhart", degree: "North Central High School, Carmel", years: "Summer 2011", current: false, role: "High School", pubCount: 0 },
       { name: "Jeffrey Shen", degree: "Park Tudor High School, Indianapolis", years: "Summer 2010", current: false, role: "High School", pubCount: 1 },
@@ -497,7 +501,7 @@ export default function TrainingPage() {
 
                 {/* Trainee list */}
                 <div className="divide-y divide-slate-50 dark:divide-zinc-800/50">
-                  {cat.trainees.map((t, tIdx) => (
+                  {[...cat.trainees].sort((a, b) => b.pubCount - a.pubCount).map((t, tIdx) => (
                     <div
                       key={`${t.name}-${tIdx}`}
                       className="flex flex-wrap items-center gap-x-4 gap-y-1 px-6 py-3 text-sm"
