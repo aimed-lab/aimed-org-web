@@ -32,6 +32,11 @@ const lineage = [
 
 const currentMembers = [
   {
+    name: "Huu Phong Nguyen",
+    role: "Postdoctoral Fellow",
+    photo: null,
+  },
+  {
     name: "Fuad Al Abir",
     role: "PhD Student, Biomedical Informatics & Data Science",
     photo: "/members/fuad-al-abir.jpg",
