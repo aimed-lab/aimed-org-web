@@ -1,170 +1,287 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? "";
+const GEMINI_MODEL = "gemini-2.0-flash-lite";
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
 }
 
-// Public-only lab knowledge — never reveal unpublished work
-const LAB_INFO: Record<string, string> = {
-  about: `AI.MED Lab is led by Prof. Jake Y. Chen, Triton Endowed Professor of Biomedical Informatics and Data Science at the UAB School of Medicine. The lab advances AI-driven biomedical informatics, network/systems biology, and computational drug discovery.`,
-  director: `Prof. Jake Y. Chen is the founding director of the Systems Pharmacology AI Research Center (SPARC). He has 200+ publications, 200+ invited talks, and >$100M in grants. He is a Fellow of ACMI, AIMBE, and AMIA, an ACM Distinguished Member, and was named among the "Top 100 AI Leaders in Drug Discovery" (2019).`,
-  research: `The lab's research spans: AI-driven drug discovery, systems pharmacology, multi-omics AI frameworks, precision medicine, knowledge networks (PAGER, BEERE), network biology, digital twin simulations, and biomedical data science. Key tools include PAGER, BEERE, WINNER, HAPPI, DEMA, and GeneTerrain.`,
-  contact: `Email: jakechen@uab.edu. Visit the Join page at aimed-lab.org/join to submit an inquiry or collaboration request.`,
-  location: `The AI.MED Lab is at the University of Alabama at Birmingham (UAB), Department of Biomedical Informatics and Data Science.`,
-  join: `To join or collaborate, visit aimed-lab.org/join and fill out the inquiry form. We welcome postdocs, PhD students, and research staff.`,
-  software: `Key tools: PAGER (pathway/gene-set enrichment), BEERE (biomedical entity exploration), WINNER (network biology), HAPPI (protein interactions), DEMA (network visualization), GeneTerrain (gene expression visualization). Visit aimed-lab.org/software.`,
-};
+// ── Rate limiting ──────────────────────────────────────────────────────────
+const RATE_WINDOW_MS = 60_000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10; // max 10 messages per minute per IP
+const BLOCK_DURATION_MS = 5 * 60_000; // block for 5 minutes if exceeded
 
+const ipRequests = new Map<string, { count: number; windowStart: number }>();
+const blockedIps = new Map<string, number>(); // IP → unblock time
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+
+  // Check if blocked
+  const unblockAt = blockedIps.get(ip);
+  if (unblockAt) {
+    if (now < unblockAt) {
+      return { allowed: false, retryAfter: Math.ceil((unblockAt - now) / 1000) };
+    }
+    blockedIps.delete(ip);
+  }
+
+  // Check rate window
+  const entry = ipRequests.get(ip);
+  if (!entry || now - entry.windowStart > RATE_WINDOW_MS) {
+    ipRequests.set(ip, { count: 1, windowStart: now });
+    return { allowed: true };
+  }
+
+  entry.count++;
+  if (entry.count > MAX_REQUESTS_PER_WINDOW) {
+    blockedIps.set(ip, now + BLOCK_DURATION_MS);
+    ipRequests.delete(ip);
+    return { allowed: false, retryAfter: Math.ceil(BLOCK_DURATION_MS / 1000) };
+  }
+
+  return { allowed: true };
+}
+
+const SYSTEM_PROMPT = `You are the AI.MED Lab website assistant at the University of Alabama at Birmingham (UAB).
+
+ABOUT THE LAB:
+- Led by Prof. Jake Y. Chen, Triton Endowed Professor of Biomedical Informatics and Data Science
+- Prof. Chen is the founding director of the Systems Pharmacology AI Research Center (SPARC)
+- Previously served as Chief Bioinformatics Officer and Associate Director of the UAB Informatics Institute
+- Fellow of ACMI, AIMBE, AMIA; ACM Distinguished Member; "Top 100 AI Leaders in Drug Discovery" (2019)
+- 200+ publications, 200+ invited talks, >$100M in grants over 25+ years
+- Contact MPI for CONNECT, an NIH U54 national AI-infrastructure initiative (2024-2029)
+
+CURRENT LAB MEMBERS:
+- Huu Phong Nguyen, PhD — Postdoctoral Fellow
+- Fuad Al Abir — PhD Student, Biomedical Informatics & Data Science
+- Delower Hossain — PhD Student, Computer Science
+- John Haoyuan Cheng — Research Staff
+- Nikhil Kurmachalam — Research Staff
+- Geetanjali Oishe — PhD Student
+
+RESEARCH AREAS:
+AI-driven drug discovery, systems pharmacology, multi-omics AI, precision medicine, knowledge networks (PAGER, BEERE), network biology, digital twin simulations, biomedical data science, computational drug repurposing
+
+SOFTWARE TOOLS:
+PAGER (pathway/gene-set enrichment), BEERE (biomedical entity exploration), WINNER (network biology), HAPPI (protein interactions), DEMA (network visualization), GeneTerrain (gene expression visualization)
+
+CONTACT: jakechen@uab.edu | Website: aimed-lab.org | Join page: aimed-lab.org/join
+
+RULES:
+1. Only share PUBLIC information. Never reveal unpublished work, internal plans, or confidential data.
+2. When publications are provided in context, cite them accurately with DOI/PubMed links.
+3. Keep answers concise and helpful. Use bullet points for lists.
+4. If you don't know something, say so and suggest visiting the website or contacting the lab.
+5. For publication queries, use the search results provided in context.
+6. Format links as markdown: [text](url)`;
+
+// Search publications with flexible matching
 async function searchPublications(query: string) {
-  const pubs = await prisma.publication.findMany({
-    where: {
-      OR: [
-        { title: { contains: query } },
-        { authors: { contains: query } },
-        { journal: { contains: query } },
-        { tags: { contains: query } },
-      ],
-    },
-    take: 5,
+  const words = query
+    .toLowerCase()
+    .replace(/['']/g, "") // strip possessives
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !STOP_WORDS.has(w));
+
+  if (words.length === 0) return [];
+
+  // Try AND match first
+  const andConditions = words.map((word) => ({
+    OR: [
+      { title: { contains: word } },
+      { authors: { contains: word } },
+      { journal: { contains: word } },
+    ],
+  }));
+
+  let pubs = await prisma.publication.findMany({
+    where: { AND: andConditions },
+    take: 8,
     orderBy: { year: "desc" },
   });
+
+  // Fall back to first significant keyword
+  if (pubs.length === 0 && words.length > 0) {
+    pubs = await prisma.publication.findMany({
+      where: {
+        OR: [
+          { title: { contains: words[0] } },
+          { authors: { contains: words[0] } },
+        ],
+      },
+      take: 8,
+      orderBy: { year: "desc" },
+    });
+  }
+
   return pubs;
 }
 
-function detectIntent(message: string): {
-  type: string;
-  query: string;
-} {
-  const lower = message.toLowerCase();
+const STOP_WORDS = new Set([
+  "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
+  "have", "has", "had", "do", "does", "did", "will", "would", "could",
+  "should", "may", "might", "shall", "can", "need", "dare", "ought",
+  "used", "to", "of", "in", "for", "on", "with", "at", "by", "from",
+  "as", "into", "through", "during", "before", "after", "above", "below",
+  "between", "out", "off", "over", "under", "again", "further", "then",
+  "once", "here", "there", "when", "where", "why", "how", "all", "both",
+  "each", "few", "more", "most", "other", "some", "such", "no", "nor",
+  "not", "only", "own", "same", "so", "than", "too", "very", "just",
+  "because", "but", "and", "or", "if", "while", "about", "what", "which",
+  "who", "whom", "this", "that", "these", "those", "am", "its", "his",
+  "her", "their", "our", "my", "your", "me", "him", "them", "us", "you",
+  "she", "he", "it", "we", "they",
+  "find", "search", "show", "list", "tell", "give", "paper", "papers",
+  "publication", "publications", "article", "articles", "published",
+  "written", "authored", "any", "recent", "latest", "new",
+]);
 
-  // Publication/paper search
-  if (
-    /paper|publication|article|research on|published|pubmed|doi|cite|written|authored/i.test(lower)
-  ) {
-    const cleaned = lower
-      .replace(
-        /\b(find|search|show|list|any|what|has|have|did|does|do|is|are|the|a|an|their|his|her|its|my|our|me|i|we|you|they|it|this|that|these|those|papers?|publications?|articles?|about|on|related|to|by|regarding|written|authored|published|tell|give)\b/g,
-        ""
-      )
-      .replace(/[?.!,]/g, "")
-      .replace(/\s+/g, " ")
-      .trim();
-    return { type: "publication", query: cleaned || lower };
-  }
-
-  // Software/tools
-  if (/software|tool|database|pager|beere|winner|happi|dema|geneterrain/i.test(lower))
-    return { type: "info", query: "software" };
-
-  // Contact/join
-  if (/contact|email|reach|join|collaborate|apply|postdoc|phd|position/i.test(lower))
-    return { type: "info", query: lower.includes("join") || lower.includes("apply") || lower.includes("position") ? "join" : "contact" };
-
-  // About the lab
-  if (/\blab\b|ai\.?med|about|what do you|what does|overview/i.test(lower))
-    return { type: "info", query: "about" };
-
-  // Director/PI
-  if (/jake|chen|director|pi|professor|who leads|who runs/i.test(lower))
-    return { type: "info", query: "director" };
-
-  // Research areas
-  if (/research|area|focus|drug discovery|pharmacol|precision medicine|network biology/i.test(lower))
-    return { type: "info", query: "research" };
-
-  // Location
-  if (/where|location|address|uab|birmingham/i.test(lower))
-    return { type: "info", query: "location" };
-
-  // Drug discovery specific
-  if (/drug|compound|target|admet|toxicity|repurpos/i.test(lower))
-    return { type: "publication", query: lower };
-
-  // Cancer, Alzheimer, etc
-  if (/cancer|alzheimer|glioblastoma|leukemia|parkinson|disease/i.test(lower))
-    return { type: "publication", query: lower };
-
-  // Default: try publication search
-  return { type: "general", query: lower };
+// Extract search-worthy terms from any message
+function extractSearchTerms(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !STOP_WORDS.has(w))
+    .join(" ");
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ?? "unknown";
+  const rateCheck = checkRateLimit(ip);
+  if (!rateCheck.allowed) {
+    return NextResponse.json(
+      { reply: `Too many requests. Please try again in ${rateCheck.retryAfter} seconds.` },
+      { status: 429, headers: { "Retry-After": String(rateCheck.retryAfter ?? 300) } }
+    );
+  }
+
   try {
     const { messages } = (await req.json()) as { messages: ChatMessage[] };
     const lastMessage = messages[messages.length - 1];
     if (!lastMessage || lastMessage.role !== "user") {
-      return NextResponse.json({ reply: "I didn't receive a message. How can I help you?" });
+      return NextResponse.json({ reply: "How can I help you today?" });
     }
 
     const userText = lastMessage.content.trim();
-    if (!userText) {
-      return NextResponse.json({ reply: "Please type your question about the AI.MED Lab." });
+
+    // Search for relevant publications to include as context
+    const searchTerms = extractSearchTerms(userText);
+    const pubs = searchTerms ? await searchPublications(searchTerms) : [];
+
+    let pubContext = "";
+    if (pubs.length > 0) {
+      pubContext = "\n\nRELEVANT PUBLICATIONS FROM DATABASE:\n" +
+        pubs.map((p) => {
+          const links: string[] = [];
+          if (p.doi) links.push(`DOI: https://doi.org/${p.doi}`);
+          if (p.pubmedId) links.push(`PubMed: https://pubmed.ncbi.nlm.nih.gov/${p.pubmedId}`);
+          if (p.arxivId) links.push(`arXiv: https://arxiv.org/abs/${p.arxivId}`);
+          return `- "${p.title}" (${p.year}, ${p.journal ?? "N/A"}) by ${p.authors}. ${links.join(", ")}`;
+        }).join("\n");
     }
 
-    const intent = detectIntent(userText);
-
-    // Info queries
-    if (intent.type === "info") {
-      const info = LAB_INFO[intent.query] ?? LAB_INFO.about;
-      return NextResponse.json({ reply: info });
+    // If no Gemini API key, use a simple fallback
+    if (!GEMINI_API_KEY) {
+      return handleFallback(userText, pubs);
     }
 
-    // Publication search
-    if (intent.type === "publication") {
-      const keywords = intent.query
-        .split(/\s+/)
-        .filter((w) => w.length > 2)
-        .slice(0, 5);
+    // Build Gemini request
+    const geminiMessages = [
+      ...messages.slice(-6).map((m) => ({
+        role: m.role === "user" ? "user" : "model",
+        parts: [{ text: m.content }],
+      })),
+    ];
 
-      // Try the full query first, then individual keywords
-      let pubs = await searchPublications(intent.query);
-      if (pubs.length === 0) {
-        for (const kw of keywords) {
-          const results = await searchPublications(kw);
-          pubs.push(...results);
-        }
-      }
-
-      // Deduplicate and prioritize: results matching more keywords rank higher
-      const seen = new Set<number>();
-      pubs = pubs.filter((p) => {
-        if (seen.has(p.id)) return false;
-        seen.add(p.id);
-        return true;
-      });
-
-      if (pubs.length === 0) {
-        return NextResponse.json({
-          reply: `I couldn't find publications matching "${intent.query}". Try broader terms like "drug discovery", "cancer", "AI", "network biology", or visit our Publications page at aimed-lab.org/publications for the full list.`,
-        });
-      }
-
-      const lines = pubs.slice(0, 5).map((p) => {
-        const links: string[] = [];
-        if (p.doi) links.push(`[DOI](https://doi.org/${p.doi})`);
-        if (p.pubmedId) links.push(`[PubMed](https://pubmed.ncbi.nlm.nih.gov/${p.pubmedId})`);
-        if (p.arxivId) links.push(`[arXiv](https://arxiv.org/abs/${p.arxivId})`);
-        links.push(
-          `[Scholar](https://scholar.google.com/scholar?q=${encodeURIComponent(p.title)})`
-        );
-        return `• **${p.title}** (${p.year}, ${p.journal ?? ""})\n  ${p.authors}\n  ${links.join(" · ")}`;
-      });
-
-      return NextResponse.json({
-        reply: `Found ${pubs.length} publication(s):\n\n${lines.join("\n\n")}\n\nVisit [Publications](/publications) for the complete list.`,
-      });
+    // Inject system prompt + publication context into the first user message
+    if (geminiMessages.length > 0 && geminiMessages[geminiMessages.length - 1].role === "user") {
+      const lastParts = geminiMessages[geminiMessages.length - 1].parts;
+      lastParts[0].text = lastParts[0].text + pubContext;
     }
 
-    // General/fallback
-    return NextResponse.json({
-      reply: `I can help with questions about the AI.MED Lab. Try asking about:\n\n• **Publications** — "Find papers on drug discovery"\n• **Research areas** — "What research does the lab do?"\n• **Software/tools** — "What tools has the lab built?"\n• **Contact/Join** — "How to join the lab?"\n• **About** — "Tell me about AI.MED Lab"\n\nFor detailed research inquiries, visit [Join](/join) to contact us directly.`,
+    const body = {
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: geminiMessages,
+      generationConfig: {
+        temperature: 0.3,
+        maxOutputTokens: 800,
+      },
+    };
+
+    const geminiRes = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
-  } catch {
+
+    if (!geminiRes.ok) {
+      console.error("Gemini API error:", geminiRes.status, await geminiRes.text());
+      return handleFallback(userText, pubs);
+    }
+
+    const geminiData = await geminiRes.json();
+    const reply =
+      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "I'm sorry, I couldn't generate a response. Please try again.";
+
+    return NextResponse.json({ reply });
+  } catch (err) {
+    console.error("Chat error:", err);
     return NextResponse.json(
       { reply: "Sorry, something went wrong. Please try again." },
       { status: 500 }
     );
   }
+}
+
+// Fallback when no Gemini API key is configured
+function handleFallback(
+  userText: string,
+  pubs: Awaited<ReturnType<typeof searchPublications>>
+) {
+  if (pubs.length > 0) {
+    const lines = pubs.slice(0, 5).map((p) => {
+      const links: string[] = [];
+      if (p.doi) links.push(`[DOI](https://doi.org/${p.doi})`);
+      if (p.pubmedId) links.push(`[PubMed](https://pubmed.ncbi.nlm.nih.gov/${p.pubmedId})`);
+      if (p.arxivId) links.push(`[arXiv](https://arxiv.org/abs/${p.arxivId})`);
+      links.push(`[Scholar](https://scholar.google.com/scholar?q=${encodeURIComponent(p.title)})`);
+      return `• **${p.title}** (${p.year}, ${p.journal ?? ""})\n  ${p.authors}\n  ${links.join(" · ")}`;
+    });
+    return NextResponse.json({
+      reply: `Found ${pubs.length} publication(s):\n\n${lines.join("\n\n")}\n\nVisit [Publications](/publications) for the complete list.`,
+    });
+  }
+
+  const lower = userText.toLowerCase();
+  if (/about|lab|ai\.?med/i.test(lower)) {
+    return NextResponse.json({
+      reply: "AI.MED Lab is led by Prof. Jake Y. Chen at UAB. The lab advances AI-driven biomedical informatics, network/systems biology, and computational drug discovery. Visit [aimed-lab.org](/) for more details.",
+    });
+  }
+  if (/contact|email|join|apply/i.test(lower)) {
+    return NextResponse.json({
+      reply: "Contact Prof. Chen at jakechen@uab.edu or visit the [Join page](/join) to submit an inquiry.",
+    });
+  }
+  if (/software|tool/i.test(lower)) {
+    return NextResponse.json({
+      reply: "Key tools: PAGER, BEERE, WINNER, HAPPI, DEMA, GeneTerrain. Visit [Software](/software) for details.",
+    });
+  }
+
+  return NextResponse.json({
+    reply: `I can help with questions about the AI.MED Lab. Try asking about:\n• **Publications** — "Find papers by Delower"\n• **Research** — "What does the lab study?"\n• **Software** — "What tools does the lab build?"\n• **Contact** — "How to join the lab?"`,
+  });
 }
