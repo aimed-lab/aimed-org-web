@@ -44,13 +44,14 @@ const typeColors: Record<string, string> = {
 
 function yearFromDate(dateStr: string | null): number | null {
   if (!dateStr) return null;
-  const d = new Date(dateStr);
-  return isNaN(d.getTime()) ? null : d.getFullYear();
+  // Parse year directly to avoid timezone issues (e.g. "2025-01-01" becoming 2024 in US timezones)
+  const m = dateStr.match(/^(\d{4})/);
+  return m ? parseInt(m[1], 10) : null;
 }
 
 function formatDate(dateStr: string | null): string {
   if (!dateStr) return "";
-  const d = new Date(dateStr);
+  const d = new Date(dateStr + "T00:00:00");
   if (isNaN(d.getTime())) return "";
   return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
