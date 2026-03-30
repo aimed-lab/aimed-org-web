@@ -1,0 +1,758 @@
+[
+  {
+    "name": "Huu Phong Nguyen",
+    "degree": "PhD in Computer Science, University of Coimbra, Portugal",
+    "institution": "University of Coimbra, Portugal",
+    "years": "2025-present",
+    "current": true,
+    "role": "Postdoc",
+    "pubCount": 1
+  },
+  {
+    "name": "Rahul Sharma",
+    "degree": "PhD in Machine Learning, University of Coimbra, Portugal",
+    "institution": "University of Coimbra, Portugal",
+    "years": "2021-2023",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 2
+  },
+  {
+    "name": "Ehsan Saghapour",
+    "degree": "PhD in Biomedical Engineering, Isfahan University of Medical Sciences, Isfahan, Iran",
+    "institution": "Isfahan University of Medical Sciences, Isfahan, Iran",
+    "years": "2021-2023",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 6
+  },
+  {
+    "name": "Zongliang Yue",
+    "degree": "PhD in General Biological Sciences, UAB Informatics Institute",
+    "institution": "UAB Informatics Institute",
+    "years": "2020-2023",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 24
+  },
+  {
+    "name": "Thanh Nguyen",
+    "degree": "PhD in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2018-2021",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 20
+  },
+  {
+    "name": "Michael Falola",
+    "degree": "PhD K23 Candidate, UAB Department of Psychiatry and Behavioral Neurobiology",
+    "institution": "UAB Department of Psychiatry and Behavioral Neurobiology",
+    "years": "2018-2023",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 0
+  },
+  {
+    "name": "Noha Sharafeldin",
+    "degree": "MD/PhD K33 Candidate, UAB Institute for Cancer Outcomes and Survivorship",
+    "institution": "UAB Institute for Cancer Outcomes and Survivorship",
+    "years": "2017-2021",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 0
+  },
+  {
+    "name": "Syed Aun Muhammad",
+    "degree": "PhD in Biotechnology, Quaid-i-Azam University, Pakistan",
+    "institution": "Quaid-i-Azam University, Pakistan",
+    "years": "2015",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 6
+  },
+  {
+    "name": "Jieun Jeong",
+    "degree": "PhD in Computer Science, Penn State University",
+    "institution": "Penn State University",
+    "years": "2008-2009",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 2
+  },
+  {
+    "name": "Scott Harrison",
+    "degree": "PhD in Microbiology, Michigan State University",
+    "institution": "Michigan State University",
+    "years": "2007-2009",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 3
+  },
+  {
+    "name": "Sudipto Saha",
+    "degree": "PhD in Bioinformatics, Jawaharlal Nehru University, India",
+    "institution": "Jawaharlal Nehru University, India",
+    "years": "2007-2008",
+    "current": false,
+    "role": "Postdoc",
+    "pubCount": 2
+  },
+  {
+    "name": "Fuad Al Abir",
+    "degree": "PhD in Biomedical Informatics and Data Science",
+    "institution": "",
+    "years": "",
+    "current": true,
+    "role": "PhD",
+    "pubCount": 5
+  },
+  {
+    "name": "Delower Hossain",
+    "degree": "PhD in Computer Science",
+    "institution": "",
+    "years": "",
+    "current": true,
+    "role": "PhD",
+    "pubCount": 6
+  },
+  {
+    "name": "Kevin Song",
+    "degree": "PhD in Biomedical Engineering (Bioinformatics Concentration)",
+    "institution": "",
+    "years": "2023-2025",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 6
+  },
+  {
+    "name": "Radomir Slominski",
+    "degree": "MD, PhD in Genetics, Genomics, and Bioinformatics, UAB",
+    "institution": "UAB",
+    "years": "2022-2023",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 6
+  },
+  {
+    "name": "Samuel Bharti",
+    "degree": "PhD in Biomedical Engineering (Bioinformatics Track), UAB",
+    "institution": "UAB",
+    "years": "2021",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 2
+  },
+  {
+    "name": "Zongliang Yue",
+    "degree": "PhD in Genetics, Genomics, and Bioinformatics, UAB",
+    "institution": "Genomics, and Bioinformatics, UAB",
+    "years": "2020",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 24
+  },
+  {
+    "name": "Kevin Cao",
+    "degree": "MS in Bioinformatics, University of Minnesota",
+    "institution": "University of Minnesota",
+    "years": "2017",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Nafisa Bulsara",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2017",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Madhura Kshirsagar",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2016",
+    "current": false,
+    "role": "MS",
+    "pubCount": 1
+  },
+  {
+    "name": "Itika Arora",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2016",
+    "current": false,
+    "role": "MS",
+    "pubCount": 1
+  },
+  {
+    "name": "Ronak P Shah",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2016",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Zongliang Yue",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2015",
+    "current": false,
+    "role": "MS",
+    "pubCount": 24
+  },
+  {
+    "name": "Michael Neylon",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2015",
+    "current": false,
+    "role": "MS",
+    "pubCount": 4
+  },
+  {
+    "name": "Anurag Bhattrai",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2016",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Sandeep Shantharam",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2015",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Ashish Jain",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2015",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Myron Snelson",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2014",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Chayaporn Suphavilai",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2014",
+    "current": false,
+    "role": "MS",
+    "pubCount": 3
+  },
+  {
+    "name": "Hui Huang",
+    "degree": "PhD in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2014",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 12
+  },
+  {
+    "name": "Liang-Chin Huang",
+    "degree": "PhD in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2013",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 3
+  },
+  {
+    "name": "Madhankumar Sonachalam",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2012",
+    "current": false,
+    "role": "MS",
+    "pubCount": 2
+  },
+  {
+    "name": "Prudhvi Mummaneni",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2011",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Ehsan Behnamghader",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2010",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Paul Hale",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2012",
+    "current": false,
+    "role": "MS",
+    "pubCount": 1
+  },
+  {
+    "name": "Sudhir R. Chowbina",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2009",
+    "current": false,
+    "role": "MS",
+    "pubCount": 2
+  },
+  {
+    "name": "Usha Katta",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2009",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Ragini Pandey",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2008",
+    "current": false,
+    "role": "MS",
+    "pubCount": 9
+  },
+  {
+    "name": "Ramaprabha Ramamurthy",
+    "degree": "MS in Bioinformatics, Purdue University",
+    "institution": "Purdue University",
+    "years": "2008",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Harini Kasamsetty",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2007",
+    "current": false,
+    "role": "MS",
+    "pubCount": 2
+  },
+  {
+    "name": "Sheetal Khadke",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2007",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Lavanya Dhanapalan",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2007",
+    "current": false,
+    "role": "MS",
+    "pubCount": 2
+  },
+  {
+    "name": "Sharmila Jothirajah",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2007",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Shailaja Taduri",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2007",
+    "current": false,
+    "role": "MS",
+    "pubCount": 1
+  },
+  {
+    "name": "Bhanu Potugari",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2007",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Zhong Yan",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2006",
+    "current": false,
+    "role": "MS",
+    "pubCount": 3
+  },
+  {
+    "name": "Warren Killian",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2006",
+    "current": false,
+    "role": "MS",
+    "pubCount": 0
+  },
+  {
+    "name": "Sudharani Mamidipalli",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2006",
+    "current": false,
+    "role": "MS",
+    "pubCount": 2
+  },
+  {
+    "name": "Zhenyu Weng",
+    "degree": "PhD in Computer Science and Engineering, Peking University (co-advised)",
+    "institution": "Peking University",
+    "years": "2020",
+    "current": false,
+    "role": "PhD",
+    "pubCount": 1
+  },
+  {
+    "name": "Kyle H. Cichos",
+    "degree": "PhD in Immunology, UAB",
+    "institution": "UAB",
+    "years": "2023",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Julia K. Ziebro",
+    "degree": "PhD in Cancer Biology, UAB",
+    "institution": "UAB",
+    "years": "",
+    "current": true,
+    "role": "PhD (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Eric Zhang",
+    "degree": "PhD in Biomedical Engineering, UAB",
+    "institution": "UAB",
+    "years": "2021",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 6
+  },
+  {
+    "name": "Mathew Neu",
+    "degree": "MD/PhD Program, UAB Medical Scientist Training Program",
+    "institution": "UAB Medical Scientist Training Program",
+    "years": "2020",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Christian T. Stackhouse",
+    "degree": "PhD in Neuroscience, UAB",
+    "institution": "UAB",
+    "years": "2020",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 2
+  },
+  {
+    "name": "Vishal Sharma",
+    "degree": "PhD in Immunology, UAB",
+    "institution": "UAB",
+    "years": "2020",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Deepali Jhamb",
+    "degree": "PhD in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2014",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Ao Zhou",
+    "degree": "PhD in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2014",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 1
+  },
+  {
+    "name": "Jiangang Liu",
+    "degree": "PhD in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2010",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Joshua Heyen",
+    "degree": "PhD in Biochemistry & Molecular Biology, Indiana University School of Medicine",
+    "institution": "Indiana University School of Medicine",
+    "years": "2010",
+    "current": false,
+    "role": "PhD (committee)",
+    "pubCount": 2
+  },
+  {
+    "name": "Rati R. Nair",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2010",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Rini Pauly",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2010",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Uday Evani",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2010",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Mihai Stancu",
+    "degree": "MS in Health Informatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2010",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Maliki Yacouba",
+    "degree": "MS in Bioinformatics, Georgetown University",
+    "institution": "Georgetown University",
+    "years": "2009",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Stuart Ough",
+    "degree": "MS in Human-Computer Interaction, Indiana University",
+    "institution": "Indiana University",
+    "years": "2007",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Mindi Dippold",
+    "degree": "MS in Bioinformatics, Indiana University",
+    "institution": "Indiana University",
+    "years": "2006",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Rakesh Dhaval",
+    "degree": "MS in Computer Science, Purdue University",
+    "institution": "Purdue University",
+    "years": "2005",
+    "current": false,
+    "role": "MS (committee)",
+    "pubCount": 0
+  },
+  {
+    "name": "Kevin Song",
+    "degree": "Biology, Stanford University",
+    "institution": "Stanford University",
+    "years": "2014",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 6
+  },
+  {
+    "name": "Sara Ibrahim",
+    "degree": "Pre-med, IUPUI",
+    "institution": "IUPUI",
+    "years": "2010-2014",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 4
+  },
+  {
+    "name": "Thanh Nguyen",
+    "degree": "Computer Science, IUPUI",
+    "institution": "IUPUI",
+    "years": "2012-2013",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 20
+  },
+  {
+    "name": "Don Capouch",
+    "degree": "Electrical and Computer Engineering, IUPUI",
+    "institution": "IUPUI",
+    "years": "2011-2013",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 0
+  },
+  {
+    "name": "Sujay Chandorkar",
+    "degree": "Computer and Information Science, IUPUI",
+    "institution": "IUPUI",
+    "years": "2011-2012",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 0
+  },
+  {
+    "name": "Marianne McKenzie",
+    "degree": "Mathematics, IUPUI",
+    "institution": "IUPUI",
+    "years": "2010-2011",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 1
+  },
+  {
+    "name": "Everton Lima",
+    "degree": "Computer Science, IUPUI",
+    "institution": "IUPUI",
+    "years": "2010-2011",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 0
+  },
+  {
+    "name": "Peter Li",
+    "degree": "Computer Science, Northwestern University",
+    "institution": "Northwestern University",
+    "years": "2010",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 1
+  },
+  {
+    "name": "Taiwo Ajumobi",
+    "degree": "Biology, DePauw University",
+    "institution": "DePauw University",
+    "years": "2010",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 1
+  },
+  {
+    "name": "Israel Aguilera-Laina",
+    "degree": "Chemistry, IUPUI",
+    "institution": "IUPUI",
+    "years": "2009",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 0
+  },
+  {
+    "name": "Alexander Scherer",
+    "degree": "Biology, Stanford University",
+    "institution": "Stanford University",
+    "years": "2008",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 0
+  },
+  {
+    "name": "Ayotunde O. Ositelu",
+    "degree": "Pre-Med, Vanderbilt University",
+    "institution": "Vanderbilt University",
+    "years": "2007",
+    "current": false,
+    "role": "Undergrad",
+    "pubCount": 0
+  },
+  {
+    "name": "Prahasith Veluvolu",
+    "degree": "Senior, Park Tudor High School, Indianapolis, Indiana",
+    "institution": "Park Tudor High School, Indianapolis, Indiana",
+    "years": "2012",
+    "current": false,
+    "role": "High School",
+    "pubCount": 0
+  },
+  {
+    "name": "Sina Reinhart",
+    "degree": "Senior, North Central High School, Carmel, Indiana",
+    "institution": "North Central High School, Carmel, Indiana",
+    "years": "2011",
+    "current": false,
+    "role": "High School",
+    "pubCount": 0
+  },
+  {
+    "name": "Jeffrey Shen",
+    "degree": "Senior, Park Tudor High School, Indianapolis, Indiana",
+    "institution": "Park Tudor High School, Indianapolis, Indiana",
+    "years": "2010",
+    "current": false,
+    "role": "High School",
+    "pubCount": 1
+  },
+  {
+    "name": "Kevin Huang",
+    "degree": "Sophomore, Carmel High School, Carmel, Indiana",
+    "institution": "Carmel High School, Carmel, Indiana",
+    "years": "2009",
+    "current": false,
+    "role": "High School",
+    "pubCount": 0
+  },
+  {
+    "name": "Peter Li",
+    "degree": "Senior, Carmel High School, Carmel, Indiana",
+    "institution": "Carmel High School, Carmel, Indiana",
+    "years": "2008",
+    "current": false,
+    "role": "High School",
+    "pubCount": 1
+  }
+]

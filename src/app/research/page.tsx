@@ -310,6 +310,86 @@ export default function ResearchPage() {
         </div>
       ))}
 
+      {/* Funding */}
+      <section className="bg-slate-50 py-20 dark:bg-zinc-900/50">
+        <div className="mx-auto max-w-6xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
+              Research Funding
+            </h2>
+            <p className="mb-8 text-center text-slate-600 dark:text-slate-400">
+              Over $100M in cumulative research funding from 60+ grants since 2004
+            </p>
+          </motion.div>
+
+          {/* Agency logos */}
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-6">
+            {[
+              { name: "NIH", full: "National Institutes of Health" },
+              { name: "NSF", full: "National Science Foundation" },
+              { name: "DOD", full: "Department of Defense" },
+              { name: "NASA", full: "National Aeronautics and Space Administration" },
+              { name: "NAIRR", full: "National AI Research Resource" },
+              { name: "AHA", full: "American Heart Association" },
+              { name: "BMS", full: "Bristol-Myers Squibb" },
+            ].map((a) => (
+              <div
+                key={a.name}
+                className="flex h-16 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                title={a.full}
+              >
+                <span className="text-lg font-bold text-slate-700 dark:text-slate-300">{a.name}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Current Grants */}
+          <h3 className="mb-4 text-xl font-bold text-slate-900 dark:text-slate-100">Current Grants</h3>
+          <div className="mb-10 grid gap-4 sm:grid-cols-2">
+            {[
+              { mech: "U54: OD036472", title: "CONNECT: Collaborative Network for Nurturing Ecosystems of Common Fund Team Science", agency: "NIH", role: "Contact MPI", pi: "Jake Y. Chen", period: "2024-2029" },
+              { mech: "U24: AG098157", title: "ReCARDO: Using Real-World Data to Derive Common Data Elements for AD/ADRD Research", agency: "NIH", role: "Co-I & UAB Site PI", pi: "Guo-Qiang Zhang", period: "2024-2029" },
+              { mech: "OT2: OD032742", title: "Building an Interpretable Genomic Translator Using Maps of Cell Architecture", agency: "NIH (Bridge2AI)", role: "MPI", pi: "Trey Ideker", period: "2022-2026" },
+              { mech: "U54: DK137307", title: "UAB-UCSD O'Brien Center for Acute Kidney Injury Research", agency: "NIH/NIDDK", role: "Co-I", pi: "Anupam Agarwal", period: "2023-2028" },
+              { mech: "NAIRR Pilot", title: "Computing for AI-enabled Systems Pharmacology and Drug Discovery", agency: "NAIRR", role: "PI", pi: "Jake Y. Chen", period: "2025-2026" },
+              { mech: "UM1: TR004771", title: "UAB Center for Clinical and Translational Science (CCTS)", agency: "NIH/NCATS", role: "Co-I", pi: "Orlando Gutierrez", period: "2024-2031" },
+            ].map((g) => (
+              <div key={g.mech} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="rounded bg-blue-100 px-2 py-0.5 text-[11px] font-bold text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">{g.mech}</span>
+                  <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{g.agency}</span>
+                </div>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 line-clamp-2">{g.title}</h4>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  {g.role} &middot; PI: {g.pi} &middot; {g.period}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Past Grants Summary */}
+          <h3 className="mb-4 text-xl font-bold text-slate-900 dark:text-slate-100">Selected Past Funding</h3>
+          <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 mb-4">
+            Prior funded research includes major NIH-supported programs in cancer systems biology
+            (U01CA223976, R01CA258248), immunology (R01HL150078, R01AI134023, R01AR073850),
+            diabetes and metabolic diseases (R21DK129968), translational science infrastructure
+            (U54TR001005, UL1TR001417, 3UL1TR003096), as well as Department of Defense grants
+            in neurodevelopmental research and cardiac regeneration through the NHLBI Progenitor
+            Cell Translational Consortium.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {["U01CA223976", "R01CA258248", "R01HL150078", "R21DK129968", "U54TR001005", "R01AI134023", "R01AR073850", "R21MD015319"].map((id) => (
+              <span key={id} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-zinc-800 dark:text-slate-400">{id}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Cross-lineage callout */}
       <motion.section
         initial="hidden"
