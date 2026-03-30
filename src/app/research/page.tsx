@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Pill,
@@ -8,22 +7,12 @@ import {
   BarChart3,
   Users,
   Database,
-  Microscope,
-  Brain,
-  FlaskConical,
-  Layers,
-  Server,
   ChevronRight,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
-/*  Static data                                                       */
+/*  Static data — all derived from Prof. Chen's CV publications       */
 /* ------------------------------------------------------------------ */
-
-interface TimelineEvent {
-  year: string;
-  label: string;
-}
 
 interface Lineage {
   id: string;
@@ -31,9 +20,8 @@ interface Lineage {
   title: string;
   description: string;
   methods: string[];
-  seminalPapers: { title: string; year: string }[];
+  representativePapers: { title: string; year: string }[];
   tools: string[];
-  timeline: TimelineEvent[];
   color: string;
 }
 
@@ -43,27 +31,24 @@ const lineages: Lineage[] = [
     icon: <Pill className="h-7 w-7" />,
     title: "Systems Pharmacology & Drug Discovery",
     description:
-      "Computational identification of drug targets, molecular modeling, and AI-driven therapeutic development. This lineage spans from early network pharmacology approaches through modern deep-learning generative models for molecular design.",
+      "Computational identification of drug targets, AI-driven therapeutic development, and drug repurposing using network pharmacology, neuro-symbolic AI, and large language models. From early connectivity map approaches to modern LLM agent swarms for hypothesis-driven drug discovery.",
     methods: [
       "Network pharmacology",
-      "Molecular docking & dynamics",
-      "Generative chemistry (VAE / GAN)",
-      "Drug repurposing algorithms",
-      "ADMET prediction",
+      "Drug repurposing (PETS, C2Maps)",
+      "Neuro-symbolic AI (QSAR)",
+      "LLM agent swarms",
+      "Antibody-antigen binding prediction",
+      "ADMET & hERG cardiotoxicity prediction",
     ],
-    seminalPapers: [
-      { title: "Network-based Drug Repurposing for Human Coronavirus", year: "2020" },
-      { title: "Deep Learning Approaches for Protein Structure Prediction", year: "2023" },
-      { title: "AI-Driven Multi-Target Drug Design for Complex Diseases", year: "2024" },
+    representativePapers: [
+      { title: "LLM Agent Swarm for Hypothesis-Driven Drug Discovery", year: "2025" },
+      { title: "LlamaAffinity: A Predictive Antibody-Antigen Binding Model Integrating Antibody Sequences with Llama3 Backbone Architecture", year: "2025" },
+      { title: "NeSyDPP4-QSAR: Discovering DPP-4 Inhibitors for Diabetes Treatment with a Neuro-symbolic AI Approach", year: "2025" },
+      { title: "Integrative multi-scale network simulation for precision drug repurposing with PETS", year: "2025" },
+      { title: "An NLP-based Technique to Extract Meaningful Features from Drug SMILES", year: "2024" },
+      { title: "C2Maps: A Network Pharmacology Database with Comprehensive Disease-Gene-Drug Connectivity Relationships", year: "2012" },
     ],
-    tools: ["DrugRepoNet", "MolGraphNet", "TargetHunter"],
-    timeline: [
-      { year: "2012", label: "Network pharmacology framework" },
-      { year: "2016", label: "Large-scale docking pipelines" },
-      { year: "2020", label: "COVID drug repurposing" },
-      { year: "2023", label: "Generative molecular design" },
-      { year: "2025", label: "Multi-target AI therapeutics" },
-    ],
+    tools: ["C2-Maps", "PAGER-CoV", "WINNER", "BEERE"],
     color: "blue",
   },
   {
@@ -71,27 +56,24 @@ const lineages: Lineage[] = [
     icon: <Network className="h-7 w-7" />,
     title: "Biomedical Knowledge Networks & Data Ecosystems",
     description:
-      "Construction and reasoning over large-scale knowledge graphs, biomedical ontologies, and semantic integration pipelines. This lineage drives our ability to connect disparate data sources into coherent, queryable ecosystems.",
+      "Construction of large-scale knowledge graphs, pathway/gene-set repositories, and semantic integration pipelines. From the foundational PAGER database to the NIH Bridge2AI and CONNECT initiatives building AI-ready biomedical data ecosystems.",
     methods: [
-      "Knowledge graph embedding",
-      "Ontology alignment",
-      "Biomedical NLP & text mining",
-      "Semantic web technologies",
-      "Link prediction",
+      "Gene set / pathway enrichment (PAGER, PAGED)",
+      "Biomedical entity expansion (BEERE)",
+      "Ontology-guided analysis (GOALS)",
+      "Knowledge graph construction",
+      "Semantic web & data mining",
+      "NIH Common Fund data integration",
     ],
-    seminalPapers: [
-      { title: "Biomedical Knowledge Graph Construction and Applications", year: "2022" },
-      { title: "Ontology-Guided Integration of Multi-Source Biomedical Data", year: "2021" },
-      { title: "Large Language Models for Biomedical Knowledge Extraction", year: "2024" },
+    representativePapers: [
+      { title: "GOALS: Gene Ontology Analysis with Layered Shells for Enhanced Functional Insight and Visualization", year: "2025" },
+      { title: "PAGER-scFGA: Unveiling Cell Functions and Molecular Mechanisms in Cell Trajectories through Single-Cell Functional Genomics Analysis", year: "2024" },
+      { title: "PAGER Web APP: An Interactive, Online Gene Set and Network Interpretation Tool", year: "2022" },
+      { title: "BEERE: a Web Server for Biomedical Entity Expansion, Ranking, and Explorations", year: "2019" },
+      { title: "PAGER: Constructing PAGs and new PAG-PAG Relationships for Network Biology", year: "2015" },
+      { title: "Semantic Graph Mining for Biomedical Network Analysis: an Overview", year: "2009" },
     ],
-    tools: ["BioKG Builder", "OntoAlign", "SemMedExtract"],
-    timeline: [
-      { year: "2013", label: "Biomedical text mining tools" },
-      { year: "2017", label: "Knowledge graph v1" },
-      { year: "2021", label: "Ontology integration platform" },
-      { year: "2023", label: "LLM-augmented extraction" },
-      { year: "2025", label: "Federated knowledge ecosystems" },
-    ],
+    tools: ["PAGER", "PAGED", "BEERE", "GOALS", "HAPPI Database", "HPD"],
     color: "emerald",
   },
   {
@@ -99,27 +81,24 @@ const lineages: Lineage[] = [
     icon: <BarChart3 className="h-7 w-7" />,
     title: "Multi-omics, Visualization & Interpretable AI",
     description:
-      "Pioneering visual analytics for high-dimensional biological data, including the GeneTerrainMap platform. This lineage is grounded in the belief that interpretability is not optional -- every model must explain itself.",
+      "Pioneering visual analytics for high-dimensional biological data. From the original GeneTerrain platform to Mondrian-inspired differential pathway analysis and single-cell spatial embedding tools (PGC, SpatialRSP).",
     methods: [
-      "Dimensionality reduction (t-SNE, UMAP)",
-      "Terrain-based visualization",
-      "SHAP / attention-based explainability",
-      "Multi-omics factor analysis",
-      "Interactive dashboards",
+      "Terrain-based expression visualization",
+      "Single-cell spatial embeddings (PGC, SpatialRSP)",
+      "Mondrian abstraction for pathway analysis",
+      "Network layout algorithms (DEMA, GraphWaGu)",
+      "Multi-omics integration",
+      "Kinome profiling visualization",
     ],
-    seminalPapers: [
-      { title: "GeneTerrainMap: Terrain-based Visualization of Gene Expression Data", year: "2019" },
-      { title: "Interpretable Deep Learning for Multi-omics Cancer Subtypes", year: "2022" },
-      { title: "Multi-omics Integration for Precision Oncology", year: "2024" },
+    representativePapers: [
+      { title: "Temporal GeneTerrain: Advancing Precision Medicine Through Dynamic Gene Expression Visualization", year: "2025" },
+      { title: "KinoViz: A User-Friendly Web Application for High-Throughput Kinome Profiling Analysis and Visualization in Cancer Research", year: "2025" },
+      { title: "Mondrian Abstraction and Language Model Embeddings for Differential Pathway Analysis", year: "2024" },
+      { title: "Polar Gini Curve: a Quantitative Technique to Discover Gene Expression Spatial Patterns from Single-cell Data", year: "2022" },
+      { title: "DEMA: a Distance-bounded Energy-field Minimization Algorithm to Model and Layout Bio-molecular Networks", year: "2022" },
+      { title: "GeneTerrain: Visual Exploration of Differential Gene Expression Profiles Organized in Native Biomolecular Interaction Networks", year: "2010" },
     ],
-    tools: ["GeneTerrainMap", "OmicsLens", "XAI-Omics"],
-    timeline: [
-      { year: "2014", label: "Early gene expression visualization" },
-      { year: "2019", label: "GeneTerrainMap release" },
-      { year: "2022", label: "Explainable multi-omics ML" },
-      { year: "2024", label: "Real-time interactive analytics" },
-      { year: "2026", label: "Foundation model interpretability" },
-    ],
+    tools: ["GeneTerrain", "Mondrian Map", "PGC", "SpatialRSP", "HOMER", "PEPPI"],
     color: "violet",
   },
   {
@@ -127,93 +106,80 @@ const lineages: Lineage[] = [
     icon: <Users className="h-7 w-7" />,
     title: "Digital Twins & Precision Medicine",
     description:
-      "Building patient-level computational models that fuse genomics, phenomics, and clinical data into personalized digital twins. These multi-scale simulations enable in-silico clinical trials and individualized treatment optimization.",
+      "Building patient-level computational models that fuse genomics, phenomics, and clinical data into personalized digital twins for cancer simulation, treatment optimization, and precision drug screening.",
     methods: [
-      "Agent-based modeling",
-      "Physiologically-based PK/PD",
-      "Bayesian patient stratification",
-      "Multi-scale simulation",
-      "Causal inference",
+      "Multi-scale digital twin simulation (MLPA)",
+      "Sample-level statistical enrichment (SEAS)",
+      "Clinotype-phenotype-genotype linking",
+      "Cancer systems pharmacology",
+      "Biomarker discovery & prioritization",
+      "Personalized drug response prediction",
     ],
-    seminalPapers: [
-      { title: "Digital Twin Framework for Personalized Cancer Therapy", year: "2023" },
-      { title: "Multi-Scale Computational Modeling of Drug Response", year: "2021" },
-      { title: "Patient Stratification via Integrative Bayesian Networks", year: "2020" },
+    representativePapers: [
+      { title: "MLPA: A Multi-scale Digital Twin Framework for Personalized Cancer Simulation and Treatment Optimization", year: "2024" },
+      { title: "Statistical Enrichment Analysis of Samples (SEAS): a General-purpose Tool to Annotate Metadata Neighborhoods of Biomedical Samples", year: "2021" },
+      { title: "Linking Clinotypes to Phenotypes and Genotypes from Laboratory Test Results in Comprehensive Physical Examinations", year: "2021" },
+      { title: "Network Medicine: Finding the Links to Personalized Therapy", year: "2013" },
+      { title: "Unraveling Human Complexity and Disease with Systems Biology and Personalized Medicine", year: "2010" },
     ],
-    tools: ["TwinSim", "PrecisionRx", "PatientGraph"],
-    timeline: [
-      { year: "2016", label: "PK/PD modeling pipelines" },
-      { year: "2020", label: "Patient stratification models" },
-      { year: "2023", label: "Digital twin framework" },
-      { year: "2025", label: "In-silico trial simulations" },
-      { year: "2026", label: "Real-time adaptive twins" },
-    ],
+    tools: ["SEAS", "WINNER", "HIP2", "ProteoLens"],
     color: "amber",
   },
   {
     id: "infrastructure",
     icon: <Database className="h-7 w-7" />,
-    title: "Translational Data Infrastructure",
+    title: "Translational Data Infrastructure & Team Science",
     description:
-      "Designing and deploying the data platforms, clinical informatics systems, and research-to-bedside pipelines that underpin every other lineage. Infrastructure is the invisible backbone that turns ideas into patient impact.",
+      "Designing and deploying the data platforms, clinical informatics systems, and multi-institutional collaboration frameworks that underpin biomedical AI. Includes leadership of the NIH-funded CONNECT consortium, U-BRITE, and the UAB CCTS bioinformatics core.",
     methods: [
-      "FHIR / HL7 interoperability",
-      "ETL & data harmonization",
-      "Cloud-native data lakes",
-      "REDCap / i2b2 integration",
-      "Regulatory-compliant ML pipelines",
+      "Multi-institutional consortium management (CONNECT, Bridge2AI)",
+      "Translational informatics platforms (U-BRITE)",
+      "COVID-19 data integration (PAGER-CoV, N3C)",
+      "Talent knowledge graphs",
+      "Scalable genome assembly (Pregel)",
+      "Privacy-preserving health informatics",
     ],
-    seminalPapers: [
-      { title: "Scalable Clinical Data Platforms for Learning Health Systems", year: "2021" },
-      { title: "FAIR Principles Applied to Biomedical Research Data", year: "2019" },
-      { title: "Federated Analytics for Multi-Site Clinical Studies", year: "2024" },
+    representativePapers: [
+      { title: "Cell Maps for Artificial Intelligence: AI-Ready Maps of Human Cell Architecture from Disease-Relevant Cell Lines", year: "2024" },
+      { title: "PAGER-CoV: A Comprehensive Collection of Pathways, Annotated-gene-lists, and Gene Signatures for Coronavirus Disease Functional Genomic Studies", year: "2021" },
+      { title: "Empowering Team Science Across the Translational Spectrum with the UAB Biomedical Research Infrastructure Technology Enhancement (U-BRITE)", year: "2020" },
+      { title: "Scalable De Novo Genome Assembly Using a Pregel-Like Graph-Parallel System", year: "2021" },
+      { title: "HAPPI: an Online Database of Comprehensive Human Annotated and Predicted Protein Interactions", year: "2009" },
     ],
-    tools: ["BioDataHub", "ClinConnect", "FAIR-Pipe"],
-    timeline: [
-      { year: "2015", label: "First clinical data warehouse" },
-      { year: "2019", label: "FAIR data platform" },
-      { year: "2021", label: "Cloud-native data lake" },
-      { year: "2024", label: "Federated analytics layer" },
-      { year: "2026", label: "AI-ready research fabric" },
-    ],
+    tools: ["PAGER-CoV", "Talent Knowledge Map", "HAPPI Database", "WIPER Database"],
     color: "rose",
   },
 ];
 
-const colorMap: Record<string, { bg: string; text: string; border: string; dot: string; light: string }> = {
+const colorMap: Record<string, { bg: string; text: string; border: string; light: string }> = {
   blue: {
     bg: "bg-blue-600",
     text: "text-blue-600 dark:text-blue-400",
     border: "border-blue-600 dark:border-blue-400",
-    dot: "bg-blue-600 dark:bg-blue-400",
     light: "bg-blue-50 dark:bg-blue-950/40",
   },
   emerald: {
     bg: "bg-emerald-600",
     text: "text-emerald-600 dark:text-emerald-400",
     border: "border-emerald-600 dark:border-emerald-400",
-    dot: "bg-emerald-600 dark:bg-emerald-400",
     light: "bg-emerald-50 dark:bg-emerald-950/40",
   },
   violet: {
     bg: "bg-violet-600",
     text: "text-violet-600 dark:text-violet-400",
     border: "border-violet-600 dark:border-violet-400",
-    dot: "bg-violet-600 dark:bg-violet-400",
     light: "bg-violet-50 dark:bg-violet-950/40",
   },
   amber: {
     bg: "bg-amber-600",
     text: "text-amber-600 dark:text-amber-400",
     border: "border-amber-600 dark:border-amber-400",
-    dot: "bg-amber-600 dark:bg-amber-400",
     light: "bg-amber-50 dark:bg-amber-950/40",
   },
   rose: {
     bg: "bg-rose-600",
     text: "text-rose-600 dark:text-rose-400",
     border: "border-rose-600 dark:border-rose-400",
-    dot: "bg-rose-600 dark:bg-rose-400",
     light: "bg-rose-50 dark:bg-rose-950/40",
   },
 };
@@ -231,34 +197,9 @@ const fadeUp = {
   }),
 };
 
-const stagger = {
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
 /* ------------------------------------------------------------------ */
 /*  Components                                                        */
 /* ------------------------------------------------------------------ */
-
-function TimelineStrip({ events, color }: { events: TimelineEvent[]; color: string }) {
-  const c = colorMap[color];
-  return (
-    <div className="relative mt-6 pl-4">
-      {/* vertical line */}
-      <div className={`absolute left-[7px] top-0 bottom-0 w-0.5 ${c.bg} opacity-30`} />
-      <motion.ul variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="space-y-4">
-        {events.map((ev, i) => (
-          <motion.li key={ev.year} variants={fadeUp} custom={i} className="relative flex items-start gap-3">
-            <span className={`mt-1.5 h-3 w-3 shrink-0 rounded-full ${c.dot} ring-2 ring-white dark:ring-zinc-950`} />
-            <div>
-              <span className={`text-xs font-bold uppercase tracking-wider ${c.text}`}>{ev.year}</span>
-              <p className="text-sm text-slate-700 dark:text-slate-300">{ev.label}</p>
-            </div>
-          </motion.li>
-        ))}
-      </motion.ul>
-    </div>
-  );
-}
 
 function LineageSection({ lineage, index }: { lineage: Lineage; index: number }) {
   const c = colorMap[lineage.color];
@@ -294,21 +235,8 @@ function LineageSection({ lineage, index }: { lineage: Lineage; index: number })
             ))}
           </ul>
 
-          {/* Seminal papers */}
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2">Seminal Papers</h3>
-          <ul className="space-y-2 mb-6">
-            {lineage.seminalPapers.map((p) => (
-              <li key={p.title} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
-                <ChevronRight className={`mt-0.5 h-4 w-4 shrink-0 ${c.text}`} />
-                <span>
-                  {p.title} <span className="text-slate-400">({p.year})</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-
           {/* Tools */}
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2">Related Tools</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2">Lab Software</h3>
           <div className="flex flex-wrap gap-2">
             {lineage.tools.map((t) => (
               <span key={t} className={`rounded-md border ${c.border} px-2.5 py-0.5 text-xs font-semibold ${c.text}`}>
@@ -318,11 +246,20 @@ function LineageSection({ lineage, index }: { lineage: Lineage; index: number })
           </div>
         </div>
 
-        {/* Timeline column */}
+        {/* Papers column */}
         <div className={isEven ? "" : "md:[direction:ltr]"}>
           <div className={`rounded-2xl border border-slate-200 dark:border-zinc-800 ${c.light} p-6`}>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Lineage Evolution</h3>
-            <TimelineStrip events={lineage.timeline} color={lineage.color} />
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">Representative Publications</h3>
+            <ul className="space-y-3">
+              {lineage.representativePapers.map((p) => (
+                <li key={p.title} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
+                  <ChevronRight className={`mt-0.5 h-4 w-4 shrink-0 ${c.text}`} />
+                  <span>
+                    {p.title} <span className="text-slate-400 dark:text-slate-500">({p.year})</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
@@ -354,13 +291,11 @@ export default function ResearchPage() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
           >
-            Our intellectual program weaves five interconnected research lineages -- from molecular
-            modeling to bedside data infrastructure -- into a unified effort to make AI truly useful
-            in medicine. Each lineage builds on a decade of cumulative insight and feeds directly
-            into the others.
+            Our research weaves five interconnected lineages -- from AI-driven drug discovery
+            to translational data infrastructure -- into a unified effort to make artificial
+            intelligence truly useful in medicine.
           </motion.p>
         </div>
-        {/* Decorative grid */}
         <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] dark:opacity-[0.04]" />
       </section>
 
@@ -386,7 +321,7 @@ export default function ResearchPage() {
         <div className="mx-auto max-w-3xl px-6 text-center">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Cross-Lineage Synergies</h2>
           <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400">
-            The power of the AI.MED lab lies in the intersections: knowledge graphs feed drug
+            The power of the AI.MED lab lies in the intersections: knowledge networks feed drug
             discovery models, digital twins consume multi-omics visualizations, and every insight
             travels through our translational data infrastructure on its way to patient care. We
             design our research program so that progress in one lineage accelerates all the others.
