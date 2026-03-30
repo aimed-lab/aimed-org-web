@@ -90,19 +90,20 @@ const courses = [
   {
     school: "University of Alabama at Birmingham",
     list: [
-      "BMI 601 - Introduction to Biomedical Informatics",
-      "BMI 732 - Advanced Machine Learning for Biomedicine",
-      "BMI 740 - Translational Bioinformatics",
-      "BMI 790 - Seminar in Biomedical Data Science",
+      "INFO 603/703 - Biological Data Management",
+      "INFO 693/793 - Bioinformatics Journal Club",
+      "INFO 510 - Programming for Biologists",
     ],
   },
   {
     school: "Indiana University / Purdue University",
     list: [
-      "INFO I501 - Introduction to Informatics",
       "INFO I519 - Introduction to Bioinformatics",
-      "CSCI B565 - Data Mining",
-      "INFO I590 - Topics in Biomedical Natural Language Processing",
+      "INFO I646 - Topics in Computational Systems Biology",
+      "INFO I556 - Biological Database Management",
+      "INFO I501 - Introduction to Informatics",
+      "INFO I690 - Seminars in Bioinformatics",
+      "CSCI 443 - Biological Database Management",
     ],
   },
 ];

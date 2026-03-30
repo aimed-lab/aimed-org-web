@@ -1,0 +1,211 @@
+[
+  {
+    "title": "U54: OD036472 Contact MPI: \u201cCONNECT: Collaborative Network for Nurturing Ecosystems of Common Fund T",
+    "mechanism": "U54",
+    "role": "Contact MPI",
+    "amount": 9437405.0,
+    "agency": "NIH",
+    "piName": "Jake Chen",
+    "status": "Current",
+    "startDate": "04/01/2024",
+    "endDate": "3/31/2029"
+  },
+  {
+    "title": "U24: AG098157-01 Co-investigator and UAB Site PI: \u201cReCARDO: Using Real-World Data to Derive Common D",
+    "mechanism": "U24",
+    "role": "Site PI",
+    "amount": 19977000.0,
+    "agency": "NIH",
+    "piName": "Guo-Qiang Zhang",
+    "status": "Current",
+    "startDate": "09/01/2025",
+    "endDate": "08/31/2030"
+  },
+  {
+    "title": "1OT2-OD032742-01 MPI: \u201cBuilding an Interpretable Genomic Translator Using Maps of Cell Architecture\u201d",
+    "mechanism": null,
+    "role": "Contact MPI",
+    "amount": 2.1,
+    "agency": "NIH",
+    "piName": "Trey Ideker",
+    "status": "Current",
+    "startDate": "9/1/2022",
+    "endDate": "8/31/2026"
+  },
+  {
+    "title": "U54:DK137307 Co-investigator: \u201cUAB-UCSD O\u2019Brien Center for Acute Kidney Injury Research\u201d, $4,572,100",
+    "mechanism": "U54",
+    "role": "Co-investigator",
+    "amount": 4572100.0,
+    "agency": "NIH",
+    "piName": "Anupam Agarwal",
+    "status": "Current",
+    "startDate": "07/2023",
+    "endDate": "06/2028"
+  },
+  {
+    "title": "PI: \u201cComputing for AI-enabled Systems Pharmacology and Drug Discovery\u201d, $130,000 USD equivalent of G",
+    "mechanism": null,
+    "role": "PI",
+    "amount": 130000.0,
+    "agency": "NAIRR",
+    "piName": null,
+    "status": "Current",
+    "startDate": "01/2025",
+    "endDate": "11/2026"
+  },
+  {
+    "title": "UM1TR004771 Co-investigator: \u201cUAB Center for Clinical and Translational Science (CCTS)\u201d $68,363,123 ",
+    "mechanism": null,
+    "role": "Co-investigator",
+    "amount": 68363123.0,
+    "agency": "NIH",
+    "piName": "Orlando Gutierrez",
+    "status": "Current",
+    "startDate": "05/01/2024",
+    "endDate": "04/30/2031"
+  },
+  {
+    "title": "U01CA223976 MPI: \u201cBiological Comparisons among Three Derivative Models of Glioma Patient Cancers und",
+    "mechanism": "U01CA",
+    "role": "MPI",
+    "amount": 3272844.0,
+    "agency": "NIH",
+    "piName": "Christopher Willey",
+    "status": "Completed",
+    "startDate": "09/01/2018",
+    "endDate": "12/31/2024"
+  },
+  {
+    "title": "R01CA258248-01A1 Co-investigator: \u201cCredentialing Next-generation Human Glioma Models for Precision T",
+    "mechanism": "R01CA",
+    "role": "Co-investigator",
+    "amount": 2893751.0,
+    "agency": "NIH",
+    "piName": "Ryan Miller",
+    "status": "Completed",
+    "startDate": "01/12/2022",
+    "endDate": "12/31/2024"
+  },
+  {
+    "title": "R01HL150078 Co-investigator: \u201cRole of Bone Marrow Tregs in Maintaining Stromal Cell Function\u201d $1,485",
+    "mechanism": "R01HL",
+    "role": "Co-investigator",
+    "amount": 1485000.0,
+    "agency": "NIH",
+    "piName": "Robert Welner",
+    "status": "Completed",
+    "startDate": "09/15/2020",
+    "endDate": "05/31/2024"
+  },
+  {
+    "title": "R21DK129968 Co-PI: \u201cIdentifying Secreted Protein Networks Affecting Human, Pancreatic Islet Function",
+    "mechanism": "R21DK",
+    "role": "Co-PI",
+    "amount": 250000.0,
+    "agency": "NIH",
+    "piName": "Sushant Bhatnagar",
+    "status": "Completed",
+    "startDate": "9/1/2021",
+    "endDate": "8/30/2024"
+  },
+  {
+    "title": "U54TR001005 Co-investigator & Chief Bioinformatics Officer: \u201cUAB Center for Clinical and Translation",
+    "mechanism": "U54TR",
+    "role": "Co-investigator",
+    "amount": 30169977.0,
+    "agency": "NIH",
+    "piName": "Robert Kimberly",
+    "status": "Completed",
+    "startDate": "04/01/2019",
+    "endDate": "04/31/2024"
+  },
+  {
+    "title": "Co-investigator: \u201cNeurodevelopmental Deficits in Fetus and Children with Congenital Heart Disease\u201d. ",
+    "mechanism": null,
+    "role": "Co-investigator",
+    "amount": 1359292.0,
+    "agency": "DOD",
+    "piName": "Sadeep Shrestha",
+    "status": "Completed",
+    "startDate": "12/01/2019",
+    "endDate": "11/30/2022"
+  },
+  {
+    "title": "R01AR073850 Co-investigator: \u201cCharacterization of the Lupus Nephritis microRNAome\u201d. $2,499,999 (1% e",
+    "mechanism": "R01AR",
+    "role": "Co-investigator",
+    "amount": 2499999.0,
+    "agency": "NIH",
+    "piName": "Elizabeth Brown",
+    "status": "Completed",
+    "startDate": "07/01/2018",
+    "endDate": "06/30/2023"
+  },
+  {
+    "title": "UAB Method Development Grant: \u201cNatural Language Processing to Extract Explainable Features from Drug",
+    "mechanism": null,
+    "role": "Co-investigator",
+    "amount": 30000.0,
+    "agency": "NIH",
+    "piName": "Jake Chen",
+    "status": "Completed",
+    "startDate": "8/1/2022",
+    "endDate": "4/30/2023"
+  },
+  {
+    "title": "R01AI134023 Co-investigator: \u201cB Cell Intrinsic Interferon-B Regulates Autoreactive B Cell Developmen",
+    "mechanism": "R01AI",
+    "role": "Co-investigator",
+    "amount": 1586565.0,
+    "agency": "NIH",
+    "piName": "John D Mountz",
+    "status": "Completed",
+    "startDate": "02/13/2018",
+    "endDate": "01/31/2023"
+  },
+  {
+    "title": "R21MD015319-02 Co-investigator: \u201cMolecular Mechanisms of Multiple Sclerosis Disease Severity in Afri",
+    "mechanism": "R21MD",
+    "role": "Co-investigator",
+    "amount": 408375.0,
+    "agency": "NIH",
+    "piName": "Chander Raman",
+    "status": "Completed",
+    "startDate": "08/24/2020",
+    "endDate": "08/23/2022"
+  },
+  {
+    "title": "3UL1TR003096-02 Co-investigator: \u201cUAB Center for Clinical and Translational Science (CCTS) Supplemen",
+    "mechanism": null,
+    "role": "Co-investigator",
+    "amount": 100000.0,
+    "agency": "NIH",
+    "piName": "Robert Kimberly",
+    "status": "Completed",
+    "startDate": "07/01/2020",
+    "endDate": "12/31/2021"
+  },
+  {
+    "title": "NHLBI Progenitor Cell Translational Consortium (PCTC) Clinical Translation Award Joint PI: \u201cNetwork ",
+    "mechanism": null,
+    "role": "Joint PI",
+    "amount": 50000.0,
+    "agency": "NIH",
+    "piName": null,
+    "status": "Completed",
+    "startDate": "04/01/2020",
+    "endDate": "03/31/2021"
+  },
+  {
+    "title": "NHLBI Progenitor Cell Translational Consortium (PCTC) Clinical Translation Award Joint PI: \u201cWhole-he",
+    "mechanism": null,
+    "role": "Joint PI",
+    "amount": 50000.0,
+    "agency": "NIH",
+    "piName": null,
+    "status": "Completed",
+    "startDate": "04/01/2020",
+    "endDate": "03/31/2021"
+  }
+]

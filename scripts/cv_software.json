@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Talent Knowledge Map",
+    "description": "Talent Knowledge Map (2025) Developed as a collaboration between UAB and UT Austin with Prof. Ying Ding\u2019s lab for NIH-funded bridge2AI and CFDE communities. http://cm4aikg.vercel.app/",
+    "url": "http://cm4aikg.vercel.app/",
+    "year": 2025
+  },
+  {
+    "name": "SpatialRSP",
+    "description": "SpatialRSP: Identifying Embedding Space Patterns and Biomarkers in Single-Cell Gene Expression Data (2024) Developed at UAB with Peter (Zeyu) Yao.",
+    "url": null,
+    "year": 2024
+  },
+  {
+    "name": "Mondrian Map",
+    "description": "Mondrian Map: Piet Mondrian\u2019s Abstraction for Differential Pathway Analysis (2024) Developed at UAB. http://github.com/fuad021/mondrian-map with Fuad Al Abir.",
+    "url": "http://github.com/fuad021/mondrian-map",
+    "year": 2024
+  },
+  {
+    "name": "WINNER",
+    "description": "WINNER: Weighted In-Network Node Expansion and Ranking (2022) Developed at UAB. http://discovery.informatics.uab.edu/WINNER/ with Zongliang Yue and others.",
+    "url": "http://discovery.informatics.uab.edu/WINNER/",
+    "year": 2022
+  },
+  {
+    "name": "SEAS",
+    "description": "SEAS: Statistical Enrichment Analysis of Samples (2021) Developed at UAB. http://discovery.informatics.uab.edu/SEAS/ with Thanh Nguyen, Sameul Bharti, and others.",
+    "url": "http://discovery.informatics.uab.edu/SEAS/",
+    "year": 2021
+  },
+  {
+    "name": "PGC",
+    "description": "PGC: Polar Gini Curves for Finding Biomarkers from Single-cell RNA-seq Embedding Data (2021) Developed at UAB. http://discovery.informatics.uab.edu/PGC/ with Thanh Nguyen and others.",
+    "url": "http://discovery.informatics.uab.edu/PGC/",
+    "year": 2021
+  },
+  {
+    "name": "PAGER-CoV",
+    "description": "PAGER-CoV: A Database of Pathways, Annotated Gene Lists, and Gene Signatures for Coronavirus Disease Biology Studies. (2020) Developed at UAB. http://discovery.informatics.uab.edu/PAGER-COV/ with Zongliang Yue, Eric Zhang, and others.",
+    "url": "http://discovery.informatics.uab.edu/PAGER-COV/",
+    "year": 2020
+  },
+  {
+    "name": "BEERE",
+    "description": "BEERE: A Tool for Biomedical Entity Expansion, Ranking, and Explorations. (2019) Developed at UAB. http://discovery.informatics.uab.edu/BEERE/ with Zongliang Yue.",
+    "url": "http://discovery.informatics.uab.edu/BEERE/",
+    "year": 2019
+  },
+  {
+    "name": "WIPER Database",
+    "description": "WIPER Database: Human Annotated and Predicted Protein Interactions. (2018) Developed at Indiana University & UAB. http://discovery.informatics.uab.edu/wiper/ with Zongliang Yue and Thanh Nguyen.",
+    "url": "http://discovery.informatics.uab.edu/wiper/",
+    "year": 2018
+  },
+  {
+    "name": "HAPPI Database",
+    "description": "HAPPI Database: Human Annotated and Predicted Protein Interactions. (2006, 2017) Developed at Indiana University & UAB. http://discovery.informatics.uab.edu/HAPPI/ with SudhaRani Mamidipalli, Ragini Pandey, and Thanh Nguyen.",
+    "url": "http://discovery.informatics.uab.edu/HAPPI/",
+    "year": null
+  },
+  {
+    "name": "PAGER",
+    "description": "PAGER: Pathways, Annotated-lists, and Gene-signatures Electronic Repository (2014, 2017) Developed at Indiana University. http://discovery.informatics.uab.edu/PAGER/ with Chayaporn Suphavilai, Zongliang Yue, Michael Neylon, and Liugen Zhu.",
+    "url": "http://discovery.informatics.uab.edu/PAGER/",
+    "year": null
+  },
+  {
+    "name": "PAGED",
+    "description": "PAGED: Pathway And Gene-set Enrichment Database (2012) Developed at Indiana University. http://bio.informatics.uab.edu/PAGED/ with Hui Huang and Xiaogang Wu.",
+    "url": "http://bio.informatics.uab.edu/PAGED/",
+    "year": 2012
+  },
+  {
+    "name": "HOMER",
+    "description": "HOMER: Human Organ-specific Molecular Electronic Repository (2011) Developed at Indiana University. http://discovery.informatics.uab.edu/HOMER/ with Fan Zhang.",
+    "url": "http://discovery.informatics.uab.edu/HOMER/",
+    "year": 2011
+  },
+  {
+    "name": "PEPPI",
+    "description": "PEPPI: a Peptidomic Database of Human Protein Isoforms for Proteomics Experiments (2010) Developed at Indiana University. http://discovery.informatics.uab.edu/PEPPI/ with Ao Zhou and Fan Zhang.",
+    "url": "http://discovery.informatics.uab.edu/PEPPI/",
+    "year": 2010
+  },
+  {
+    "name": "HPD",
+    "description": "HPD: an Online Integrated Human Pathway Database (2009) Developed at Indiana University. http://discovery.informatics.uab.edu/HPD/ with Sudhir Chowbina, Xiaogang Wu, Peter Li, Ragini Pandey, Fan Zhang, and Harini N. Kasamsetty.",
+    "url": "http://discovery.informatics.uab.edu/HPD/",
+    "year": 2009
+  },
+  {
+    "name": "C2-Maps",
+    "description": "C2-Maps: Connectivity Map Web Server. (2008) Developed at Indiana University. http://discovery.informatics.uab.edu/cmaps/ with Hui Huang, Ragini Pandey, and Jiao Li.",
+    "url": "http://discovery.informatics.uab.edu/cmaps/",
+    "year": 2008
+  },
+  {
+    "name": "GeneTerrain",
+    "description": "GeneTerrain: A Visualization Software Tool for Panel Expression Biomarker Discoveries (2008) Developed at Indiana University. http://discovery.informatics.uab.edu/geneterrain/ with You Qian and Shiaofen Fang.",
+    "url": "http://discovery.informatics.uab.edu/geneterrain/",
+    "year": 2008
+  },
+  {
+    "name": "HIP2",
+    "description": "HIP2: A Database for Health Human Individual\u2019s Integrated Plasma Proteome. (2007) Developed at Indiana University. http://discovery.informatics.uab.edu/HIP2/ with Sudipto Saha.",
+    "url": "http://discovery.informatics.uab.edu/HIP2/",
+    "year": 2007
+  },
+  {
+    "name": "ProteoLens",
+    "description": "ProteoLens: a Visual Data Mining and Querying Tool. (2006) Developed at Indiana University and Salt Lake City. http://bio.informatics.uab.edu/proteolens/ with Tianxiao Huan, Andrey Sivachenko, and Scott Harrison.",
+    "url": "http://bio.informatics.uab.edu/proteolens/",
+    "year": 2006
+  }
+]

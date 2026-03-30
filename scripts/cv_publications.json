@@ -1,0 +1,1928 @@
+[
+  {
+    "title": "Shaping the Glioblastoma Microenvironment to Enhance CAR-NK Immunotherapy",
+    "authors": "Emily Tang and Jake Y Chen*",
+    "year": 2025,
+    "journal": "Frontiers in Immunology",
+    "doi": "10.3389/fimmu.2025.1681966",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "GETgene-AI: a framework for prioritizing actionable cancer drug targets",
+    "authors": "Adrian Gu and Jake Y. Chen*",
+    "year": 2025,
+    "journal": "Frontiers in Systems Biolology",
+    "doi": "10.3389/fsysb.2025.1649758",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Targeting west nile virus replication by xanthine inhibitors",
+    "authors": "Theresa H. Nguyen, Jessica L. Smith, Shuklendu D. Karyakarte, John P. Tillotson, Sarah C. Sarngadharan, Fuad Al Abir, Jake Y. Chen, Sixue Zhang, Lynn Rasmussen, Robert Bostwick, Alec J. Hirsch, Corinne E. Augelli-Szafran, Ashish K. Pathak, Omar Mouhka-Chafiq",
+    "year": 2025,
+    "journal": "Medicinal Chemistry Research. DOI:",
+    "doi": "10.1007/s00044-025-03481-7",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Journal of Diabetes Technology and Science",
+    "authors": "Klonoff DC, Mader JK, Heinemann L, Cobelli C, Kerr D, Kovatchev B, Najafi B, Prahalad P, Zheng Y, Shao MM, Scheideman AF, DuNova AY, Espinoza J, Kohn M, Umpierrez GE, Wong TY, Abdel Malek A, Agus MSD, Ahn DT, AlSaad R, Al-Sofiani ME, Armstrong D, Arnold MA, Bee YM, Bequette BW, Bellazzi R, Cengiz E, Chase JG, Chen H, Chen JY, Cichosz SL, Cinar A, Clements MA, Close KL, Cuadros J, Contreras I, Datta G, Dhatariya K, Doyle FJ III, Drincic A, Facchinetti A, Fleming GA, Foreman J, Gabbay MAL, Gutierrez-Osuna R, Healey E, Hoang TD, Jacobs PG, Kulzer B, La Belle J, Lee AY, Lee CS, Lee WA, Liepmann D, Maahs D, Mathioudakis N, Meo SA, Metwally AA, Misra S, Mohan V, Moon SJ, Raeder H, Rhee C, Rhee EJ, Scheinker D, Shah VN, Sheng B, Snyder MP, Sode K, Spanakis EK, Svensson J, Vaswani N, Vareth M, Vehi J, Wallia A, Waki K, Wang T, Williams E Jr, Wolf RM, Wong JC, Yeshiwas S, Zilbermint M, Shah SN*",
+    "year": 2025,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "LlamaAffinity: A Predictive Antibody Antigen Binding Model Integrating Antibody Sequences with Llama3 Backbone Architecture",
+    "authors": "Delower Hossain, Ehsan Saghapour, Kevin Song, and Jake Y. Chen*",
+    "year": 2025,
+    "journal": "bioRxiv [preprint]. DOI:",
+    "doi": "10.1101/2025.05.28.653051",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "LLM Agent Swarm for Hypothesis-Driven Drug Discovery",
+    "authors": "Kevin Song, Andrew Trotter, Jake Y. Chen*",
+    "year": 2025,
+    "journal": "arXiv [preprint]. \tarXiv:",
+    "doi": null,
+    "arxivId": "2504",
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Integrative multi-scale network simulation for precision drug repurposing with PETS",
+    "authors": "Kevin Song and Jake Y. Chen*",
+    "year": 2025,
+    "journal": "bioRxiv [preprint]. DOI:",
+    "doi": "10.1101/2025.02",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "GOALS: Gene Ontology Analysis with Layered Shells for Enhanced Functional Insight and Visualization",
+    "authors": "Zongliang Yue, Robert S. Welner, Christopher D. Willey, Rajesh Amin, and Jake Y. Chen*",
+    "year": 2025,
+    "journal": "bioRxiv [preprint]. DOI:",
+    "doi": "10.1101/2025.04.22.650095",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "KinoViz: A User-Friendly Web Application for High-Throughput Kinome Profiling Analysis and Visualization in Cancer Research",
+    "authors": "Ehsan Saghapour, JC Anderson, Jake Y. Chen, Christopher D. Willey",
+    "year": 2025,
+    "journal": "Res Sq [Preprint]. DOI:",
+    "doi": "10.21203/rs.3.rs-6431257/v1",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Toden-E: Topology-Based and Density-Based Ensembled Clustering for the Development of Super-PAG in Functional Genomics using PAG Network and LLM",
+    "authors": "Li Q, Nichols C, Welner RS, Jake Y. Chen, Ku WS, Yue Z",
+    "year": 2025,
+    "journal": "bioRxiv [Preprint]",
+    "doi": "10.1101/2024.10.20.619308",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "AI-Driven Network Biology Identifies SRC as a Therapeutic Target in Metastatic Pancreatic Adenocarcinoma",
+    "authors": "Ayla Zhang and Jake Y. Chen*",
+    "year": 2025,
+    "journal": "Intelligent Oncology",
+    "doi": "10.1016/j.intonc.2025.06.004",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "High-throughput screening for the identification of dual inhibitors of BRD4 and RIPK3 toward the development of small-molecule medical countermeasure agents against arsenicals",
+    "authors": "Yatchang MF, Zhai L, Moukha-Chafiq O, Mathew B, Abir FA, Zhang S, Ruiz P, McKellip S, Nebane M, Jake Y. Chen, Agarwal A, Bostwick JR, Suto MJ, Athar M, Augelli-Szafran CE",
+    "year": 2025,
+    "journal": "SLAS Discovery",
+    "doi": "10.1016/j.slasd.2025.100247",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Temporal GeneTerrain: Advancing Precision Medicine Through Dynamic Gene Expression Visualization",
+    "authors": "Ehsan Saghapour, Rahul Sharma , Delower Hossain, Kevin Song, Zhandos Sembay, and Jake Y Chen*",
+    "year": 2025,
+    "journal": "Frontiers in Bioinformatics",
+    "doi": "10.3389/fbinf.2025.1602850",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "NeSyDPP4-QSAR: Discovering DPP-4 Inhibitors for Diabetes Treatment with a Neuro-symbolic AI Approach",
+    "authors": "Delower Hossain, Ehsan Saghapour, and Jake Y.\u00a0Chen*",
+    "year": 2025,
+    "journal": "Frontiers in Bioinformatics",
+    "doi": "10.3389/fbinf.2025.1603133",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Study on Neuro-Symbolic Artificial Intelligence: Healthcare Perspectives",
+    "authors": "Delower Hossain and Jake Y.\u00a0Chen*",
+    "year": 2025,
+    "journal": "arXiv [preprint]. arXiv:",
+    "doi": null,
+    "arxivId": "2503",
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Hybrid Chaos-Based Cryptographic Framework for Post-Quantum Secure Communications",
+    "authors": "Kevin Song, Noorullah Imran, Jake Y. Chen, Allan C. Dobbins",
+    "year": 2025,
+    "journal": "arXiv [preprint].  arXiv:",
+    "doi": null,
+    "arxivId": "2504",
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "MLPA: A Multi-scale Digital Twin Framework for Personalized Cancer Simulation and Treatment Optimization",
+    "authors": "James\u00a0Gu and\u00a0Jake Y.\u00a0Chen*",
+    "year": 2024,
+    "journal": "bioRxiv\u00a0[Preprint]. DOI:",
+    "doi": "10.1101/2024.09.13.612988",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Mondrian Abstraction and Language Model Embeddings for Differential Pathway Analysis",
+    "authors": "Fuad Al Abir and Jake Y. Chen*",
+    "year": 2024,
+    "journal": "bioRxiv [Preprint]",
+    "doi": "10.1101/2024.04.11.589093",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Cell Maps for Artificial Intelligence: AI-Ready Maps of Human Cell Architecture from Disease-Relevant Cell Lines",
+    "authors": "Clark T, Mohan J, Schaffer L, Obernier K, Al Manir S, Churas CP, Dailamy A, Doctor Y, Forget A, Hansen JN, Hu M, Lenkiewicz J, Levinson MA, Marquez C, Nourreddine S, Niestroy J, Pratt D, Qian G, Thaker S, B\u00e9lisle-Pipon JC, Brandt C, Jake Chen, Ding Y, Fodeh S, Krogan N, Lundberg E, Mali P, Payne-Foster P, Ratcliffe S, Ravitsky V, Sali A, Schulz W, Ideker T",
+    "year": 2024,
+    "journal": "bioRxiv [Preprint]",
+    "doi": "10.1101/2024.05.21.589311",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Pharmacogenomics of Coronary Artery Response to Intravenous Gamma Globulin in Kawasaki Disease",
+    "authors": "Sadeep Shrestha, Howard Wiener, Sabrina Chowdhury, Hidemi Kajimoto, Vinodh Srinivasasainagendra, Olga Mamaeva, Ujval Brahmbhatt, Dolena Ledee, Yung Lau, Luz Padilla, Jake Chen, Nagib Dahdah, Hemant Tiwari, and Michael Portman",
+    "year": 2024,
+    "journal": "npj Genomic Medicine",
+    "doi": "10.1038/s41525-024-00419-7",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "An NLP-based Technique to Extract Meaningful Features from Drug SMILES",
+    "authors": "Rahul Sharma, Ehsan Saghapour, and Jake Y. Chen*",
+    "year": 2024,
+    "journal": "iScience Vol",
+    "doi": "10.1016/j.isci.2024.109127",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PAGER-scFGA: Unveiling Cell Functions and Molecular Mechanisms in Cell Trajectories through Single-Cell Functional Genomics Analysis",
+    "authors": "Fengyuan Huang, Robert Welner, Jake Y Chen*, and Zongliang Yue*",
+    "year": 2024,
+    "journal": "Frontiers in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Pharmacogenomics of intravenous immunoglobulin response in Kawasaki disease",
+    "authors": "Sadeep Shrestha, Howard Wiener, Hidemi Kajimoto, Vinodh Srinivasasainagendra, Dolena Ledee, Sabrina Chowdhury, Jinhong Cui, Jake Y. Chen, Mikayla Beckley, Luz Padilla, Nagib Dahdah, Hemant Tiwari, and Michael Portman",
+    "year": 2024,
+    "journal": "Frontiers in Immunology",
+    "doi": "10.3389/fimmu.2023.1287094",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Photo-neuro-immuno-endocrinology: how the Ultraviolet Radiation Regulates the Body, Mind, and Immune System",
+    "authors": "Radomir M. Slominski, Jake Y. Chen, Chander Raman, Andrzej Slominski",
+    "year": 2024,
+    "journal": "Proceedings of the National Academy of Sciences. Vol",
+    "doi": "10.1073/pnas.2308374121",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Prioritizing Complex Disease Genes from Heterogeneous Public Databases",
+    "authors": "Eric Gong and Jake Y. Chen*",
+    "year": 2023,
+    "journal": "Biomedical Sciences Instrumentation",
+    "doi": "10.3389/fimmu.2023.1287094",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Analysis of Cardiac Single-cell RNA-sequencing Data Can be Improved by the Use of Artificial-Intelligence-based Tools",
+    "authors": "Thanh Nguyen, Yuhua Wei, Yuji Nakada, Jake Y Chen, Yang Zhou, Gregory Walcott, and Jianyi Zhang*",
+    "year": 2023,
+    "journal": "Scientific Reports",
+    "doi": "10.1038/s41598-023-32293-1",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Biological Network Mining",
+    "authors": "Zongliang Yue*, Da Yan*, Guimu Guo, and Jake Y. Chen",
+    "year": 2023,
+    "journal": "Biostatistics Research",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "How Cancer Hijacks the Body\u2019s Homeostasis through the Neuroendocrine System and Why",
+    "authors": "Radomir M. Slominski, Chander Raman, Jake Y. Chen, and Andrzej T. Slominski*",
+    "year": 2023,
+    "journal": "Trends in Neurosciences",
+    "doi": "10.1016/j.tins.2023.01.003",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Neuroendocrine Signaling in the Skin with a Special Focus on the Epidermal Neuropeptides",
+    "authors": "Andrzej T. Slominski, Radomir M.  Slominski, Chander Raman, Jake Y.  Chen, Mohammad Athar, Craig Elmets",
+    "year": 2022,
+    "journal": "American Journal of Physiology-Cell Physiology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "WINNER: A network biology tool for biomolecular characterization and prioritization",
+    "authors": "Thanh Nguyen, Zongliang Yue, Radomir Slominski, Rob Welner, Jay Zhang, Jake Y. Chen*",
+    "year": 2022,
+    "journal": "Frontiers in Big Data. Vol",
+    "doi": "10.3389/fdata.2022.1016606",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Crowdsourcing Approach to Develop Machine Learning Models to Quantify Radiographic Joint Damage in Rheumatoid Arthritis",
+    "authors": "Dongmei Sun, Thanh M. Nguyen, Robert J. Allaway, Jelai Wang, Verena Chung, Thomas V Yu, Michael Mason, Isaac Dimitrovsky, Lars Ericson, Hongyang Li, Yuanfang Guan, Ariel Israel, Alex Olar, Balint Armin Pataki, RA2 DREAM Challenge Community, Gustavo Stolovitzky, Justin Guinney, Percio S. Gulko, Mason B. Frazier, Jake Y. Chen*, James C. Costello*, and S. Louis Bridges, Jr.*",
+    "year": 2022,
+    "journal": "JAMA Network Open",
+    "doi": "10.1001/jamanetworkopen.2022.27423",
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Novel in vivo Model of Glioblastoma Radiation Resistance Identifies Long Non-coding RNAs and Targetable Kinases, JCI Insights, 7(16):e148717, DOI: doi",
+    "authors": "Christian T. Stackhouse, Joshua C. Anderson, Zongliang Yue, Thanh Nguyen, Nicholas J. Eustace, Lara Ianov, Catherine P. Langford, Jelai Wang, James R. Rowland III, Chuan Xing, Fady M. Mikhail, Eddy S. Yang, Anita B. Hjelmeland, C. Ryan Miller, Jake Y. Chen, G. Yancey Gillespie, Christopher D. Willey*",
+    "year": 2022,
+    "journal": "org/",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "DEMA: a Distance-bounded Energy-field Minimization Algorithm to Model and Layout Bio-molecular Networks with Quantitative Features",
+    "authors": "Zhenyu Weng, Zongliang Yue, Yuesheng Zhu, and Jake Y. Chen*",
+    "year": 2022,
+    "journal": "Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Single Nucleus Transcriptomics: Apical Resection in Newborn Pigs Extends the Time-window of Cardiomyocyte Proliferation and Myocardial Regeneration",
+    "authors": "Jianyi Zhang*, Yuji Nakada, Yang Zhou, Wuming Gong, Eric Zhang, Erik Skie, Thanh Nguyen, Yuhua Wei, Meng Zhao, Wangping Chen, Jake Y. Chen, Gregory Walcott, Daniel Garry, Jiacheng Sun, and Syed Raza",
+    "year": 2022,
+    "journal": "Circulation",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PAGER Web APP: An Interactive, Online Gene Set and Network Interpretation Tool of High-throughput Functional Genomics Results",
+    "authors": "Zongliang Yue, Radomir Slominski, Samuel Bharti, and Jake Y Chen*",
+    "year": 2022,
+    "journal": "Frontiers in Genetics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Polar Gini Curve: a Quantitative Technique to Discover Gene Expression Spatial Patterns from Single-cell Data",
+    "authors": "Thanh Nguyen, Jacob Jeevan, Nuo Xu, and Jake Y. Chen*",
+    "year": 2022,
+    "journal": "Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Non-redundant Role for T cell-derived IL-22 in Antibacterial Defense of Colonic Crypts",
+    "authors": "Carlene L. Zindl, Steven J. Witte, Vincent A. Laufer, Min Gao, Zongliang Yue, Karen M. Janowski, Baiyi Cai, Blake F. Frey, Daniel J. Silberger, Stacey N. Harbour, Duy Pham, Henrietta Turner, Fran E. Lund, Bruce A. Vallance, Alexander F. Rosenberg, Trenton R. Schoeb, Jake Y. Chen, Robin T. Hatton and Casey T. Weaver*",
+    "year": 2022,
+    "journal": "Immunity. Vol",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Statistical Enrichment Analysis of Samples (SEAS): a General-purpose Tool to Annotate Metadata Neighborhoods of Biological Samples",
+    "authors": "Thanh Minh Nguyen, Samuel Bharti, Zongliang Yue, Christopher D Willey and Jake Y Chen*",
+    "year": 2021,
+    "journal": "Frontiers in Big Data",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Guest Editorial for Selected Papers From BIOKDD 2019",
+    "authors": "D. Yan*, S. Thankachan and Jake Y. Chen*",
+    "year": 2021,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Metabolic alterations mediated by STAT3 promotes drug persistence in CML",
+    "authors": "Sweta B. Patel, Travis Nemkov, Davide Stefanoni, Gloria A. Benavides, Brittany L. Crown, Victoria R. Matkins, Virginia Camacho, Ashley T. Hoang, Danielle E. Tenen, Samuel L. Wolock, Jihye Park, Mahmoud A. Bassal, Li Ying, Zongliang Yue, Jake Y. Chen, Henry Yang, Daniel G. Tenen, Paul Brent Ferrell, Rui Lu, Victor Darley-Usmar, Angelo D\u2019Alessandro, Ravi Bhatia, Robert S. Welner",
+    "year": 2021,
+    "journal": "Leukemia",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Vitamin D and Lumisterol Derivatives Can Act on Liver X Receptors (LXRs), Scientific Reports, Vol",
+    "authors": "Andrzej T Slominski, Tae-Kang Kim, Shariq Qayyum, Yuwei Song, Zorica Janjetovic, Allen SW Oak, Radomir M Slominski, Chander Raman, Joanna Stefan, Carlos A Mier-Aguilar, Venkatram Atigadda, David K Crossman, Andriy Golub, Yaroslav Bilokin, Edith K Y Tang, Jake Y. Chen, Robert C Tuckey, Anton M Jetten, Yuhua Song",
+    "year": 2021,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Linking Clinotypes to Phenotypes and Genotypes from Laboratory Test Results in Comprehensive Physical Exams",
+    "authors": "Thanh Nguyen, Tongbin Zhang, Geoffrey Fox, Sisi Zeng, Ni Cao, Chuandi Pan*, and Jake Y. Chen*",
+    "year": 2021,
+    "journal": "BMC Medical Informatics and Decision Making",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PAGER-CoV: A Comprehensive Collection of Pathways, Annotated-gene-lists, and Gene Signatures for Coronavirus Disease Studies",
+    "authors": "Zongliang Yue, Eric Zhang, Clark Xu, Sunny Khurana, Nishant Batra, Son Dang, and Jake Y. Chen*",
+    "year": 2021,
+    "journal": "Nucleic Acids Research",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Scalable De Novo Genome Assembly Using a Pregel-Like Graph-Parallel System",
+    "authors": "Guimu Guo, Hongzhi Chen, Da Yan, James Cheng, and Jake Y. Chen",
+    "year": 2021,
+    "journal": "ACM/IEEE Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Multi-omic Exploration of Inherent and Acquired Radiation Resistance of Glioblastoma Patient-derived Xenografts",
+    "authors": "C.D. Willey, C.T. Stackhouse, J.R. Rowland, C.P. Langford, J.C. Anderson, L. Ianov, Z. Yue, T. Nguyen, A.B. Hjelmeland, Jake Y. Chen, G.Y. Gillespie",
+    "year": 2020,
+    "journal": "International Journal of Radiation Oncology Biology Physics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Identifying the Key Regulators that Promote Cell-cycle Activity in the Hearts of Early Neonatal Pigs after Myocardial Injury",
+    "authors": "Eric Zhang, Thanh Nguyen, Meng Zhao, Son Do Hai Dang, Jake Y. Chen, Weihua Bian, and Gregory P Walcott",
+    "year": 2020,
+    "journal": "PLOS ONE",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Decoding SARS-CoV-2 Hijacking of Host Mitochondria in Pathogenesis of COVID-19",
+    "authors": "Keshav K Singh, Gyneshwer Chaubey, Jake Y. Chen, and Prashanth Suravajhala",
+    "year": 2020,
+    "journal": "American Journal of Physiology-Cell Physiology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "IL-23 promotes a coordinated B-cell germinal center program for class-switch recombination to IgG2b in BXD2 mice",
+    "authors": "Huixian Hong, Min Gao, Qi Wu, PingAr Yang, Shanrun Liu, Hao Li, Peter D. Burrows, Daniel Cua, Jake Y. Chen, Hui-Chen Hsu, and John D. Mountz",
+    "year": 2020,
+    "journal": "J. Immunology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Guest Editorial for Selected Papers from BIOKDD 2018 and DMBIH 2018",
+    "authors": "Da Yan, Xin Gao, Samah J. Fodeh, and Jake Y. Chen*",
+    "year": 2020,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Polyvalent Therapeutic Vaccine for Type 2 Diabetes Mellitus: Immunoinformatics Approach to Study Co-Stimulation of Cytokines and GLUT1 Receptors",
+    "authors": "Syed A Muhammad, Hiba Ashfaq, Sidra Zafar, Fahad Munir, Muhammad B Jamshed, Jake Y. Chen, and Qiyu Zhang",
+    "year": 2020,
+    "journal": "BMC Molecular and Cell Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Association of CMV genomic mutations with symptomatic infection and hearing loss in congenital CMV infection",
+    "authors": "George Dobbins, Amit Patki, Dongquan Chen, Hemant K. Tiwari, Curtis Hendrickson, William J. Britt, Karen Fowler, Jake Y. Chen, Suresh B Boppana, and Shannon A Ross*",
+    "year": 2019,
+    "journal": "BMC Infectious Disease",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "WIPER: Weighted in-Path Edge Ranking for Biomolecular Association Networks",
+    "authors": "Zongliang Yue, Thanh Nguyen, Eric Zhang, Jianyi Zhang, and Jake Y. Chen*",
+    "year": 2019,
+    "journal": "Quantitative Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "BEERE: a Web Server for Biomedical Entity Expansion, Ranking, and Explorations",
+    "authors": "Zongliang Yue, Christopher D Willey, Anita B Hjelmeland, and Jake Y. Chen*",
+    "year": 2019,
+    "journal": "Nucleic Acids Research",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A GVHD-free Antitumoral Signature Following Allogeneic Donor Lymphocyte Injection Identified by Proteomics and Systems Biology",
+    "authors": "Xiaowen Liu, Zongliang Yue, Yimou Cao, Lauren Taylor, Qing Zhang, Sung Wong Choi, Samir Hanash, Sawa Ito, Jake Y. Chen, Huanmei Wu, and Sophie Paczesny",
+    "year": 2019,
+    "journal": "JCO Precision Oncology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Gsslasso Cox: a Bayesian hierarchical model for predicting survival and detecting associated genes by incorporating pathway information",
+    "authors": "Zaixiang Tang, Shufeng Lei, Xinyan Zhang, Zixuan Yi, Boyi Guo, Jake Y. Chen, Yueping Shen, and Nengjun Yi",
+    "year": 2019,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Systematic Simulation-based Meta-analytical Framework for Prediction of Physiological Biomarkers in Alopecia",
+    "authors": "Syed Aun Muhammad*, Nighat Fatima, Rehan Zafar Paracha, Amjad Ali, and Jake Y. Chen*",
+    "year": 2019,
+    "journal": "Journal of Biological Research-Thessaloniki",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Multiscale and Multimodal Analysis for Computational Biology",
+    "authors": "Xin Gao, Jake Y. Chen, and Mohammed J. Zaki",
+    "year": 2018,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "\u201cSuper Gene Set\u201d Causal Relationship Discovery from Functional Genomics Data",
+    "authors": "Zongliang Yue, Michael T. Neylon, Thanh Nguyen, Timothy Ratliff, Jake Y. Chen*",
+    "year": 2018,
+    "journal": "ACM/IEEE Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Regenerative Potential of Neonatal Porcine Hearts",
+    "authors": "Wuqiang Zhu, Eric Zhang, Meng Zhao, Zechen Chong, Chengming Fan, Yawen Tang, Jervaughn D. Hunter, Anton V. Borovjagin, Greggory P. Walcott, Jake Y. Chen, Gangjian Qin, Jianyi Zhang",
+    "year": 2018,
+    "journal": "Circulation",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Simulation Study of cDNA Dataset to Investigate Possible Association of Differentially Expressed Genes of Human THP1-Monocytic Cells in Cancer Progression Affected by Bacterial Shiga Toxins",
+    "authors": "Syed Aun Muhammad*, Jinlei Guo, Thanh Minh Nguyen, Xiaogang Wu, Baogang Bai, X Frank Yang, Jake Y. Chen*",
+    "year": 2018,
+    "journal": "Frontiers in Microbiology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PAGER 2",
+    "authors": "Zongliang Yue, Qi Zheng, Micheal T Neylon, Minjae Yoo, Jimin Shin, Zhiying Zhao, Aik Choon Tan, and Jake Y. Chen*",
+    "year": 2018,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Repositioning Drugs by Targeting Network Modules: A Parkinson\u2019s Disease Case Study",
+    "authors": "Zongliang Yue, Itika Arora, Eric Zhang, Vincent Laufer, S. Louis Bridges, and Jake Y. Chen*",
+    "year": 2017,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Characterization and Analysis of Long Non-Coding RNA (lncRNA) in in vitro- and ex vivo-derived Cardiac Progenitor Cells",
+    "authors": "Baron Arnone, Jake Y. Chen, and Gangjian Qin",
+    "year": 2017,
+    "journal": "PLOS ONE",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Integrative Approaches to Understanding the Pathogenic Role of Genetic Variation in Rheumatic Diseases",
+    "authors": "Vincent A. Laufer, Jake Y. Chen, S Louis Bridges Jr",
+    "year": 2017,
+    "journal": "Rheumatic Disease Clinics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "HAPPI-2: Constructing a Comprehensive Map of Human Annotated and Predicted Protein Interactions",
+    "authors": "Jake Y. Chen*, Ragini Pandey, and Thanh Nguyen",
+    "year": 2017,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Cellular Signaling Pathways in Insulin Resistance-Systems Biology Analyses of Microarray Dataset Reveals New Drug Target Gene Signatures of Type 2 Diabetes Mellitus",
+    "authors": "Syed Aun Muhammad*, Waseem Raza, Thanh Nguyen, Baogang Bai, Xiaogang Wu, and Jake Chen*",
+    "year": 2017,
+    "journal": "Frontiers in Physiology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Method for Identifying Discriminative Isoform-Specific Peptides for Clinical Proteomics Application",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2016,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Proteomic characterization reveals that MMP-3 correlates with bronchiolitis obliterans syndrome following allogeneic hematopoietic cell and lung transplantation, American Journal of Transplantation, Vol",
+    "authors": "Xiaowen Liu, Zongliang Yue, Jeffrey Yu, Etienne Daguindau, KushiKushekhar, Qing Zhang, Yuko Ogata, Philip Gafken, Yoshihiro Inamota, Adam Gracon, David Wikes, John Hansen, Stephanie Lee, Jake Y. Chen, and Sophie Paczesny*",
+    "year": 2016,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "MicroRNA Expression Profiling of Human Respiratory Epithelium Affected by Invasive Candida infection",
+    "authors": "Syed Aun Muhammad, Nighat Fatima, Nawazish-i-Husain Syed, XiaogangWu, X. Frank Yang, and Jake Y. Chen*",
+    "year": 2015,
+    "journal": "PLOS ONE",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PAGER: Constructing PAGs and new PAG-PAG Relationships for Network Biology",
+    "authors": "Zongliang Yue, Madhura Kshirsagar, Thanh Nguyen, Chayaporn Suphavilai, Michael Neylon, Liugen Zhu, Timothy Ratliff, and Jake Y. Chen*",
+    "year": 2015,
+    "journal": "ISMB/ECCB Special Issue",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "DMAP: A next-generation connectivity map database towards drug repositioning applications",
+    "authors": "Hui Huang, Thanh Nguyen, Sara Ibrahim, and Jake Y. Chen*",
+    "year": 2015,
+    "journal": "MCBIOS \u2019",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Method for Developing Regulatory Gene Set Networks to Characterize Complex Biological Systems",
+    "authors": "Chayaporn Suphavilai, Liugen Zhu, and Jake Y. Chen*",
+    "year": 2015,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Knowledge Discovery Using Big Data in Biomedical Systems",
+    "authors": "Sarath Chandra Janga, Dongxiao Zhu, Jake Y. Chen, and Mohammed J. Zaki",
+    "year": 2015,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "SLDR: A Computational Technique to Identify Novel Genetic Regulatory Relationship",
+    "authors": "Zongliang Yue, Ping Wan, Hui Huang, Zhan Xie, and Jake Y. Chen*",
+    "year": 2014,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Prioritizing Drug Targets in Clostridium botulinum with a Computational Systems Biology Approach",
+    "authors": "Syed Aun Muhammad, Safia  Ahmed, Amjad Ali, Hui  Huang, Xiaogang  Wu, X. Frank  Yang, Anam  Naz, Jake Y. Chen*",
+    "year": 2014,
+    "journal": "Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Pathway and Network Analysis in Proteomics",
+    "authors": "Xiaogang Wu, Mohammad Al Hasan, and Jake Y. Chen*",
+    "year": 2014,
+    "journal": "Journal of Theoretical Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Computational Identification of De-centric Genetic Regulatory Relationships from Functional Genomic Data, Lecture Notes in Bioinformatics, Vol",
+    "authors": "Zongliang Yue, Zhan Xie, Ping Wan, and Jake Y. Chen",
+    "year": 2014,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Seed-weighted Random Walk Ranking for Cancer Biomarker Prioritization: a Case Study in Leukemia",
+    "authors": "Tianxiao Huan, Xiaogang Wu, Zengliang Bai*, and Jake Y. Chen*",
+    "year": 2014,
+    "journal": "International Journal of Data Mining and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Genetic Variation Analysis of Hemagglutinin and Neuraminidase of Human Influenza A (H3N2) Virus in Hong Kong (1997-2006)",
+    "authors": "Shubo Zhang, Jake Y. Chen, Jianan Rao, Shanghong Zhang, Daniel Wai Tin Chan, Guanghua Liu, Yang Xu, and Miao He",
+    "year": 2014,
+    "journal": "African Journal of Microbiology Research",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Network Medicine: Finding the Links to Personalized Therapy",
+    "authors": "Jake Y. Chen, Micheline Piquette-Miller, and BP Smith",
+    "year": 2013,
+    "journal": "Clinical Pharmacology & Therapeutics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Neural Network Approach to Multi-biomarker Panel Discovery by High-throughput Plasma Proteomics Profiling of Breast Cancer",
+    "authors": "Fan Zhang, Jake Chen, Mu Wang, and Renee Drabier",
+    "year": 2013,
+    "journal": "BMC Proceedings",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Semantic Web Meets Integrative Biology: A Survey",
+    "authors": "Huajun Chen*, Tong Yu*, and Jake Y. Chen*",
+    "year": 2013,
+    "journal": "Briefings in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Predicting Adverse Drug Reaction Profiles by Integrating Protein Interaction Networks with Drug Structures",
+    "authors": "Liang-Chin Huang, Xiaogang Wu, and Jake Y. Chen*",
+    "year": 2013,
+    "journal": "Proteomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Breast Cancer Subtyping from Plasma Proteins",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2013,
+    "journal": "BMC Medical Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "C2Maps: A Network Pharmacology Database with Comprehensive Disease-Gene-Drug Connectivity Relationships",
+    "authors": "Hui Huang, Xiaogang Wu, Ragini Pandey, Jiao Li, Guoling Zhao, Sara Ibrahim, Jake Y. Chen*",
+    "year": 2012,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PAGED: A Pathway and Gene-set Enrichment Database to Enable Molecular Phenotype Discoveries",
+    "authors": "Hui Huang, Xiaogang Wu, Madhankumar Sonachalam, Sammed N. Mandape, Ragini Pandey, Karl F. MacDorman, Ping Wan*, Jake Y. Chen*",
+    "year": 2012,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Genome-wide Meta-analysis of Genetic Susceptible Genes for Type-2 Diabetes, BMC Systems Biology, Vol",
+    "authors": "Paul Hale, Alfredo M. L\u00f3pez-Yunez, Jake Y. Chen*",
+    "year": 2012,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Network Expansion and Pathway Enrichment Analysis towards Biologically Significant Findings from Microarrays",
+    "authors": "Xiaogang Wu, Hui Huang, Tao Wei, Ragini Pandey, Christoph Reinhard, Shuyu D. Li*, and Jake Y. Chen*",
+    "year": 2012,
+    "journal": "Journal of Integrative Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Towards a Metadata Model for Mass-Spectrometry Based Clinical Proteomics",
+    "authors": "John Springer, Fan Zhang, Peter Hussey, Charles Buck, Fred Regnier, and Jake Y. Chen*",
+    "year": 2012,
+    "journal": "Current Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Biological Knowledge and Data Mining: An Editorial",
+    "authors": "Mohammad Al Hasan, Jun Huan, Jake Chen, and Mohammed J. Zaki",
+    "year": 2012,
+    "journal": "Scientific Programming",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Predicting Adverse Side Effects of Drugs",
+    "authors": "Liang-Chin Huang, Xiaogang Wu, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Reordering Based Integrative Expression Profiling for Microarray Classification",
+    "authors": "Xiaogang Wu, Hui Huang, Madhankumar Sonachalam, Sina Reinhard, Jeffrey Shen, Ragini Pandey, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "An Integrated Proteomics Analysis of Bone Tissues in Response to Mechanical Stimulation",
+    "authors": "Jiliang Li, Fan Zhang, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "BMC Systems Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "HOMER: A Human Organ-specific Molecular Electronic Repository",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "New Threats to Health Data Privacy",
+    "authors": "Fengjun Li, Xukai Zou, Peng Liu, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Systems-scale Analysis Reveals Pathways Involved in Cellular Response to Methamphetamine",
+    "authors": "Lijie Sun, Hong-Mei Li, Manfredo J. Seufferheld, Kent Walters, Venu Margam, Amber Jannasch, Naomi Diaz, Catherine P. Riley, Weilin Sun, Yueh-Feng Li, William M. Muir, Jun Xie, Jing Wu, Fan Zhang, Jake Y. Chen, Eric L. Barker, Jiri Adamec, & Barry R. Pittendrigh",
+    "year": 2011,
+    "journal": "PLOS ONE",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Computational Analysis of Drought-stress Associated miRNAs and miRNA Co-regulation Network in Physcomitrella Patens",
+    "authors": "Ping Wan, Jun Wu, Yuan Zhou, Junshu Xiao, Jie Feng, Weizhong Zhao, Shen Xiang, Guanglong Jiang, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A new Approach to Construct Pathway Connected Networks and Its Application in Dose Responsive Gene Expression Profiles of Rat Liver Regulated by 2,4DNT",
+    "authors": "Sudhir Chowbina, Youping Deng, Junmei Ai, Xiaogang Wu, Xin Guan, Mitchell S. Wilbanks, Barbara Lynn Escalon, Sharon A. Meyer, Edward J. Perkins, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Discovery of Pathway Biomarkers from Coupled Proteomics and Systems Biology Methods",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "PEPPI: A Peptidomic Database of Human Protein Isoforms for Proteomics Experiments",
+    "authors": "Ao Zhou, Fan Zhang, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Unraveling Human Complexity and Disease with Systems Biology and Personalized Medicine",
+    "authors": "Steve Naylor and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "Personalized Medicine",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Systems Biology Visualization Tools for Drug Target Discovery",
+    "authors": "Tianxiao Huan, Xiaogang Wu, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "Expert Opinion on Drug Discovery",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Bowman-Birk Inhibitor Affects Pathways Associated with Energy Metabolism in Drosophila melanogaster",
+    "authors": "Hong-Mei Li, Lijie Sun, Omprakash Mittapalli, William M. Muir, Jun Xie, Jing Wu, Brandon J. Schemerhorn, Amber Jannasch, Jake Y. Chen, Fan Zhang, Jiri Adamec, Larry L. Murdock, and Barry R. Pittendrigh",
+    "year": 2010,
+    "journal": "Insect Molecular Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Data Mining in Bioinformatics: Selected Papers from BIOKDD 2008",
+    "authors": "Stefano Lonardi and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A GMM-IG Framework for Selecting Genes as Expression Panel Biomarkers",
+    "authors": "Mingyi Wang and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "Artificial Intelligence in Medicine",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Discovering Novel Breast Cancer Drug Candidates from Biomedical Literature",
+    "authors": "Jiao Li, Xiaoyan Zhu, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "International Journal of Data Mining and Bioinformatics. Vol",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "GeneTerrain: Visual Exploration of Differential Gene Expression Profiles Organized in Native Biomolecular Interaction Networks",
+    "authors": "Qian You, Shiaofen Fang, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "Information Visualization",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Building Disease-specific Drug-Protein Connectivity Maps from Molecular Interaction Networks and PubMed Abstracts",
+    "authors": "Jiao Li, Xiaoyan Zhu, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "PLoS Computational Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "HPD: An Online Integrated Human Pathway Database Enabling Systems Biology Studies",
+    "authors": "Sudhir R. Chowbina, Xiaogang Wu, Fan Zhang, Peter M. Li, Ragini Pandey, Harini N. Kasamsetty, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "HAPPI: an Online Database of Comprehensive Human Annotated and Predicted Protein Interactions",
+    "authors": "Jake Y. Chen*, SudhaRani Mamidipalli, and Tianxiao Huan",
+    "year": 2009,
+    "journal": "BMC Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Finding Fractal Patterns in Molecular Interaction Networks: a Case Study in Alzheimer's Disease",
+    "authors": "Xiaogang Wu, Tianxiao Huan, Ragini Pandey, Tianshu Zhou, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "International Journal of Computational Biology and Drug Design",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Semantic Graph Mining for Biomedical Network Analysis: an Overview",
+    "authors": "Huajun Chen, Li Ding, Zhaohui Wu, Tong Yu, Lavanya Dhanapalan, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "Briefings in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Improved Biomedical Document Retrieval System with PubMed Term Statistics and Expansions",
+    "authors": "Huian Li and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "International Journal of Computational Intelligence in Bioinformatics and Systems Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Dissecting the Human Plasma Proteome and Inflammatory Response Biomarkers",
+    "authors": "Sudipto Saha, Scott H. Harrison, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "Proteomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "BIOKDD 2008: A Workshop Report on Data Mining in Bioinformatics",
+    "authors": "Jake Y. Chen, Mohammed Zaki, and Stefano Lonardi",
+    "year": 2008,
+    "journal": "SIGKDD Explorations",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "ProteoLens: a Visual Analytic Tool for Multi-scale Database-driven Biological Network Data Mining",
+    "authors": "Tianxiao Huan, Andrey Sivachenko, Scott H. Harrison, and Jake Y. Chen*",
+    "year": 2008,
+    "journal": "BMC Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "HIP2: An Online Database of Human Plasma Proteins from Healthy Individuals",
+    "authors": "Sudipto Saha, Scott H. Harrison, Changyu Shen, Haixu Tang, Predrag Radivojac, Randy J. Arnold, Xiang Zhang, and Jake Y. Chen*",
+    "year": 2008,
+    "journal": "BMC Medical Genomics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "International Workshop on Data Mining in Bioinformatics (BIOKDD) 2007: Introduction",
+    "authors": "Stefano Lonardi and Jake Y. Chen*",
+    "year": 2008,
+    "journal": "Journal of Bioinformatics and Computational Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Tumor Necrosis Factor-alpha and Interleukin-1 Induced Cellular Responses:  Coupling Proteomic and Genomic Information",
+    "authors": "Lee W. Ott, Katheryn A. Resing, Alecia W. Sizemore, Joshua W. Heyen, Ross R. Cocklin, Nathan M. Pedrick, H. Cary Woods, Jake Y. Chen, Mark G. Goebl, Frank A. Witzmann, and Maureen A. Harrington",
+    "year": 2007,
+    "journal": "Journal of Proteome Research",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Case Study of Integrating Protein Interaction Data using Semantic Web Technology",
+    "authors": "Lavanya Dhanapalan and Jake Y. Chen*",
+    "year": 2007,
+    "journal": "International Journal of Bioinformatics Research and Applications",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Systems Biology Approach to The Study of Cisplatin Drug Resistance In Ovarian Cancers",
+    "authors": "Jake Y. Chen*, Zhong Yan, Changyu Shen, Dawn P. G. Brown, and Mu Wang",
+    "year": 2007,
+    "journal": "Journal of Bioinformatics and Computational Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "DisProt: The Database of Disordered Proteins",
+    "authors": "Megan Sickmeier, Justin Hamilton, Tanguy LeGall, Vladimir Vacic, Marc Cortese, Agnes Tantos, Beata Szabo, Peter Tompa, Jake Chen, Vladimir Uversky, Zoran Obradovic, A Keith Dunker",
+    "year": 2007,
+    "journal": "Nucleic Acids Research",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Ontologies for Bioinformatics I",
+    "authors": "Tharam S. Dillon, Elizabeth Chang, Amandeep S. Sidhu, and Jake Y. Chen*",
+    "year": 2007,
+    "journal": "International Journal of Bioinformatics Research and Applications",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Disorder and Sequence Repeats in Hub Proteins and Their Implications for Network Evolution, Journal of Proteome Research, Vol",
+    "authors": "Zsuzsanna Doszt\u00e1nyi, Jake Y. Chen, A. Keith Dunker, Istv\u00e1n Simon, and Peter Tompa",
+    "year": 2006,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "A Statistical Framework to Discover True Associations from Multi-protein Complex Pull-down Proteomics Data Sets",
+    "authors": "Changyu Shen, Lang Li, Jake Y. Chen*",
+    "year": 2006,
+    "journal": "Proteins: Structure",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Data Mining in Protein Interactomics",
+    "authors": "Jake Y. Chen* and Andrey Y. Sivachenko",
+    "year": 2005,
+    "journal": "IEEE Magazine in Biology and Medicine",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Oracle Database 10g: A Platform for BLAST Search and Regular Expression Pattern Matching in Life Sciences, Nucleic Acids Research, Vol",
+    "authors": "Susie Stephens, Jake Y. Chen, Marcel Davidson, Shiby Thomas, and Barry M. Trute",
+    "year": 2005,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "ODM BLAST: Sequence Homology Search in the RDBMS",
+    "authors": "Susie Stephens, Jake Y. Chen, and Shiby Thomas",
+    "year": 2004,
+    "journal": "IEEE Data Engineering Bulletin",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Book Review: Digital Code of Life\u2014How Bioinformatics is Revolutionizing Science, Medicine, and Business",
+    "authors": "Jake Y. Chen*",
+    "year": 2004,
+    "journal": "Briefings in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Genomic Data Modeling",
+    "authors": "Jake Y. Chen* and John Carlis",
+    "year": 2003,
+    "journal": "Information Systems",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Journal Article"
+  },
+  {
+    "title": "Multi-target Parallel Drug Discovery with Multi-agent Orchestration",
+    "authors": "AI Agent, Fuad Al Abir, Sixue Zhang, and Jake Y. Chen",
+    "year": 2025,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "GeneTerrain Trajectory (GTT): A Novel Approach for Mapping the Dynamics and Regulators of Cell Fate Decisions",
+    "authors": "Ehsan Saghapour, Delower Hossain, Kevin Song and Jake Y. Chen*",
+    "year": 2025,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "hERG-LTN: A New Paradigm for hERG Cardiotoxicity Prediction Using Neuro-Symbolic and Generative AI",
+    "authors": "Delower Hossain, Fuad Al Abir, and Jake Y.\u00a0Chen*",
+    "year": 2025,
+    "journal": "Proceedings of",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Generating Novel Linker Sequences in Antibody-Drug Conjugates with Diffusion Models, Proceedings of 23rd International Conference on Artificial Intelligence in Medicine (AIME 2025), Pavia, Italy, pp",
+    "authors": "April Cao and Jake Y. Chen*",
+    "year": 2025,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Mondrian Abstraction and Language Model Embeddings for Differential Pathway Analysis, Proceedings of the IEEE Biomedical Informatics and Biomedical Engineering (BIBM) 2024, Lisbon, Portugal, pp",
+    "authors": "Fuad Al Abir and Jake Y. Chen*",
+    "year": 2024,
+    "journal": null,
+    "doi": "10.1109/BIBM62325.2024.10822686",
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Demo: Interactive Visualization of Semantic Relationships in a Biomedical Project\u2019s Talent Knowledge Graph, Workshop on AI in HealthCare, Thirty-Eighth Annual Conference on Neural Information Processing Systems (NeurIPS) 2024, Vancouver, Canada",
+    "authors": "Jiawei Xu, Zhandos Sembay, Swathi Thaker, Pamela Payne-Foster, Jake Chen,\u00a0and\u00a0Ying Ding",
+    "year": 2024,
+    "journal": "arXiv:",
+    "doi": null,
+    "arxivId": "2501",
+    "articleType": "Conference"
+  },
+  {
+    "title": "Decoding Patterns of Data Generation Teams for Clinical and Scientific Success Insights from the Bridge2AI Talent Knowledge Graph, Proceedings of the ACM-IEEE Joint Conference on Digital Libraries (JCDL) 2024",
+    "authors": "Jiawei Xu, Qingnan Xie, Meijun Liu, Zhandos Sembay, Swathi Thaker, Pamela Payne-Foster, Jake Chen,\u00a0and\u00a0Ying Ding",
+    "year": 2024,
+    "journal": "No",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Accurate Identification of Human Emotional States from Images Using Deep Learning, 2023 IEEE EMBS International Conference on Biomedical and Health Informatics (BHI), Pittsburgh, PA, USA, pp",
+    "authors": "Emmy Yang and Jake Y. Chen*",
+    "year": 2023,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Cross-Team Collaboration and Diversity in the Bridge2AI Project, WWW '23 Companion: Companion Proceedings of the ACM Web Conference 2023, pp 790\u2013794",
+    "authors": "Huimin Xu, Chitrank Gupta, Zhandos Sembay, Swathi Thaker, Pamela Payne-Foster, Jake Chen, and Ying Ding",
+    "year": 2023,
+    "journal": "doi:",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "GraphWaGu: GPU Powered Large Scale Graph Layout Computation and Rendering for the Web, Proceedings of Eurographics Symposium on Parallel Graphics and Visualization, pp",
+    "authors": "Landon Dyken, Pravin Poudel, Will Usher, Steve Petruzza, Jake Y. Chen, and Sidharth Kumar*",
+    "year": 2022,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Empowering Team Science Across the Translational Spectrum with the UAB Biomedical Research Infrastructure Technology Enhancement (U-BRITE), Proceedings of the IEEE 21st International Conference on Information Reuse and Integration for Data Science (IRI), Las Vegas, NV, USA, 2020 pp",
+    "authors": "James J. Cimino, Wayne H. Liang, Jelai Wang, Dongmei Sun, John D. Osborne, Amy Y. Wang, S. Louis Bridges, Jr., Matt Wyatt, and Jake Y. Chen*",
+    "year": 2020,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Towards Constructing \u201cSuper Gene Sets\u201d Regulatory Networks, Proceedings of the 2016 International Conference on Bioinformatics & Biomedicine, Shenzhen, China, doi: 10",
+    "authors": "Jake Chen*, Michael Neylon, Zongliang Yue, Thanh Nguyen, Timothy Ratliff",
+    "year": 2016,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Predictive and Preventive Models for Diabetes Prevention using Clinical Information in Electronic Health Record, Proceedings of the 2015 International Conference on Bioinformatics & Biomedicine, Washington, DC, pp",
+    "authors": "Ni Cao, Sisi Zeng, Feixia Shen, Chuandi Pan, Chengshui Chen, Thanh Nguen, and Jake Chen*",
+    "year": 2015,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "An Integrated Machine Learning and Network Analysis to Discover Marker Clinical Measurement in Lung Cancer, Proceedings of 2015 International Conference on Genome Medicine, eds",
+    "authors": "Thanh Nguyen, Junjie Chen, Dongxiang Ji, Xiaoru Sun, Chuandi Pan,* Chengshui Chen*, and Jake Y. Chen*",
+    "year": 2015,
+    "journal": "Le L & Pham S",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Constructing Regulatory Gene Set Network to Reveal Novel Insights into Biological Systems, Proceedings of the IEEE 4th International Conference on Computational Advances in Bio and Medical Sciences, Miami Beach, FL, DOI: 10",
+    "authors": "Chayaporn Suphavilai, Liugen Zhu, and Jake Y. Chen*",
+    "year": 2014,
+    "journal": null,
+    "doi": "10.1109/ICCABS.2014.6863927",
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "An Evaluation for Merging Signaling Pathways by Using Protein-Protein Interaction Data, Proceedings of IEEE International Workshop on Genomic Signal Processing and Statistics, Washington, DC",
+    "authors": "Xiaogang Wu and Jake Chen*",
+    "year": 2012,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Multi-Biomarker Panel Selection on a GPU, Proceedings of IEEE International Conference on Electro/Information Technology, Indianapolis, IN",
+    "authors": "David Johnson, Brandon Shafer, Jaehwan John Lee, and Jake Chen*",
+    "year": 2012,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Network Expansion and Pathway Enrichment Analysis towards Biologically Significant Findings from Microarrays, Proceedings of the Eighth Annual International Symposium on Integrative Bioinformatics, Hangfzhou, Zhejiang, China",
+    "authors": "Xiaogang Wu, Hui Huang, Tao Wei, Ragini Pandey, Christopher Reinhard, Shuyu D. Li, Jake Y. Chen*",
+    "year": 2012,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "A Network Biology Approach to Predicting Drug Cardiotoxicity, Proceedings of the International Conference on Bioinformatics & Biomedicine, Atlanta, GA, pp",
+    "authors": "Liang-Chin Huang and Jake Y. Chen*",
+    "year": 2011,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "TAO: Terrain Analytic Operators for Expert-Guided Data Mining Applications, Workshop on Visual Analytics in Healthcare, Providence, RI",
+    "authors": "Jason McLaughlin, Qian You, Shiaofen Fang, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Predicting Drug Efficacy Based on the Integrated Breast Cancer Pathway Model, 2011 IEEE International Workshop on Genomic Signal Processing and Statistics, San Antonio, TX",
+    "authors": "Hui Huang, Xiaogang Wu, Sara Ibrahim, Marianne Mckenzie, Sunil Badve, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Network Reordering Based Integrative Expression Profiling for Microarray Classification, 2011 Great Lakes Bioinformatics Conference, Athens, OH",
+    "authors": "Xiaogang Wu and Jake Y. Chen*",
+    "year": 2011,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Personal Genome Privacy Protection with Feature-based Hierarchical Dual-stage Encryptions, 2011 IEEE International Workshop on Genomic Signal Processing and Statistics, San Antonio, TX",
+    "authors": "Xukai Zou*, Peng Liu*, and Jake Y. Chen*",
+    "year": 2011,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Novel Protein Isoform Biomarker Identifications from Proteomes, 2nd International Workshop on Data Mining for Biomarker Discovery at the 2010 IEEE International Conference of Bioinformatics and Biomedicine, Hong Kong",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2010,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Evaluate Drug Effects on Gene Expression Profiles with Connectivity Maps, 2nd International Workshop on Data Mining for Biomarker Discovery at the 2010 IEEE International Conference of Bioinformatics and Biomedicine, Hong Kong",
+    "authors": "Hui Huang, Xiaogang Wu, Shuyu Li, Sara Ibrahim, Taiwo Ajumobi, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Proteome-scale Protein Isoform Characterization with High-Performance Computing, 2010 Microsoft eScience Workshop Proceedings, Berkeley, CA",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2010,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "New Privacy Threats in Healthcare Informatics: When Medical Records Join the Web, Ninth ACM SIGKDD Workshop on Data Mining in Bioinformatics (BioKDD 2010) at the International Conference on Knowledge Discovery and Data Mining, Washington, DC",
+    "authors": "Fengjun Li, Jake Y. Chen, Xukai Zou, and Peng Liu",
+    "year": 2010,
+    "journal": "(Acceptance rate:",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Breast Cancer Plasma Protein Biomarker Discovery by Coupling LC-MS/MS Proteomics and Systems Biology, Proceedings of the ACM International Conference on Bioinformatics and Computational Biology, Niagara Falls, NY",
+    "authors": "Fan Zhang, Mu Wang, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Random Walk Ranking Guided by Disease Association Networks for Lung Cancer Biomarker Discovery, Proceedings of the International Symposium on Biocomputing, Vol",
+    "authors": "Tianxiao Huan, Xiaogang Wu, Zengliang Bai, and Jake Y. Chen*",
+    "year": 2010,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "RIC: Ranking with Interaction Chains and its Applications in Computational Clinical Proteomics Studies, Proceedings of the International Conference on Bioinformatics & Biomedicine, pp",
+    "authors": "Jieun Jeong and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "SWRWR: Seed-weighted Random Walks Ranking Method and Its Application to Leukemia Cancer Biomarker Prioritizations, IEEE International Conference on Bioinformatics and Biomedicine Workshop 2009, pp",
+    "authors": "Tianxiao Huan, Xiaogang Wu, Zengliang Bai, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "A Neural Network Approach to Multi-biomarker Panel Development Based on LC/MS/MS Proteomics Profiles: A Case Study in Breast Cancer, Proceedings of the 22nd IEEE Symposium on Computer-Based Medical Systems, pp",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": "10.1109/CBMS.2009.5255456",
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Disease Gene-fishing in Molecular Interaction Networks: a Case Study in Colorectal Cancer, Proceedings of the 31st Annual International Conference of the IEEE Engineering in Medicine and Biology Society, pp",
+    "authors": "Hui Huang, Jiao Li, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Network Topological Reordering Revealing Systemic Patterns in Yeast Protein Interaction Networks, Proceedings of the 31st Annual International Conference of the IEEE Engineering in Medicine and Biology Society, pp",
+    "authors": "Xiaogang Wu, Ragini Pandey, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Visualizing a Correlative Multi-level Graph of Biology Entity Interactions, Workshop on Intelligent Biomedical Information Systems at the 12th International Conference on Network-Based Information Systems, pp",
+    "authors": "Qian You, Shiaofen Fang, Snehasis Mukhopadhyay, Harsha Vaka, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Toward Ontology-Driven Omics Data Integration in Current Database Management Systems, Workshop on Intelligent Biomedical Information Systems at the 12th International Conference on Network-Based Information Systems, pp",
+    "authors": "John Springer and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Construct Anticancer Drug-Drug Correlation Network, Proceedings of the 24th Annual ACM Symposium on Applied Computing, Vol",
+    "authors": "Jiao Li, Pamela Crowell, and Jake Y. Chen*",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Gene Selection using the GMM-IG Framework based Integrative Analysis",
+    "authors": "Mingyi Wang and Jake Y. Chen*",
+    "year": 2008,
+    "journal": "IEEE Proceedings of the International Conference on Biomedical Engineering and Informatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "An Integrative Human Pathway Database for Systems Biology Applications",
+    "authors": "Harini Kasamsetty, Xiaogang Wu, and Jake Y. Chen*",
+    "year": 2008,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Mining Disease-Specific Molecular Association Profiles from Biomedical Literature: A Case Study",
+    "authors": "Jiao Li, Xiaoyan Zhu, and Jake Y. Chen*",
+    "year": 2008,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "A Systems Biology Case Study of Ovarian Cancer Drug Resistance",
+    "authors": "Jake Y. Chen*, Changyu Shen, Zhong Yan, Dawn P. G. Brown, and Mu Wang",
+    "year": 2006,
+    "journal": "Computational Systems Bioinformatics: CSB",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "An Integrated Computational Proteomics Method to Extract Protein Targets for Fanconi Anemia Studies",
+    "authors": "Jake Y. Chen*, Sarah L. Pinkerton, Changyu Shen, and Mu Wang",
+    "year": 2006,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Mining Alzheimer Disease Relevant Proteins from Integrated Protein Interactome Data",
+    "authors": "Jake Y. Chen*, Changyu Shen, and Andrey Sivachenko",
+    "year": 2006,
+    "journal": "Pacific Symposium on Biocomputing",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Discover True Association Rates in Multi-protein Complex Proteomics Data Sets",
+    "authors": "Changyu Shen, Lang Li, Jake Y. Chen*",
+    "year": 2005,
+    "journal": "Proceedings of the IEEE Computational Systems Biology Bioinformatics Conference",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "A Method for Conquering Complex Biological Database Queries",
+    "authors": "Jake Y. Chen*, John Carlis, and Ning Gao",
+    "year": 2005,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Experience with Processing and Exploration of High-throughput Protein Interaction Data, Session on Systems Biology and Bioinformatics",
+    "authors": "Jake Y. Chen*",
+    "year": 2004,
+    "journal": "Proceedings of the Eighth World Multi-Conference on Systemics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "High-throughput Protein Interactome Data: Minable or Not? Fourth ACM SIGKDD Workshop on Data Mining in Bioinformatics (BioKDD 2004) at the International Conference on Knowledge Discovery and Data Mining, Seattle, WA, pp",
+    "authors": "Jake Y. Chen*, Andrey Y. Sivachenko, and Lang Li",
+    "year": 2004,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Initial Large-scale Exploration of Protein-protein Interactions in the Human Brain",
+    "authors": "Jake Y. Chen*, Andrey Y. Sivachenko, Russell Bell, Connie Kurschner, Irene Ota, and Sudhir Sahasrabudhe",
+    "year": 2003,
+    "journal": "Proceedings of the IEEE CSB Bioinformatics Conference",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Similar_Join: Extending DBMS with a Bio-specific Operator",
+    "authors": "Jake Y. Chen* and John Carlis",
+    "year": 2003,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Managing Bioinformatics Challenges in Expression Microarray Sequence Selection Projects",
+    "authors": "Jake Y. Chen* and John Carlis",
+    "year": 2002,
+    "journal": "Proceedings of the Second Chinese Conference on Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "A High-density Microarray Case Study of Query Modeling In Bioinformatics",
+    "authors": "Jake Y. Chen* and John Carlis",
+    "year": 2002,
+    "journal": "Proceedings of the International Conference on Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "A High-throughput System to Resolve Inconsistent Reading Frame Predictions for Expressed Sequence Tags",
+    "authors": "Yue Chen*, Libby Shoop, John Carlis, and John Riedl",
+    "year": 2001,
+    "journal": "Proceedings of Workshop on Inconsistency in Data and Knowledge at the International Joint Conference on Artificial Intelligence (IJCAI)",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Conference"
+  },
+  {
+    "title": "Biological Data Mining",
+    "authors": "Jake Y. Chen and Stefano Lonardi, ed",
+    "year": 2009,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book"
+  },
+  {
+    "title": "Biological Database Modeling",
+    "authors": "Jake Y. Chen and Amandeep Sidhu, ed",
+    "year": 2007,
+    "journal": null,
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book"
+  },
+  {
+    "title": "AI in Translational Bioinformatics and Precision Medicine",
+    "authors": "Jake Y. Chen and Thanh Nguyen",
+    "year": 2022,
+    "journal": "Intelligent Systems In Medicine and Health: The Role of AI",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Network Mining",
+    "authors": "Zongliang Yue, Da Yan, Guimu Guo, Jake Y. Chen",
+    "year": 2021,
+    "journal": "Modelling Transcriptional Regulation",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Computational Biomarker Discovery",
+    "authors": "Fan Zhang, Xiaogang Wu, and Jake Y. Chen*",
+    "year": 2013,
+    "journal": "Approaches in Integrative Bioinformatics - Towards Virtual Cell",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Ethics and Privacy Issues for Systems Biology Application in Predictive and Personalized Medicine",
+    "authors": "Jake Y. Chen*, Heng Xu*, Pan Shi, Adam Culbertson, and Eric Meslin",
+    "year": 2011,
+    "journal": "Handbook of Research on Computational and Systems Biology: Interdisciplinary Applications",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Data Mining Methods in Omics-based Biomarker Discovery",
+    "authors": "Fan Zhang and Jake Y. Chen*",
+    "year": 2011,
+    "journal": "Bioinformatics for Omics Data: Methods and Protocols",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "ProteoLens: A Database-driven Visual Data Mining Tool for Network Biology",
+    "authors": "Jake Y. Chen* and Tianxiao Huan",
+    "year": 2010,
+    "journal": "Systems Biology for Signaling Networks",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Techniques for Prioritization of Disease Genes",
+    "authors": "Jieun Jeong and Jake Y. Chen*",
+    "year": 2010,
+    "journal": "Computational Intelligence and Pattern Analysis in Biological Informatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Design of an Online Physician-Mediated Personal Health Record System",
+    "authors": "Jake Y. Chen*, Shailaja Taduri, and Frank Lloyd",
+    "year": 2009,
+    "journal": "Biomedical Data and Applications",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Connecting Protein Interaction Data, Mutations and Disease using Bioinformatics",
+    "authors": "Jake Y. Chen, Eunseog Youn, Sean D Mooney*",
+    "year": 2009,
+    "journal": "Methods in Molecular Biology: Computational Systems Biology",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Molecular Interaction Networks: Topological and Functional Characterizations",
+    "authors": "Xiaogang Wu and Jake Y. Chen*",
+    "year": 2009,
+    "journal": "Automation in Genomics and Proteomics: An Engineering Case-Based Approach",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Basic Concepts",
+    "authors": "Amandeep Sidhu and Jake Y. Chen*",
+    "year": 2007,
+    "journal": "Biological Database Modeling. Published by Artech House",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Data Management in Expression-based Proteomics",
+    "authors": "Zhong Yan, Jake Y. Chen*, Josh Heyen, Lee W Ott, Cary Woods, Maureen A Harrington, and Mark G Goebl",
+    "year": 2007,
+    "journal": "Biological Database Modeling. Published by Artech House",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Protein-Protein Interactions: Concepts, Databases, Software Tools, and Biomedical Implications",
+    "authors": "SudhaRani Mamidipalli and Jake Y. Chen*",
+    "year": 2007,
+    "journal": "Current Topics in Human Genetics: Studies of Complex Diseases. Published by World Scientific Publishing Co",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Book Chapter"
+  },
+  {
+    "title": "Guest Editorial for Selected Papers From BIOKDD 2023",
+    "authors": "Da Yan, Ariful Azad, Jie Hou, Jake Y Chen",
+    "year": 2025,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Outbreak Oracles: How AI's Journey through COVID-19 Shapes Future Epidemic Strategy",
+    "authors": "Dmytro Chumachenko,\u00a0 Jasleen Kaur, and Jake Y Chen",
+    "year": 2025,
+    "journal": "Frontiers in Artificial Intelligence. DOI:",
+    "doi": "10.3389/frai.2025.1636444",
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Health Day: Building Health AI Ecosystem: From Data Harmonization to Knowledge Discovery",
+    "authors": "Jake Y. Chen and Peipei Ping",
+    "year": 2024,
+    "journal": "Proceedings of the",
+    "doi": "10.1145/3637528.367386",
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Guest Editorial Selected Papers From BIOKDD 2022",
+    "authors": "Da Yan, C. Pesquita, C. G\u00f6rg and Jake Y. Chen,",
+    "year": 2024,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": "10.1109/TCBB.2024.3429784",
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Editorial: Artificial Intelligence for Precision Medicine",
+    "authors": "Jun Deng, Thomas Hartung, Enrico Capobianco, Jake Y Chen, and Frank Emmert-Streib",
+    "year": 2022,
+    "journal": "Frontiers in Artificial Intelligence",
+    "doi": "10.3389/frai.2021.834645",
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Guest Editorial for Selected Papers from BIOKDD 2021",
+    "authors": "Da Yan, Zhaohui S. Qin, Debswapna Bhattacharya, and Jake Y. Chen",
+    "year": 2022,
+    "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+    "doi": "10.1109/TCBB.2022.3208759",
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Editorial: AI-Enabled Data Science for COVID-19",
+    "authors": "Da Yan, Hong Qin, Hsiang-Yun Wu, and Jake Y. Chen",
+    "year": 2021,
+    "journal": "Frontiers in Big Data",
+    "doi": "10.3389/fdata.2021.802452",
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "DTMBIO 2016: The Tenth International Workshop on Data and Text Mining in Biomedical Informatics",
+    "authors": "Sangwoo Kim, Jake Y. Chen, Vincenzo Cutello, Doheon Lee",
+    "year": 2016,
+    "journal": "Proceedings of ACM",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "BIOKDD\u201911: Workshop on Data Mining in Bioinformatics",
+    "authors": "Mohammad Al Hasan, Luke Huan, Jake Y. Chen, and Mohammed Zaki",
+    "year": 2011,
+    "journal": "Proceedings of the Tenth International Workshop on Data Mining in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "BIOKDD\u201910: Workshop on Data Mining in Bioinformatics",
+    "authors": "Luke Huan, Jake Y. Chen, and Mohammed Zaki",
+    "year": 2010,
+    "journal": "Proceedings of the Tenth International Workshop on Data Mining in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Data Mining for Biomarker Discovery: The Time is Ripe",
+    "authors": "Vincent S. Tseng, Hui-Huang Hsu, and Jake Y. Chen",
+    "year": 2009,
+    "journal": "IEEE International Conference on Bioinformatics and Biomedicine Workshop",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Preface",
+    "authors": "Jake Y. Chen and Stefano Lonardi",
+    "year": 2009,
+    "journal": "Biological Data Mining",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Editorial: 2008 International Workshop on Data Mining in Bioinformatics",
+    "authors": "Stefano Lonardi, Jake Y. Chen, and Mohammed Zaki",
+    "year": 2008,
+    "journal": "Proceedings of the Eighth International Workshop on Data Mining in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Preface",
+    "authors": "Jake Y. Chen and Amandeep Sidhu",
+    "year": 2007,
+    "journal": "Biological Database Modeling",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Editorial: BIOKDD \u201807: Workshop on Data Mining in Bioinformatics",
+    "authors": "Jake Y. Chen, Stefano Lonardi, and Mohammed Zaki",
+    "year": 2007,
+    "journal": "Proceedings of the Seventh International Workshop on Data Mining in Bioinformatics",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Session Editorial: Computer Infrastructure for Systems Biology",
+    "authors": "Jake Y. Chen and Bradley S. Sherman",
+    "year": 2005,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  },
+  {
+    "title": "Editorial Message: Special Track on Bioinformatics",
+    "authors": "Warren T. Jones, Mathew J. Palakal, and Jake Y. Chen",
+    "year": 2004,
+    "journal": "Proceedings of the",
+    "doi": null,
+    "arxivId": null,
+    "articleType": "Editorial"
+  }
+]

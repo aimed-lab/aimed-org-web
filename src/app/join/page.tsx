@@ -11,7 +11,8 @@ import {
   CheckCircle2,
   Upload,
   Send,
-  Sparkles,
+  FlaskConical,
+  Users,
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
@@ -20,26 +21,42 @@ import {
 const pathways = [
   {
     icon: GraduationCap,
-    title: 'Prospective Students',
-    audience: 'High School, Undergraduate, Master\'s & PhD',
+    title: 'Intern or Volunteer',
+    audience: 'High School, Undergraduate & Master\'s Students',
     description:
-      'Join AI.MED as a research trainee or graduate student. We welcome motivated students at every level who are passionate about applying AI to solve biomedical challenges. Gain hands-on experience with cutting-edge computational methods.',
+      'A limited number of internship and volunteer positions are available each year for exceptional students who demonstrate strong analytical skills, self-motivation, and a genuine commitment to biomedical AI research. Candidates must be prepared to dedicate significant time and effort; casual interest is not sufficient.',
     gradient: 'from-blue-600 to-cyan-500',
   },
   {
-    icon: Microscope,
-    title: 'Postdocs & Medical Students',
-    audience: 'Postdoctoral Researchers & MD Students',
+    icon: FlaskConical,
+    title: 'Visiting Scholar',
+    audience: 'Visiting Researchers & Exchange Scholars',
     description:
-      'Pursue independent and collaborative research in a highly interdisciplinary environment. Our postdocs lead projects spanning knowledge graphs, multi-omics, drug discovery, and clinical informatics.',
+      'AI.MED selectively hosts visiting scholars who bring complementary expertise and a track record of peer-reviewed publications. Visiting positions are highly competitive and require a clearly defined research plan aligned with our ongoing projects. Applicants must secure their own funding or sponsorship.',
+    gradient: 'from-teal-600 to-emerald-500',
+  },
+  {
+    icon: Microscope,
+    title: 'PhD Student',
+    audience: 'Doctoral Applicants',
+    description:
+      'We accept only a small number of PhD students each cycle. Successful candidates typically hold strong quantitative backgrounds, demonstrate prior research experience, and show evidence of independent problem-solving ability. Admission is through UAB graduate programs; interest alone does not guarantee a position.',
     gradient: 'from-emerald-600 to-teal-500',
   },
   {
+    icon: Users,
+    title: 'Postdoc or Staff',
+    audience: 'Postdoctoral Researchers & Research Staff',
+    description:
+      'Postdoctoral and staff positions require a proven publication record, deep technical expertise, and the ability to lead independent research streams. We hold our team to the highest standards of scientific rigor and productivity. Positions are funded and filled on a competitive, as-needed basis.',
+    gradient: 'from-indigo-600 to-violet-500',
+  },
+  {
     icon: Handshake,
-    title: 'Collaborators & Faculty',
+    title: 'Collaborator',
     audience: 'Academic & Industry Partners',
     description:
-      'Partner with AI.MED on grants, joint publications, or translational projects. We actively seek collaborators across biomedicine, computer science, pharmacy, and data science to tackle grand challenges.',
+      'AI.MED partners selectively with investigators and organizations whose expertise complements our research mission. We prioritize collaborations that lead to high-impact publications, funded grants, or translational outcomes. Proposals should clearly articulate mutual benefit and scientific merit.',
     gradient: 'from-purple-600 to-pink-500',
   },
   {
@@ -57,24 +74,28 @@ const pathways = [
 /* ------------------------------------------------------------------ */
 const faqs = [
   {
+    q: 'How competitive is it to join AI.MED?',
+    a: 'Extremely competitive. We receive a large volume of inquiries each year and can only accommodate a small fraction. Candidates who stand out typically have strong academic records, demonstrated research experience, and a clear alignment with our ongoing projects.',
+  },
+  {
     q: 'What qualifications do I need to join as a PhD student?',
-    a: 'We look for strong quantitative backgrounds (CS, bioinformatics, statistics, or related fields), programming skills in Python or R, and genuine curiosity about biomedical problems. Prior research experience is a plus but not mandatory.',
+    a: 'We require a strong quantitative background (CS, bioinformatics, statistics, or related fields), solid programming skills in Python or R, and meaningful prior research experience. Admission is through UAB graduate programs; simply expressing interest does not guarantee consideration.',
   },
   {
     q: 'Are there remote or hybrid positions available?',
-    a: 'Some research roles can be performed in a hybrid format depending on the project. Please mention your location preference in the inquiry form and we will discuss options.',
+    a: 'Most positions require on-site presence at UAB. Limited hybrid arrangements may be considered for specific projects on a case-by-case basis, but only for candidates who have already demonstrated exceptional productivity and independence.',
   },
   {
     q: 'How long does it take to hear back after submitting an inquiry?',
-    a: 'We review inquiries on a rolling basis and aim to respond within two weeks. High-volume periods (e.g., fall admissions season) may take slightly longer.',
+    a: 'We review inquiries on a rolling basis. Due to the high volume of applications, only shortlisted candidates will be contacted, typically within four to six weeks. If you do not hear back, your inquiry was not selected for further consideration at this time.',
   },
   {
     q: 'Do you accept undergraduate interns during the summer?',
-    a: 'Yes! We offer summer research experiences for undergraduates, typically 10-12 weeks. Applications open in January each year. International students with appropriate visa status are welcome.',
+    a: 'A very limited number of summer internship positions (typically 10-12 weeks) are available for undergraduates with strong quantitative skills and prior lab experience. Applications open in January each year. Selection is highly competitive.',
   },
   {
     q: 'What funding opportunities are available for postdocs?',
-    a: 'AI.MED postdocs are funded through a mix of NIH grants, institutional training awards, and industry partnerships. We also support applicants pursuing independent fellowships (e.g., NIH F32, K99).',
+    a: 'AI.MED postdocs are funded through a mix of NIH grants, institutional training awards, and industry partnerships. We strongly favor candidates who are pursuing or willing to pursue independent fellowships (e.g., NIH F32, K99), as this reflects the level of initiative and ambition we expect.',
   },
 ];
 
@@ -138,12 +159,12 @@ export default function JoinPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Sparkles className="mx-auto mb-4 h-12 w-12 opacity-80" />
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Join AI.MED</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Opportunities at AI.MED</h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">
-              We are on a mission to transform biomedicine through artificial intelligence.
-              Whether you are a student, researcher, clinician, or collaborator -- there is a
-              place for you.
+              AI.MED attracts exceptional talent committed to advancing biomedical AI at the
+              highest level. We set a high bar for excellence -- only a select number of
+              positions are available each year for interns, volunteers, visiting scholars,
+              PhD students, postdocs, staff, and collaborators.
             </p>
           </motion.div>
         </div>
@@ -152,7 +173,7 @@ export default function JoinPage() {
       {/* Pathways */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-          Find Your Path
+          Opportunity Categories
         </h2>
         <div className="grid gap-8 md:grid-cols-2">
           {pathways.map((p, i) => {
@@ -185,7 +206,7 @@ export default function JoinPage() {
                   onClick={scrollToForm}
                   className="mt-6 inline-flex w-fit items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                 >
-                  Start Inquiry
+                  Submit Inquiry
                   <Send className="h-4 w-4" />
                 </button>
               </motion.div>
@@ -207,10 +228,11 @@ export default function JoinPage() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="mb-2 text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              Contact &amp; Inquiry
+              Submit an Inquiry
             </h2>
             <p className="mb-10 text-center text-slate-600 dark:text-slate-400">
-              Fill out the form below and we will get back to you shortly.
+              All inquiries undergo a selective review process. Please provide thorough and
+              accurate information. Only shortlisted candidates will be contacted.
             </p>
           </motion.div>
 
@@ -227,8 +249,8 @@ export default function JoinPage() {
                   Inquiry Submitted!
                 </h3>
                 <p className="text-green-700 dark:text-green-300">
-                  Thank you for your interest in AI.MED. We will review your inquiry and
-                  respond within two weeks.
+                  Thank you for your interest in AI.MED. Your inquiry will be reviewed
+                  carefully. Only shortlisted candidates will be contacted.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -295,7 +317,11 @@ export default function JoinPage() {
                     <option>Undergraduate</option>
                     <option>Master&apos;s Student</option>
                     <option>PhD Applicant</option>
+                    <option>Intern</option>
+                    <option>Volunteer</option>
+                    <option>Visiting Scholar</option>
                     <option>Postdoc</option>
+                    <option>Staff</option>
                     <option>Faculty/Collaborator</option>
                     <option>Media/Press</option>
                     <option>Other</option>

@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col antialiased bg-white dark:bg-zinc-950 text-slate-900 dark:text-slate-100 font-sans">
+      <body suppressHydrationWarning className="min-h-screen flex flex-col antialiased bg-white dark:bg-zinc-950 text-slate-900 dark:text-slate-100 font-sans">
         <ThemeProvider>
           <Header />
           <main className="flex-1">{children}</main>
