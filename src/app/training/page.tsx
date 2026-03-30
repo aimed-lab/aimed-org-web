@@ -12,7 +12,6 @@ import {
   ChevronDown,
   ChevronUp,
   ArrowRight,
-  School,
   Building,
   MapPin,
   FileText,
@@ -73,17 +72,6 @@ const traineeTypes = [
       "Publication opportunities as co-author",
       "Coding mentorship (Python, R, bioinformatics pipelines)",
       "Preparation for graduate school or industry careers",
-    ],
-  },
-  {
-    icon: School,
-    title: "High School Students",
-    color: "from-pink-500 to-rose-500",
-    items: [
-      "Summer research exposure programs",
-      "Introduction to computational biology concepts",
-      "Hands-on coding workshops in Python / R",
-      "Poster presentation at end-of-program symposium",
     ],
   },
 ];
@@ -260,22 +248,6 @@ const traineeCategories: {
       { name: "Israel Aguilera-Laina", degree: "Chemistry, IUPUI", years: "Summer 2009", current: false, role: "Undergrad", pubCount: 0 },
       { name: "Alexander Scherer", degree: "Biology, Stanford University", years: "Summer 2008", current: false, role: "Undergrad", pubCount: 0 },
       { name: "Ayotunde O. Ositelu", degree: "Pre-Med, Vanderbilt University", years: "Summer 2007", current: false, role: "Undergrad", pubCount: 0 },
-    ],
-  },
-  {
-    label: "High School Research Interns",
-    icon: School,
-    color: "from-pink-500 to-rose-500",
-    trainees: [
-      { name: "Ayla Zhang", degree: "The Altamont School, Birmingham", years: "2024-2025", current: true, role: "High School", pubCount: 1 },
-      { name: "April Cao", degree: "Hoover High School, Birmingham", years: "2024-2025", current: true, role: "High School", pubCount: 1 },
-      { name: "Adrian Gu", degree: "Vestavia Hills High School, Birmingham", years: "2024-2025", current: true, role: "High School", pubCount: 1 },
-      { name: "Eric Gong", degree: "Mountain Brook High School, Birmingham", years: "2022-2023", current: false, role: "High School", pubCount: 1 },
-      { name: "Prahasith Veluvolu", degree: "Park Tudor High School, Indianapolis", years: "Summer 2012", current: false, role: "High School", pubCount: 0 },
-      { name: "Sina Reinhart", degree: "North Central High School, Carmel", years: "Summer 2011", current: false, role: "High School", pubCount: 0 },
-      { name: "Jeffrey Shen", degree: "Park Tudor High School, Indianapolis", years: "Summer 2010", current: false, role: "High School", pubCount: 1 },
-      { name: "Kevin Huang", degree: "Carmel High School, Carmel", years: "Summer 2009", current: false, role: "High School", pubCount: 0 },
-      { name: "Peter Li", degree: "Carmel High School, Carmel", years: "Summer 2008", current: false, role: "High School", pubCount: 1 },
     ],
   },
 ];
@@ -597,8 +569,9 @@ export default function TrainingPage() {
           {/* Additional training programs */}
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {[
-              { name: "Masters of Science Biomedical Sciences (MSBMS) Training Faculty", period: "2017–present" },
-              { name: "Graduate Biomedical Sciences (GBS) Doctoral Training Program Faculty", period: "2016–present" },
+              { name: "Masters of Science Biomedical Sciences (MSBMS) Training Faculty, UAB", period: "2017–present" },
+              { name: "Graduate Biomedical Sciences (GBS) Doctoral Training Program Faculty, UAB", period: "2016–present" },
+              { name: "Graduate Bioinformatics Training Program, Indiana University School of Informatics and Computing", period: "2004–2016" },
             ].map((prog, i) => (
               <motion.div
                 key={prog.name}
