@@ -80,17 +80,23 @@ const SEARCHES = [
 
 const BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 
+// NCBI requires tool + email for API access from cloud servers
+const NCBI_PARAMS = "tool=aimed-lab-news&email=jakechen@uab.edu";
+
 async function searchPubMed(term: string, retmax: number): Promise<string[]> {
-  const url = `${BASE}/esearch.fcgi?db=pubmed&term=${term}&retmax=${retmax}&retmode=json`;
+  const url = `${BASE}/esearch.fcgi?db=pubmed&term=${term}&retmax=${retmax}&retmode=json&${NCBI_PARAMS}`;
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) return [];
+  if (!res.ok) {
+    console.error(`PubMed search failed: ${res.status} ${res.statusText}`);
+    return [];
+  }
   const data = await res.json();
   return data?.esearchresult?.idlist ?? [];
 }
 
 async function fetchSummaries(ids: string[]): Promise<PubMedSummary[]> {
   if (ids.length === 0) return [];
-  const url = `${BASE}/esummary.fcgi?db=pubmed&id=${ids.join(",")}&retmode=json`;
+  const url = `${BASE}/esummary.fcgi?db=pubmed&id=${ids.join(",")}&retmode=json&${NCBI_PARAMS}`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) return [];
   const data = await res.json();

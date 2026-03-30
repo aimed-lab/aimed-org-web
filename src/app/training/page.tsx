@@ -30,6 +30,12 @@ const lineage = [
   { institution: "University of Alabama at Birmingham", location: "Birmingham, AL", period: "Faculty / Center Director (current)" },
 ];
 
+const piMember = {
+  name: "Jake Y. Chen, PhD",
+  role: "Principal Investigator",
+  photo: "/jake-chen-headshot.jpg",
+};
+
 const currentMembers = [
   {
     name: "Huu Phong Nguyen, PhD",
@@ -60,6 +66,11 @@ const currentMembers = [
     name: "Geetanjali Oishe",
     role: "PhD Student",
     photo: null,
+  },
+  {
+    name: "Zhandos Sembay, MS",
+    role: "Systems Administrator",
+    photo: "/members/zhandos-sembay.jpg",
   },
 ];
 
@@ -342,10 +353,10 @@ export default function TrainingPage() {
               Building the next generation
             </div>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              Training &amp; Mentoring
+              Our Team
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
-              Join a training lineage spanning three decades and multiple continents -- from Peking University to UAB, we cultivate researchers who change the world.
+              A multidisciplinary team spanning three decades and multiple continents — from Peking University to UAB, we cultivate researchers who change the world.
             </p>
           </motion.div>
         </div>
@@ -364,6 +375,34 @@ export default function TrainingPage() {
           </h2>
           <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
             Meet the researchers currently working in the AI.MED lab
+          </p>
+        </motion.div>
+
+        {/* PI Card — prominent, centered */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto mb-12 flex max-w-md flex-col items-center rounded-2xl border-2 border-emerald-200 bg-gradient-to-b from-emerald-50 to-white p-8 shadow-md dark:border-emerald-800 dark:from-emerald-950/40 dark:to-zinc-900"
+        >
+          <div className="mb-4 h-36 w-36 overflow-hidden rounded-full border-4 border-emerald-200 bg-slate-100 dark:border-emerald-800 dark:bg-zinc-800">
+            <Image
+              src={piMember.photo}
+              alt={piMember.name}
+              width={144}
+              height={144}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <h3 className="text-center text-xl font-bold text-slate-900 dark:text-slate-100">
+            {piMember.name}
+          </h3>
+          <p className="mt-1 text-center text-sm font-medium text-emerald-700 dark:text-emerald-400">
+            {piMember.role}
+          </p>
+          <p className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
+            Triton Endowed Professor &middot; Founding Director, SPARC
           </p>
         </motion.div>
 
