@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   Pill,
   Network,
@@ -54,26 +55,26 @@ const lineages: Lineage[] = [
   {
     id: "knowledge-networks",
     icon: <Network className="h-7 w-7" />,
-    title: "Biomedical Knowledge Networks & Data Ecosystems",
+    title: "Biomedical Knowledge Networks & Network Biology",
     description:
-      "Construction of large-scale knowledge graphs, pathway/gene-set repositories, and semantic integration pipelines. From the foundational PAGER database to the NIH Bridge2AI and CONNECT initiatives building AI-ready biomedical data ecosystems.",
+      "Construction of large-scale knowledge graphs, pathway/gene-set repositories, protein interaction databases, and network biology methods. From the foundational HAPPI protein interactome and PAGER gene-set repository to modern network-based biomarker discovery and drug target prioritization.",
     methods: [
       "Gene set / pathway enrichment (PAGER, PAGED)",
+      "Protein interaction networks (HAPPI, WIPER)",
       "Biomedical entity expansion (BEERE)",
       "Ontology-guided analysis (GOALS)",
-      "Knowledge graph construction",
+      "Network topology & reordering",
       "Semantic web & data mining",
-      "NIH Common Fund data integration",
     ],
     representativePapers: [
       { title: "GOALS: Gene Ontology Analysis with Layered Shells for Enhanced Functional Insight and Visualization", year: "2025" },
-      { title: "PAGER-scFGA: Unveiling Cell Functions and Molecular Mechanisms in Cell Trajectories through Single-Cell Functional Genomics Analysis", year: "2024" },
-      { title: "PAGER Web APP: An Interactive, Online Gene Set and Network Interpretation Tool", year: "2022" },
-      { title: "BEERE: a Web Server for Biomedical Entity Expansion, Ranking, and Explorations", year: "2019" },
+      { title: "AI-Driven Network Biology Identifies SRC as a Therapeutic Target in Metastatic Pancreatic Adenocarcinoma", year: "2025" },
+      { title: "Toden-E: Topology-Based and Density-Based Ensembled Clustering for the Development of Super-PAG in Functional Genomics", year: "2025" },
+      { title: "WIPER: Weighted in-Path Edge Ranking for Biomolecular Association Networks", year: "2019" },
       { title: "PAGER: Constructing PAGs and new PAG-PAG Relationships for Network Biology", year: "2015" },
-      { title: "Semantic Graph Mining for Biomedical Network Analysis: an Overview", year: "2009" },
+      { title: "HAPPI: an Online Database of Comprehensive Human Annotated and Predicted Protein Interactions", year: "2009" },
     ],
-    tools: ["PAGER", "PAGED", "BEERE", "GOALS", "HAPPI Database", "HPD"],
+    tools: ["PAGER", "PAGED", "BEERE", "GOALS", "HAPPI Database", "WIPER Database", "HPD"],
     color: "emerald",
   },
   {
@@ -128,25 +129,25 @@ const lineages: Lineage[] = [
   {
     id: "infrastructure",
     icon: <Database className="h-7 w-7" />,
-    title: "Translational Data Infrastructure & Team Science",
+    title: "Translational Infrastructure, Data Ecosystems & Team Science",
     description:
-      "Designing and deploying the data platforms, clinical informatics systems, and multi-institutional collaboration frameworks that underpin biomedical AI. Includes leadership of the NIH-funded CONNECT consortium, U-BRITE, and the UAB CCTS bioinformatics core.",
+      "Designing and deploying the data platforms, AI-ready data ecosystems, and multi-institutional collaboration frameworks that underpin biomedical AI. Includes leadership of the NIH-funded CONNECT consortium and Bridge2AI program, the U-BRITE translational platform, COVID-19 data resources, and the UAB CCTS bioinformatics core.",
     methods: [
-      "Multi-institutional consortium management (CONNECT, Bridge2AI)",
+      "NIH Common Fund data ecosystems (CONNECT, Bridge2AI, CFDE)",
       "Translational informatics platforms (U-BRITE)",
       "COVID-19 data integration (PAGER-CoV, N3C)",
-      "Talent knowledge graphs",
-      "Scalable genome assembly (Pregel)",
+      "AI-ready cell architecture maps (Cell Maps for AI)",
+      "Talent knowledge graphs & team science analytics",
       "Privacy-preserving health informatics",
     ],
     representativePapers: [
       { title: "Cell Maps for Artificial Intelligence: AI-Ready Maps of Human Cell Architecture from Disease-Relevant Cell Lines", year: "2024" },
+      { title: "PAGER-scFGA: Unveiling Cell Functions and Molecular Mechanisms in Cell Trajectories through Single-Cell Functional Genomics Analysis", year: "2024" },
       { title: "PAGER-CoV: A Comprehensive Collection of Pathways, Annotated-gene-lists, and Gene Signatures for Coronavirus Disease Functional Genomic Studies", year: "2021" },
       { title: "Empowering Team Science Across the Translational Spectrum with the UAB Biomedical Research Infrastructure Technology Enhancement (U-BRITE)", year: "2020" },
-      { title: "Scalable De Novo Genome Assembly Using a Pregel-Like Graph-Parallel System", year: "2021" },
-      { title: "HAPPI: an Online Database of Comprehensive Human Annotated and Predicted Protein Interactions", year: "2009" },
+      { title: "PAGER Web APP: An Interactive, Online Gene Set and Network Interpretation Tool", year: "2022" },
     ],
-    tools: ["PAGER-CoV", "Talent Knowledge Map", "HAPPI Database", "WIPER Database"],
+    tools: ["PAGER-CoV", "Talent Knowledge Map", "SEAS", "PAGER"],
     color: "rose",
   },
 ];
@@ -239,9 +240,9 @@ function LineageSection({ lineage, index }: { lineage: Lineage; index: number })
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-2">Lab Software</h3>
           <div className="flex flex-wrap gap-2">
             {lineage.tools.map((t) => (
-              <span key={t} className={`rounded-md border ${c.border} px-2.5 py-0.5 text-xs font-semibold ${c.text}`}>
+              <Link key={t} href="/software" className={`rounded-md border ${c.border} px-2.5 py-0.5 text-xs font-semibold ${c.text} hover:opacity-80 transition-opacity`}>
                 {t}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
@@ -254,9 +255,9 @@ function LineageSection({ lineage, index }: { lineage: Lineage; index: number })
               {lineage.representativePapers.map((p) => (
                 <li key={p.title} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
                   <ChevronRight className={`mt-0.5 h-4 w-4 shrink-0 ${c.text}`} />
-                  <span>
+                  <Link href={`/publications?search=${encodeURIComponent(p.title.substring(0, 50))}`} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     {p.title} <span className="text-slate-400 dark:text-slate-500">({p.year})</span>
-                  </span>
+                  </Link>
                 </li>
               ))}
             </ul>
