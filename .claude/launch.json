@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "next-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["scripts/dev.mjs"],
       "port": 3000
     }
   ]

@@ -59,11 +59,11 @@ const researchPillars = [
 ];
 
 const timelineSteps = [
-  { year: "1994", label: "Peking University", detail: "B.S." },
-  { year: "2000", label: "University of Minnesota", detail: "Ph.D." },
-  { year: "2000s", label: "Indiana / Purdue", detail: "Faculty" },
-  { year: "2010s", label: "Wenzhou Medical University", detail: "Dean" },
-  { year: "Now", label: "UAB", detail: "Endowed Professor" },
+  { year: "1995", label: "Peking University", detail: "B.S." },
+  { year: "2001", label: "University of Minnesota", detail: "Ph.D." },
+  { year: "2004", label: "Indiana / Purdue", detail: "Faculty" },
+  { year: "2016", label: "UAB", detail: "Professor" },
+  { year: "Now", label: "UAB SPARC", detail: "Endowed Professor" },
 ];
 
 const honors = [
@@ -71,8 +71,8 @@ const honors = [
   "AIMBE Fellow",
   "AMIA Fellow",
   "ACMI Fellow",
-  "CAST-USA Pioneer Award",
   "Top 100 AI Leaders in Drug Discovery",
+  "NIH Bridge2AI Grand Prize",
 ];
 
 const mentorshipPoints = [

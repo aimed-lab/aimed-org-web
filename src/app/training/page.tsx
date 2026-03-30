@@ -22,10 +22,9 @@ import {
 /* ------------------------------------------------------------------ */
 
 const lineage = [
-  { institution: "Peking University", location: "Beijing, China", period: "B.S." },
+  { institution: "Peking University", location: "College of Life Sciences", period: "B.S." },
   { institution: "University of Minnesota", location: "Minneapolis, MN", period: "Ph.D." },
   { institution: "Indiana University / Purdue University", location: "Indianapolis, IN", period: "Faculty" },
-  { institution: "Wenzhou Medical University", location: "Wenzhou, China", period: "Visiting" },
   { institution: "University of Alabama at Birmingham", location: "Birmingham, AL", period: "Faculty (current)" },
 ];
 
