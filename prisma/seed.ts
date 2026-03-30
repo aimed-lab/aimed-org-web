@@ -142,7 +142,7 @@ async function main() {
       authors: "Kevin Song, Andrew Trotter, Jake Y. Chen*",
       year: 2025,
       journal: "arXiv",
-      arxivId: "2504.10952",
+      arxivId: "2504.17967",
       articleType: "Journal Article",
     },
     {
@@ -214,7 +214,7 @@ async function main() {
       authors: "Delower Hossain and Jake Y.\u00a0Chen*",
       year: 2025,
       journal: "arXiv",
-      arxivId: "2503.22157",
+      arxivId: "2503.18213",
       articleType: "Journal Article",
     },
     {
@@ -222,7 +222,7 @@ async function main() {
       authors: "Kevin Song, Noorullah Imran, Jake Y. Chen, Allan C. Dobbins",
       year: 2025,
       journal: "arXiv",
-      arxivId: "2504.07463",
+      arxivId: "2504.08618",
       articleType: "Journal Article",
     },
     {
@@ -294,6 +294,7 @@ async function main() {
       authors: "Eric Gong and Jake Y. Chen*",
       year: 2023,
       journal: "Biomedical Sciences Instrumentation",
+      doi: "10.1101/2023.02.09.527562",
       articleType: "Journal Article",
     },
     {
@@ -435,7 +436,7 @@ async function main() {
       authors: "Zongliang Yue, Eric Zhang, Clark Xu, Sunny Khurana, Nishant Batra, Son Dang, and Jake Y. Chen*",
       year: 2021,
       journal: "Nucleic Acids Research",
-      doi: "10.1093/nar/gkab1094",
+      doi: "10.1093/nar/gkaa1094",
       articleType: "Journal Article",
     },
     {
