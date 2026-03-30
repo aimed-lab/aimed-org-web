@@ -37,7 +37,7 @@ interface Publication {
   featured: boolean;
 }
 
-const allTopics = ["Drug Discovery", "AI/ML", "Bioinformatics", "Systems Biology", "Knowledge Networks", "Multi-omics", "Precision Medicine", "Translational", "Immunology", "Visualization"];
+const allTopics = ["Drug Discovery", "AI/ML", "Bioinformatics", "Systems Biology", "Knowledge Networks", "Multi-omics", "Precision Medicine", "Cancer", "Neurodegenerative Diseases", "Immunology", "Visualization"];
 const allTypes = ["Journal Article", "Preprint", "Conference"];
 const years = Array.from({ length: 26 }, (_, i) => 2025 - i);
 

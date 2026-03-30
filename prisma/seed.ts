@@ -17,7 +17,8 @@ function autoTag(title: string, journal: string | null): string {
     "Knowledge Networks": /knowledge graph|ontology|semantic web|data mining|pager|beere|database|electronic repository/,
     "Multi-omics": /multi-omics|omics|proteom|metabolom|transcriptom|integrative/,
     "Precision Medicine": /precision medicine|personalized|biomarker|clinical trial|patient|digital twin|clinical/,
-    "Translational": /translational|ccts|bridge2ai|clinical and translational/,
+    "Cancer": /cancer|tumor|glioma|glioblastoma|melanoma|leukemia|lymphoma|carcinoma|oncol|neoplasm|metastatic|anti-ctla|pancreatic adenocarcinoma/,
+    "Neurodegenerative Diseases": /alzheimer|parkinson|neurodegenerat|dementia|huntington|amyloid|tau protein|cognitive decline|brain disease/,
     "Immunology": /immun|t cell|b cell|autoimmune|lupus|graft|gvhd|checkpoint|car-nk|car-t/,
     "Visualization": /visual|geneterrain|graphwagu|dema|mondrian|terrain/,
   }
