@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 72" fill="none">
+  <!-- "a" in gray -->
+  <text x="0" y="58" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="64" font-weight="400" fill="#8494A7" letter-spacing="-1">a</text>
+  <!-- hand-drawn "i": stem -->
+  <rect x="40" y="25" width="7" height="34" rx="1.5" fill="#8494A7"/>
+  <!-- "i": blue dot -->
+  <circle cx="43.5" cy="13" r="5.5" fill="#2E7DE6"/>
+  <!-- period/dot separator -->
+  <circle cx="66" cy="54" r="4.5" fill="#2E7DE6"/>
+  <!-- "med" in blue -->
+  <text x="79" y="58" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="64" font-weight="400" fill="#2E7DE6" letter-spacing="-1">med</text>
+</svg>

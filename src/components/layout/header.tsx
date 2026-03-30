@@ -57,9 +57,9 @@ export function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-xl font-bold tracking-tight text-slate-900 dark:text-white hover:opacity-80 transition-opacity"
+          className="hover:opacity-80 transition-opacity"
         >
-          AI.MED
+          <img src="/logos/aimed-logo.svg" alt="AI.MED" className="h-8" />
         </Link>
 
         {/* Desktop nav */}
