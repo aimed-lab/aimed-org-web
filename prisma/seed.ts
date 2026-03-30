@@ -2,8 +2,13 @@ import { PrismaClient } from "../src/generated/prisma/client"
 import { PrismaLibSql } from "@prisma/adapter-libsql"
 
 import { resolve } from "path"
-const dbPath = resolve(__dirname, "..", "dev.db")
-const adapter = new PrismaLibSql({ url: `file:${dbPath}` })
+
+const tursoUrl = process.env.TURSO_DATABASE_URL
+const tursoToken = process.env.TURSO_AUTH_TOKEN
+
+const adapter = tursoUrl
+  ? new PrismaLibSql({ url: tursoUrl, authToken: tursoToken })
+  : new PrismaLibSql({ url: `file:${resolve(__dirname, "..", "dev.db")}` })
 const prisma = new PrismaClient({ adapter })
 
 function autoTag(title: string, journal: string | null): string {
