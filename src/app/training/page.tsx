@@ -43,12 +43,12 @@ const currentMembers = [
   },
   {
     name: "John Haoyuan Cheng",
-    role: "PhD Student",
+    role: "Research Staff",
     photo: null,
   },
   {
     name: "Nikhil Kurmachalam",
-    role: "MS Student",
+    role: "Research Staff",
     photo: null,
   },
   {
@@ -190,7 +190,6 @@ const traineeCategories: {
     trainees: [
       { name: "Fuad Al Abir", degree: "PhD, Biomedical Informatics & Data Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 5 },
       { name: "Delower Hossain", degree: "PhD, Computer Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 6 },
-      { name: "John Haoyuan Cheng", degree: "PhD, UAB", years: "Current", current: true, role: "PhD", pubCount: 0 },
       { name: "Geetanjali Oishe", degree: "PhD, UAB", years: "Current", current: true, role: "PhD", pubCount: 0 },
       { name: "Kevin Song", degree: "PhD, Biomedical Engineering, UAB", years: "2023-2025", current: false, role: "PhD", pubCount: 6 },
       { name: "Radomir Slominski", degree: "MD/PhD, Genetics & Bioinformatics, UAB", years: "2022-2023", current: false, role: "PhD", pubCount: 6 },
@@ -206,7 +205,6 @@ const traineeCategories: {
     icon: GraduationCap,
     color: "from-emerald-500 to-teal-500",
     trainees: [
-      { name: "Nikhil Kurmachalam", degree: "MS, UAB", years: "Current", current: true, role: "MS", pubCount: 0 },
       { name: "Kevin Cao", degree: "MS, Bioinformatics, U. of Minnesota", years: "2017", current: false, role: "MS", pubCount: 0 },
       { name: "Nafisa Bulsara", degree: "MS, Bioinformatics, Indiana U.", years: "2017", current: false, role: "MS", pubCount: 0 },
       { name: "Madhura Kshirsagar", degree: "MS, Bioinformatics, Indiana U.", years: "2016", current: false, role: "MS", pubCount: 1 },
