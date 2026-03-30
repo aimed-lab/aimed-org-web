@@ -6,6 +6,37 @@ const dbPath = resolve(__dirname, "..", "dev.db")
 const adapter = new PrismaLibSql({ url: `file:${dbPath}` })
 const prisma = new PrismaClient({ adapter })
 
+function autoTag(title: string, journal: string | null): string {
+  const text = `${title} ${journal ?? ""}`.toLowerCase()
+
+  const rules: Record<string, RegExp> = {
+    "Drug Discovery": /drug|pharmacol|admet|toxicity|herg|dpp-4|repurpos|smiles|inhibitor|therapeutic|cardiotoxicity|countermeasure/,
+    "AI/ML": /\bai\b|artificial intelligence|machine learning|deep learning|neural network|llm|llama|gpt|transformer|diffusion|generative|neuro-symbolic|nlp|language model|qsar/,
+    "Bioinformatics": /bioinformat|genomic|proteom|blast|sequence|rna-seq|single-cell|gene expression|microrna|mirna|snp|genome|omics/,
+    "Systems Biology": /network|systems biology|pathway|interactome|connectivity map|graph|topology/,
+    "Knowledge Networks": /knowledge graph|ontology|semantic web|data mining|pager|beere|database|electronic repository/,
+    "Multi-omics": /multi-omics|omics|proteom|metabolom|transcriptom|integrative/,
+    "Precision Medicine": /precision medicine|personalized|biomarker|clinical trial|patient|digital twin|clinical/,
+    "Translational": /translational|ccts|bridge2ai|clinical and translational/,
+    "Immunology": /immun|t cell|b cell|autoimmune|lupus|graft|gvhd|checkpoint|car-nk|car-t/,
+    "Visualization": /visual|geneterrain|graphwagu|dema|mondrian|terrain/,
+  }
+
+  const tags: string[] = []
+  for (const [tag, regex] of Object.entries(rules)) {
+    if (regex.test(text)) {
+      tags.push(tag)
+    }
+  }
+
+  // Ensure at least one tag per publication
+  if (tags.length === 0) {
+    tags.push("Bioinformatics")
+  }
+
+  return JSON.stringify(tags)
+}
+
 async function main() {
   console.log("Seeding database...")
 
@@ -1603,7 +1634,9 @@ async function main() {
     },
   ]
   for (const pub of publications) {
-    await prisma.publication.create({ data: pub })
+    await prisma.publication.create({
+      data: { ...pub, tags: autoTag(pub.title, pub.journal ?? null) },
+    })
   }
   console.log(`Seeded ${publications.length} publications.`)
 

@@ -12,6 +12,8 @@ import {
   BookOpen,
   X,
   Loader2,
+  Download,
+  GraduationCap,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -79,12 +81,50 @@ function Pill({
   );
 }
 
+function generateRIS(pub: Publication): string {
+  const type = pub.articleType === "Conference" ? "CONF" : pub.articleType === "Book" ? "BOOK" : pub.articleType === "Book Chapter" ? "CHAP" : "JOUR";
+  const lines = [`TY  - ${type}`];
+  // Split authors and add each as AU
+  const authorList = pub.authors.replace(/\*/g, "").split(/,\s*(?:and\s+)?|(?:\s+and\s+)/);
+  for (const a of authorList) {
+    const trimmed = a.trim();
+    if (trimmed) lines.push(`AU  - ${trimmed}`);
+  }
+  lines.push(`TI  - ${pub.title}`);
+  if (pub.journal) lines.push(`JO  - ${pub.journal}`);
+  lines.push(`PY  - ${pub.year}`);
+  if (pub.doi) lines.push(`DO  - ${pub.doi}`);
+  if (pub.pubmedId) lines.push(`AN  - ${pub.pubmedId}`);
+  if (pub.arxivId) lines.push(`UR  - https://arxiv.org/abs/${pub.arxivId}`);
+  if (pub.abstract) lines.push(`AB  - ${pub.abstract}`);
+  lines.push("ER  - ");
+  return lines.join("\r\n");
+}
+
+function downloadRIS(pub: Publication) {
+  const ris = generateRIS(pub);
+  const blob = new Blob([ris], { type: "application/x-research-info-systems" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  const slug = pub.title.replace(/[^a-zA-Z0-9]+/g, "_").substring(0, 60);
+  a.download = `${slug}.ris`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
   const [open, setOpen] = useState(false);
   const tags: string[] = pub.tags ? JSON.parse(pub.tags) : [];
   const doiUrl = pub.doi ? `https://doi.org/${pub.doi}` : null;
-  const pubmedUrl = pub.pubmedId ? `https://pubmed.ncbi.nlm.nih.gov/${pub.pubmedId}` : null;
+  const pubmedUrl = pub.pubmedId
+    ? `https://pubmed.ncbi.nlm.nih.gov/${pub.pubmedId}`
+    : null;
+  const pubmedSearchUrl = !pub.pubmedId
+    ? `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(pub.title)}`
+    : null;
   const arxivUrl = pub.arxivId ? `https://arxiv.org/abs/${pub.arxivId}` : null;
+  const scholarUrl = `https://scholar.google.com/scholar?q=${encodeURIComponent(pub.title)}`;
 
   return (
     <motion.article
@@ -125,7 +165,7 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
       </div>
 
       {/* Links */}
-      <div className="mt-3 flex items-center gap-3">
+      <div className="mt-3 flex flex-wrap items-center gap-3">
         {doiUrl && (
           <a href={doiUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
             <ExternalLink className="h-3.5 w-3.5" /> DOI
@@ -136,6 +176,14 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
             <BookOpen className="h-3.5 w-3.5" /> PubMed
           </a>
         )}
+        {pubmedSearchUrl && pub.articleType === "Journal Article" && (
+          <a href={pubmedSearchUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+            <BookOpen className="h-3.5 w-3.5" /> PubMed
+          </a>
+        )}
+        <a href={scholarUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+          <GraduationCap className="h-3.5 w-3.5" /> Scholar
+        </a>
         {arxivUrl && (
           <a href={arxivUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
             <FileText className="h-3.5 w-3.5" /> arXiv
@@ -146,6 +194,12 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
             <FileText className="h-3.5 w-3.5" /> PDF
           </a>
         )}
+        <button
+          onClick={() => downloadRIS(pub)}
+          className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          <Download className="h-3.5 w-3.5" /> Cite
+        </button>
         {pub.abstract && (
           <button
             onClick={() => setOpen(!open)}
