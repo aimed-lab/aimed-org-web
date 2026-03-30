@@ -77,14 +77,29 @@ const pastLeadership = [
     period: "2022–2026",
   },
   {
+    role: "Past President",
+    org: "Mid-South Computational Biology & Bioinformatics Society (MCBIOS)",
+    period: "2021–2022",
+  },
+  {
     role: "Founding Director, Indiana Center for Systems Biology and Personalized Medicine",
     org: "Indiana University–Purdue University",
     period: "2007–2016",
   },
   {
-    role: "Associate Professor (tenured)",
-    org: "Indiana University School of Informatics & Purdue CS",
-    period: "2010–2016",
+    role: "Founder & Chairman, MedeoLinx, LLC",
+    org: "Indianapolis, IN",
+    period: "2006–2016",
+  },
+  {
+    role: "Co-founder & Chief Informatics Officer, Predictive Physiology and Medicine, Inc.",
+    org: "Bloomington, IN (raised >$6M in venture funding)",
+    period: "2006–2008",
+  },
+  {
+    role: "Head of Computational Proteomics & Principal Bioinformatics Scientist",
+    org: "Myriad Proteomics (Prolexys Pharmaceuticals), Salt Lake City, UT",
+    period: "2002–2003",
   },
 ];
 
