@@ -41,13 +41,15 @@ function detectIntent(message: string): {
 
   // Publication/paper search
   if (
-    /paper|publication|article|research on|published|pubmed|doi|cite/i.test(lower)
+    /paper|publication|article|research on|published|pubmed|doi|cite|written|authored/i.test(lower)
   ) {
     const cleaned = lower
       .replace(
-        /\b(find|search|show|list|any|papers?|publications?|articles?|about|on|related to|by|regarding)\b/g,
+        /\b(find|search|show|list|any|what|has|have|did|does|do|is|are|the|a|an|their|his|her|its|my|our|me|i|we|you|they|it|this|that|these|those|papers?|publications?|articles?|about|on|related|to|by|regarding|written|authored|published|tell|give)\b/g,
         ""
       )
+      .replace(/[?.!,]/g, "")
+      .replace(/\s+/g, " ")
       .trim();
     return { type: "publication", query: cleaned || lower };
   }
@@ -114,15 +116,18 @@ export async function POST(req: NextRequest) {
       const keywords = intent.query
         .split(/\s+/)
         .filter((w) => w.length > 2)
-        .slice(0, 3);
+        .slice(0, 5);
 
-      let pubs: Awaited<ReturnType<typeof searchPublications>> = [];
-      for (const kw of keywords) {
-        const results = await searchPublications(kw);
-        pubs.push(...results);
+      // Try the full query first, then individual keywords
+      let pubs = await searchPublications(intent.query);
+      if (pubs.length === 0) {
+        for (const kw of keywords) {
+          const results = await searchPublications(kw);
+          pubs.push(...results);
+        }
       }
 
-      // Deduplicate
+      // Deduplicate and prioritize: results matching more keywords rank higher
       const seen = new Set<number>();
       pubs = pubs.filter((p) => {
         if (seen.has(p.id)) return false;
