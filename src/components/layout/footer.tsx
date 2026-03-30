@@ -9,10 +9,10 @@ const quickLinks = [
 ]
 
 const profileLinks = [
-  { label: "Google Scholar", href: "https://scholar.google.com/" },
-  { label: "ORCID", href: "https://orcid.org/" },
-  { label: "GitHub", href: "https://github.com/" },
-  { label: "LinkedIn", href: "https://linkedin.com/" },
+  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=_x7KRJAAAAAJ" },
+  { label: "ORCID", href: "https://orcid.org/0000-0001-8829-7504" },
+  { label: "GitHub", href: "https://github.com/aimed-lab" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jakeychen/" },
 ]
 
 export function Footer() {
