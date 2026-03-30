@@ -1,84 +1,84 @@
 [
   {
-    "awardName": "ACM Distinguished Scientist",
+    "awardName": "Distinguished Scientist",
     "year": 2021,
     "category": "International",
     "issuer": "ACM"
   },
   {
-    "awardName": "\u201cTop 100 AI Leaders in Drug Discovery and Advanced Healthcare\u201d by Deep Knowledge Analytics",
+    "awardName": "\u201cTop 100 AI Leaders in Drug Discovery and Advanced Healthcare\u201d",
     "year": 2019,
     "category": "International",
     "issuer": "Deep Knowledge Analytics"
   },
   {
-    "awardName": "ISCB Senior Member",
+    "awardName": "Senior Member",
     "year": 2019,
     "category": "International",
     "issuer": "ISCB"
   },
   {
-    "awardName": "Innocentive.com Grand Challenge Award Winner (Competition among a community of >250,000 scientists for solving the Cancer Cell Drug Discovery challenge)",
+    "awardName": "Grand Challenge Award Winner (Competition among a community of >250,000 scientists for solving the Cancer Cell Drug Discovery challenge)",
     "year": 2012,
     "category": "International",
     "issuer": "Innocentive.com"
   },
   {
-    "awardName": "ACM Senior Member",
+    "awardName": "Senior Member",
     "year": 2009,
     "category": "International",
     "issuer": "ACM"
   },
   {
-    "awardName": "IEEE Senior Member",
+    "awardName": "Senior Member",
     "year": 2004,
     "category": "International",
     "issuer": "IEEE"
   },
   {
-    "awardName": "Grand Prize, NIH Bridge2AI Program Theme Song Competition",
+    "awardName": "Grand Prize, Bridge2AI Theme Song Competition",
     "year": 2024,
     "category": "National",
     "issuer": "NIH Bridge2AI Program"
   },
   {
-    "awardName": "Elected Fellow, AIMBE",
+    "awardName": "Elected Fellow",
     "year": 2021,
     "category": "National",
     "issuer": "AIMBE"
   },
   {
-    "awardName": "Elected Fellow, AMIA",
+    "awardName": "Elected Fellow",
     "year": 2020,
     "category": "National",
     "issuer": "AMIA"
   },
   {
-    "awardName": "Elected Fellow, ACMI",
+    "awardName": "Elected Fellow",
     "year": 2019,
     "category": "National",
     "issuer": "ACMI"
   },
   {
-    "awardName": "\u201c17 Informatics Experts Worth Listening To\u201d, HealthTechTopia",
+    "awardName": "\u201c17 Informatics Experts Worth Listening To\u201d",
     "year": 2011,
     "category": "National",
     "issuer": "HealthTechTopia"
   },
   {
-    "awardName": "Scientific Advisory Board Member, ProteinLounge, Inc",
+    "awardName": "Scientific Advisory Board Member",
     "year": 2011,
     "category": "National",
     "issuer": "ProteinLounge, Inc."
   },
   {
-    "awardName": "CHI Translational Medicine Conference Distinguished Faculty List (selected along with 25 chief scientists and executives from Academia and biotech/pharmaceutical industry)",
+    "awardName": "Distinguished Faculty List (selected along with 25 chief scientists and executives from Academia and biotech/pharmaceutical industry)",
     "year": 2010,
     "category": "National",
     "issuer": "CHI Translational Medicine Conference"
   },
   {
-    "awardName": "Canary Foundation Bioinformatics Dissemination Award",
+    "awardName": "Bioinformatics Dissemination Award",
     "year": 2007,
     "category": "National",
     "issuer": "Canary Foundation"
@@ -102,85 +102,85 @@
     "issuer": "TechPoint (Indiana)"
   },
   {
-    "awardName": "Indiana Small Business Grant Preparation Award (for MedeoLinx, LLC, $12K)",
+    "awardName": "Small Business Grant Preparation Award",
     "year": 2007,
     "category": "Regional",
     "issuer": "State of Indiana"
   },
   {
-    "awardName": "Indiana Economic Development Scholarship",
+    "awardName": "Economic Development Scholarship",
     "year": 2006,
     "category": "Regional",
     "issuer": "State of Indiana"
   },
   {
-    "awardName": "IEEE Central Indiana Section Service Recognition Award",
+    "awardName": "Central Indiana Section Service Recognition Award",
     "year": 2006,
     "category": "Regional",
     "issuer": "IEEE"
   },
   {
-    "awardName": "University of Alabama Board of Trustees Triton Endowed Professorship",
+    "awardName": "Triton Endowed Professorship",
     "year": 2023,
     "category": "University",
     "issuer": "University of Alabama Board of Trustees"
   },
   {
-    "awardName": "UAB School of Medicine Featured Discovery Award",
+    "awardName": "Featured Discovery Award",
     "year": 2021,
     "category": "University",
     "issuer": "UAB School of Medicine"
   },
   {
-    "awardName": "IUPUI School of Informatics Commencement Marshall",
+    "awardName": "Commencement Marshall",
     "year": 2014,
     "category": "University",
     "issuer": "IUPUI School of Informatics"
   },
   {
-    "awardName": "Inaugural IUPUI School of Informatics Research Award",
+    "awardName": "Inaugural Research Award",
     "year": 2011,
     "category": "University",
     "issuer": "IUPUI School of Informatics"
   },
   {
-    "awardName": "Fellow, Indiana University Center for Applied Cybersecurity Research",
+    "awardName": "Fellow, Center for Applied Cybersecurity Research",
     "year": 2010,
     "category": "University",
     "issuer": "Indiana University"
   },
   {
-    "awardName": "IUPUI Translational Research into Practice (TRIP) Scholar Recognition Award",
+    "awardName": "Translational Research into Practice (TRIP) Scholar Recognition Award",
     "year": 2009,
     "category": "University",
     "issuer": "IUPUI"
   },
   {
-    "awardName": "IUPUI Chancellor\u2019s Prestigious External Awards Recognition (PEAR)",
+    "awardName": "Chancellor\u2019s Prestigious External Awards Recognition (PEAR)",
     "year": 2008,
     "category": "University",
     "issuer": "IUPUI"
   },
   {
-    "awardName": "Founder Recognition Award, Predictive Physiology and Medicine, Inc.",
+    "awardName": "Founder Recognition Award",
     "year": 2007,
     "category": "University",
     "issuer": "Predictive Physiology and Medicine, Inc."
   },
   {
-    "awardName": "Purdue Research Foundation Summer Faculty Fellow",
+    "awardName": "Summer Faculty Fellow",
     "year": 2005,
     "category": "University",
     "issuer": "Purdue Research Foundation"
   },
   {
-    "awardName": "Affymetrix Project Achievement Award",
+    "awardName": "Project Achievement Award",
     "year": 1999,
     "category": "University",
     "issuer": "Affymetrix, Inc."
   },
   {
-    "awardName": "University of Minnesota Outstanding Computer Science Graduate Research Award",
+    "awardName": "Outstanding Computer Science Graduate Research Award",
     "year": 1998,
     "category": "University",
     "issuer": "University of Minnesota"

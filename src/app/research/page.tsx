@@ -328,22 +328,26 @@ export default function ResearchPage() {
           </motion.div>
 
           {/* Agency logos */}
-          <div className="mb-12 flex flex-wrap items-center justify-center gap-6">
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-8">
             {[
-              { name: "NIH", full: "National Institutes of Health" },
-              { name: "NSF", full: "National Science Foundation" },
-              { name: "DOD", full: "Department of Defense" },
-              { name: "NASA", full: "National Aeronautics and Space Administration" },
-              { name: "NAIRR", full: "National AI Research Resource" },
-              { name: "AHA", full: "American Heart Association" },
-              { name: "BMS", full: "Bristol-Myers Squibb" },
+              { name: "NIH", full: "National Institutes of Health", logo: "/logos/nih.png" },
+              { name: "NSF", full: "National Science Foundation", logo: "/logos/nsf.png" },
+              { name: "DOD", full: "Department of Defense", logo: "/logos/dod.png" },
+              { name: "NASA", full: "National Aeronautics and Space Administration", logo: "/logos/nasa.png" },
+              { name: "NAIRR", full: "National AI Research Resource", logo: "" },
+              { name: "AHA", full: "American Heart Association", logo: "/logos/aha.png" },
+              { name: "BMS", full: "Bristol-Myers Squibb", logo: "/logos/bms.png" },
             ].map((a) => (
               <div
                 key={a.name}
-                className="flex h-16 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                className="flex h-20 min-w-[5.5rem] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
                 title={a.full}
               >
-                <span className="text-lg font-bold text-slate-700 dark:text-slate-300">{a.name}</span>
+                {a.logo ? (
+                  <img src={a.logo} alt={a.full} className="h-12 max-w-[4.5rem] object-contain" />
+                ) : (
+                  <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{a.name}</span>
+                )}
               </div>
             ))}
           </div>

@@ -15,6 +15,8 @@ import {
   School,
   Building,
   MapPin,
+  FileText,
+  Award,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -128,6 +130,149 @@ const faqs = [
   {
     q: "Are funded positions available?",
     a: "PhD students are typically funded through research or teaching assistantships. Postdoc positions are funded through active grants. Undergraduate and master's students should inquire about current funding availability when applying.",
+  },
+];
+
+type Trainee = {
+  name: string;
+  degree: string;
+  years: string;
+  current: boolean;
+  role: string;
+  pubCount: number;
+};
+
+const traineeCategories: {
+  label: string;
+  icon: typeof Briefcase;
+  color: string;
+  trainees: Trainee[];
+}[] = [
+  {
+    label: "Postdoctoral Fellows & K-Award Scholars",
+    icon: Briefcase,
+    color: "from-purple-500 to-violet-500",
+    trainees: [
+      { name: "Huu Phong Nguyen", degree: "PhD, Computer Science, U. of Coimbra", years: "2025-present", current: true, role: "Postdoc", pubCount: 1 },
+      { name: "Rahul Sharma", degree: "PhD, Machine Learning, U. of Coimbra", years: "2021-2023", current: false, role: "Postdoc", pubCount: 2 },
+      { name: "Ehsan Saghapour", degree: "PhD, Biomedical Engineering, Isfahan U.", years: "2021-2023", current: false, role: "Postdoc", pubCount: 6 },
+      { name: "Zongliang Yue", degree: "PhD, General Biological Sciences, UAB", years: "2020-2023", current: false, role: "Postdoc", pubCount: 24 },
+      { name: "Thanh Nguyen", degree: "PhD, Computer Science, Purdue", years: "2018-2021", current: false, role: "Postdoc", pubCount: 20 },
+      { name: "Michael Falola", degree: "K23 Fellow, Psychiatry, UAB", years: "2018-2023", current: false, role: "Postdoc", pubCount: 0 },
+      { name: "Noha Sharafeldin", degree: "K33 Fellow, Cancer Outcomes, UAB", years: "2017-2021", current: false, role: "Postdoc", pubCount: 0 },
+      { name: "Syed Aun Muhammad", degree: "PhD, Biotechnology, Quaid-i-Azam U.", years: "2015", current: false, role: "Postdoc", pubCount: 6 },
+      { name: "Jieun Jeong", degree: "PhD, Computer Science, Penn State", years: "2008-2009", current: false, role: "Postdoc", pubCount: 2 },
+      { name: "Scott Harrison", degree: "PhD, Microbiology, Michigan State", years: "2007-2009", current: false, role: "Postdoc", pubCount: 3 },
+      { name: "Sudipto Saha", degree: "PhD, Bioinformatics, JNU India", years: "2007-2008", current: false, role: "Postdoc", pubCount: 2 },
+    ],
+  },
+  {
+    label: "PhD Students (Advisor/Chair)",
+    icon: FlaskConical,
+    color: "from-blue-500 to-indigo-500",
+    trainees: [
+      { name: "Fuad Al Abir", degree: "PhD, Biomedical Informatics & Data Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 5 },
+      { name: "Delower Hossain", degree: "PhD, Computer Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 6 },
+      { name: "Kevin Song", degree: "PhD, Biomedical Engineering, UAB", years: "2023-2025", current: false, role: "PhD", pubCount: 6 },
+      { name: "Radomir Slominski", degree: "MD/PhD, Genetics & Bioinformatics, UAB", years: "2022-2023", current: false, role: "PhD", pubCount: 6 },
+      { name: "Samuel Bharti", degree: "PhD, Biomedical Engineering, UAB", years: "2021-2022", current: false, role: "PhD", pubCount: 2 },
+      { name: "Zongliang Yue", degree: "PhD, Genetics & Bioinformatics, UAB", years: "2020", current: false, role: "PhD", pubCount: 24 },
+      { name: "Zhenyu Weng", degree: "PhD, CS & Engineering, Peking U. (co-advised)", years: "2020", current: false, role: "PhD", pubCount: 1 },
+      { name: "Hui Huang", degree: "PhD, Bioinformatics, Indiana U.", years: "2014", current: false, role: "PhD", pubCount: 12 },
+      { name: "Liang-Chin Huang", degree: "PhD, Bioinformatics, Indiana U.", years: "2013", current: false, role: "PhD", pubCount: 3 },
+    ],
+  },
+  {
+    label: "Master's Students (Advisor/Chair)",
+    icon: GraduationCap,
+    color: "from-emerald-500 to-teal-500",
+    trainees: [
+      { name: "Kevin Cao", degree: "MS, Bioinformatics, U. of Minnesota", years: "2017", current: false, role: "MS", pubCount: 0 },
+      { name: "Nafisa Bulsara", degree: "MS, Bioinformatics, Indiana U.", years: "2017", current: false, role: "MS", pubCount: 0 },
+      { name: "Madhura Kshirsagar", degree: "MS, Bioinformatics, Indiana U.", years: "2016", current: false, role: "MS", pubCount: 1 },
+      { name: "Itika Arora", degree: "MS, Bioinformatics, Indiana U.", years: "2016", current: false, role: "MS", pubCount: 1 },
+      { name: "Ronak P Shah", degree: "MS, Computer Science, Purdue", years: "2016", current: false, role: "MS", pubCount: 0 },
+      { name: "Zongliang Yue", degree: "MS, Bioinformatics, Indiana U.", years: "2015", current: false, role: "MS", pubCount: 24 },
+      { name: "Michael Neylon", degree: "MS, Bioinformatics, Indiana U.", years: "2015", current: false, role: "MS", pubCount: 4 },
+      { name: "Anurag Bhattrai", degree: "MS, Bioinformatics, Indiana U.", years: "2016", current: false, role: "MS", pubCount: 0 },
+      { name: "Sandeep Shantharam", degree: "MS, Bioinformatics, Indiana U.", years: "2015", current: false, role: "MS", pubCount: 0 },
+      { name: "Ashish Jain", degree: "MS, Bioinformatics, Indiana U.", years: "2015", current: false, role: "MS", pubCount: 0 },
+      { name: "Myron Snelson", degree: "MS, Bioinformatics, Indiana U.", years: "2014", current: false, role: "MS", pubCount: 0 },
+      { name: "Chayaporn Suphavilai", degree: "MS, Computer Science, Purdue", years: "2014", current: false, role: "MS", pubCount: 3 },
+      { name: "Madhankumar Sonachalam", degree: "MS, Bioinformatics, Indiana U.", years: "2012", current: false, role: "MS", pubCount: 2 },
+      { name: "Prudhvi Mummaneni", degree: "MS, Bioinformatics, Indiana U.", years: "2011", current: false, role: "MS", pubCount: 0 },
+      { name: "Ehsan Behnamghader", degree: "MS, Bioinformatics, Indiana U.", years: "2010", current: false, role: "MS", pubCount: 0 },
+      { name: "Paul Hale", degree: "MS, Bioinformatics, Indiana U.", years: "2012", current: false, role: "MS", pubCount: 1 },
+      { name: "Sudhir R. Chowbina", degree: "MS, Bioinformatics, Indiana U.", years: "2009", current: false, role: "MS", pubCount: 2 },
+      { name: "Usha Katta", degree: "MS, Bioinformatics, Indiana U.", years: "2009", current: false, role: "MS", pubCount: 0 },
+      { name: "Ragini Pandey", degree: "MS, Bioinformatics, Indiana U.", years: "2008", current: false, role: "MS", pubCount: 9 },
+      { name: "Ramaprabha Ramamurthy", degree: "MS, Bioinformatics, Purdue", years: "2008", current: false, role: "MS", pubCount: 0 },
+      { name: "Harini Kasamsetty", degree: "MS, Bioinformatics, Indiana U.", years: "2007", current: false, role: "MS", pubCount: 2 },
+      { name: "Sheetal Khadke", degree: "MS, Computer Science, Purdue", years: "2007", current: false, role: "MS", pubCount: 0 },
+      { name: "Lavanya Dhanapalan", degree: "MS, Computer Science, Purdue", years: "2007", current: false, role: "MS", pubCount: 2 },
+      { name: "Sharmila Jothirajah", degree: "MS, Computer Science, Purdue", years: "2007", current: false, role: "MS", pubCount: 0 },
+      { name: "Shailaja Taduri", degree: "MS, Computer Science, Purdue", years: "2007", current: false, role: "MS", pubCount: 1 },
+      { name: "Bhanu Potugari", degree: "MS, Bioinformatics, Indiana U.", years: "2007", current: false, role: "MS", pubCount: 0 },
+      { name: "Zhong Yan", degree: "MS, Bioinformatics, Indiana U.", years: "2006", current: false, role: "MS", pubCount: 3 },
+      { name: "Warren Killian", degree: "MS, Computer Science, Purdue", years: "2006", current: false, role: "MS", pubCount: 0 },
+      { name: "Sudharani Mamidipalli", degree: "MS, Bioinformatics, Indiana U.", years: "2006", current: false, role: "MS", pubCount: 2 },
+    ],
+  },
+  {
+    label: "Dissertation Committee Service",
+    icon: Award,
+    color: "from-slate-500 to-zinc-500",
+    trainees: [
+      { name: "Julia K. Ziebro", degree: "PhD, Cancer Biology, UAB", years: "Current", current: true, role: "PhD (committee)", pubCount: 0 },
+      { name: "Kyle H. Cichos", degree: "PhD, Immunology, UAB", years: "2023", current: false, role: "PhD (committee)", pubCount: 0 },
+      { name: "Eric Zhang", degree: "PhD, Biomedical Engineering, UAB", years: "2021", current: false, role: "PhD (committee)", pubCount: 6 },
+      { name: "Mathew Neu", degree: "MD/PhD, Medical Scientist Training, UAB", years: "2020", current: false, role: "PhD (committee)", pubCount: 0 },
+      { name: "Christian T. Stackhouse", degree: "PhD, Neuroscience, UAB", years: "2020", current: false, role: "PhD (committee)", pubCount: 2 },
+      { name: "Vishal Sharma", degree: "PhD, Immunology, UAB", years: "2020", current: false, role: "PhD (committee)", pubCount: 0 },
+      { name: "Deepali Jhamb", degree: "PhD, Bioinformatics, Indiana U.", years: "2014", current: false, role: "PhD (committee)", pubCount: 0 },
+      { name: "Ao Zhou", degree: "PhD, Bioinformatics, Indiana U.", years: "2014", current: false, role: "PhD (committee)", pubCount: 1 },
+      { name: "Jiangang Liu", degree: "PhD, Bioinformatics, Indiana U.", years: "2010", current: false, role: "PhD (committee)", pubCount: 0 },
+      { name: "Joshua Heyen", degree: "PhD, Biochemistry, IU School of Medicine", years: "2010", current: false, role: "PhD (committee)", pubCount: 2 },
+      { name: "Rati R. Nair", degree: "MS, Computer Science, Purdue", years: "2010", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Rini Pauly", degree: "MS, Bioinformatics, Indiana U.", years: "2010", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Uday Evani", degree: "MS, Bioinformatics, Indiana U.", years: "2010", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Mihai Stancu", degree: "MS, Health Informatics, Indiana U.", years: "2010", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Maliki Yacouba", degree: "MS, Bioinformatics, Georgetown U.", years: "2009", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Stuart Ough", degree: "MS, Human-Computer Interaction, Indiana U.", years: "2007", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Mindi Dippold", degree: "MS, Bioinformatics, Indiana U.", years: "2006", current: false, role: "MS (committee)", pubCount: 0 },
+      { name: "Rakesh Dhaval", degree: "MS, Computer Science, Purdue", years: "2005", current: false, role: "MS (committee)", pubCount: 0 },
+    ],
+  },
+  {
+    label: "Undergraduate Researchers",
+    icon: BookOpen,
+    color: "from-amber-500 to-orange-500",
+    trainees: [
+      { name: "Kevin Song", degree: "Biology, Stanford University", years: "Summer 2014", current: false, role: "Undergrad", pubCount: 6 },
+      { name: "Sara Ibrahim", degree: "Pre-med, IUPUI", years: "2010-2014", current: false, role: "Undergrad", pubCount: 4 },
+      { name: "Thanh Nguyen", degree: "Computer Science, IUPUI", years: "2012-2013", current: false, role: "Undergrad", pubCount: 20 },
+      { name: "Don Capouch", degree: "ECE, IUPUI", years: "2011-2013", current: false, role: "Undergrad", pubCount: 0 },
+      { name: "Sujay Chandorkar", degree: "CIS, IUPUI", years: "2011-2012", current: false, role: "Undergrad", pubCount: 0 },
+      { name: "Marianne McKenzie", degree: "Mathematics, IUPUI", years: "2010-2011", current: false, role: "Undergrad", pubCount: 1 },
+      { name: "Everton Lima", degree: "Computer Science, IUPUI", years: "2010-2011", current: false, role: "Undergrad", pubCount: 0 },
+      { name: "Peter Li", degree: "Computer Science, Northwestern", years: "Summer 2010-2012", current: false, role: "Undergrad", pubCount: 1 },
+      { name: "Taiwo Ajumobi", degree: "Biology, DePauw University", years: "Summer 2010", current: false, role: "Undergrad", pubCount: 1 },
+      { name: "Israel Aguilera-Laina", degree: "Chemistry, IUPUI", years: "Summer 2009", current: false, role: "Undergrad", pubCount: 0 },
+      { name: "Alexander Scherer", degree: "Biology, Stanford University", years: "Summer 2008", current: false, role: "Undergrad", pubCount: 0 },
+      { name: "Ayotunde O. Ositelu", degree: "Pre-Med, Vanderbilt University", years: "Summer 2007", current: false, role: "Undergrad", pubCount: 0 },
+    ],
+  },
+  {
+    label: "High School Research Interns",
+    icon: School,
+    color: "from-pink-500 to-rose-500",
+    trainees: [
+      { name: "Prahasith Veluvolu", degree: "Park Tudor High School, Indianapolis", years: "Summer 2012", current: false, role: "High School", pubCount: 0 },
+      { name: "Sina Reinhart", degree: "North Central High School, Carmel", years: "Summer 2011", current: false, role: "High School", pubCount: 0 },
+      { name: "Jeffrey Shen", degree: "Park Tudor High School, Indianapolis", years: "Summer 2010", current: false, role: "High School", pubCount: 1 },
+      { name: "Kevin Huang", degree: "Carmel High School, Carmel", years: "Summer 2009", current: false, role: "High School", pubCount: 0 },
+      { name: "Peter Li", degree: "Carmel High School, Carmel", years: "Summer 2008", current: false, role: "High School", pubCount: 1 },
+    ],
   },
 ];
 
@@ -304,7 +449,7 @@ export default function TrainingPage() {
         </div>
       </section>
 
-      {/* Courses Taught */}
+      {/* Lab Alumni & Trainees */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -313,42 +458,126 @@ export default function TrainingPage() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
-            Courses Taught
+            Lab Alumni &amp; Trainees
           </h2>
-          <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
-            Graduate and undergraduate courses across institutions
+          <p className="mb-4 text-center text-slate-600 dark:text-slate-400">
+            Over 80 researchers mentored across two decades and multiple institutions
+          </p>
+          <p className="mb-12 text-center text-xs text-slate-400 dark:text-slate-500">
+            Publication counts reflect co-authored papers with Prof. Chen
           </p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2">
-          {courses.map((school, i) => (
-            <motion.div
-              key={school.school}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-            >
-              <div className="mb-4 flex items-center gap-2">
-                <GraduationCap className="h-5 w-5 text-blue-600" />
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-                  {school.school}
-                </h3>
-              </div>
-              <ul className="space-y-2">
-                {school.list.map((course) => (
-                  <li
-                    key={course}
-                    className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400"
+        <div className="space-y-10">
+          {traineeCategories.map((cat, catIdx) => {
+            const CatIcon = cat.icon;
+            return (
+              <motion.div
+                key={cat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: catIdx * 0.05 }}
+                className="rounded-xl border border-slate-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+              >
+                {/* Category header */}
+                <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-4 dark:border-zinc-800">
+                  <div
+                    className={`inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${cat.color} text-white`}
                   >
-                    <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-slate-400 dark:text-slate-500" />
-                    {course}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+                    <CatIcon className="h-4 w-4" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                    {cat.label}
+                  </h3>
+                  <span className="ml-auto rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:bg-zinc-800 dark:text-slate-400">
+                    {cat.trainees.length}
+                  </span>
+                </div>
+
+                {/* Trainee list */}
+                <div className="divide-y divide-slate-50 dark:divide-zinc-800/50">
+                  {cat.trainees.map((t, tIdx) => (
+                    <div
+                      key={`${t.name}-${tIdx}`}
+                      className="flex flex-wrap items-center gap-x-4 gap-y-1 px-6 py-3 text-sm"
+                    >
+                      <span className="font-semibold text-slate-800 dark:text-slate-200">
+                        {t.name}
+                        {t.current && (
+                          <span className="ml-2 inline-block rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-700 dark:bg-green-900/40 dark:text-green-400">
+                            Current
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-slate-500 dark:text-slate-400">
+                        {t.degree}
+                      </span>
+                      <span className="text-xs text-slate-400 dark:text-slate-500">
+                        {t.years}
+                      </span>
+                      {t.pubCount > 0 && (
+                        <span className="ml-auto flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400">
+                          <FileText className="h-3 w-3" />
+                          {t.pubCount} pub{t.pubCount !== 1 ? "s" : ""}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Courses Taught */}
+      <section className="bg-slate-50 py-20 dark:bg-zinc-900/50">
+        <div className="mx-auto max-w-6xl px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
+              Courses Taught
+            </h2>
+            <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
+              Graduate and undergraduate courses across institutions
+            </p>
+          </motion.div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {courses.map((school, i) => (
+              <motion.div
+                key={school.school}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+              >
+                <div className="mb-4 flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5 text-blue-600" />
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                    {school.school}
+                  </h3>
+                </div>
+                <ul className="space-y-2">
+                  {school.list.map((course) => (
+                    <li
+                      key={course}
+                      className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400"
+                    >
+                      <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-slate-400 dark:text-slate-500" />
+                      {course}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
