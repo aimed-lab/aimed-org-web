@@ -211,7 +211,7 @@ export default function HomePage() {
               custom={1}
               className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
             >
-              Jake Y. Chen
+              Jake Y. Chen, Ph.D.
             </motion.h1>
 
             <motion.p
