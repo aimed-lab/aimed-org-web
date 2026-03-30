@@ -58,6 +58,12 @@ const currentPositions = [
     org: "UAB School of Medicine",
     period: "2019–present",
   },
+  {
+    role: "Contact MPI, CONNECT (NIH U54)",
+    dept: "Collaborative Network for Nurturing Ecosystems of Common Fund Team Science",
+    org: "NIH Office of the Director",
+    period: "2024–2029",
+  },
 ];
 
 const pastLeadership = [
@@ -65,11 +71,6 @@ const pastLeadership = [
     role: "Chief Bioinformatics Officer & Associate Director",
     org: "Informatics Institute, UAB",
     period: "2016–2023",
-  },
-  {
-    role: "Contact MPI, CONNECT (NIH U54)",
-    org: "National AI-infrastructure initiative",
-    period: "2024–2029",
   },
   {
     role: "MPI, Cell Maps for AI (CM4AI), Bridge2AI Program (NIH OT2)",
