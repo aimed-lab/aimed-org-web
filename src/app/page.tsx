@@ -268,7 +268,8 @@ export default function HomePage() {
               Contact MPI for CONNECT, an NIH U54-funded national AI-infrastructure initiative
               building AI-ready biomedical knowledge networks. Fellow of ACMI, AIMBE, and AMIA;
               ACM Distinguished Member; named among the &ldquo;Top 100 AI Leaders in Drug Discovery
-              and Healthcare&rdquo; (2019).
+              and Healthcare&rdquo; (2019); finalist for the MIRA &ldquo;Technology Educator of the
+              Year&rdquo; Award in Indiana.
             </motion.p>
 
             <motion.p
