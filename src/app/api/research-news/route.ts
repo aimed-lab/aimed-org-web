@@ -81,7 +81,7 @@ const SEARCHES = [
 const BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 
 async function searchPubMed(term: string, retmax: number): Promise<string[]> {
-  const url = `${BASE}/esearch.fcgi?db=pubmed&term=${term}&retmax=${retmax}&retmode=json&sort=pub+date`;
+  const url = `${BASE}/esearch.fcgi?db=pubmed&term=${term}&retmax=${retmax}&retmode=json`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) return [];
   const data = await res.json();
@@ -132,8 +132,8 @@ export async function GET() {
             score: scoreRelevance(title, journal),
           });
         }
-      } catch {
-        // Skip failed searches silently
+      } catch (err) {
+        console.error(`Research news fetch failed for "${topic}":`, err);
       }
     })
   );
@@ -146,6 +146,10 @@ export async function GET() {
     return db - da;
   });
 
+  console.log(`Research news: ${allItems.length} items fetched, scores: ${allItems.slice(0,5).map(i => i.score).join(',')}`);
+
+  // Filter by relevance, but fall back to all items if nothing passes
   const filtered = allItems.filter((item) => item.score >= 30);
-  return NextResponse.json(filtered.slice(0, 20));
+  const results = filtered.length > 0 ? filtered : allItems;
+  return NextResponse.json(results.slice(0, 20));
 }
