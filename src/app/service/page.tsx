@@ -116,8 +116,8 @@ const conferences = [
 ];
 
 const committees = [
-  { name: "NHLBI Progenitor Cell Translational Consortium Omics Committee", years: "2019–present" },
-  { name: "NCI Patient-derived Models of Cancer (PDMC) Steering Committee", years: "2019–present" },
+  { name: "NHLBI Progenitor Cell Translational Consortium Omics Committee", years: "2019" },
+  { name: "NCI Patient-derived Models of Cancer (PDMC) Steering Committee", years: "2019" },
   { name: "AMIA Working Group Steering Committee", years: "2018–2021" },
   { name: "National Academies IOM Committee on Regulatory Systems", years: "2011–2012" },
 ];
