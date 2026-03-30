@@ -3036,13 +3036,13 @@ async function main() {
       issuer: "TechPoint (Indiana)",
     },
     {
-      awardName: "Finalist, Indiana Techpoint MIRA Award on \u201cTechnology Innovator of the Year\u201d",
+      awardName: "Finalist, Technology Innovator of the Year MIRA Award",
       year: 2014,
       category: "Regional",
       issuer: "TechPoint (Indiana)",
     },
     {
-      awardName: "Finalist, Indiana Techpoint MIRA Award on \u201cHealthcare Information Technology\u201d",
+      awardName: "Finalist, Technology Innovator of the Year MIRA Award",
       year: 2010,
       category: "Regional",
       issuer: "TechPoint (Indiana)",
@@ -3317,9 +3317,15 @@ async function main() {
   // ─── News Items ──────────────────────────────────────────────────
   const newsItems = [
     {
-      date: new Date("2025-10-01"),
-      headline: "Jake Chen Receives UF College of Medicine Rising Star Researcher Award in Data Science/AI",
-      summary: "Recognized for pioneering contributions to AI-driven biomedical informatics and systems pharmacology research.",
+      date: new Date("2025-07-01"),
+      headline: "US Patent Filed: Inhibitors of Phosphoglycerate Dehydrogenase for Alzheimer's Disease",
+      summary: "US patent application filed by UAB for novel PHGDH inhibitors discovered through AI-driven drug repurposing, co-invented with Fuad Al Abir, Md Delower Hossain, Zhandos Sembay, and Sixue Zhang.",
+      link: null,
+    },
+    {
+      date: new Date("2025-06-01"),
+      headline: "AI.MED Lab Receives Innovation Fund Award",
+      summary: "The AI.MED lab is awarded an innovation fund to advance AI-powered drug discovery and translational research at UAB.",
       link: null,
     },
     {

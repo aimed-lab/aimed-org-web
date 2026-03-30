@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   GraduationCap,
@@ -27,6 +28,34 @@ const lineage = [
   { institution: "University of Minnesota", location: "Minneapolis, MN", period: "Ph.D." },
   { institution: "Indiana University / Purdue University", location: "Indianapolis, IN", period: "Faculty" },
   { institution: "University of Alabama at Birmingham", location: "Birmingham, AL", period: "Faculty (current)" },
+];
+
+const currentMembers = [
+  {
+    name: "Fuad Al Abir",
+    role: "PhD Student, Biomedical Informatics & Data Science",
+    photo: "/members/fuad-al-abir.jpg",
+  },
+  {
+    name: "Delower Hossain",
+    role: "PhD Student, Computer Science",
+    photo: "/members/delower-hossain.jpg",
+  },
+  {
+    name: "John Haoyuan Cheng",
+    role: "PhD Student",
+    photo: null,
+  },
+  {
+    name: "Nikhil Kurmachalam",
+    role: "MS Student",
+    photo: null,
+  },
+  {
+    name: "Geetanjali Oishe",
+    role: "PhD Student",
+    photo: null,
+  },
 ];
 
 const traineeTypes = [
@@ -161,6 +190,8 @@ const traineeCategories: {
     trainees: [
       { name: "Fuad Al Abir", degree: "PhD, Biomedical Informatics & Data Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 5 },
       { name: "Delower Hossain", degree: "PhD, Computer Science, UAB", years: "Current", current: true, role: "PhD", pubCount: 6 },
+      { name: "John Haoyuan Cheng", degree: "PhD, UAB", years: "Current", current: true, role: "PhD", pubCount: 0 },
+      { name: "Geetanjali Oishe", degree: "PhD, UAB", years: "Current", current: true, role: "PhD", pubCount: 0 },
       { name: "Kevin Song", degree: "PhD, Biomedical Engineering, UAB", years: "2023-2025", current: false, role: "PhD", pubCount: 6 },
       { name: "Radomir Slominski", degree: "MD/PhD, Genetics & Bioinformatics, UAB", years: "2022-2023", current: false, role: "PhD", pubCount: 6 },
       { name: "Samuel Bharti", degree: "PhD, Biomedical Engineering, UAB", years: "2021-2022", current: false, role: "PhD", pubCount: 2 },
@@ -175,6 +206,7 @@ const traineeCategories: {
     icon: GraduationCap,
     color: "from-emerald-500 to-teal-500",
     trainees: [
+      { name: "Nikhil Kurmachalam", degree: "MS, UAB", years: "Current", current: true, role: "MS", pubCount: 0 },
       { name: "Kevin Cao", degree: "MS, Bioinformatics, U. of Minnesota", years: "2017", current: false, role: "MS", pubCount: 0 },
       { name: "Nafisa Bulsara", degree: "MS, Bioinformatics, Indiana U.", years: "2017", current: false, role: "MS", pubCount: 0 },
       { name: "Madhura Kshirsagar", degree: "MS, Bioinformatics, Indiana U.", years: "2016", current: false, role: "MS", pubCount: 1 },
@@ -313,6 +345,58 @@ export default function TrainingPage() {
               Join a training lineage spanning three decades and multiple continents -- from Peking University to UAB, we cultivate researchers who change the world.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Current Lab Members */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
+            Current Lab Members
+          </h2>
+          <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
+            Meet the researchers currently working in the AI.MED lab
+          </p>
+        </motion.div>
+
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {currentMembers.map((member, i) => (
+            <motion.div
+              key={member.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <div className="mb-4 h-28 w-28 overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
+                {member.photo ? (
+                  <Image
+                    src={member.photo}
+                    alt={member.name}
+                    width={112}
+                    height={112}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-3xl font-bold text-slate-300 dark:text-zinc-600">
+                    {member.name.split(" ").map((n) => n[0]).join("")}
+                  </div>
+                )}
+              </div>
+              <h3 className="text-center text-base font-bold text-slate-900 dark:text-slate-100">
+                {member.name}
+              </h3>
+              <p className="mt-1 text-center text-sm text-slate-500 dark:text-slate-400">
+                {member.role}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
