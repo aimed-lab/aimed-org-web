@@ -72,7 +72,7 @@ const pastLeadership = [
     period: "2024–2029",
   },
   {
-    role: "MPI, Bridge2AI (NIH OT2)",
+    role: "MPI, Cell Maps for AI (CM4AI), Bridge2AI Program (NIH OT2)",
     org: "NIH Common Fund Program",
     period: "2022–2026",
   },
