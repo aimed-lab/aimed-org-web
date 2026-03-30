@@ -1,0 +1,197 @@
+// Prisma schema for the AI.MED Lab website
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ─── Models ────────────────────────────────��─────────────────────────────────
+// Note: SQLite doesn't support enums. Using String fields with app-level validation.
+// AppointmentType values: EDUCATION, FACULTY, INDUSTRY, VISITING
+// InquiryStatus values: NEW, REVIEWED, REPLIED, SHORTLISTED, ACCEPTED, DECLINED, ARCHIVED
+// UserRole values: ADMIN, APPLICANT
+
+model PersonProfile {
+  id              Int      @id @default(autoincrement())
+  name            String
+  title           String?
+  bio             String?
+  shortBio        String?
+  headshot        String?
+  email           String?
+  googleScholar   String?
+  orcid           String?
+  linkedin        String?
+  github          String?
+  cvUrl           String?
+  featuredMetrics String? // JSON string
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Appointment {
+  id          Int    @id @default(autoincrement())
+  institution String
+  role        String
+  department  String?
+  startYear   Int
+  endYear     Int?
+  type        String // EDUCATION, FACULTY, INDUSTRY, VISITING
+  location    String?
+  sortOrder   Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Publication {
+  id              Int      @id @default(autoincrement())
+  title           String
+  authors         String
+  year            Int
+  journal         String?
+  abstract        String?
+  doi             String?
+  pubmedId        String?
+  arxivId         String?
+  pdfUrl          String?
+  tags            String? // JSON string
+  researchLineage String?
+  articleType     String?
+  featured        Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Grant {
+  id            Int       @id @default(autoincrement())
+  agency        String
+  mechanism     String?
+  title         String
+  role          String?
+  amount        Float?
+  startDate     DateTime?
+  endDate       DateTime?
+  collaborators String?
+  status        String?
+  piName        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Talk {
+  id        Int       @id @default(autoincrement())
+  title     String
+  venue     String?
+  host      String?
+  city      String?
+  country   String?
+  date      DateTime?
+  talkType  String?
+  slidesUrl String?
+  videoUrl  String?
+  topic     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Honor {
+  id          Int     @id @default(autoincrement())
+  awardName   String
+  year        Int?
+  category    String?
+  issuer      String?
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SoftwareResource {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String?
+  url           String?
+  githubUrl     String?
+  screenshotUrl String?
+  relatedPapers String?
+  category      String?
+  featured      Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Patent {
+  id              Int     @id @default(autoincrement())
+  title           String
+  year            Int?
+  inventors       String?
+  filingInfo      String?
+  relatedResearch String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewsItem {
+  id        Int       @id @default(autoincrement())
+  date      DateTime?
+  headline  String
+  summary   String?
+  imageUrl  String?
+  link      String?
+  pinned    Boolean   @default(false)
+  published Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PhotoAsset {
+  id           Int       @id @default(autoincrement())
+  caption      String?
+  date         DateTime?
+  tags         String? // JSON string
+  galleryGroup String?
+  sourceUrl    String?
+  altText      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InquirySubmission {
+  id            Int    @id @default(autoincrement())
+  name          String
+  email         String
+  role          String?
+  interestArea  String?
+  message       String?
+  attachmentUrl String?
+  status        String @default("NEW") // NEW, REVIEWED, REPLIED, SHORTLISTED, ACCEPTED, DECLINED, ARCHIVED
+  notes         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  name     String?
+  role     String @default("APPLICANT") // ADMIN, APPLICANT
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
