@@ -1846,7 +1846,7 @@ async function main() {
   }
   console.log(`Seeded ${grants.length} grants.`)
 
-  // ─── Talks (185 total) ────────────────────────────────────
+  // ─── Talks (179 total) ────────────────────────────────────
   const talks = [
     {
       title: "Embracing The New Frontier: Artificial Intelligence in Research",
@@ -2051,11 +2051,6 @@ async function main() {
       venue: "",
       date: new Date("2018-01-01"),
       talkType: "Panel",
-    },
-    {
-      title: "Publications",
-      venue: "",
-      talkType: "Invited",
     },
     {
       title: "Cell Maps for AI",
@@ -2919,31 +2914,6 @@ async function main() {
       title: "Bio-discovery Informatics: A Case Study in Integrative Network Biology",
       venue: "Center for Information Biology and the DNA Data Bank of Japan (DDBJ), National Institute of Genetics of Japan, Mishima, Japan",
       date: new Date("2005-01-01"),
-      talkType: "Invited",
-    },
-    {
-      title: "Brain Tumor Biology",
-      venue: "Predoctoral Research Mentor, UAB",
-      talkType: "Invited",
-    },
-    {
-      title: "Multifaceted Translational Approach to Mental Illness",
-      venue: "Predoctoral Research Mentor, UAB (application pending)",
-      talkType: "Invited",
-    },
-    {
-      title: "Research Training in Engineered Tissue Constructs and Related Technologies",
-      venue: "Predoctoral Research Mentor, UAB (application pending)",
-      talkType: "Invited",
-    },
-    {
-      title: "Integrating Computational Biology Analytics into Research on the Basic Mechanisms of Diabetes",
-      venue: "Predoctoral Research Mentor, UAB (application pending)",
-      talkType: "Invited",
-    },
-    {
-      title: "Center of Excellence",
-      venue: "Grant Panel",
       talkType: "Invited",
     },
     {

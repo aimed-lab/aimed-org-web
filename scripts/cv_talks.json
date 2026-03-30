@@ -204,12 +204,6 @@
     "talkType": "Panel"
   },
   {
-    "title": "Publications",
-    "venue": "",
-    "year": null,
-    "talkType": "Invited"
-  },
-  {
     "title": "Cell Maps for AI",
     "venue": "Session on the Bridge2AI Consortium, American Medical Informatics Association (AMIA) Annual Symposium, Atlanta, GA",
     "year": 2025,
@@ -1071,36 +1065,6 @@
     "title": "Bio-discovery Informatics: A Case Study in Integrative Network Biology",
     "venue": "Center for Information Biology and the DNA Data Bank of Japan (DDBJ), National Institute of Genetics of Japan, Mishima, Japan",
     "year": 2005,
-    "talkType": "Invited"
-  },
-  {
-    "title": "Brain Tumor Biology",
-    "venue": "Predoctoral Research Mentor, UAB",
-    "year": null,
-    "talkType": "Invited"
-  },
-  {
-    "title": "Multifaceted Translational Approach to Mental Illness",
-    "venue": "Predoctoral Research Mentor, UAB (application pending)",
-    "year": null,
-    "talkType": "Invited"
-  },
-  {
-    "title": "Research Training in Engineered Tissue Constructs and Related Technologies",
-    "venue": "Predoctoral Research Mentor, UAB (application pending)",
-    "year": null,
-    "talkType": "Invited"
-  },
-  {
-    "title": "Integrating Computational Biology Analytics into Research on the Basic Mechanisms of Diabetes",
-    "venue": "Predoctoral Research Mentor, UAB (application pending)",
-    "year": null,
-    "talkType": "Invited"
-  },
-  {
-    "title": "Center of Excellence",
-    "venue": "Grant Panel",
-    "year": null,
     "talkType": "Invited"
   },
   {

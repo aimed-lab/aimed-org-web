@@ -59,7 +59,8 @@ function formatDate(dateStr: string | null): string {
 function groupByYear(talks: Talk[]): { year: number; talks: Talk[] }[] {
   const map = new Map<number, Talk[]>();
   for (const talk of talks) {
-    const y = yearFromDate(talk.date) ?? 0;
+    const y = yearFromDate(talk.date);
+    if (!y) continue; // Skip talks without a year
     if (!map.has(y)) map.set(y, []);
     map.get(y)!.push(talk);
   }
