@@ -394,6 +394,60 @@ export default function ResearchPage() {
         </div>
       </section>
 
+      {/* Research Collaborators */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeUp}
+            custom={0}
+          >
+            <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
+              Research Collaborators
+            </h2>
+            <p className="mb-10 text-center text-slate-600 dark:text-slate-400">
+              Multi-institutional partnerships advancing biomedical AI
+            </p>
+          </motion.div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {[
+              "UC San Diego",
+              "UCLA",
+              "UCSF",
+              "Stanford University",
+              "Yale University",
+              "University of Virginia",
+              "UT Health Houston",
+              "UT Austin",
+              "Simon Fraser University",
+              "University of South Florida",
+              "Universit\u00e9 de Montr\u00e9al",
+              "University of Alabama at Birmingham",
+              "Indiana University",
+              "University of Alabama",
+              "Tulane University",
+              "University of Colorado",
+              "University of Florida",
+              "Emory University",
+              "Purdue University",
+              "University of Minnesota",
+              "Medical University of South Carolina",
+              "Oregon Health & Science University",
+              "University of Wisconsin-Madison",
+            ].map((inst) => (
+              <span
+                key={inst}
+                className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-slate-300"
+              >
+                {inst}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Cross-lineage callout */}
       <motion.section
         initial="hidden"
