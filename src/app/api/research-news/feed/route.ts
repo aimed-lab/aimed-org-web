@@ -43,7 +43,7 @@ function escapeXml(s: string): string {
     .replace(/'/g, "&apos;");
 }
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const allItems: Array<{
@@ -57,7 +57,7 @@ export async function GET() {
       try {
         const searchRes = await fetch(
           `${BASE}/esearch.fcgi?db=pubmed&term=${term}&retmax=${retmax}&retmode=json&sort=pub+date`,
-          { next: { revalidate: 3600 } }
+          { cache: "no-store" }
         );
         if (!searchRes.ok) return;
         const searchData = await searchRes.json();
@@ -66,7 +66,7 @@ export async function GET() {
 
         const sumRes = await fetch(
           `${BASE}/esummary.fcgi?db=pubmed&id=${ids.join(",")}&retmode=json`,
-          { next: { revalidate: 3600 } }
+          { cache: "no-store" }
         );
         if (!sumRes.ok) return;
         const sumData = await sumRes.json();

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export const revalidate = 3600; // Cache for 1 hour
+export const dynamic = "force-dynamic"; // Always fetch fresh from PubMed
 
 interface PubMedSummary {
   uid: string;
@@ -82,7 +82,7 @@ const BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 
 async function searchPubMed(term: string, retmax: number): Promise<string[]> {
   const url = `${BASE}/esearch.fcgi?db=pubmed&term=${term}&retmax=${retmax}&retmode=json&sort=pub+date`;
-  const res = await fetch(url, { next: { revalidate: 3600 } });
+  const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) return [];
   const data = await res.json();
   return data?.esearchresult?.idlist ?? [];
@@ -91,7 +91,7 @@ async function searchPubMed(term: string, retmax: number): Promise<string[]> {
 async function fetchSummaries(ids: string[]): Promise<PubMedSummary[]> {
   if (ids.length === 0) return [];
   const url = `${BASE}/esummary.fcgi?db=pubmed&id=${ids.join(",")}&retmode=json`;
-  const res = await fetch(url, { next: { revalidate: 3600 } });
+  const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) return [];
   const data = await res.json();
   const result = data?.result ?? {};
