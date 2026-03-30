@@ -13,6 +13,8 @@ import {
   Send,
   FlaskConical,
   Users,
+  FileText,
+  X,
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
@@ -114,10 +116,18 @@ const fadeUp = {
 /* ------------------------------------------------------------------ */
 /*  Page Component                                                     */
 /* ------------------------------------------------------------------ */
+interface UploadedFile {
+  file: File;
+  label: string;
+}
+
+const FILE_LABELS = ["Cover Letter", "Resume / CV", "Transcript", "Work Sample", "Other"];
+
 export default function JoinPage() {
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
   function scrollToForm() {
     document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -373,21 +383,82 @@ export default function JoinPage() {
                   )}
                 </div>
 
-                {/* Resume / CV Upload */}
+                {/* Supporting Documents */}
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Resume / CV Upload
+                    Supporting Documents
                   </label>
+                  <div className="rounded-lg border border-emerald-200 bg-emerald-50/50 px-4 py-3 dark:border-emerald-900 dark:bg-emerald-950/20 mb-3">
+                    <p className="text-xs leading-relaxed text-emerald-800 dark:text-emerald-300">
+                      <strong>Tip:</strong> Serious inquirers should include a <strong>cover letter</strong>, a <strong>resume / CV</strong>, and <strong>up-to-date undergraduate or graduate transcripts</strong>. You may also attach work samples such as publications, code portfolios, or project reports.
+                    </p>
+                  </div>
+
+                  {/* Uploaded files list */}
+                  {uploadedFiles.length > 0 && (
+                    <div className="mb-3 space-y-2">
+                      {uploadedFiles.map((uf, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-zinc-800"
+                        >
+                          <FileText className="h-4 w-4 shrink-0 text-emerald-600" />
+                          <span className="flex-1 truncate text-sm text-slate-700 dark:text-slate-300">
+                            {uf.file.name}
+                          </span>
+                          <select
+                            value={uf.label}
+                            onChange={(e) => {
+                              const updated = [...uploadedFiles];
+                              updated[idx] = { ...uf, label: e.target.value };
+                              setUploadedFiles(updated);
+                            }}
+                            className="rounded border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-700 dark:border-zinc-600 dark:bg-zinc-700 dark:text-slate-300"
+                          >
+                            {FILE_LABELS.map((l) => (
+                              <option key={l} value={l}>{l}</option>
+                            ))}
+                          </select>
+                          <button
+                            type="button"
+                            onClick={() => setUploadedFiles(uploadedFiles.filter((_, i) => i !== idx))}
+                            className="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20"
+                            aria-label="Remove file"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Add files button */}
                   <div className="flex items-center gap-3 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-4 dark:border-zinc-700 dark:bg-zinc-800">
                     <Upload className="h-5 w-5 text-slate-400" />
                     <input
-                      name="cv"
                       type="file"
                       accept=".pdf,.doc,.docx"
+                      multiple
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files ?? []);
+                        const newFiles = files.map((f) => {
+                          const name = f.name.toLowerCase();
+                          let label = "Other";
+                          if (name.includes("cover") || name.includes("letter")) label = "Cover Letter";
+                          else if (name.includes("resume") || name.includes("cv")) label = "Resume / CV";
+                          else if (name.includes("transcript")) label = "Transcript";
+                          else if (name.includes("sample") || name.includes("portfolio") || name.includes("paper")) label = "Work Sample";
+                          return { file: f, label };
+                        });
+                        setUploadedFiles((prev) => [...prev, ...newFiles]);
+                        e.target.value = "";
+                      }}
                       className="text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-emerald-700 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-white hover:file:bg-emerald-800 dark:text-slate-400"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-slate-400">PDF, DOC, or DOCX (max 10 MB)</p>
+                  <p className="mt-1 text-xs text-slate-400">
+                    PDF, DOC, or DOCX (max 10 MB each). You may upload multiple files.
+                  </p>
                 </div>
 
                 {/* Submit */}
