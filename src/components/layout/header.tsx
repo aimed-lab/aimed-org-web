@@ -14,6 +14,7 @@ const navLinks = [
   { label: "Honors", href: "/honors" },
   { label: "Training", href: "/training" },
   { label: "Software", href: "/software" },
+  { label: "Service", href: "/service" },
   { label: "News", href: "/news" },
   { label: "Join", href: "/join" },
 ]
