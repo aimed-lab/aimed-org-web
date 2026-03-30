@@ -31,49 +31,49 @@
   },
   {
     "title": "PAGER-CoV: An Online Curated Gene Signature Database Resource for Coronavirus Disease Functional Genomic Studies",
-    "venue": "19th International Workshop on Data Mining in Bioinformatics (BIOKDD), 2020 Annual ACM KDD Conference, San Diego, CA (virtual).",
+    "venue": "19th International Workshop on Data Mining in Bioinformatics (BIOKDD), 2020 Annual ACM KDD Conference, San Diego, CA (virtual)",
     "year": 2020,
     "talkType": "Keynote"
   },
   {
     "title": "Modeling Networks to Accelerate Biomedical Discoveries in Translational Medicine",
-    "venue": "2nd International Translational and Regenerative Medicine Conference, Valencia, Spain.",
+    "venue": "2nd International Translational and Regenerative Medicine Conference, Valencia, Spain",
     "year": 2019,
     "talkType": "Keynote"
   },
   {
     "title": "Network Biology Modeling in Translational Bioinformatics",
-    "venue": "Workshop on Knowledge Discovery and Data Mining in Bioinformatics (BIOKDD), 2018 Annual ACM KDD Conference, London, UK.",
+    "venue": "Workshop on Knowledge Discovery and Data Mining in Bioinformatics (BIOKDD), 2018 Annual ACM KDD Conference, London, UK",
     "year": 2018,
     "talkType": "Keynote"
   },
   {
     "title": "Unravel Complex Patterns in Omics Data with Integrative GNPA Tools",
-    "venue": "6th Annual LA Conference on Computational Biology & Bioinformatics, Baton Rouge, LA.",
+    "venue": "6th Annual LA Conference on Computational Biology & Bioinformatics, Baton Rouge, LA",
     "year": 2018,
     "talkType": "Keynote"
   },
   {
     "title": "Modeling Drug Efficacy Using Network Pharmacology",
-    "venue": "Annual Cambridge Health Institute Molecular Medicine Tri-conference, San Francisco, CA.",
+    "venue": "Annual Cambridge Health Institute Molecular Medicine Tri-conference, San Francisco, CA",
     "year": 2012,
     "talkType": "Keynote"
   },
   {
     "title": "Translational Bioinformatics: Power Tools for Predictive and Personalized Medicine",
-    "venue": "International Symposium on Biocomputing, Calicut, Kerala, India.",
+    "venue": "International Symposium on Biocomputing, Calicut, Kerala, India",
     "year": 2010,
     "talkType": "Keynote"
   },
   {
     "title": "ProteoLens: a Visual Analytic Tool for Multi-scale Database-driven Biological Network Data Mining",
-    "venue": "Fifth Annual Conference of the MidSouth Computational Biology and Bioinformatics Society, Oklahoma City, OK.",
+    "venue": "Fifth Annual Conference of the MidSouth Computational Biology and Bioinformatics Society, Oklahoma City, OK",
     "year": 2008,
     "talkType": "Keynote"
   },
   {
     "title": "Translational Systems Biology: A Prelude",
-    "venue": "2nd IEEE International Workshop on Data Mining in Bioinformatics, at the IEEE International Conference on Bioinformatics and Biomedicine (BIBM), Fremont, CA.",
+    "venue": "2nd IEEE International Workshop on Data Mining in Bioinformatics, at the IEEE International Conference on Bioinformatics and Biomedicine (BIBM), Fremont, CA",
     "year": 2007,
     "talkType": "Keynote"
   },
@@ -205,7 +205,7 @@
   },
   {
     "title": "Publications",
-    "venue": ".",
+    "venue": "",
     "year": null,
     "talkType": "Invited"
   },
@@ -217,7 +217,7 @@
   },
   {
     "title": "Decentralizing AI-accelerated Drug Discovery",
-    "venue": "Session on Pharmacoinformatics: Integrating Data Science and Artificial Intelligence \ninto Drug Life Cycle, AMIA Annual Symposium, Atlanta, GA",
+    "venue": "Session on Pharmacoinformatics: Integrating Data Science and Artificial Intelligence into Drug Life Cycle, AMIA Annual Symposium, Atlanta, GA",
     "year": 2025,
     "talkType": "Invited"
   },
@@ -313,115 +313,115 @@
   },
   {
     "title": "Community-based Team Data Science Platform with U-BRITE",
-    "venue": ", BioTechX, Basel, Switzerland.",
+    "venue": "BioTechX, Basel, Switzerland",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Navigating an Academia-industry dual-track career: how I tailored it to have the best of both worlds?",
-    "venue": ", 2022 AMIA Annual Symposium, Washington, DC.",
+    "venue": "2022 AMIA Annual Symposium, Washington, DC",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Cancer Patient Stratification and Molecular Mechanism Identification Using Patient Clinotypes and Transcriptomic Embeddings",
-    "venue": ", 21st European Conference on Computational Biology and Bioinformatics (ECCB), Sitges, Spain.",
+    "venue": "21st European Conference on Computational Biology and Bioinformatics (ECCB), Sitges, Spain",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "21st BIOKDD Opening Remark",
-    "venue": ", 21st International Workshop on Data Mining in Bioinformatics, 2022 ACM Conference on Knowledge Discovery and Data Mining (KDD), Washington, DC.",
+    "venue": "21st International Workshop on Data Mining in Bioinformatics, 2022 ACM Conference on Knowledge Discovery and Data Mining (KDD), Washington, DC",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "New Toolkits for Disease Network Biology",
-    "venue": ", Session on AI/ML in Biomedical Research with Big Data, 31st Annual Symposium for the International Chinese Statistical Association (ICSA), Gainesville, FL.",
+    "venue": "Session on AI/ML in Biomedical Research with Big Data, 31st Annual Symposium for the International Chinese Statistical Association (ICSA), Gainesville, FL",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Out-gaming Cancer with AI and Systems Biology Models",
-    "venue": "Drug Discovery and Therapy Session, Elsevier Conference on The Future of Medicine: Development and Applications of AI in Disease Biology and Health Care, held virtually online.",
+    "venue": "Drug Discovery and Therapy Session, Elsevier Conference on The Future of Medicine: Development and Applications of AI in Disease Biology and Health Care, held virtually online",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Data-driven Medicine",
-    "venue": ", BioData World Congress 2021, Basel, Switzerland.",
+    "venue": "BioData World Congress 2021, Basel, Switzerland",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "PAGER-CoV-Run: An Online Interactive Analytical Platform for COVID-19 Functional genomic Downstream Analysis",
-    "venue": ", AMIA 2021 Annual Symposium, San Diego, CA.",
+    "venue": "AMIA 2021 Annual Symposium, San Diego, CA",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Developing PAGER-CoV: A Comprehensive Knowledgebase Enabling COVID-19 Functional Genomic Studies",
-    "venue": ", Mitochondria-Targeted Drug Development Summit, held virtually online.",
+    "venue": "Mitochondria-Targeted Drug Development Summit, held virtually online",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Discover Gene Expression Spatial Patterns from Single-cell RNA-seq Data Embeddings",
-    "venue": ", International Genomics Proteomics and Bioinformatics Frontier Symposium (GFS), held virtually online.",
+    "venue": "International Genomics Proteomics and Bioinformatics Frontier Symposium (GFS), held virtually online",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "Data-driven Medicine: Lessons from Community-based Data Science Efforts to Fight COVID-19",
-    "venue": ", BioData World Congress 2020, held virtually online.",
+    "venue": "BioData World Congress 2020, held virtually online",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "Identifying Glioblastoma Multiform (GBM) Subtypes with Robust and Interpretable Gene Signatures",
-    "venue": "2nd Patient-derived Models of Cancer (PDMC) Consortium Annual Meeting, held virtually online.",
+    "venue": "2nd Patient-derived Models of Cancer (PDMC) Consortium Annual Meeting, held virtually online",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "PAGER-CoV: A Comprehensive Collection of Pathways, Annotated Gene Lists, and Gene Signatures for Coronavirus Disease Biology Studies",
-    "venue": "4th Annual NHLBI Progenitor Cell Translational Consortium (PCTC) Meeting, held virtually online.",
+    "venue": "4th Annual NHLBI Progenitor Cell Translational Consortium (PCTC) Meeting, held virtually online",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "U-BRITE 2.0: An Overview",
-    "venue": "U-BRITE Day Symposium, UAB, Birmingham, AL.",
+    "venue": "U-BRITE Day Symposium, UAB, Birmingham, AL",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "Cancer Informatics: Understanding and Winning the Games of Cancer",
-    "venue": "ISCB Student Regional Group \u2013 Southeast USA Computational Biology Second Annual Symposium, St. Petersburg, FL.",
+    "venue": "ISCB Student Regional Group \u2013 Southeast USA Computational Biology Second Annual Symposium, St. Petersburg, FL",
     "year": 2019,
     "talkType": "Invited"
   },
   {
     "title": "U-BRITE: Biocomputing Infrastructure to Accelerate Data-intensive Translational Science",
-    "venue": "BioData World Congress 2019, Basel, Switzerland.",
+    "venue": "BioData World Congress 2019, Basel, Switzerland",
     "year": 2019,
     "talkType": "Invited"
   },
   {
     "title": "Deciphering the Interaction between Tumor Heterogeneity and Microenvironment to Model Glioblastoma Biology and Therapeutic Response",
-    "venue": "NIH Investigator\u2019s Workshop on Biological Comparisons in Patient-derived Models of Cancer, San Francisco, CA.",
+    "venue": "NIH Investigator\u2019s Workshop on Biological Comparisons in Patient-derived Models of Cancer, San Francisco, CA",
     "year": 2019,
     "talkType": "Invited"
   },
   {
     "title": "Biological Data Mining and BIOKDD: An Introduction",
-    "venue": "18th International Workshop on Data Mining in Biology (BIOKDD \u201919), Anchorage, AL.",
+    "venue": "18th International Workshop on Data Mining in Biology (BIOKDD \u201919), Anchorage, AL",
     "year": 2019,
     "talkType": "Invited"
   },
   {
     "title": "Enabling Genomic Data Science for Translational Medicine",
-    "venue": "2nd International Translational and Regenerative Medicine Conference, Valencia, Spain.",
+    "venue": "2nd International Translational and Regenerative Medicine Conference, Valencia, Spain",
     "year": 2019,
     "talkType": "Invited"
   },
@@ -433,229 +433,229 @@
   },
   {
     "title": "Computational Approaches to Biomarker Discovery",
-    "venue": "International Conference on Disease Biomarkers and Precision Medicine, Houston, TX.",
+    "venue": "International Conference on Disease Biomarkers and Precision Medicine, Houston, TX",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "Network Medicine: From Multi-omics Analysis to Drug Repositioning",
-    "venue": "Annual Conference on Intelligent Systems for Molecular Biology (ISMB), Chicago, IL.",
+    "venue": "Annual Conference on Intelligent Systems for Molecular Biology (ISMB), Chicago, IL",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "Super Gene Sets",
-    "venue": "15th Annual Mid-South Conference on Bioinformatics (MCBIOS), Starkville, MS.",
+    "venue": "15th Annual Mid-South Conference on Bioinformatics (MCBIOS), Starkville, MS",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "MidSouth Conference on Bioinformatics and Computational Biology 2019",
-    "venue": "15th Annual Mid-South Conference on Bioinformatics (MCBIOS), Starkville, MS.",
+    "venue": "15th Annual Mid-South Conference on Bioinformatics (MCBIOS), Starkville, MS",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics: Catching the Wave of Digital Intelligence Revolution in Medicine",
-    "venue": "1st Annual UAB Research Roundtable, Birmingham, AL.",
+    "venue": "1st Annual UAB Research Roundtable, Birmingham, AL",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "Systems Biology Modeling of Cancer Cells for Drug Reposition Simulations",
-    "venue": "Symposium on Digital Human for Drug Development, West Lafayette, IN.",
+    "venue": "Symposium on Digital Human for Drug Development, West Lafayette, IN",
     "year": 2015,
     "talkType": "Invited"
   },
   {
     "title": "A New Systems Pharmacology Approach towards Drug Repositioning",
-    "venue": "246th American Chemical Society National Meeting, Indianapolis, IN.",
+    "venue": "246th American Chemical Society National Meeting, Indianapolis, IN",
     "year": 2013,
     "talkType": "Invited"
   },
   {
     "title": "Genome-scale Meta-analysis of Type-2 Diabetes Genetic Risks",
-    "venue": "the Second International Conference on Environmental Omics, Seoul, South Korea.",
+    "venue": "the Second International Conference on Environmental Omics, Seoul, South Korea",
     "year": 2013,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics: An Alzheimer\u2019s Disease Biomarker Discovery Case Study",
-    "venue": "the Second International Conference on Environmental Omics, Seoul, South Korea.",
+    "venue": "the Second International Conference on Environmental Omics, Seoul, South Korea",
     "year": 2013,
     "talkType": "Invited"
   },
   {
     "title": "Predicting Adverse Side Effects of Drugs Using Systems Pharmacology",
-    "venue": "Cambridge Health Institute\u2019s Twelfth Annual BioITWorld Conference & Expo, Boston, MA.",
+    "venue": "Cambridge Health Institute\u2019s Twelfth Annual BioITWorld Conference & Expo, Boston, MA",
     "year": 2013,
     "talkType": "Invited"
   },
   {
     "title": "Advancing Systems Pharmacology with Translational Bioinformatics Tools",
-    "venue": "Cambridge Health Institute\u2019s Annual Molecular Medicine Tri-conference, San Francisco, CA.",
+    "venue": "Cambridge Health Institute\u2019s Annual Molecular Medicine Tri-conference, San Francisco, CA",
     "year": 2012,
     "talkType": "Invited"
   },
   {
     "title": "Accelerating Biomarker Discovery through Visual Analytics",
-    "venue": "Cambridge Healthtech Institute\u2019s Third Annual ADAPT Conference, Philadelphia, PA.",
+    "venue": "Cambridge Healthtech Institute\u2019s Third Annual ADAPT Conference, Philadelphia, PA",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "Predictive and Personalized Medicine: Where are we now?",
-    "venue": "Alivio Medical Center 10th Anniversary Medical Symposium, Indianapolis, IN.",
+    "venue": "Alivio Medical Center 10th Anniversary Medical Symposium, Indianapolis, IN",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "Omics and Pathway Integration for Knowledge Discovery",
-    "venue": "Annual Indiana Colorectal Cancer Engineering Symposium, Indianapolis, IN.",
+    "venue": "Annual Indiana Colorectal Cancer Engineering Symposium, Indianapolis, IN",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "High Content Mining of Disease Biomarkers",
-    "venue": "17th CHI International Molecular Medicine Tri-conference, San Francisco, CA.",
+    "venue": "17th CHI International Molecular Medicine Tri-conference, San Francisco, CA",
     "year": 2010,
     "talkType": "Invited"
   },
   {
     "title": "PEPPI: A Peptidomics Database of Protein Isoforms in Human",
-    "venue": "The Seventh Annual Conference of the MidSouth Computational Biology and Bioinformatics Society, Jonesboro, AK.",
+    "venue": "The Seventh Annual Conference of the MidSouth Computational Biology and Bioinformatics Society, Jonesboro, AK",
     "year": 2010,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics for Genome Medicine",
-    "venue": "InnovationWell Annual Meeting, Bryn Mawr College, Philadelphia, PA.",
+    "venue": "InnovationWell Annual Meeting, Bryn Mawr College, Philadelphia, PA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics: an Introduction",
-    "venue": "InnovationWell Annual Meeting, Bryn Mawr College, Philadelphia, PA.",
+    "venue": "InnovationWell Annual Meeting, Bryn Mawr College, Philadelphia, PA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Next-generation Biomarker Discovery: A Systems Biology Perspective",
-    "venue": "Quantitative Pharmacology Summit, Eli Lilly and Company, Indianapolis, IN.",
+    "venue": "Quantitative Pharmacology Summit, Eli Lilly and Company, Indianapolis, IN",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Network Multi-marker Panel: Towards Next-generation Robust and Interpretable Biomarkers",
-    "venue": "CHI Accelerating Discovery and Advancing Personalized Therapy Conference, Washington, DC.",
+    "venue": "CHI Accelerating Discovery and Advancing Personalized Therapy Conference, Washington, DC",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Turbo-charging Biomedical Knowledge Discoveries",
-    "venue": "Indiana Pervasive Technology Laboratory and Research Technology Showcase Day, IUPUI, Indianapolis, IN.",
+    "venue": "Indiana Pervasive Technology Laboratory and Research Technology Showcase Day, IUPUI, Indianapolis, IN",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Cancer Clinical Proteomics",
-    "venue": "Informatics, Biomedical Informatics, and Translational Research Mini-Conference, Windber Research Institute, Windber, PA.",
+    "venue": "Informatics, Biomedical Informatics, and Translational Research Mini-Conference, Windber Research Institute, Windber, PA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Translational Systems Biology",
-    "venue": "Mini-symposium of DARPA Delegates and IUPUI Signature Center Directors, Indiana University \u2013 Purdue University, Indianapolis, IN.",
+    "venue": "Mini-symposium of DARPA Delegates and IUPUI Signature Center Directors, Indiana University \u2013 Purdue University, Indianapolis, IN",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Web 2.0 Tools and its Impact on the Quality of Teaching and Learning",
-    "venue": "Annual Edward C. Moore Symposium, Indiana University \u2013 Purdue University, Indianapolis, IN.",
+    "venue": "Annual Edward C. Moore Symposium, Indiana University \u2013 Purdue University, Indianapolis, IN",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Translational Systems Biology: Bridging Gaps for Genome Medicine",
-    "venue": "16th CHI International Molecular Medicine Tri-Conference, San Francisco, CA.",
+    "venue": "16th CHI International Molecular Medicine Tri-Conference, San Francisco, CA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Bio-computing and Knowledge Discovery of Molecular Networks",
-    "venue": "e-Bioinformatics Workshop at the 4th IEEE International Conference on E-Science, Indianapolis, IN.",
+    "venue": "e-Bioinformatics Workshop at the 4th IEEE International Conference on E-Science, Indianapolis, IN",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Characterizing the Human Plasma Proteome",
-    "venue": "Midwest Computational Biology and Bioinformatics Symposium, University of Illinois, Urbana-Champion, IL.",
+    "venue": "Midwest Computational Biology and Bioinformatics Symposium, University of Illinois, Urbana-Champion, IL",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics: Challenges for New Computational Tools",
-    "venue": "Panel: Computational Biology, at Innovation in Life Science & Healthcare Research & Product Development Meeting, Philadelphia, PA.",
+    "venue": "Panel: Computational Biology, at Innovation in Life Science & Healthcare Research & Product Development Meeting, Philadelphia, PA",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "A Translational Systems Biology Approach to Panel Biomarker Discoveries",
-    "venue": "Biomarker Discovery Summit 2008, Philadelphia, PA.",
+    "venue": "Biomarker Discovery Summit 2008, Philadelphia, PA",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Molecular Connectivity and Network Biology Tools for Complex Disease Studies",
-    "venue": "Indiana University \u2013 University of Notre Dame Biomedical Research Collaboration Mini-Symposium, Biocomplexity Institute, University of Notre Dame, South Bend, IN.",
+    "venue": "Indiana University \u2013 University of Notre Dame Biomedical Research Collaboration Mini-Symposium, Biocomplexity Institute, University of Notre Dame, South Bend, IN",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics",
-    "venue": "Purdue \u2013 Intel Bioscience Technology Summit, Bindley Bioscience Center, Purdue University Discovery Park, West Lafayette, IN.",
+    "venue": "Purdue \u2013 Intel Bioscience Technology Summit, Bindley Bioscience Center, Purdue University Discovery Park, West Lafayette, IN",
     "year": 2007,
     "talkType": "Invited"
   },
   {
     "title": "Introduction to BIOKDD \u201907",
-    "venue": "7th International Workshop on Data Mining in Bioinformatics, ACM SIGKDD Conference, San Jose, CA.",
+    "venue": "7th International Workshop on Data Mining in Bioinformatics, ACM SIGKDD Conference, San Jose, CA",
     "year": 2007,
     "talkType": "Invited"
   },
   {
     "title": "Network Biology Research: Connecting the Dots in Biology",
-    "venue": "Indiana University School of Informatics Bioinformatics Faculty Retreat, Bradford Woods, IN.",
+    "venue": "Indiana University School of Informatics Bioinformatics Faculty Retreat, Bradford Woods, IN",
     "year": 2007,
     "talkType": "Invited"
   },
   {
     "title": "Informatics-driven Systems Biology Research Supporting Translational Biomedical Discoveries",
-    "venue": "Indiana State Legislature Tech Conference, Indianapolis, IN.",
+    "venue": "Indiana State Legislature Tech Conference, Indianapolis, IN",
     "year": 2006,
     "talkType": "Invited"
   },
   {
     "title": "Enabling \u2018Fat Queries\u2019 on a TeraGrid-powered Systems Biology Data Warehouse",
-    "venue": "TeraGrid Conference \u201806, Indianapolis, IN.",
+    "venue": "TeraGrid Conference \u201806, Indianapolis, IN",
     "year": 2006,
     "talkType": "Invited"
   },
   {
     "title": "Sequence Search Capabilities in the Database",
-    "venue": "Invited Presentation, Oracle Life Sciences User Group Meeting, OracleWorld Conference 2003, San Francisco, CA.",
+    "venue": "Invited Presentation, Oracle Life Sciences User Group Meeting, OracleWorld Conference 2003, San Francisco, CA",
     "year": 2003,
     "talkType": "Invited"
   },
   {
     "title": "Managing High-throughput Human Proteomics Data",
-    "venue": "CHI Beyond Genome: 11th Annual Bioinformatics and Genome Research Conference, San Diego, CA.",
+    "venue": "CHI Beyond Genome: 11th Annual Bioinformatics and Genome Research Conference, San Diego, CA",
     "year": 2002,
     "talkType": "Invited"
   },
   {
     "title": "Data-driven Biology with CFDE: Connecting Communities of Resources",
-    "venue": ", dkNET Webinar, Network of Resources by the US National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK), held virtually online.",
+    "venue": "dkNET Webinar, Network of Resources by the US National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK), held virtually online",
     "year": 2025,
     "talkType": "Invited"
   },
@@ -667,13 +667,13 @@
   },
   {
     "title": "AI in Medicine: Can we push the frontiers of medicine with AI?",
-    "venue": "Invited Webinar, Department of Artificial Intelligence and Informatics (AI&I), Mayo Clinic, held virtually online.",
+    "venue": "Invited Webinar, Department of Artificial Intelligence and Informatics (AI&I), Mayo Clinic, held virtually online",
     "year": 2023,
     "talkType": "Invited"
   },
   {
     "title": "AI in Medicine and Healthcare: An Introduction",
-    "venue": "Invited Seminar, joint among Deep South Resource Center for Minority Aging Research, UAB Minority Health & Health Equities Research Center, Center for Outcomes and Effectiveness Research and Education, and Center for Clinical and Translational Science, held virtually online.",
+    "venue": "Invited Seminar, joint among Deep South Resource Center for Minority Aging Research, UAB Minority Health & Health Equities Research Center, Center for Outcomes and Effectiveness Research and Education, and Center for Clinical and Translational Science, held virtually online",
     "year": 2023,
     "talkType": "Invited"
   },
@@ -685,391 +685,391 @@
   },
   {
     "title": "Pivoting Towards AI: A Bioinformatician\u2019s Perspective",
-    "venue": "Career Development Seminar Series, by the MidSouth Computational Biology and Bioinformatics Society, held virtually online.",
+    "venue": "Career Development Seminar Series, by the MidSouth Computational Biology and Bioinformatics Society, held virtually online",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Informatics and AI in Biology and Medicine",
-    "venue": ", Chinese Association for Science and Technology USA (CAST-USA) Seminar Series, held virtually online.",
+    "venue": "Chinese Association for Science and Technology USA (CAST-USA) Seminar Series, held virtually online",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Advancing Transformative and Translational Bioinformatics at UAB",
-    "venue": ", Institute for Informatics, Washington University at St. Louis, MO",
+    "venue": "Institute for Informatics, Washington University at St. Louis, MO",
     "year": 2022,
     "talkType": "Invited"
   },
   {
     "title": "Integrative Systems Biology Modeling for Precision Oncology",
-    "venue": ", Center for Precision Health Seminar in Precision Medicine, University of Texas Health Science Center at Houston (online)",
+    "venue": "Center for Precision Health Seminar in Precision Medicine, University of Texas Health Science Center at Houston (online)",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Biomedical Informatics: Opportunities for Research, Education, and Broader Impact",
-    "venue": ", Invited Seminar, Cincinnati Children\u2019s Hospital Medical Center, Cincinnati, OH",
+    "venue": "Invited Seminar, Cincinnati Children\u2019s Hospital Medical Center, Cincinnati, OH",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Data Science and AI Frontiers in Medicine",
-    "venue": ", Data Science Seminar, Shipt, Inc., Birmingham, AL (online)",
+    "venue": "Data Science Seminar, Shipt, Inc., Birmingham, AL (online)",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Disease Biology Modeling in the Era of Data-Driven Medicine",
-    "venue": ", Invited Seminar, Cincinnati Children\u2019s Hospital Medical Center, Cincinnati, OH (online)",
+    "venue": "Invited Seminar, Cincinnati Children\u2019s Hospital Medical Center, Cincinnati, OH (online)",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Big Data, AI, and Team Science in Medicine: Challenges and Opportunities",
-    "venue": ", Invited Seminar, Virginia Commonwealth University, Richmond, VA (online).",
+    "venue": "Invited Seminar, Virginia Commonwealth University, Richmond, VA (online)",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "Developing PAGER-CoV: A Comprehensive Knowledgebase Enabling COVID-19 Functional Genomic Studies",
-    "venue": ", Invited Seminar, Next-generation Intelligent Science Training Society, Ann Arbor, MI (online).",
+    "venue": "Invited Seminar, Next-generation Intelligent Science Training Society, Ann Arbor, MI (online)",
     "year": 2021,
     "talkType": "Invited"
   },
   {
     "title": "The Coronavirus (COVID-19) Outbreak and Data-driven Healthcare: A\u00a0Biomedical\u00a0Informatics Perspective",
-    "venue": ", Special Seminar, the University of Alabama at Birmingham, Birmingham, AL.",
+    "venue": "Special Seminar, the University of Alabama at Birmingham, Birmingham, AL",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics: Data Science that Helps us Fight Against Virus and Cancer",
-    "venue": ", Genetics Department Seminar, Louisiana State University Health Sciences Center, New Orleans, LA.",
+    "venue": "Genetics Department Seminar, Louisiana State University Health Sciences Center, New Orleans, LA",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "Advancing and AI.MED Research Agenda for Cancer Informatics",
-    "venue": ", Markey Research Seminar, University of Kentucky Markey Cancer Center, Lexington, KY.",
+    "venue": "Markey Research Seminar, University of Kentucky Markey Cancer Center, Lexington, KY",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "Precision Drug Repositioning",
-    "venue": ", IUPUI School of Informatics Colloquia, Indianapolis, IN.",
+    "venue": "IUPUI School of Informatics Colloquia, Indianapolis, IN",
     "year": 2020,
     "talkType": "Invited"
   },
   {
     "title": "From Data Science to Precision Medicine: Unique Research Opportunities in Translational Bioinformatics",
-    "venue": ", School of Dentistry, University of Mississippi Medical Center, Jackson, MS.",
+    "venue": "School of Dentistry, University of Mississippi Medical Center, Jackson, MS",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "Data Engineering, Science, and Artistry: Informatics Approaches that Save Lives and Cure Cancer?",
-    "venue": ", Department of Mathematics and Computer Science, Emory University, Atlanta, GA.",
+    "venue": "Department of Mathematics and Computer Science, Emory University, Atlanta, GA",
     "year": 2017,
     "talkType": "Invited"
   },
   {
     "title": "Super Gene Sets for Omics Data Downstream Analysis",
-    "venue": ", Department of Biostatistics and Bioinformatics, Rollins School of Public Health, Emory University, Atlanta, GA.",
+    "venue": "Department of Biostatistics and Bioinformatics, Rollins School of Public Health, Emory University, Atlanta, GA",
     "year": 2017,
     "talkType": "Invited"
   },
   {
     "title": "Transforming Omics data and visual storytelling",
-    "venue": ", UAB 1st Annual Translational Bioinformatics Mini-Symposium, Birmingham, AL.",
+    "venue": "UAB 1st Annual Translational Bioinformatics Mini-Symposium, Birmingham, AL",
     "year": 2017,
     "talkType": "Invited"
   },
   {
     "title": "GeneTerrain Knowledge Maps: A Visual Analytic Platform for Complex Disease Molecular Systems Exploration and Classifications",
-    "venue": ", Joint UAB Genetic Department and HudsonAlpha Biotechnology Institute Seminar, Guntersville, AL.",
+    "venue": "Joint UAB Genetic Department and HudsonAlpha Biotechnology Institute Seminar, Guntersville, AL",
     "year": 2016,
     "talkType": "Invited"
   },
   {
     "title": "Integrative Modeling of Biological Systems with the new GeneTerrain Software Platform",
-    "venue": ", Asuragen, Inc., Austin, TX.",
+    "venue": "Asuragen, Inc., Austin, TX",
     "year": 2015,
     "talkType": "Invited"
   },
   {
     "title": "Network Medicine: from Biomedical Big Data to Medicine 2.0",
-    "venue": "Applied Mathematics and Statistics Departmental Seminar, University of Notre Dame, South Bend, IN.",
+    "venue": "Applied Mathematics and Statistics Departmental Seminar, University of Notre Dame, South Bend, IN",
     "year": 2014,
     "talkType": "Invited"
   },
   {
     "title": "Systems Pharmacology: Are we ready for predicting new uses of old drugs?",
-    "venue": "Bioinformatics Seminar, Purdue University, West Lafayette, IN.",
+    "venue": "Bioinformatics Seminar, Purdue University, West Lafayette, IN",
     "year": 2013,
     "talkType": "Invited"
   },
   {
     "title": "Advanced Analytics: A Primer",
-    "venue": "KeLabs, Carmel, IN.",
+    "venue": "KeLabs, Carmel, IN",
     "year": 2012,
     "talkType": "Invited"
   },
   {
     "title": "Informatics Solutions Enabling Predictive and Personalized Medicine",
-    "venue": "Translational Science & Technology, Eli & Lilly Company, Indianapolis, IN.",
+    "venue": "Translational Science & Technology, Eli & Lilly Company, Indianapolis, IN",
     "year": 2012,
     "talkType": "Invited"
   },
   {
     "title": "Modeling Drug Efficacy and Side Effects using Systems Pharmacology",
-    "venue": "Department of Computer Science and Engineering, Case Western Reserve University, Cleveland, OH.",
+    "venue": "Department of Computer Science and Engineering, Case Western Reserve University, Cleveland, OH",
     "year": 2012,
     "talkType": "Invited"
   },
   {
     "title": "Predictive and Personalized Medicine: Computational Challenges and Opportunities",
-    "venue": "Department of Biomedical Informatics, Arizona State University, Scottsdale, AZ.",
+    "venue": "Department of Biomedical Informatics, Arizona State University, Scottsdale, AZ",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "Plans for Analysis of Type 2-Diabetes Clinical and Health Survey Data",
-    "venue": "Fairbanks Institute, Indianapolis, IN.",
+    "venue": "Fairbanks Institute, Indianapolis, IN",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "Computational Drug Discovery using Translational Bioinformatics",
-    "venue": "LONI Institute/LA-SiGMA Seminar series, Louisiana Optical Network Initiative (LONI) Institute, New Orleans, LA.",
+    "venue": "LONI Institute/LA-SiGMA Seminar series, Louisiana Optical Network Initiative (LONI) Institute, New Orleans, LA",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "Drug Discovery and Repurposing with Translational Bioinformatics",
-    "venue": "Biomedical Research Seminar Series, University of Texas Health Sciences Center at San Antonio, San Antonio, UT.",
+    "venue": "Biomedical Research Seminar Series, University of Texas Health Sciences Center at San Antonio, San Antonio, UT",
     "year": 2011,
     "talkType": "Invited"
   },
   {
     "title": "Bioinformatics in Biomarker Discovery",
-    "venue": "DBS Translational Biomedical Research Seminar Series, University of Illinois Urbana-Champion, Champion-Urbana, IL.",
+    "venue": "DBS Translational Biomedical Research Seminar Series, University of Illinois Urbana-Champion, Champion-Urbana, IL",
     "year": 2010,
     "talkType": "Invited"
   },
   {
     "title": "Biomarker Discovery: Computational Challenges and Opportunities",
-    "venue": "Department of Computer Science, the University of Texas at San Antonio, San Antonio, TX.",
+    "venue": "Department of Computer Science, the University of Texas at San Antonio, San Antonio, TX",
     "year": 2010,
     "talkType": "Invited"
   },
   {
     "title": "Finding Biomarkers and Drugs in Silico: A Translational Bioinformatics Approach",
-    "venue": "Department of Biomedical Informatics, Ohio State University Medical Center, Columbus, OH.",
+    "venue": "Department of Biomedical Informatics, Ohio State University Medical Center, Columbus, OH",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Enabling Informatics Methods to Biomarker Discovery",
-    "venue": "Jefferson Medical College, Thomas Jefferson University, Philadelphia, PA.",
+    "venue": "Jefferson Medical College, Thomas Jefferson University, Philadelphia, PA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics for Genome Medicine",
-    "venue": "Department of Computer Science and Engineering, Institute of Technology, University of Minnesota, Twin Cities, MN.",
+    "venue": "Department of Computer Science and Engineering, Institute of Technology, University of Minnesota, Twin Cities, MN",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics in Genome Medicine",
-    "venue": "School of Medicine, University of Kansas Medical Center, Kansas City, KS.",
+    "venue": "School of Medicine, University of Kansas Medical Center, Kansas City, KS",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Network and Systems Biology: Power Tools for Post-genome Biomarker Discovery",
-    "venue": "Windber Research Institute, Windber, PA.",
+    "venue": "Windber Research Institute, Windber, PA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Bioinformatics and Genome Medicine",
-    "venue": "College of Information Sciences and Technology, Penn State University, College Station, PA.",
+    "venue": "College of Information Sciences and Technology, Penn State University, College Station, PA",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Molecular Network Pharmacology: Enabling Future Drug Discovery through Translational Systems Biology",
-    "venue": "College of Medicine, the University of Arkansas for Medical Sciences, Little Rock, AR.",
+    "venue": "College of Medicine, the University of Arkansas for Medical Sciences, Little Rock, AR",
     "year": 2009,
     "talkType": "Invited"
   },
   {
     "title": "Building Connectivity Maps for Drug Re-purposing and Toxicogenomics Studies",
-    "venue": "Chemical Informatics Division, Eli Lilly and Company, Indianapolis, IN.",
+    "venue": "Chemical Informatics Division, Eli Lilly and Company, Indianapolis, IN",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics: Computational Tools Enabling Genome Medicine",
-    "venue": "School of Medicine, University of California, San Diego, CA.",
+    "venue": "School of Medicine, University of California, San Diego, CA",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Translational Systems Biology: Connectivity, Network Models, & Panel Biomarker Discoveries",
-    "venue": "Computational Biology and Bioinformatics Graduate Program Colloquium, Northwestern University, Evanston, IL.",
+    "venue": "Computational Biology and Bioinformatics Graduate Program Colloquium, Northwestern University, Evanston, IL",
     "year": 2008,
     "talkType": "Invited"
   },
   {
     "title": "Translational Bioinformatics and Systems Biology",
-    "venue": "Department of Computer Science, Virginia Tech, Falls Church, VA.",
+    "venue": "Department of Computer Science, Virginia Tech, Falls Church, VA",
     "year": 2007,
     "talkType": "Invited"
   },
   {
     "title": "Computational Systems Biology: New Research Opportunities & Applications",
-    "venue": "Cyber Center and Department of Computer Science, Purdue University, West Lafayette, IN.",
+    "venue": "Cyber Center and Department of Computer Science, Purdue University, West Lafayette, IN",
     "year": 2007,
     "talkType": "Invited"
   },
   {
     "title": "TBD: Computational Systems Biology Agenda 2.0",
-    "venue": "Integrative Biology Division, Eli Lilly & Company, Greenfield, IN.",
+    "venue": "Integrative Biology Division, Eli Lilly & Company, Greenfield, IN",
     "year": 2007,
     "talkType": "Invited"
   },
   {
     "title": "Informatics as a Platform Supporting Translational Disease Therapeutics and Diagnostics",
-    "venue": "Asuragen, Inc., Austin, TX.",
+    "venue": "Asuragen, Inc., Austin, TX",
     "year": 2006,
     "talkType": "Invited"
   },
   {
     "title": "From Systems Biology to Personalized Medicine Informatics: How to Plan for Success",
-    "venue": "Division of Biomedical Informatics, Cincinnati Children's Hospital, Cincinnati, OH.",
+    "venue": "Division of Biomedical Informatics, Cincinnati Children's Hospital, Cincinnati, OH",
     "year": 2006,
     "talkType": "Invited"
   },
   {
     "title": "Computational Discovery from Large Biological Network Data",
-    "venue": "Prolexys Pharmaceuticals, Inc., Salt Lake City, UT.",
+    "venue": "Prolexys Pharmaceuticals, Inc., Salt Lake City, UT",
     "year": 2005,
     "talkType": "Invited"
   },
   {
     "title": "A Few Thoughts on Large Protein Interaction Networks",
-    "venue": "Center for Genomics and Bioinformatics, Indiana University, Bloomington, IN.",
+    "venue": "Center for Genomics and Bioinformatics, Indiana University, Bloomington, IN",
     "year": 2005,
     "talkType": "Invited"
   },
   {
     "title": "Human Protein Interactome: Reasoning on Structures of Randomness",
-    "venue": "Bioinformatics Colloquium, Department of Statistics, Purdue University, West Lafayette, IN.",
+    "venue": "Bioinformatics Colloquium, Department of Statistics, Purdue University, West Lafayette, IN",
     "year": 2004,
     "talkType": "Invited"
   },
   {
     "title": "A Bioinformatics Study of the Human Protein Interactome",
-    "venue": "Joslin Diabetes Center, Harvard Medical School, Boston, MA.",
+    "venue": "Joslin Diabetes Center, Harvard Medical School, Boston, MA",
     "year": 2004,
     "talkType": "Invited"
   },
   {
     "title": "The Human Protein Interactome: Computational Opportunities and Discovery Surprises",
-    "venue": "Virginia Bioinformatics Institute, Virginia Tech, Blacksburg, VA.",
+    "venue": "Virginia Bioinformatics Institute, Virginia Tech, Blacksburg, VA",
     "year": 2003,
     "talkType": "Invited"
   },
   {
     "title": "Computational Proteomics: Mining Hidden Links between Proteins",
-    "venue": ", National Center for Genome Resources, Santa Fe, NM.",
+    "venue": "National Center for Genome Resources, Santa Fe, NM",
     "year": 2003,
     "talkType": "Invited"
   },
   {
     "title": "Extended DBMS: Towards a Bio-computing Platform and a Scientific Discovery Tool",
-    "venue": "Life Sciences Group, Oracle Corporation, Burlington, MA.",
+    "venue": "Life Sciences Group, Oracle Corporation, Burlington, MA",
     "year": 2003,
     "talkType": "Invited"
   },
   {
     "title": "Guilt-by-Association: Proteomics Analysis using Random Yeast 2-Hybrid Data",
-    "venue": "Windber Research Institute, Windber, PA.",
+    "venue": "Windber Research Institute, Windber, PA",
     "year": 2003,
     "talkType": "Invited"
   },
   {
     "title": "Knowledge Discovery of High-throughput Protein-protein Interaction Data",
-    "venue": "Medical Informatics Department, University of Utah, Salt Lake City, UT.",
+    "venue": "Medical Informatics Department, University of Utah, Salt Lake City, UT",
     "year": 2003,
     "talkType": "Invited"
   },
   {
     "title": "Developing a Computational Framework for Mining Yeast-2-hybrid Interaction Data",
-    "venue": "Myriad Proteomics, Inc., Salt Lake City, UT.",
+    "venue": "Myriad Proteomics, Inc., Salt Lake City, UT",
     "year": 2002,
     "talkType": "Invited"
   },
   {
     "title": "Bioinformatics: Managing Biological Data and Discoveries",
-    "venue": "Monthly Seminar Series, ACM San Francisco Bay Area Local Chapter, Cupertino, CA.",
+    "venue": "Monthly Seminar Series, ACM San Francisco Bay Area Local Chapter, Cupertino, CA",
     "year": 2002,
     "talkType": "Invited"
   },
   {
     "title": "Bioinformatics: Challenges, Opportunities, and Transitions",
-    "venue": "Bay Area Young Scientists Forum, Stanford University, Stanford, CA.",
+    "venue": "Bay Area Young Scientists Forum, Stanford University, Stanford, CA",
     "year": 2002,
     "talkType": "Invited"
   },
   {
     "title": "Developing Bioinformatics Information Models",
-    "venue": "Rosetta Inpharmatics, Bothell, WA.",
+    "venue": "Rosetta Inpharmatics, Bothell, WA",
     "year": 2001,
     "talkType": "Invited"
   },
   {
     "title": "A GeneChip Case Study of Discovery-oriented Bioinformatics",
-    "venue": "Cray-sponsored Computer Science Colloquia, University of Minnesota, Minneapolis, MN.",
+    "venue": "Cray-sponsored Computer Science Colloquia, University of Minnesota, Minneapolis, MN",
     "year": 2001,
     "talkType": "Invited"
   },
   {
     "title": "Building Genomic Database Systems for Bioinformatics",
-    "venue": "Affymetrix, Inc., Santa Clara, CA.",
+    "venue": "Affymetrix, Inc., Santa Clara, CA",
     "year": 2000,
     "talkType": "Invited"
   },
   {
     "title": "Designing A Rat Expression Chip",
-    "venue": "Affymetrix, Inc., Santa Clara, CA.",
+    "venue": "Affymetrix, Inc., Santa Clara, CA",
     "year": 1999,
     "talkType": "Invited"
   },
   {
     "title": "Experience with a Data-Centric Approach to Building Bioinformatics Systems",
-    "venue": "Russ Altman\u2019s Bioinformatics Group Seminar, Stanford University, Palo Alto, CA.",
+    "venue": "Russ Altman\u2019s Bioinformatics Group Seminar, Stanford University, Palo Alto, CA",
     "year": 1998,
     "talkType": "Invited"
   },
   {
     "title": "Network Biology Modeling in Translational Bioinformatics",
-    "venue": "European Bioinformatics Institute (EMBL-EBI) Joint Seminar Series, Hinxton, UK.",
+    "venue": "European Bioinformatics Institute (EMBL-EBI) Joint Seminar Series, Hinxton, UK",
     "year": 2018,
     "talkType": "Invited"
   },
   {
     "title": "Translational Informatics: Developing Tools to Model Human Genomics Big Data Towards Medicine 2.0",
-    "venue": "Computational Bioscience Division, King Abdullah University of Science and Technology, Thuwal, Saudi Arabia.",
+    "venue": "Computational Bioscience Division, King Abdullah University of Science and Technology, Thuwal, Saudi Arabia",
     "year": 2016,
     "talkType": "Invited"
   },
   {
     "title": "Bio-discovery Informatics: A Case Study in Integrative Network Biology",
-    "venue": "Center for Information Biology and the DNA Data Bank of Japan (DDBJ), National Institute of Genetics of Japan, Mishima, Japan.",
+    "venue": "Center for Information Biology and the DNA Data Bank of Japan (DDBJ), National Institute of Genetics of Japan, Mishima, Japan",
     "year": 2005,
     "talkType": "Invited"
   },
