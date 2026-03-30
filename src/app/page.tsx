@@ -150,6 +150,7 @@ const honors = [
   "ACMI Fellow",
   "Top 100 AI Leaders in Drug Discovery",
   "CAST-USA Pioneer Award",
+  "MIRA Technology Educator of the Year Finalist",
 ];
 
 /* ------------------------------------------------------------------ */
@@ -523,29 +524,19 @@ export default function HomePage() {
           </h2>
         </div>
 
-        <div className="relative mt-12">
-          <div className="flex animate-marquee gap-4 whitespace-nowrap">
-            {[...honors, ...honors].map((honor, i) => (
+        <div className="mx-auto mt-10 max-w-6xl px-6">
+          <div className="flex flex-wrap justify-center gap-3">
+            {honors.map((honor) => (
               <span
-                key={`${honor}-${i}`}
+                key={honor}
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium shadow-sm dark:border-slate-800 dark:bg-zinc-900"
               >
-                <Award className="h-4 w-4 text-emerald-700" />
+                <Award className="h-4 w-4 shrink-0 text-emerald-700" />
                 {honor}
               </span>
             ))}
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-marquee {
-            animation: marquee 30s linear infinite;
-          }
-        `}</style>
       </section>
 
       {/* ============================================================ */}
