@@ -109,40 +109,58 @@ export async function GET() {
   const allItems: ResearchNewsItem[] = [];
   const seenPmids = new Set<string>();
 
-  await Promise.all(
-    SEARCHES.map(async ({ topic, term, retmax }) => {
-      try {
-        const ids = await searchPubMed(term, retmax);
-        const summaries = await fetchSummaries(ids);
-        for (const s of summaries) {
-          if (seenPmids.has(s.uid)) continue;
-          seenPmids.add(s.uid);
-          const doi =
-            s.articleids?.find((a) => a.idtype === "doi")?.value ?? null;
-          const authors =
-            s.authors
-              ?.slice(0, 3)
-              .map((a) => a.name)
-              .join(", ") + (s.authors?.length > 3 ? ", et al." : "");
-          const title = s.title?.replace(/\.$/, "") ?? "(Untitled)";
-          const journal = s.source ?? "";
-          allItems.push({
-            pmid: s.uid,
-            title,
-            pubdate: s.pubdate ?? "",
-            journal,
-            authors,
-            link: `https://pubmed.ncbi.nlm.nih.gov/${s.uid}/`,
-            doi,
-            topic,
-            score: scoreRelevance(title, journal),
-          });
-        }
-      } catch (err) {
-        console.error(`Research news fetch failed for "${topic}":`, err);
+  // Collect all PMIDs sequentially with delays to avoid NCBI rate limits (3 req/sec without API key)
+  const allIds: Array<{ id: string; topic: string }> = [];
+  for (const { topic, term, retmax } of SEARCHES) {
+    try {
+      const ids = await searchPubMed(term, retmax);
+      for (const id of ids) allIds.push({ id, topic });
+      // 400ms delay between searches to stay under NCBI rate limit
+      await new Promise((r) => setTimeout(r, 400));
+    } catch (err) {
+      console.error(`PubMed search failed for "${topic}":`, err);
+    }
+  }
+
+  // Deduplicate IDs, keeping first topic assignment
+  const uniqueIds = new Map<string, string>();
+  for (const { id, topic } of allIds) {
+    if (!uniqueIds.has(id)) uniqueIds.set(id, topic);
+  }
+
+  // Single batch summary fetch (avoids multiple requests)
+  if (uniqueIds.size > 0) {
+    try {
+      const summaries = await fetchSummaries(Array.from(uniqueIds.keys()));
+      for (const s of summaries) {
+        if (seenPmids.has(s.uid)) continue;
+        seenPmids.add(s.uid);
+        const topic = uniqueIds.get(s.uid) ?? "General";
+        const doi =
+          s.articleids?.find((a) => a.idtype === "doi")?.value ?? null;
+        const authors =
+          s.authors
+            ?.slice(0, 3)
+            .map((a) => a.name)
+            .join(", ") + (s.authors?.length > 3 ? ", et al." : "");
+        const title = s.title?.replace(/\.$/, "") ?? "(Untitled)";
+        const journal = s.source ?? "";
+        allItems.push({
+          pmid: s.uid,
+          title,
+          pubdate: s.pubdate ?? "",
+          journal,
+          authors,
+          link: `https://pubmed.ncbi.nlm.nih.gov/${s.uid}/`,
+          doi,
+          topic,
+          score: scoreRelevance(title, journal),
+        });
       }
-    })
-  );
+    } catch (err) {
+      console.error("PubMed summary fetch failed:", err);
+    }
+  }
 
   // Sort by score descending, then by date
   allItems.sort((a, b) => {
