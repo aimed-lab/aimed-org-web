@@ -2924,8 +2924,22 @@ async function main() {
       talkType: "Invited",
     },
   ]
+  function autoTopicTalk(title: string, venue: string | null): string {
+    const text = `${title} ${venue ?? ""}`.toLowerCase()
+    if (/drug.discover|pharmacol|admet|toxicity|repurpos|inhibitor|therapeutic|countermeasure|pharma/.test(text)) return "Drug Discovery"
+    if (/ai\b|artificial intelligence|machine learning|deep learning|llm|chatgpt|foundation model|generative|digital twin/.test(text)) return "AI & Machine Learning"
+    if (/single.cell|multi-omics|omics|genom|proteom|metabolom|transcriptom/.test(text)) return "Multi-omics & Genomics"
+    if (/network|systems biology|pathway|interactome|graph|knowledge/.test(text)) return "Network & Systems Biology"
+    if (/precision medicine|personalized|biomarker|clinical|translational|health|patient|diabetes|cancer|covid|immunol/.test(text)) return "Precision Medicine & Health"
+    if (/bioinformat|data science|data mining|data harmon|big data|infrastructure/.test(text)) return "Bioinformatics & Data Science"
+    if (/team science|bridge2ai|collaboration|consortium|connect/.test(text)) return "Team Science & Collaboration"
+    if (/education|training|mentor|student|teaching/.test(text)) return "Education & Training"
+    return "Bioinformatics & Data Science"
+  }
+
   for (const talk of talks) {
-    await prisma.talk.create({ data: talk })
+    const topic = autoTopicTalk(talk.title, talk.venue ?? null)
+    await prisma.talk.create({ data: { ...talk, topic } })
   }
   console.log(`Seeded ${talks.length} talks.`)
 

@@ -78,6 +78,7 @@ export default function TalksPage() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedType, setSelectedType] = useState("All");
+  const [selectedTopic, setSelectedTopic] = useState("All");
 
   const fetchTalks = useCallback(async () => {
     setLoading(true);
@@ -100,7 +101,9 @@ export default function TalksPage() {
     fetchTalks();
   }, [fetchTalks]);
 
-  const grouped = groupByYear(talks);
+  const topics = ["All", ...Array.from(new Set(talks.map((t) => t.topic).filter(Boolean))) as string[]];
+  const filtered = selectedTopic === "All" ? talks : talks.filter((t) => t.topic === selectedTopic);
+  const grouped = groupByYear(filtered);
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
@@ -148,12 +151,31 @@ export default function TalksPage() {
             {!loading && (
               <span className="ml-auto text-sm text-slate-500 dark:text-slate-400">
                 <span className="font-semibold text-slate-700 dark:text-slate-200">
-                  {total}
+                  {filtered.length}
                 </span>{" "}
-                talk{total !== 1 ? "s" : ""}
+                talk{filtered.length !== 1 ? "s" : ""}
               </span>
             )}
           </div>
+          {/* Topic filter */}
+          {!loading && topics.length > 2 && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 mr-1">Topic:</span>
+              {topics.map((topic) => (
+                <button
+                  key={topic}
+                  onClick={() => setSelectedTopic(topic)}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                    selectedTopic === topic
+                      ? "bg-emerald-600 text-white"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
+                  }`}
+                >
+                  {topic}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
