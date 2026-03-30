@@ -166,10 +166,14 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
 
       {/* Links */}
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        {doiUrl && (
+        {doiUrl ? (
           <a href={doiUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
             <ExternalLink className="h-3.5 w-3.5" /> DOI
           </a>
+        ) : (
+          <span className="flex items-center gap-1 text-xs font-medium text-slate-300 dark:text-slate-600 select-none" title="DOI not available">
+            <ExternalLink className="h-3.5 w-3.5" /> DOI
+          </span>
         )}
         {pubmedUrl && (
           <a href={pubmedUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">

@@ -24,7 +24,7 @@ const externalLinks = [
   { label: "ORCID", href: "https://orcid.org/0000-0001-8829-7504" },
   { label: "GitHub", href: "https://github.com/aimed-lab" },
   { label: "LinkedIn", href: "https://linkedin.com/" },
-  { label: "CV (PDF)", href: "/cv.pdf" },
+  { label: "NIH Biosketch (PDF)", href: "https://www.ncbi.nlm.nih.gov/labs/sciencv/1863846/" },
 ]
 
 export function Header() {

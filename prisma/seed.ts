@@ -142,7 +142,7 @@ async function main() {
       authors: "Kevin Song, Andrew Trotter, Jake Y. Chen*",
       year: 2025,
       journal: "arXiv",
-      arxivId: "2504",
+      arxivId: "2504.10952",
       articleType: "Journal Article",
     },
     {
@@ -150,7 +150,7 @@ async function main() {
       authors: "Kevin Song and Jake Y. Chen*",
       year: 2025,
       journal: "bioRxiv",
-      doi: "10.1101/2025.02",
+      doi: "10.1101/2025.02.24.639994",
       articleType: "Journal Article",
     },
     {
@@ -214,7 +214,7 @@ async function main() {
       authors: "Delower Hossain and Jake Y.\u00a0Chen*",
       year: 2025,
       journal: "arXiv",
-      arxivId: "2503",
+      arxivId: "2503.22157",
       articleType: "Journal Article",
     },
     {
@@ -222,7 +222,7 @@ async function main() {
       authors: "Kevin Song, Noorullah Imran, Jake Y. Chen, Allan C. Dobbins",
       year: 2025,
       journal: "arXiv",
-      arxivId: "2504",
+      arxivId: "2504.07463",
       articleType: "Journal Article",
     },
     {
@@ -270,6 +270,7 @@ async function main() {
       authors: "Fengyuan Huang, Robert Welner, Jake Y Chen*, and Zongliang Yue*",
       year: 2024,
       journal: "Frontiers in Bioinformatics",
+      doi: "10.3389/fbinf.2024.1336135",
       articleType: "Journal Article",
     },
     {
@@ -293,7 +294,6 @@ async function main() {
       authors: "Eric Gong and Jake Y. Chen*",
       year: 2023,
       journal: "Biomedical Sciences Instrumentation",
-      doi: "10.3389/fimmu.2023.1287094",
       articleType: "Journal Article",
     },
     {
@@ -324,6 +324,7 @@ async function main() {
       authors: "Andrzej T. Slominski, Radomir M.  Slominski, Chander Raman, Jake Y.  Chen, Mohammad Athar, Craig Elmets",
       year: 2022,
       journal: "American Journal of Physiology-Cell Physiology",
+      doi: "10.1152/ajpcell.00147.2022",
       articleType: "Journal Article",
     },
     {
@@ -343,10 +344,11 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "A Novel in vivo Model of Glioblastoma Radiation Resistance Identifies Long Non-coding RNAs and Targetable Kinases, JCI Insights, 7(16):e148717, DOI: doi",
+      title: "A Novel in vivo Model of Glioblastoma Radiation Resistance Identifies Long Non-coding RNAs and Targetable Kinases",
       authors: "Christian T. Stackhouse, Joshua C. Anderson, Zongliang Yue, Thanh Nguyen, Nicholas J. Eustace, Lara Ianov, Catherine P. Langford, Jelai Wang, James R. Rowland III, Chuan Xing, Fady M. Mikhail, Eddy S. Yang, Anita B. Hjelmeland, C. Ryan Miller, Jake Y. Chen, G. Yancey Gillespie, Christopher D. Willey*",
       year: 2022,
-      journal: "org/",
+      journal: "JCI Insight",
+      doi: "10.1172/jci.insight.148717",
       articleType: "Journal Article",
     },
     {
@@ -354,6 +356,7 @@ async function main() {
       authors: "Zhenyu Weng, Zongliang Yue, Yuesheng Zhu, and Jake Y. Chen*",
       year: 2022,
       journal: "Bioinformatics",
+      doi: "10.1093/bioinformatics/btac261",
       articleType: "Journal Article",
     },
     {
@@ -361,6 +364,7 @@ async function main() {
       authors: "Jianyi Zhang*, Yuji Nakada, Yang Zhou, Wuming Gong, Eric Zhang, Erik Skie, Thanh Nguyen, Yuhua Wei, Meng Zhao, Wangping Chen, Jake Y. Chen, Gregory Walcott, Daniel Garry, Jiacheng Sun, and Syed Raza",
       year: 2022,
       journal: "Circulation",
+      doi: "10.1161/CIRCULATIONAHA.121.056995",
       articleType: "Journal Article",
     },
     {
@@ -368,13 +372,15 @@ async function main() {
       authors: "Zongliang Yue, Radomir Slominski, Samuel Bharti, and Jake Y Chen*",
       year: 2022,
       journal: "Frontiers in Genetics",
+      doi: "10.3389/fgene.2022.820361",
       articleType: "Journal Article",
     },
     {
       title: "Polar Gini Curve: a Quantitative Technique to Discover Gene Expression Spatial Patterns from Single-cell Data",
       authors: "Thanh Nguyen, Jacob Jeevan, Nuo Xu, and Jake Y. Chen*",
       year: 2022,
-      journal: "Genomics",
+      journal: "Genomics, Proteomics & Bioinformatics",
+      doi: "10.1016/j.gpb.2020.09.006",
       articleType: "Journal Article",
     },
     {
@@ -382,6 +388,7 @@ async function main() {
       authors: "Carlene L. Zindl, Steven J. Witte, Vincent A. Laufer, Min Gao, Zongliang Yue, Karen M. Janowski, Baiyi Cai, Blake F. Frey, Daniel J. Silberger, Stacey N. Harbour, Duy Pham, Henrietta Turner, Fran E. Lund, Bruce A. Vallance, Alexander F. Rosenberg, Trenton R. Schoeb, Jake Y. Chen, Robin T. Hatton and Casey T. Weaver*",
       year: 2022,
       journal: "Immunity",
+      doi: "10.1016/j.immuni.2022.02.003",
       articleType: "Journal Article",
     },
     {
@@ -389,6 +396,7 @@ async function main() {
       authors: "Thanh Minh Nguyen, Samuel Bharti, Zongliang Yue, Christopher D Willey and Jake Y Chen*",
       year: 2021,
       journal: "Frontiers in Big Data",
+      doi: "10.3389/fdata.2021.725276",
       articleType: "Journal Article",
     },
     {
@@ -403,13 +411,15 @@ async function main() {
       authors: "Sweta B. Patel, Travis Nemkov, Davide Stefanoni, Gloria A. Benavides, Brittany L. Crown, Victoria R. Matkins, Virginia Camacho, Ashley T. Hoang, Danielle E. Tenen, Samuel L. Wolock, Jihye Park, Mahmoud A. Bassal, Li Ying, Zongliang Yue, Jake Y. Chen, Henry Yang, Daniel G. Tenen, Paul Brent Ferrell, Rui Lu, Victor Darley-Usmar, Angelo D\u2019Alessandro, Ravi Bhatia, Robert S. Welner",
       year: 2021,
       journal: "Leukemia",
+      doi: "10.1038/s41375-021-01315-0",
       articleType: "Journal Article",
     },
     {
-      title: "Vitamin D and Lumisterol Derivatives Can Act on Liver X Receptors (LXRs), Scientific Reports, Vol",
+      title: "Vitamin D and Lumisterol Derivatives Can Act on Liver X Receptors (LXRs)",
       authors: "Andrzej T Slominski, Tae-Kang Kim, Shariq Qayyum, Yuwei Song, Zorica Janjetovic, Allen SW Oak, Radomir M Slominski, Chander Raman, Joanna Stefan, Carlos A Mier-Aguilar, Venkatram Atigadda, David K Crossman, Andriy Golub, Yaroslav Bilokin, Edith K Y Tang, Jake Y. Chen, Robert C Tuckey, Anton M Jetten, Yuhua Song",
       year: 2021,
-      journal: null,
+      journal: "Scientific Reports",
+      doi: "10.1038/s41598-021-90746-x",
       articleType: "Journal Article",
     },
     {
@@ -417,6 +427,7 @@ async function main() {
       authors: "Thanh Nguyen, Tongbin Zhang, Geoffrey Fox, Sisi Zeng, Ni Cao, Chuandi Pan*, and Jake Y. Chen*",
       year: 2021,
       journal: "BMC Medical Informatics and Decision Making",
+      doi: "10.1186/s12911-021-01387-z",
       articleType: "Journal Article",
     },
     {
@@ -424,13 +435,15 @@ async function main() {
       authors: "Zongliang Yue, Eric Zhang, Clark Xu, Sunny Khurana, Nishant Batra, Son Dang, and Jake Y. Chen*",
       year: 2021,
       journal: "Nucleic Acids Research",
+      doi: "10.1093/nar/gkab1094",
       articleType: "Journal Article",
     },
     {
       title: "Scalable De Novo Genome Assembly Using a Pregel-Like Graph-Parallel System",
       authors: "Guimu Guo, Hongzhi Chen, Da Yan, James Cheng, and Jake Y. Chen",
       year: 2021,
-      journal: "ACM/IEEE Transactions on Computational Biology and Bioinformatics",
+      journal: "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+      doi: "10.1109/TCBB.2019.2920912",
       articleType: "Journal Article",
     },
     {
@@ -445,6 +458,7 @@ async function main() {
       authors: "Eric Zhang, Thanh Nguyen, Meng Zhao, Son Do Hai Dang, Jake Y. Chen, Weihua Bian, and Gregory P Walcott",
       year: 2020,
       journal: "PLOS ONE",
+      doi: "10.1371/journal.pone.0232963",
       articleType: "Journal Article",
     },
     {
@@ -452,6 +466,7 @@ async function main() {
       authors: "Keshav K Singh, Gyneshwer Chaubey, Jake Y. Chen, and Prashanth Suravajhala",
       year: 2020,
       journal: "American Journal of Physiology-Cell Physiology",
+      doi: "10.1152/ajpcell.00224.2020",
       articleType: "Journal Article",
     },
     {
@@ -546,10 +561,11 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "PAGER 2",
+      title: "PAGER 2.0: An Update to the Pathway, Annotated-list and Gene-set Enrichment Analysis Resource",
       authors: "Zongliang Yue, Qi Zheng, Micheal T Neylon, Minjae Yoo, Jimin Shin, Zhiying Zhao, Aik Choon Tan, and Jake Y. Chen*",
       year: 2018,
-      journal: null,
+      journal: "Nucleic Acids Research",
+      doi: "10.1093/nar/gkx1013",
       articleType: "Journal Article",
     },
     {
@@ -595,10 +611,11 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "Proteomic characterization reveals that MMP-3 correlates with bronchiolitis obliterans syndrome following allogeneic hematopoietic cell and lung transplantation, American Journal of Transplantation, Vol",
+      title: "Proteomic characterization reveals that MMP-3 correlates with bronchiolitis obliterans syndrome following allogeneic hematopoietic cell and lung transplantation",
       authors: "Xiaowen Liu, Zongliang Yue, Jeffrey Yu, Etienne Daguindau, KushiKushekhar, Qing Zhang, Yuko Ogata, Philip Gafken, Yoshihiro Inamota, Adam Gracon, David Wikes, John Hansen, Stephanie Lee, Jake Y. Chen, and Sophie Paczesny*",
       year: 2016,
-      journal: null,
+      journal: "American Journal of Transplantation",
+      doi: "10.1111/ajt.13891",
       articleType: "Journal Article",
     },
     {
@@ -658,10 +675,10 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "Computational Identification of De-centric Genetic Regulatory Relationships from Functional Genomic Data, Lecture Notes in Bioinformatics, Vol",
+      title: "Computational Identification of De-centric Genetic Regulatory Relationships from Functional Genomic Data",
       authors: "Zongliang Yue, Zhan Xie, Ping Wan, and Jake Y. Chen",
       year: 2014,
-      journal: null,
+      journal: "Lecture Notes in Bioinformatics",
       articleType: "Journal Article",
     },
     {
@@ -728,10 +745,10 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "Genome-wide Meta-analysis of Genetic Susceptible Genes for Type-2 Diabetes, BMC Systems Biology, Vol",
+      title: "Genome-wide Meta-analysis of Genetic Susceptible Genes for Type-2 Diabetes",
       authors: "Paul Hale, Alfredo M. L\u00f3pez-Yunez, Jake Y. Chen*",
       year: 2012,
-      journal: null,
+      journal: "BMC Systems Biology",
       articleType: "Journal Article",
     },
     {
@@ -987,17 +1004,18 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "Disorder and Sequence Repeats in Hub Proteins and Their Implications for Network Evolution, Journal of Proteome Research, Vol",
+      title: "Disorder and Sequence Repeats in Hub Proteins and Their Implications for Network Evolution",
       authors: "Zsuzsanna Doszt\u00e1nyi, Jake Y. Chen, A. Keith Dunker, Istv\u00e1n Simon, and Peter Tompa",
       year: 2006,
-      journal: null,
+      journal: "Journal of Proteome Research",
+      doi: "10.1021/pr060171o",
       articleType: "Journal Article",
     },
     {
       title: "A Statistical Framework to Discover True Associations from Multi-protein Complex Pull-down Proteomics Data Sets",
       authors: "Changyu Shen, Lang Li, Jake Y. Chen*",
       year: 2006,
-      journal: "Proteins: Structure",
+      journal: "Proteins: Structure, Function, and Bioinformatics",
       articleType: "Journal Article",
     },
     {
@@ -1008,10 +1026,10 @@ async function main() {
       articleType: "Journal Article",
     },
     {
-      title: "Oracle Database 10g: A Platform for BLAST Search and Regular Expression Pattern Matching in Life Sciences, Nucleic Acids Research, Vol",
+      title: "Oracle Database 10g: A Platform for BLAST Search and Regular Expression Pattern Matching in Life Sciences",
       authors: "Susie Stephens, Jake Y. Chen, Marcel Davidson, Shiby Thomas, and Barry M. Trute",
       year: 2005,
-      journal: null,
+      journal: "Nucleic Acids Research",
       articleType: "Journal Article",
     },
     {
@@ -1039,21 +1057,21 @@ async function main() {
       title: "Multi-target Parallel Drug Discovery with Multi-agent Orchestration",
       authors: "AI Agent, Fuad Al Abir, Sixue Zhang, and Jake Y. Chen",
       year: 2025,
-      journal: "Proceedings of the",
+      journal: "Proceedings of the 2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2025)",
       articleType: "Conference",
     },
     {
       title: "GeneTerrain Trajectory (GTT): A Novel Approach for Mapping the Dynamics and Regulators of Cell Fate Decisions",
       authors: "Ehsan Saghapour, Delower Hossain, Kevin Song and Jake Y. Chen*",
       year: 2025,
-      journal: "Proceedings of the",
+      journal: "Proceedings of the 2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2025)",
       articleType: "Conference",
     },
     {
       title: "hERG-LTN: A New Paradigm for hERG Cardiotoxicity Prediction Using Neuro-Symbolic and Generative AI",
       authors: "Delower Hossain, Fuad Al Abir, and Jake Y.\u00a0Chen*",
       year: 2025,
-      journal: "Proceedings of",
+      journal: "Proceedings of the 2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2025)",
       articleType: "Conference",
     },
     {
@@ -1076,7 +1094,7 @@ async function main() {
       authors: "Jiawei Xu, Zhandos Sembay, Swathi Thaker, Pamela Payne-Foster, Jake Chen,\u00a0and\u00a0Ying Ding",
       year: 2024,
       journal: "Workshop on AI in HealthCare, Thirty-Eighth Annual Conference on Neural Information Processing Systems (NeurIPS) 2024, Vancouver, Canada",
-      arxivId: "2501",
+      arxivId: "2501.06052",
       articleType: "Conference",
     },
     {
@@ -1090,7 +1108,8 @@ async function main() {
       title: "Accurate Identification of Human Emotional States from Images Using Deep Learning",
       authors: "Emmy Yang and Jake Y. Chen*",
       year: 2023,
-      journal: "2023 IEEE EMBS International Conference on Biomedical and Health Informatics (BHI), Pittsburgh, PA, USA, pp",
+      journal: "2023 IEEE EMBS International Conference on Biomedical and Health Informatics (BHI), Pittsburgh, PA, USA",
+      doi: "10.1109/BHI58575.2023.10313521",
       articleType: "Conference",
     },
     {
@@ -1309,14 +1328,14 @@ async function main() {
       title: "An Integrative Human Pathway Database for Systems Biology Applications",
       authors: "Harini Kasamsetty, Xiaogang Wu, and Jake Y. Chen*",
       year: 2008,
-      journal: "Proceedings of the",
+      journal: "Proceedings of the 2008 IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2008)",
       articleType: "Conference",
     },
     {
       title: "Mining Disease-Specific Molecular Association Profiles from Biomedical Literature: A Case Study",
       authors: "Jiao Li, Xiaoyan Zhu, and Jake Y. Chen*",
       year: 2008,
-      journal: "Proceedings of the",
+      journal: "Proceedings of the 2008 IEEE International Conference on Bioinformatics and Biomedicine (BIBM 2008)",
       articleType: "Conference",
     },
     {
@@ -1527,8 +1546,8 @@ async function main() {
       title: "Health Day: Building Health AI Ecosystem: From Data Harmonization to Knowledge Discovery",
       authors: "Jake Y. Chen and Peipei Ping",
       year: 2024,
-      journal: "Proceedings of the",
-      doi: "10.1145/3637528.367386",
+      journal: "Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD 2024), Barcelona, Spain",
+      doi: "10.1145/3637528.3671686",
       articleType: "Editorial",
     },
     {
