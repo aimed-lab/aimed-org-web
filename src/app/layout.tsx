@@ -1,10 +1,13 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import Script from "next/script"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { ChatWidget } from "@/components/chatbot/ChatWidget"
 import "./globals.css"
+
+const GA_ID = "G-S5JM02Y0GJ"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -62,7 +65,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "ADD_YOUR_GOOGLE_VERIFICATION_CODE_HERE",
+    // Add Google Search Console verification code here when available
+    // google: "YOUR_VERIFICATION_CODE",
   },
 }
 
@@ -74,6 +78,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
       <head>
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
