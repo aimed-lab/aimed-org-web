@@ -40,7 +40,7 @@ const currentMembers = [
   {
     name: "Huu Phong Nguyen, PhD",
     role: "Postdoctoral Fellow",
-    photo: null,
+    photo: "/members/huu-phong-nguyen.jpg",
   },
   {
     name: "Fuad Al Abir",
