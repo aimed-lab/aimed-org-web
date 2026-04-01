@@ -112,6 +112,18 @@ export default function AchievementsPage() {
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Achievements</h2>
         </div>
 
+        {/* Lab Contributions header */}
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-900/20">
+          <h3 className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">Lab Contributions</h3>
+          <p className="mt-1 text-xs text-emerald-700 dark:text-emerald-300">
+            These achievements are auto-matched from the lab&apos;s public database based on your name.
+            Publications link to the lab&apos;s{' '}
+            <a href="/publications" className="underline hover:text-emerald-900 dark:hover:text-emerald-100">publications page</a>,
+            patents to the lab records, and software to the{' '}
+            <a href="/software" className="underline hover:text-emerald-900 dark:hover:text-emerald-100">software page</a>.
+          </p>
+        </div>
+
         {/* Tabs */}
         <div className="flex gap-1 rounded-lg border border-slate-200 bg-slate-100 p-1 dark:border-zinc-800 dark:bg-zinc-900">
           {tabs.map((tab) => {

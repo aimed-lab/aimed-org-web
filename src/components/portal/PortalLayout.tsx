@@ -6,12 +6,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
   FolderKanban,
-  Calendar,
+  FileText,
   Database,
-  Trophy,
-  Award,
-  UserCircle,
+  Wrench,
   Shield,
+  ShieldCheck,
+  Radar,
+  Trophy,
+  UserCircle,
   Users,
   UserPlus,
   LogOut,
@@ -31,15 +33,17 @@ interface NavItem {
 const memberNav: NavItem[] = [
   { label: 'Dashboard', href: '/member/dashboard', icon: LayoutDashboard },
   { label: 'Projects', href: '/member/projects', icon: FolderKanban },
-  { label: 'Planning', href: '/member/planning', icon: Calendar },
-  { label: 'Data', href: '/member/data', icon: Database },
+  { label: 'Papers', href: '/member/papers', icon: FileText },
+  { label: 'Datasets', href: '/member/datasets', icon: Database },
+  { label: 'Tools', href: '/member/tools', icon: Wrench },
+  { label: 'Ethics & Legal', href: '/member/compliance', icon: Shield },
+  { label: 'Intelligence', href: '/member/intelligence', icon: Radar },
   { label: 'Achievements', href: '/member/achievements', icon: Trophy },
-  { label: 'Honors', href: '/member/honors', icon: Award },
   { label: 'Profile', href: '/member/profile', icon: UserCircle },
 ];
 
 const adminNav: NavItem[] = [
-  { label: 'Admin Dashboard', href: '/admin/dashboard', icon: Shield },
+  { label: 'Admin Dashboard', href: '/admin/dashboard', icon: ShieldCheck },
   { label: 'Members', href: '/admin/members', icon: Users },
   { label: 'Recruits', href: '/admin/recruits', icon: UserPlus },
 ];

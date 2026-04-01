@@ -218,6 +218,11 @@ model LabMember {
   goals           QuarterlyGoal[]
   projects        ProjectTask[]
   activationCode  ActivationCode?
+  papers          MemberPaper[]
+  datasets        MemberDataset[]
+  tools           MemberTool[]
+  compliance      MemberCompliance[]
+  watches         MemberWatch[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -262,4 +267,97 @@ model QuarterlyGoal {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ─── Member Portal Models ─────────────────────────────────────────────────
+
+model MemberPaper {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  title       String
+  authors     String?
+  year        Int?
+  journal     String?
+  url         String?
+  doi         String?
+  pubmedId    String?
+  scholarUrl  String?
+  pdfPath     String?
+  citation    String?
+  notes       String?
+  tags        String?   // JSON array
+  source      String    @default("MANUAL") // MANUAL, WEB_CLIPPER, PDF_UPLOAD, SCHOLAR
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model MemberDataset {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  name        String
+  description String?
+  source      String    @default("LOCAL") // LOCAL, DOI, MCP_SERVER, URL
+  doi         String?
+  url         String?
+  filePath    String?
+  mcpServer   String?
+  format      String?
+  size        String?
+  tags        String?   // JSON array
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model MemberTool {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  name        String
+  description String?
+  toolType    String    @default("GITHUB") // GITHUB, JUPYTER, WEB_APP, API, MCP_SERVER, VM, DOCKER, OTHER
+  url         String?
+  githubRepo  String?
+  dockerImage String?
+  apiEndpoint String?
+  mcpServer   String?
+  status      String    @default("ACTIVE") // ACTIVE, ARCHIVED, IN_DEVELOPMENT
+  tags        String?   // JSON array
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model MemberCompliance {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  docType     String    // SOFTWARE_LICENSE, IRB_PROTOCOL, TRAINING_CERT, LICENSE, NDA, DUA, OTHER
+  title       String
+  description String?
+  issuer      String?
+  fileUrl     String?
+  expiresAt   DateTime?
+  status      String    @default("ACTIVE") // ACTIVE, EXPIRED, PENDING, ARCHIVED
+  protocolNum String?
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model MemberWatch {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  name        String
+  watchType   String    // AUTHOR, KEYWORD, JOURNAL, GITHUB_REPO, TOOL, DATASET
+  query       String
+  source      String    @default("PUBMED") // PUBMED, SCHOLAR, ARXIV, GITHUB, CUSTOM_URL
+  frequency   String    @default("WEEKLY") // DAILY, WEEKLY, MONTHLY
+  lastChecked DateTime?
+  resultCount Int       @default(0)
+  enabled     Boolean   @default(true)
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
