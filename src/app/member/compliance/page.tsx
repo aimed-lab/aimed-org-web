@@ -230,8 +230,11 @@ export default function CompliancePage() {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const portalRole = (member as any)?.isAdmin ? "admin" as const : "member" as const;
+
   return (
-    <PortalLayout role="member" userName={member.name} userEmail={member.email}>
+    <PortalLayout role={portalRole} userName={member.name} userEmail={member.email}>
       <div className="mx-auto max-w-5xl">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">

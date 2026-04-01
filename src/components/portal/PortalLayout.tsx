@@ -169,9 +169,15 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
               {sidebarOpen ? <ChevronLeft className="h-5 w-5 hidden lg:block" /> : <Menu className="h-5 w-5 hidden lg:block" />}
               <Menu className="h-5 w-5 lg:hidden" />
             </button>
-            <h1 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-              AI.MED Portal
-            </h1>
+            <a href="/" className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-lg font-extrabold tracking-tight">
+                <span className="text-slate-800 dark:text-slate-100">ai</span>
+                <span className="text-emerald-600">.</span>
+                <span className="text-emerald-600">med</span>
+              </span>
+              <span className="text-slate-400 dark:text-slate-500">|</span>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Lab Portal</span>
+            </a>
           </div>
           <div className="flex items-center gap-3">
             {/* Role Switcher — admin only */}
@@ -238,12 +244,19 @@ function SidebarContent({
       {/* Logo area */}
       <div className={`flex items-center border-b border-slate-200 dark:border-zinc-800 h-14 px-4 shrink-0`}>
         {sidebarOpen ? (
-          <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 truncate">
-            {portalLabel}
-          </span>
+          <div className="flex items-center gap-2 truncate">
+            <span className="text-lg font-extrabold tracking-tight shrink-0">
+              <span className="text-slate-800 dark:text-slate-100">ai</span>
+              <span className="text-emerald-600">.</span>
+              <span className="text-emerald-600">med</span>
+            </span>
+            <span className="text-xs font-medium text-slate-400 dark:text-slate-500 truncate">
+              {portalLabel}
+            </span>
+          </div>
         ) : (
-          <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 mx-auto">
-            {shortLabel}
+          <span className="text-sm font-extrabold text-emerald-600 mx-auto" title={portalLabel}>
+            ai
           </span>
         )}
       </div>

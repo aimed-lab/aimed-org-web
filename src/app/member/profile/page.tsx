@@ -109,8 +109,11 @@ export default function ProfilePage() {
   const inputClass =
     'w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100';
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const portalRole = (member as any)?.isAdmin ? "admin" as const : "member" as const;
+
   return (
-    <PortalLayout role="member" userName={member.name} userEmail={member.email}>
+    <PortalLayout role={portalRole} userName={member.name} userEmail={member.email}>
       <div className="mx-auto max-w-2xl space-y-6">
         <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Profile</h2>
 

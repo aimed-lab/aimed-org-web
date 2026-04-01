@@ -62,8 +62,22 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Email and activation code required" }, { status: 400 })
       }
 
-      // Check if this is an admin using an activation code to log in
-      // (admins can also use activation codes if they have one as a lab member)
+      // Default admin activation code — allows admin emails to log in without a DB code
+      const DEFAULT_ADMIN_CODE = process.env.ADMIN_ACTIVATION_CODE || "SPARC2026"
+      if (isAdminEmail(email) && code === DEFAULT_ADMIN_CODE) {
+        const token = Buffer.from(`${email.toLowerCase()}:${Date.now()}`).toString("base64")
+        const cookieStore = await cookies()
+        cookieStore.set("admin_token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 60 * 60 * 24,
+          path: "/",
+        })
+        return NextResponse.json({ success: true, redirect: "/admin/dashboard", role: "admin" })
+      }
+
+      // Check if this is a lab member using their personal activation code
       const member = await prisma.labMember.findUnique({
         where: { email: email.toLowerCase() },
         include: { activationCode: true },
@@ -84,7 +98,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "This code has expired. Please contact the admin for a new code." }, { status: 401 })
       }
 
-      // Mark code as used
+      // Mark code as used (one-time use)
       await prisma.activationCode.update({
         where: { id: ac.id },
         data: { used: true, usedAt: new Date() },

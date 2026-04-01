@@ -272,9 +272,9 @@ export default function AdminLoginPage() {
                       type="text"
                       value={code}
                       onChange={(e) => setCode(e.target.value)}
-                      placeholder="8-character code"
-                      maxLength={8}
-                      className={inputClass + " font-mono tracking-wider uppercase"}
+                      placeholder="Enter activation code"
+                      maxLength={12}
+                      className={inputClass + " font-mono tracking-wider"}
                     />
                   </div>
                   <p className="mt-1 text-xs text-slate-400">
@@ -388,7 +388,7 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
-          Default admins: jakechen@gmail.com, jakechen@uab.edu
+          Protected area. Authorized personnel only.
         </p>
       </motion.div>
     </div>

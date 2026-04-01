@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, FormEvent } from 'react';
+import { useEffect, useState, useCallback, FormEvent, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -116,6 +116,7 @@ export default function AdminMembersPage() {
   const [showAddMember, setShowAddMember] = useState(false);
   const [editingMember, setEditingMember] = useState<Member | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [newMemberCode, setNewMemberCode] = useState<{ name: string; code: string; email: string } | null>(null);
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -175,8 +176,17 @@ export default function AdminMembersPage() {
         body: JSON.stringify(body),
       });
       if (res.ok) {
+        const data = await res.json();
         setShowAddMember(false);
         fetchMembers();
+        // Show the auto-generated activation code
+        if (data.activationCode?.code) {
+          setNewMemberCode({
+            name: data.name,
+            email: data.email,
+            code: data.activationCode.code,
+          });
+        }
       } else {
         const data = await res.json();
         alert(data.error || 'Failed to create member');
@@ -360,9 +370,8 @@ export default function AdminMembersPage() {
             </thead>
             <tbody>
               {filteredMembers.map((m) => (
-                <>
+                <Fragment key={m.id}>
                   <tr
-                    key={m.id}
                     className="border-b border-slate-100 hover:bg-slate-50 dark:border-zinc-800 dark:hover:bg-zinc-800/50 cursor-pointer"
                     onClick={() => toggleMemberExpand(m.id)}
                   >
@@ -401,7 +410,7 @@ export default function AdminMembersPage() {
                   </tr>
                   {/* Expanded detail */}
                   {expandedMember === m.id && (
-                    <tr key={`detail-${m.id}`}>
+                    <tr>
                       <td colSpan={6} className="bg-slate-50/50 dark:bg-zinc-800/30 px-4 py-4">
                         {!memberDetail ? (
                           <div className="flex justify-center py-4">
@@ -519,7 +528,7 @@ export default function AdminMembersPage() {
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               ))}
               {filteredMembers.length === 0 && (
                 <tr>
@@ -570,6 +579,59 @@ export default function AdminMembersPage() {
                     Create Member
                   </button>
                 </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* New Member Code Modal */}
+        <AnimatePresence>
+          {newMemberCode && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+              onClick={() => setNewMemberCode(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.95 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.95 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-6 shadow-lg dark:border-zinc-800 dark:bg-zinc-900 text-center"
+              >
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                  <Check className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Member Created</h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  Share this one-time activation code with <strong>{newMemberCode.name}</strong>:
+                </p>
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <code className="rounded-lg bg-slate-100 px-4 py-2 font-mono text-lg font-bold tracking-wider text-emerald-700 dark:bg-zinc-800 dark:text-emerald-400">
+                    {newMemberCode.code}
+                  </code>
+                  <button
+                    onClick={() => copyCode(newMemberCode.code)}
+                    className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-zinc-800"
+                  >
+                    {copiedCode === newMemberCode.code ? (
+                      <Check className="h-5 w-5 text-green-600" />
+                    ) : (
+                      <Copy className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                <p className="mt-3 text-xs text-slate-400 dark:text-slate-500">
+                  They can log in at <span className="font-mono">/member/activate</span> with their email and this code. Code expires in 7 days.
+                </p>
+                <button
+                  onClick={() => setNewMemberCode(null)}
+                  className="mt-4 rounded-lg bg-emerald-700 px-6 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+                >
+                  Done
+                </button>
               </motion.div>
             </motion.div>
           )}

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
 import { verifyMemberToken } from "@/lib/member-auth"
+import { verifyAdminToken } from "@/lib/auth"
 
 export async function GET() {
   const auth = await verifyMemberToken()
@@ -21,7 +22,10 @@ export async function GET() {
       return NextResponse.json({ error: "Member not found" }, { status: 404 })
     }
 
-    return NextResponse.json(member)
+    const adminEmail = await verifyAdminToken()
+    const isAdmin = adminEmail !== null
+
+    return NextResponse.json({ ...member, isAdmin })
   } catch (error) {
     console.error("Failed to fetch profile:", error)
     return NextResponse.json({ error: "Failed to fetch profile" }, { status: 500 })

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
-import { verifyAdminToken } from "@/lib/auth"
+import { verifyAdminToken, generateActivationCode } from "@/lib/auth"
 
 export async function GET(request: NextRequest) {
   const admin = await verifyAdminToken(request)
@@ -53,7 +53,22 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(member, { status: 201 })
+    // Auto-generate a one-time activation code for the new member
+    const code = generateActivationCode()
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
+    const activationCode = await prisma.activationCode.create({
+      data: {
+        code,
+        memberId: member.id,
+        expiresAt,
+        createdBy: admin,
+      },
+    })
+
+    return NextResponse.json(
+      { ...member, activationCode: { code: activationCode.code, expiresAt: activationCode.expiresAt } },
+      { status: 201 }
+    )
   } catch (error: unknown) {
     console.error("Failed to create member:", error)
     const msg =

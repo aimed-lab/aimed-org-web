@@ -118,8 +118,11 @@ export default function MemberDashboardPage() {
   const currentQuarter = `${new Date().getFullYear()}-Q${Math.floor(new Date().getMonth() / 3) + 1}`;
   const quarterGoals = member.goals?.filter((g) => g.quarter === currentQuarter).length || 0;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const portalRole = (member as any)?.isAdmin ? "admin" as const : "member" as const;
+
   return (
-    <PortalLayout role="member" userName={member.name} userEmail={member.email}>
+    <PortalLayout role={portalRole} userName={member.name} userEmail={member.email}>
       <div className="mx-auto max-w-5xl space-y-6">
         {/* Welcome Card */}
         <motion.div

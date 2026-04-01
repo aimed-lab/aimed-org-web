@@ -67,8 +67,11 @@ export default function HonorsPage() {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const portalRole = (member as any)?.isAdmin ? "admin" as const : "member" as const;
+
   return (
-    <PortalLayout role="member" userName={member.name} userEmail={member.email}>
+    <PortalLayout role={portalRole} userName={member.name} userEmail={member.email}>
       <div className="mx-auto max-w-3xl space-y-6">
         <div className="flex items-center gap-3">
           <Award className="h-6 w-6 text-amber-500" />
