@@ -182,6 +182,15 @@ model InquirySubmission {
   status        String @default("NEW") // NEW, REVIEWED, REPLIED, SHORTLISTED, ACCEPTED, DECLINED, ARCHIVED
   notes         String?
 
+  // AI scoring fields
+  aiScore          Int?      // Overall score 1-100
+  aiScoreBreakdown String?   // JSON: {communication, resilience, aiFluency, technicalPrep, domainKnowledge, practicalExp}
+  aiAnalysis       String?   // AI-generated pros/cons/clarifications text
+  aiScoredAt       DateTime?
+  manualScore      Int?      // Admin manual override score 1-100
+  manualNotes      String?   // Admin notes
+  priority         String?   // HIGH, MEDIUM, LOW
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -223,6 +232,7 @@ model LabMember {
   tools           MemberTool[]
   compliance      MemberCompliance[]
   watches         MemberWatch[]
+  submissions     ContentSubmission[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -358,6 +368,24 @@ model MemberWatch {
   resultCount Int       @default(0)
   enabled     Boolean   @default(true)
   notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ─── Content Submission / Approval ────────────────────────────────────────
+
+model ContentSubmission {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  contentType String    // PUBLICATION, HONOR, SOFTWARE, PATENT, NEWS
+  title       String
+  data        String    // JSON with all fields for the content type
+  status      String    @default("PENDING") // PENDING, APPROVED, REJECTED, REVISION_REQUESTED
+  reviewNotes String?   // Admin feedback
+  reviewedBy  String?   // Admin email
+  reviewedAt  DateTime?
+  publishedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }

@@ -10,6 +10,8 @@ import {
   FileText,
   ExternalLink,
   ShieldAlert,
+  Send,
+  CheckCircle,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -53,6 +55,31 @@ export default function AchievementsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<'publications' | 'software' | 'patents'>('publications');
+  const [submittingId, setSubmittingId] = useState<string | null>(null);
+  const [submittedId, setSubmittedId] = useState<string | null>(null);
+
+  async function submitToLab(contentType: string, title: string, data: Record<string, unknown>, itemKey: string) {
+    if (!confirm(`Submit "${title}" for admin review to be published on the public website?`)) return;
+    setSubmittingId(itemKey);
+    try {
+      const res = await fetch('/api/member/submit-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentType, title, data }),
+      });
+      if (res.ok) {
+        setSubmittedId(itemKey);
+        setTimeout(() => setSubmittedId(null), 3000);
+      } else {
+        const d = await res.json();
+        alert(d.error || 'Submission failed');
+      }
+    } catch {
+      alert('Submission failed');
+    } finally {
+      setSubmittingId(null);
+    }
+  }
 
   useEffect(() => {
     Promise.all([
@@ -163,30 +190,49 @@ export default function AchievementsPage() {
                 </p>
               </div>
             ) : (
-              publications.map((pub) => (
-                <div
-                  key={pub.id}
-                  className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-                >
-                  <p className="font-medium text-slate-900 dark:text-slate-100">{pub.title}</p>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{pub.authors}</p>
-                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-                    {pub.journal && <span>{pub.journal}</span>}
-                    <span>{pub.year}</span>
-                    {pub.doi && (
-                      <a
-                        href={`https://doi.org/${pub.doi}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-emerald-600 hover:underline dark:text-emerald-400"
+              publications.map((pub) => {
+                const itemKey = `pub-${pub.id}`;
+                return (
+                  <div
+                    key={pub.id}
+                    className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-slate-900 dark:text-slate-100">{pub.title}</p>
+                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{pub.authors}</p>
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                          {pub.journal && <span>{pub.journal}</span>}
+                          <span>{pub.year}</span>
+                          {pub.doi && (
+                            <a
+                              href={`https://doi.org/${pub.doi}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-emerald-600 hover:underline dark:text-emerald-400"
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                              DOI
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => submitToLab('PUBLICATION', pub.title, { title: pub.title, authors: pub.authors, year: pub.year, journal: pub.journal, doi: pub.doi }, itemKey)}
+                        disabled={submittingId === itemKey}
+                        className={`rounded p-1.5 shrink-0 transition-colors ${
+                          submittedId === itemKey
+                            ? 'text-emerald-500'
+                            : 'text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-emerald-900/20'
+                        }`}
+                        title="Submit to Lab"
                       >
-                        <ExternalLink className="h-3 w-3" />
-                        DOI
-                      </a>
-                    )}
+                        {submittedId === itemKey ? <CheckCircle className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </motion.div>
         )}
@@ -206,50 +252,65 @@ export default function AchievementsPage() {
                 </p>
               </div>
             ) : (
-              software.map((sw) => (
-                <div
-                  key={sw.id}
-                  className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="font-medium text-slate-900 dark:text-slate-100">{sw.name}</p>
-                      {sw.description && (
-                        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                          {sw.description}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      {sw.url && (
-                        <a
-                          href={sw.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-zinc-800"
+              software.map((sw) => {
+                const itemKey = `sw-${sw.id}`;
+                return (
+                  <div
+                    key={sw.id}
+                    className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-medium text-slate-900 dark:text-slate-100">{sw.name}</p>
+                        {sw.description && (
+                          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                            {sw.description}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => submitToLab('SOFTWARE', sw.name, { name: sw.name, description: sw.description, url: sw.url, githubUrl: sw.githubUrl, category: sw.category }, itemKey)}
+                          disabled={submittingId === itemKey}
+                          className={`rounded p-1.5 transition-colors ${
+                            submittedId === itemKey
+                              ? 'text-emerald-500'
+                              : 'text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-emerald-900/20'
+                          }`}
+                          title="Submit to Lab"
                         >
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      )}
-                      {sw.githubUrl && (
-                        <a
-                          href={sw.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-zinc-800"
-                        >
-                          <Code2 className="h-4 w-4" />
-                        </a>
-                      )}
+                          {submittedId === itemKey ? <CheckCircle className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+                        </button>
+                        {sw.url && (
+                          <a
+                            href={sw.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-zinc-800"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        )}
+                        {sw.githubUrl && (
+                          <a
+                            href={sw.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-zinc-800"
+                          >
+                            <Code2 className="h-4 w-4" />
+                          </a>
+                        )}
+                      </div>
                     </div>
+                    {sw.category && (
+                      <span className="mt-2 inline-block rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                        {sw.category}
+                      </span>
+                    )}
                   </div>
-                  {sw.category && (
-                    <span className="mt-2 inline-block rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-                      {sw.category}
-                    </span>
-                  )}
-                </div>
-              ))
+                );
+              })
             )}
           </motion.div>
         )}
@@ -269,23 +330,42 @@ export default function AchievementsPage() {
                 </p>
               </div>
             ) : (
-              patents.map((pat) => (
-                <div
-                  key={pat.id}
-                  className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-                >
-                  <p className="font-medium text-slate-900 dark:text-slate-100">{pat.title}</p>
-                  {pat.inventors && (
-                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                      {pat.inventors}
-                    </p>
-                  )}
-                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-                    {pat.year && <span>{pat.year}</span>}
-                    {pat.filingInfo && <span>{pat.filingInfo}</span>}
+              patents.map((pat) => {
+                const itemKey = `pat-${pat.id}`;
+                return (
+                  <div
+                    key={pat.id}
+                    className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-slate-900 dark:text-slate-100">{pat.title}</p>
+                        {pat.inventors && (
+                          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                            {pat.inventors}
+                          </p>
+                        )}
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                          {pat.year && <span>{pat.year}</span>}
+                          {pat.filingInfo && <span>{pat.filingInfo}</span>}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => submitToLab('PATENT', pat.title, { title: pat.title, year: pat.year, inventors: pat.inventors, filingInfo: pat.filingInfo }, itemKey)}
+                        disabled={submittingId === itemKey}
+                        className={`rounded p-1.5 shrink-0 transition-colors ${
+                          submittedId === itemKey
+                            ? 'text-emerald-500'
+                            : 'text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-emerald-900/20'
+                        }`}
+                        title="Submit to Lab"
+                      >
+                        {submittedId === itemKey ? <CheckCircle className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </motion.div>
         )}

@@ -24,7 +24,8 @@ export function LayoutWrapper({ children }: { children: ReactNode }) {
     pathname.startsWith('/member/profile') ||
     pathname.startsWith('/admin/dashboard') ||
     pathname.startsWith('/admin/members') ||
-    pathname.startsWith('/admin/recruits');
+    pathname.startsWith('/admin/recruits') ||
+    pathname.startsWith('/admin/content');
 
   if (isPortalRoute) {
     return <main className="flex-1">{children}</main>;

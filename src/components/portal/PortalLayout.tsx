@@ -16,10 +16,12 @@ import {
   UserCircle,
   Users,
   UserPlus,
+  FileCheck,
   LogOut,
   Menu,
   X,
   ChevronLeft,
+  ArrowLeftRight,
 } from 'lucide-react';
 
 export type PortalRole = 'member' | 'admin';
@@ -43,9 +45,10 @@ const memberNav: NavItem[] = [
 ];
 
 const adminNav: NavItem[] = [
-  { label: 'Admin Dashboard', href: '/admin/dashboard', icon: ShieldCheck },
+  { label: 'Dashboard', href: '/admin/dashboard', icon: ShieldCheck },
   { label: 'Members', href: '/admin/members', icon: Users },
   { label: 'Recruits', href: '/admin/recruits', icon: UserPlus },
+  { label: 'Content Review', href: '/admin/content', icon: FileCheck },
 ];
 
 interface PortalLayoutProps {
@@ -60,6 +63,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'admin' | 'member'>(role === 'admin' ? 'admin' : 'member');
 
   // Close mobile sidebar on route change
   useEffect(() => {
@@ -67,7 +71,9 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
   }, [pathname]);
 
   const navItems = role === 'admin'
-    ? [...adminNav, { label: 'divider', href: '', icon: LayoutDashboard }, ...memberNav]
+    ? viewMode === 'admin'
+      ? [...adminNav, { label: 'divider', href: '', icon: LayoutDashboard }, ...memberNav]
+      : memberNav
     : memberNav;
 
   function handleLogout() {
@@ -110,6 +116,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
           isActive={isActive}
           sidebarOpen={sidebarOpen}
           role={role}
+          viewMode={viewMode}
           onNavigate={(href) => router.push(href)}
         />
       </aside>
@@ -137,6 +144,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
               isActive={isActive}
               sidebarOpen={true}
               role={role}
+              viewMode={viewMode}
               onNavigate={(href) => router.push(href)}
             />
           </motion.aside>
@@ -165,7 +173,18 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
               AI.MED Portal
             </h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Role Switcher — admin only */}
+            {role === 'admin' && (
+              <button
+                onClick={() => setViewMode(viewMode === 'admin' ? 'member' : 'admin')}
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-400 dark:hover:bg-zinc-800"
+                title={viewMode === 'admin' ? 'Switch to Member View' : 'Switch to Admin View'}
+              >
+                <ArrowLeftRight className="h-3.5 w-3.5" />
+                {viewMode === 'admin' ? 'Member View' : 'Admin View'}
+              </button>
+            )}
             {(userName || userEmail) && (
               <span className="hidden sm:inline text-sm text-slate-600 dark:text-slate-400">
                 {userName || userEmail}
@@ -197,25 +216,34 @@ function SidebarContent({
   isActive,
   sidebarOpen,
   role,
+  viewMode,
   onNavigate,
 }: {
   navItems: NavItem[];
   isActive: (href: string) => boolean;
   sidebarOpen: boolean;
   role: PortalRole;
+  viewMode: 'admin' | 'member';
   onNavigate: (href: string) => void;
 }) {
+  const portalLabel = role === 'admin'
+    ? viewMode === 'admin' ? 'Admin Portal' : 'Member View'
+    : 'Member Portal';
+  const shortLabel = role === 'admin'
+    ? viewMode === 'admin' ? 'A' : 'M'
+    : 'M';
+
   return (
     <div className="flex flex-1 flex-col">
       {/* Logo area */}
       <div className={`flex items-center border-b border-slate-200 dark:border-zinc-800 h-14 px-4 shrink-0`}>
         {sidebarOpen ? (
           <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 truncate">
-            {role === 'admin' ? 'Admin Portal' : 'Member Portal'}
+            {portalLabel}
           </span>
         ) : (
           <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 mx-auto">
-            {role === 'admin' ? 'A' : 'M'}
+            {shortLabel}
           </span>
         )}
       </div>

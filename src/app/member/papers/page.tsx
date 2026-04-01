@@ -17,6 +17,8 @@ import {
   Globe,
   Upload,
   Layers,
+  Send,
+  CheckCircle,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -91,6 +93,8 @@ export default function PapersPage() {
   const [tags, setTags] = useState('');
   const [source, setSource] = useState('MANUAL');
   const [submitting, setSubmitting] = useState(false);
+  const [submitToLabId, setSubmitToLabId] = useState<number | null>(null);
+  const [submitToLabSuccess, setSubmitToLabSuccess] = useState<number | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -205,6 +209,40 @@ export default function PapersPage() {
       }
     } catch {
       // ignore
+    }
+  }
+
+  async function submitToLab(paper: Paper) {
+    if (!confirm(`Submit "${paper.title}" for admin review to be published on the public website?`)) return;
+    setSubmitToLabId(paper.id);
+    try {
+      const res = await fetch('/api/member/submit-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contentType: 'PUBLICATION',
+          title: paper.title,
+          data: {
+            title: paper.title,
+            authors: paper.authors,
+            year: paper.year,
+            journal: paper.journal,
+            doi: paper.doi,
+            tags: paper.tags,
+          },
+        }),
+      });
+      if (res.ok) {
+        setSubmitToLabSuccess(paper.id);
+        setTimeout(() => setSubmitToLabSuccess(null), 3000);
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Submission failed');
+      }
+    } catch {
+      alert('Submission failed');
+    } finally {
+      setSubmitToLabId(null);
     }
   }
 
@@ -377,6 +415,24 @@ export default function PapersPage() {
                           <ExternalLink className="h-4 w-4" />
                         </a>
                       )}
+                      <button
+                        onClick={() => submitToLab(paper)}
+                        disabled={submitToLabId === paper.id}
+                        className={`rounded p-1.5 transition-colors ${
+                          submitToLabSuccess === paper.id
+                            ? 'text-emerald-500'
+                            : 'text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-emerald-900/20'
+                        }`}
+                        title="Submit to Lab"
+                      >
+                        {submitToLabSuccess === paper.id ? (
+                          <CheckCircle className="h-4 w-4" />
+                        ) : submitToLabId === paper.id ? (
+                          <Send className="h-4 w-4 animate-pulse" />
+                        ) : (
+                          <Send className="h-4 w-4" />
+                        )}
+                      </button>
                       <button
                         onClick={() => openEdit(paper)}
                         className="rounded p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-zinc-800"
