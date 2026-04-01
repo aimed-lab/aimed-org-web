@@ -45,28 +45,22 @@ function renderMarkdown(text: string) {
   });
 }
 
-/* Custom AI chat icon — brain/circuit style */
-function AiChatIcon({ className }: { className?: string }) {
+/* Gemini-style sparkle icon — clean and minimal */
+function GeminiIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Outer ring */}
-      <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="2" opacity="0.3" />
-      {/* Brain/neural paths */}
-      <path d="M16 18c0-3 2-5 5-5s5 2 5 5c0 2-1 3-2 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M22 35c3 0 5-2 5-5s-2-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M26 18c3 0 6 2 6 5s-3 5-6 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      {/* AI text */}
-      <text x="14" y="29" fontFamily="Inter, system-ui, sans-serif" fontSize="12" fontWeight="700" fill="currentColor" letterSpacing="1">AI</text>
-      {/* Neural dots */}
-      <circle cx="14" cy="16" r="1.5" fill="currentColor" opacity="0.6" />
-      <circle cx="34" cy="16" r="1.5" fill="currentColor" opacity="0.6" />
-      <circle cx="34" cy="32" r="1.5" fill="currentColor" opacity="0.6" />
-      <circle cx="14" cy="32" r="1.5" fill="currentColor" opacity="0.6" />
-      {/* Connecting lines */}
-      <line x1="14" y1="16" x2="18" y2="18" stroke="currentColor" strokeWidth="1" opacity="0.4" />
-      <line x1="34" y1="16" x2="30" y2="18" stroke="currentColor" strokeWidth="1" opacity="0.4" />
-      <line x1="34" y1="32" x2="30" y2="28" stroke="currentColor" strokeWidth="1" opacity="0.4" />
-      <line x1="14" y1="32" x2="18" y2="28" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      {/* Main 4-point sparkle */}
+      <path
+        d="M14 2C14 2 16.5 10 18.5 12.5C20.5 15 26 14 26 14C26 14 20.5 13 18.5 15.5C16.5 18 14 26 14 26C14 26 11.5 18 9.5 15.5C7.5 13 2 14 2 14C2 14 7.5 15 9.5 12.5C11.5 10 14 2 14 2Z"
+        fill="currentColor"
+        opacity="0.9"
+      />
+      {/* Small accent sparkle */}
+      <path
+        d="M22 3C22 3 22.8 5.5 23.5 6C24.2 6.5 26 6 26 6C26 6 24.2 5.5 23.5 6C22.8 6.5 22 9 22 9C22 9 21.2 6.5 20.5 6C19.8 5.5 18 6 18 6C18 6 19.8 6.5 20.5 6C21.2 6.5 22 3 22 3Z"
+        fill="currentColor"
+        opacity="0.5"
+      />
     </svg>
   );
 }
@@ -245,7 +239,7 @@ export function ChatWidget() {
           >
             {/* Pulse ring */}
             <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-20 animate-ping" />
-            <AiChatIcon className="h-9 w-9 relative z-10" />
+            <GeminiIcon className="h-9 w-9 relative z-10" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -265,7 +259,7 @@ export function ChatWidget() {
             {/* Header */}
             <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white shrink-0">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
-                <AiChatIcon className="h-5 w-5" />
+                <GeminiIcon className="h-5 w-5" />
               </div>
               <div className="flex-1">
                 <h3 className="text-sm font-semibold">AI.MED Lab Assistant</h3>
