@@ -65,7 +65,7 @@ const currentMembers = [
   {
     name: "Geetanjali Oishe",
     role: "PhD Student",
-    photo: null,
+    photo: "/members/geetanjali-oishe.jpg",
   },
   {
     name: "Zhandos Sembay, MS",
