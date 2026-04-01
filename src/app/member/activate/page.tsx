@@ -3,12 +3,12 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Lock, Mail, KeyRound } from 'lucide-react';
+import { KeyRound, Mail, ShieldCheck } from 'lucide-react';
 
-export default function AdminLoginPage() {
+export default function MemberActivatePage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -16,29 +16,29 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setError('');
 
-    if (!email.trim() || !password.trim()) {
-      setError('Please enter both email and password.');
+    if (!email.trim() || !code.trim()) {
+      setError('Please enter both email and activation code.');
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth', {
+      const res = await fetch('/api/member/activate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: email.trim(), code: code.trim() }),
       });
 
       if (res.ok) {
-        router.push('/admin/dashboard');
+        router.push('/member/dashboard');
       } else {
         const data = await res.json();
-        setError(data.error || 'Invalid credentials.');
+        setError(data.error || 'Activation failed.');
         setLoading(false);
       }
     } catch {
-      setError('Login failed. Please try again.');
+      setError('Network error. Please try again.');
       setLoading(false);
     }
   }
@@ -52,20 +52,18 @@ export default function AdminLoginPage() {
         className="w-full max-w-md"
       >
         <div className="rounded-2xl border border-slate-200 bg-white p-10 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          {/* Header */}
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-700">
-              <Lock className="h-7 w-7 text-white" />
+              <ShieldCheck className="h-7 w-7 text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              Admin Login
+              Member Activation
             </h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              AI.MED Lab Administration Portal
+              Enter the activation code provided by your admin.
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -77,7 +75,7 @@ export default function AdminLoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@aimed-lab.org"
+                  placeholder="you@uab.edu"
                   className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                 />
               </div>
@@ -85,16 +83,17 @@ export default function AdminLoginPage() {
 
             <div>
               <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Password
+                Activation Code
               </label>
               <div className="relative">
                 <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                  type="text"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="8-character code"
+                  maxLength={8}
+                  className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm font-mono tracking-widest text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                 />
               </div>
             </div>
@@ -117,14 +116,14 @@ export default function AdminLoginPage() {
               {loading ? (
                 <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
               ) : (
-                'Log In'
+                'Activate Account'
               )}
             </button>
           </form>
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
-          Protected area. Authorized personnel only.
+          Lab members only. Contact your admin if you need a code.
         </p>
       </motion.div>
     </div>

@@ -178,6 +178,7 @@ model InquirySubmission {
   interestArea  String?
   message       String?
   attachmentUrl String?
+  attachments   String? // JSON: [{label, fileName, boxFileId, boxFileUrl}]
   status        String @default("NEW") // NEW, REVIEWED, REPLIED, SHORTLISTED, ACCEPTED, DECLINED, ARCHIVED
   notes         String?
 
@@ -191,6 +192,57 @@ model User {
   password String
   name     String?
   role     String @default("APPLICANT") // ADMIN, APPLICANT
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Lab Member Management ─────────────────────────────────────────────────
+
+model LabMember {
+  id              Int      @id @default(autoincrement())
+  name            String
+  email           String   @unique
+  role            String   // PhD Student, Postdoc, Research Staff, Intern, Visiting Scholar, etc.
+  joinDate        DateTime @default(now())
+  status          String   @default("ACTIVE") // ACTIVE, ALUMNI, INACTIVE
+  resumeUrl       String?  // Box file URL
+  boxFolderId     String?  // Their personal Box folder ID
+  boxFolderUrl    String?  // Direct link to their Box folder
+  notionPageUrl   String?  // Link to their Notion lab notes
+  githubUsername  String?  // GitHub handle
+  headshot        String?  // URL to headshot image
+  bio             String?
+
+  goals           QuarterlyGoal[]
+  activationCode  ActivationCode?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActivationCode {
+  id        Int       @id @default(autoincrement())
+  code      String    @unique   // random 8-char alphanumeric
+  memberId  Int       @unique
+  member    LabMember @relation(fields: [memberId], references: [id])
+  used      Boolean   @default(false)
+  usedAt    DateTime?
+  expiresAt DateTime
+  createdBy String   // admin email who generated it
+
+  createdAt DateTime @default(now())
+}
+
+model QuarterlyGoal {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  quarter     String    // e.g. "2026-Q1"
+  title       String
+  description String?
+  status      String    @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED, DEFERRED, CANCELLED
+  notes       String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

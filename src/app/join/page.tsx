@@ -126,6 +126,8 @@ const FILE_LABELS = ["Cover Letter", "Resume / CV", "Transcript", "Work Sample",
 export default function JoinPage() {
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
@@ -145,13 +147,38 @@ export default function JoinPage() {
     return errs;
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitError('');
     const fd = new FormData(e.currentTarget);
     const v = validate(fd);
     setErrors(v);
-    if (Object.keys(v).length === 0) {
-      setSubmitted(true);
+    if (Object.keys(v).length > 0) return;
+
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: fd.get('name')?.toString().trim(),
+          email: fd.get('email')?.toString().trim(),
+          role: fd.get('role')?.toString(),
+          interestArea: fd.get('interest')?.toString(),
+          message: fd.get('message')?.toString().trim(),
+        }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const data = await res.json();
+        setSubmitError(data.error || 'Submission failed. Please try again.');
+      }
+    } catch {
+      setSubmitError('Network error. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -461,13 +488,25 @@ export default function JoinPage() {
                   </p>
                 </div>
 
+                {/* Submit Error */}
+                {submitError && (
+                  <p className="text-sm text-red-500">{submitError}</p>
+                )}
+
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
+                  disabled={submitting}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60"
                 >
-                  Submit Inquiry
-                  <Send className="h-4 w-4" />
+                  {submitting ? (
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  ) : (
+                    <>
+                      Submit Inquiry
+                      <Send className="h-4 w-4" />
+                    </>
+                  )}
                 </button>
               </motion.form>
             )}
