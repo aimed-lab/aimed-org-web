@@ -2,9 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import { ChatWidget } from "@/components/chatbot/ChatWidget"
+import { LayoutWrapper } from "@/components/layout/LayoutWrapper"
 import "./globals.css"
 
 const GA_ID = "G-S5JM02Y0GJ"
@@ -138,10 +136,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning className="min-h-screen flex flex-col antialiased bg-white dark:bg-zinc-950 text-slate-900 dark:text-slate-100 font-sans">
         <ThemeProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <ChatWidget />
+          <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>
       </body>
     </html>

@@ -213,12 +213,28 @@ model LabMember {
   githubUsername  String?  // GitHub handle
   headshot        String?  // URL to headshot image
   bio             String?
+  orcidId         String?  // ORCID identifier
 
   goals           QuarterlyGoal[]
+  projects        ProjectTask[]
   activationCode  ActivationCode?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ProjectTask {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  title       String
+  description String?
+  status      String    @default("TODO") // TODO, IN_PROGRESS, REVIEW, DONE
+  priority    String    @default("MEDIUM") // HIGH, MEDIUM, LOW
+  dueDate     DateTime?
+  category    String?   // Research, Writing, Code, Admin, etc.
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model ActivationCode {
