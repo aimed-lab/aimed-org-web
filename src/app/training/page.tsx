@@ -55,7 +55,7 @@ const currentMembers = [
   {
     name: "John Haoyuan Cheng",
     role: "Research Staff",
-    photo: null,
+    photo: "/members/john-haoyuan-cheng.jpg",
   },
   {
     name: "Nikhil Kurmachalam",
