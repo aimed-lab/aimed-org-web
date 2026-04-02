@@ -60,7 +60,7 @@ const currentMembers = [
   {
     name: "Nikhil Kurmachalam",
     role: "Research Staff",
-    photo: null,
+    photo: "/members/nikhil-kurmachalam.png",
   },
   {
     name: "Geetanjali Oishe",
