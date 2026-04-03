@@ -3,28 +3,26 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Mail, KeyRound, Ticket, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, KeyRound, Send, ArrowLeft, Hash } from 'lucide-react';
 
-type LoginMode = 'password' | 'code' | 'change-password';
+type LoginStep = 'email-passcode' | 'verify-code';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [mode, setMode] = useState<LoginMode>('password');
+  const [step, setStep] = useState<LoginStep>('email-passcode');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [code, setCode] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passcode, setPasscode] = useState('');
+  const [magicCode, setMagicCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [mustChange, setMustChange] = useState(false);
 
-  async function handlePasswordLogin(e: FormEvent) {
+  async function handleSendMagicLink(e: FormEvent) {
     e.preventDefault();
     setError('');
-    if (!email.trim() || !password.trim()) {
-      setError('Please enter both email and password.');
+    setSuccess('');
+    if (!email.trim() || !passcode.trim()) {
+      setError('Please enter both email and passcode.');
       return;
     }
     setLoading(true);
@@ -32,32 +30,29 @@ export default function AdminLoginPage() {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'login', email, password }),
+        body: JSON.stringify({ action: 'send-magic-code', email, passcode }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        if (data.mustChangePassword) {
-          setMustChange(true);
-          setMode('change-password');
-          setLoading(false);
-        } else {
-          router.push('/admin/dashboard');
-        }
+        setSuccess('A 6-digit code has been sent to your email.');
+        setStep('verify-code');
+        setLoading(false);
       } else {
-        setError(data.error || 'Invalid credentials.');
+        setError(data.error || 'Failed to send code.');
         setLoading(false);
       }
     } catch {
-      setError('Login failed. Please try again.');
+      setError('Request failed. Please try again.');
       setLoading(false);
     }
   }
 
-  async function handleCodeLogin(e: FormEvent) {
+  async function handleVerifyCode(e: FormEvent) {
     e.preventDefault();
     setError('');
-    if (!email.trim() || !code.trim()) {
-      setError('Please enter both email and activation code.');
+    setSuccess('');
+    if (!magicCode.trim()) {
+      setError('Please enter the 6-digit code.');
       return;
     }
     setLoading(true);
@@ -65,7 +60,7 @@ export default function AdminLoginPage() {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'login-code', email, code }),
+        body: JSON.stringify({ action: 'verify-magic-code', email, code: magicCode }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -75,58 +70,7 @@ export default function AdminLoginPage() {
         setLoading(false);
       }
     } catch {
-      setError('Login failed. Please try again.');
-      setLoading(false);
-    }
-  }
-
-  async function handleChangePassword(e: FormEvent) {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
-    if (!newPassword.trim() || !confirmPassword.trim()) {
-      setError('Please fill in both password fields.');
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
-    if (newPassword.length < 6) {
-      setError('Password must be at least 6 characters.');
-      return;
-    }
-    setLoading(true);
-    try {
-      const res = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'change-password',
-          email,
-          oldPassword: password,
-          newPassword,
-          confirmPassword,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setSuccess('Password changed! Redirecting...');
-        // Re-login with new password to set fresh cookie
-        const loginRes = await fetch('/api/auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'login', email, password: newPassword }),
-        });
-        if (loginRes.ok) {
-          setTimeout(() => router.push('/admin/dashboard'), 1000);
-        }
-      } else {
-        setError(data.error || 'Password change failed.');
-        setLoading(false);
-      }
-    } catch {
-      setError('Failed. Please try again.');
+      setError('Verification failed. Please try again.');
       setLoading(false);
     }
   }
@@ -149,102 +93,24 @@ export default function AdminLoginPage() {
               <Lock className="h-7 w-7 text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              {mode === 'change-password' ? 'Set New Password' : 'Lab Login'}
+              Lab Login
             </h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              {mode === 'change-password'
-                ? 'You must change your default password before continuing.'
-                : mode === 'code'
-                ? 'Enter your email and activation code'
-                : 'AI.MED Lab Administration Portal'}
+              {step === 'email-passcode'
+                ? 'AI.MED Lab Portal'
+                : 'Enter the code sent to your email'}
             </p>
           </div>
 
           <AnimatePresence mode="wait">
-            {/* ── Password Login ───────────────── */}
-            {mode === 'password' && (
+            {/* ── Step 1: Email + Passcode ─────────── */}
+            {step === 'email-passcode' && (
               <motion.form
-                key="password"
+                key="email-passcode"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
-                onSubmit={handlePasswordLogin}
-                className="space-y-5"
-              >
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Email
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="jakechen@uab.edu"
-                      className={inputClass}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter password"
-                      className={inputClass}
-                    />
-                  </div>
-                </div>
-
-                {error && (
-                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-red-500">
-                    {error}
-                  </motion.p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60"
-                >
-                  {loading ? (
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  ) : (
-                    'Log In'
-                  )}
-                </button>
-
-                <div className="flex items-center gap-3 text-xs text-slate-400">
-                  <div className="flex-1 border-t border-slate-200 dark:border-zinc-700" />
-                  or
-                  <div className="flex-1 border-t border-slate-200 dark:border-zinc-700" />
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => { setMode('code'); setError(''); }}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
-                >
-                  <Ticket className="h-4 w-4" />
-                  Login with Activation Code
-                </button>
-              </motion.form>
-            )}
-
-            {/* ── Code Login ───────────────────── */}
-            {mode === 'code' && (
-              <motion.form
-                key="code"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                onSubmit={handleCodeLogin}
+                onSubmit={handleSendMagicLink}
                 className="space-y-5"
               >
                 <div>
@@ -264,21 +130,20 @@ export default function AdminLoginPage() {
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Activation Code
+                    Passcode
                   </label>
                   <div className="relative">
-                    <Ticket className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                    <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                     <input
-                      type="text"
-                      value={code}
-                      onChange={(e) => setCode(e.target.value)}
-                      placeholder="Enter activation code"
-                      maxLength={12}
-                      className={inputClass + " font-mono tracking-wider"}
+                      type="password"
+                      value={passcode}
+                      onChange={(e) => setPasscode(e.target.value)}
+                      placeholder="Enter lab passcode"
+                      className={inputClass}
                     />
                   </div>
                   <p className="mt-1 text-xs text-slate-400">
-                    Activation codes are provided by the lab admin.
+                    Lab passcode is provided by your administrator.
                   </p>
                 </div>
 
@@ -296,68 +161,55 @@ export default function AdminLoginPage() {
                   {loading ? (
                     <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   ) : (
-                    'Activate & Login'
+                    <>
+                      <Send className="h-4 w-4" />
+                      Send magic link by email
+                    </>
                   )}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => { setMode('password'); setError(''); }}
-                  className="flex w-full items-center justify-center gap-2 text-sm text-slate-500 hover:text-emerald-700 dark:text-slate-400"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  Back to password login
                 </button>
               </motion.form>
             )}
 
-            {/* ── Change Password ──────────────── */}
-            {mode === 'change-password' && (
+            {/* ── Step 2: Verify 6-digit Code ─────── */}
+            {step === 'verify-code' && (
               <motion.form
-                key="change"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleChangePassword}
+                key="verify-code"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                onSubmit={handleVerifyCode}
                 className="space-y-5"
               >
-                {mustChange && (
-                  <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 dark:border-amber-800 dark:bg-amber-900/20">
-                    <p className="text-xs text-amber-800 dark:text-amber-300">
-                      <strong>First-time login:</strong> You must set a new password before continuing.
+                {success && (
+                  <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800 dark:bg-emerald-900/20">
+                    <p className="text-xs text-emerald-800 dark:text-emerald-300">
+                      {success}
                     </p>
                   </div>
                 )}
 
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    New Password
+                    Verification Code
                   </label>
                   <div className="relative">
-                    <ShieldCheck className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                    <Hash className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                     <input
-                      type="password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="At least 6 characters"
-                      className={inputClass}
+                      type="text"
+                      value={magicCode}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, '').slice(0, 6);
+                        setMagicCode(v);
+                      }}
+                      placeholder="000000"
+                      maxLength={6}
+                      autoFocus
+                      className={inputClass + ' font-mono text-center text-lg tracking-[0.5em]'}
                     />
                   </div>
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Confirm New Password
-                  </label>
-                  <div className="relative">
-                    <ShieldCheck className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      placeholder="Enter again"
-                      className={inputClass}
-                    />
-                  </div>
+                  <p className="mt-1 text-xs text-slate-400">
+                    Check your email for the 6-digit code. It expires in 10 minutes.
+                  </p>
                 </div>
 
                 {error && (
@@ -365,23 +217,41 @@ export default function AdminLoginPage() {
                     {error}
                   </motion.p>
                 )}
-                {success && (
-                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-green-600">
-                    {success}
-                  </motion.p>
-                )}
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || magicCode.length < 6}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60"
                 >
                   {loading ? (
                     <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   ) : (
-                    'Set Password & Continue'
+                    'Verify & Login'
                   )}
                 </button>
+
+                <div className="flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => { setStep('email-passcode'); setError(''); setSuccess(''); setMagicCode(''); }}
+                    className="flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-700 dark:text-slate-400"
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5" />
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setError('');
+                      setSuccess('');
+                      setMagicCode('');
+                      handleSendMagicLink({ preventDefault: () => {} } as FormEvent);
+                    }}
+                    className="text-sm text-emerald-700 hover:text-emerald-800 dark:text-emerald-400"
+                  >
+                    Resend code
+                  </button>
+                </div>
               </motion.form>
             )}
           </AnimatePresence>

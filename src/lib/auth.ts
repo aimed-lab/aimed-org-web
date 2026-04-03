@@ -1,96 +1,81 @@
 import { cookies } from "next/headers"
 import { NextRequest } from "next/server"
 
-// Multiple default admin emails — override with ADMIN_EMAILS env var (comma-separated)
-const DEFAULT_ADMINS = ["jakechen@gmail.com", "jakechen@uab.edu"]
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || DEFAULT_ADMINS.join(","))
-  .split(",")
-  .map((e) => e.trim().toLowerCase())
+// ─── Admin Role Hierarchy ──────────────────────────────────────────────────
+// Owner: permanent, cannot be revoked
+// Admin: revokable by owner
+// Member: regular lab member
 
-// Default password — users must change on first login
-const DEFAULT_PASSWORD = process.env.ADMIN_PASSWORD || "changeME!"
+export type AdminRole = "owner" | "admin" | null
 
-// In-memory password store — in production, use database
-// Maps email → { password, mustChange }
-const passwordStore = new Map<string, { password: string; mustChange: boolean }>()
+const OWNER_EMAILS = ["jakechen@gmail.com"]
+const REVOKABLE_ADMIN_EMAILS = ["zsembay8@uab.edu", "jakechen@uab.edu"]
 
-// Initialize default admins
-for (const email of ADMIN_EMAILS) {
-  if (!passwordStore.has(email)) {
-    passwordStore.set(email, { password: DEFAULT_PASSWORD, mustChange: true })
-  }
-}
+// Build full admin list from env or defaults
+const ENV_ADMINS = process.env.ADMIN_EMAILS
+const ALL_ADMIN_EMAILS = ENV_ADMINS
+  ? ENV_ADMINS.split(",").map((e) => e.trim().toLowerCase())
+  : [...OWNER_EMAILS, ...REVOKABLE_ADMIN_EMAILS].map((e) => e.toLowerCase())
+
+// Default passcode for magic link flow
+const DEFAULT_PASSCODE = process.env.ADMIN_ACTIVATION_CODE || "AIMED2026"
 
 /**
- * Check if an email is an admin
+ * Check if an email is any kind of admin (owner or revokable)
  */
 export function isAdminEmail(email: string): boolean {
-  return ADMIN_EMAILS.includes(email.toLowerCase())
+  return ALL_ADMIN_EMAILS.includes(email.toLowerCase())
 }
 
 /**
- * Validate admin credentials. Returns { valid, mustChangePassword }
+ * Get the admin role for an email
  */
-export function validateAdminCredentials(
-  email: string,
-  password: string
-): { valid: boolean; mustChangePassword: boolean } {
-  const normalizedEmail = email.toLowerCase()
-  if (!isAdminEmail(normalizedEmail)) return { valid: false, mustChangePassword: false }
-
-  const stored = passwordStore.get(normalizedEmail)
-  if (!stored) {
-    // First-time login with default password
-    if (password === DEFAULT_PASSWORD) {
-      passwordStore.set(normalizedEmail, { password: DEFAULT_PASSWORD, mustChange: true })
-      return { valid: true, mustChangePassword: true }
-    }
-    return { valid: false, mustChangePassword: false }
-  }
-
-  if (stored.password === password) {
-    return { valid: true, mustChangePassword: stored.mustChange }
-  }
-
-  return { valid: false, mustChangePassword: false }
+export function getAdminRole(email: string): AdminRole {
+  const e = email.toLowerCase()
+  if (OWNER_EMAILS.map((o) => o.toLowerCase()).includes(e)) return "owner"
+  if (REVOKABLE_ADMIN_EMAILS.map((a) => a.toLowerCase()).includes(e)) return "admin"
+  if (ALL_ADMIN_EMAILS.includes(e)) return "admin"
+  return null
 }
 
 /**
- * Change admin password. Returns true on success.
+ * Check if an email is a recognized user (admin or lab member).
+ * Lab members are checked against the database.
  */
-export function changeAdminPassword(
-  email: string,
-  oldPassword: string,
-  newPassword: string
-): { success: boolean; error?: string } {
-  const normalizedEmail = email.toLowerCase()
-  if (!isAdminEmail(normalizedEmail)) return { success: false, error: "Not an admin" }
-
-  const stored = passwordStore.get(normalizedEmail)
-  if (!stored || stored.password !== oldPassword) {
-    return { success: false, error: "Current password is incorrect" }
-  }
-
-  if (newPassword.length < 6) {
-    return { success: false, error: "New password must be at least 6 characters" }
-  }
-
-  if (newPassword === DEFAULT_PASSWORD) {
-    return { success: false, error: "Please choose a different password" }
-  }
-
-  passwordStore.set(normalizedEmail, { password: newPassword, mustChange: false })
-  return { success: true }
+export function isRecognizedAdmin(email: string): boolean {
+  return isAdminEmail(email)
 }
 
 /**
- * Reset admin password to default (must change on next login)
+ * Validate the shared passcode for magic link flow.
+ * All users (admin and member) use this same passcode + email to request a magic code.
  */
-export function resetAdminPassword(email: string): boolean {
-  const normalizedEmail = email.toLowerCase()
-  if (!isAdminEmail(normalizedEmail)) return false
-  passwordStore.set(normalizedEmail, { password: DEFAULT_PASSWORD, mustChange: true })
-  return true
+export function validatePasscode(passcode: string): boolean {
+  return passcode === DEFAULT_PASSCODE
+}
+
+/**
+ * Generate a random 6-digit numeric magic code.
+ */
+export function generateMagicCode(): string {
+  const bytes = new Uint8Array(4)
+  crypto.getRandomValues(bytes)
+  const num = ((bytes[0] << 16) | (bytes[1] << 8) | bytes[2]) % 1000000
+  return num.toString().padStart(6, "0")
+}
+
+/**
+ * Generate a random 8-character alphanumeric activation code.
+ */
+export function generateActivationCode(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  let code = ""
+  const bytes = new Uint8Array(8)
+  crypto.getRandomValues(bytes)
+  for (let i = 0; i < 8; i++) {
+    code += chars[bytes[i] % chars.length]
+  }
+  return code
 }
 
 /**
@@ -131,18 +116,4 @@ export async function verifyAdminToken(
 export async function isAdmin(request?: NextRequest): Promise<boolean> {
   const email = await verifyAdminToken(request)
   return email !== null
-}
-
-/**
- * Generate a random 8-character alphanumeric activation code.
- */
-export function generateActivationCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-  let code = ""
-  const bytes = new Uint8Array(8)
-  crypto.getRandomValues(bytes)
-  for (let i = 0; i < 8; i++) {
-    code += chars[bytes[i] % chars.length]
-  }
-  return code
 }

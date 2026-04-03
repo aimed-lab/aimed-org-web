@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Award, Trophy, Loader2, ChevronDown, ChevronUp } from "lucide-react";
+import { CurationBadge } from "@/components/ui/curation-badge";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -15,6 +16,8 @@ interface Honor {
   category: string | null;
   issuer: string | null;
   description: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const categories = ["All", "International", "National", "Regional", "University"];
@@ -204,9 +207,11 @@ export default function HonorsPage() {
                               <>
                                 <div className="mb-1 flex items-start gap-2">
                                   <Trophy className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
-                                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex-1">
                                     {main}
                                   </h3>
+                                  {honor.createdAt && (Date.now() - new Date(honor.createdAt).getTime()) < 30 * 24 * 60 * 60 * 1000 && <CurationBadge type="new" />}
+                                  {honor.createdAt && honor.updatedAt && (Date.now() - new Date(honor.createdAt).getTime()) >= 30 * 24 * 60 * 60 * 1000 && (Date.now() - new Date(honor.updatedAt).getTime()) < 30 * 24 * 60 * 60 * 1000 && <CurationBadge type="updated" />}
                                 </div>
                                 {footnote && (
                                   <p className="ml-7 text-[11px] leading-snug text-slate-400 dark:text-slate-500">

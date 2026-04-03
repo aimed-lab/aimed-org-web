@@ -20,6 +20,7 @@ import {
   Users,
   Globe,
 } from "lucide-react";
+import { CurationBadge } from "@/components/ui/curation-badge";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -33,6 +34,8 @@ interface SoftwareTool {
   githubUrl: string | null;
   relatedPapers: string | null;
   category: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Patent {
@@ -205,9 +208,13 @@ export default function SoftwarePage() {
                       </span>
                     )}
 
-                    <h3 className="mb-2 text-xl font-bold text-slate-900 dark:text-slate-100">
-                      {tool.name}
-                    </h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                        {tool.name}
+                      </h3>
+                      {tool.createdAt && (Date.now() - new Date(tool.createdAt).getTime()) < 30 * 24 * 60 * 60 * 1000 && <CurationBadge type="new" />}
+                      {tool.createdAt && tool.updatedAt && (Date.now() - new Date(tool.createdAt).getTime()) >= 30 * 24 * 60 * 60 * 1000 && (Date.now() - new Date(tool.updatedAt).getTime()) < 30 * 24 * 60 * 60 * 1000 && <CurationBadge type="updated" />}
+                    </div>
 
                     {tool.description && (
                       <p className="mb-4 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">

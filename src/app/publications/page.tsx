@@ -15,6 +15,7 @@ import {
   Download,
   GraduationCap,
 } from "lucide-react";
+import { CurationBadge } from "@/components/ui/curation-badge";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -35,6 +36,8 @@ interface Publication {
   researchLineage: string | null;
   articleType: string | null;
   featured: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const allTopics = ["Drug Discovery", "AI/ML", "Bioinformatics", "Systems Biology", "Knowledge Networks", "Multi-omics", "Precision Medicine", "Cancer", "Neurodegenerative Diseases", "Immunology", "Visualization"];
@@ -125,6 +128,8 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
     : null;
   const arxivUrl = pub.arxivId ? `https://arxiv.org/abs/${pub.arxivId}` : null;
   const scholarUrl = `https://scholar.google.com/scholar?q=${encodeURIComponent(pub.title)}`;
+  const isRecentlyAdded = pub.createdAt && (Date.now() - new Date(pub.createdAt).getTime()) < 30 * 24 * 60 * 60 * 1000;
+  const isRecentlyUpdated = !isRecentlyAdded && pub.updatedAt && (Date.now() - new Date(pub.updatedAt).getTime()) < 30 * 24 * 60 * 60 * 1000;
 
   return (
     <motion.article
@@ -135,12 +140,16 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
       viewport={{ once: true, amount: 0.1 }}
       className="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm hover:shadow-md transition-shadow"
     >
-      <h3
-        onClick={() => setOpen(!open)}
-        className="text-base font-semibold leading-snug text-slate-900 dark:text-slate-100 cursor-pointer hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
-      >
-        {pub.title}
-      </h3>
+      <div className="flex items-start gap-2">
+        <h3
+          onClick={() => setOpen(!open)}
+          className="text-base font-semibold leading-snug text-slate-900 dark:text-slate-100 cursor-pointer hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors flex-1"
+        >
+          {pub.title}
+        </h3>
+        {isRecentlyAdded && <CurationBadge type="new" />}
+        {isRecentlyUpdated && <CurationBadge type="updated" />}
+      </div>
 
       <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400 line-clamp-1">{pub.authors}</p>
       <p className="mt-1 text-sm italic text-slate-500 dark:text-slate-400">
