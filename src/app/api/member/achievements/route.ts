@@ -9,7 +9,6 @@ export async function GET() {
   }
 
   try {
-    // Get the member's name for matching in publications/patents
     const member = await prisma.labMember.findUnique({
       where: { id: auth.memberId },
       select: { name: true },
@@ -19,17 +18,39 @@ export async function GET() {
       return NextResponse.json({ error: "Member not found" }, { status: 404 })
     }
 
-    // Search for publications where the member's name appears in authors
-    // Use a simple substring match — the member's last name should appear
     const nameParts = member.name.split(" ")
     const lastName = nameParts[nameParts.length - 1]
+    const fullName = member.name.toLowerCase()
+    const firstInitial = nameParts[0]?.[0]?.toLowerCase() || ""
 
-    const publications = await prisma.publication.findMany({
+    // Only return VERIFIED publications where the member is a co-author
+    const allVerifiedPubs = await prisma.publication.findMany({
       where: {
+        curationStatus: "VERIFIED",
         authors: { contains: lastName },
       },
       orderBy: { year: "desc" },
-      take: 50,
+      take: 100,
+    })
+
+    // Tag each publication with co-author confidence
+    const publications = allVerifiedPubs.map((pub) => {
+      const authorsLower = pub.authors.toLowerCase()
+      let matchConfidence: "exact" | "high" | "partial" = "partial"
+
+      if (authorsLower.includes(fullName)) {
+        matchConfidence = "exact"
+      } else if (authorsLower.includes(`${lastName.toLowerCase()}, ${firstInitial}`)) {
+        matchConfidence = "high"
+      }
+
+      return { ...pub, matchConfidence, coAuthorName: member.name }
+    })
+
+    // Only return VERIFIED software
+    const software = await prisma.softwareResource.findMany({
+      where: { curationStatus: "VERIFIED" },
+      orderBy: { name: "asc" },
     })
 
     // Search for patents where member is an inventor
@@ -38,11 +59,6 @@ export async function GET() {
         inventors: { contains: lastName },
       },
       orderBy: { year: "desc" },
-    })
-
-    // Get all software (members can tag themselves later)
-    const software = await prisma.softwareResource.findMany({
-      orderBy: { name: "asc" },
     })
 
     return NextResponse.json({ publications, patents, software })

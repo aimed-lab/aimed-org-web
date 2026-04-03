@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,42 +36,15 @@ const piMember = {
   photo: "/jake-chen-headshot.jpg",
 };
 
-const currentMembers = [
-  {
-    name: "Huu Phong Nguyen, PhD",
-    role: "Postdoctoral Fellow",
-    photo: "/members/huu-phong-nguyen.jpg",
-  },
-  {
-    name: "Fuad Al Abir",
-    role: "PhD Student, Biomedical Informatics & Data Science",
-    photo: "/members/fuad-al-abir.jpg",
-  },
-  {
-    name: "Delower Hossain",
-    role: "PhD Student, Computer Science",
-    photo: "/members/delower-hossain.jpg",
-  },
-  {
-    name: "John Haoyuan Cheng",
-    role: "Research Staff",
-    photo: "/members/john-haoyuan-cheng.jpg",
-  },
-  {
-    name: "Nikhil Kurmachalam",
-    role: "Research Staff",
-    photo: "/members/nikhil-kurmachalam.png",
-  },
-  {
-    name: "Geetanjali Oishe",
-    role: "PhD Student",
-    photo: "/members/geetanjali-oishe.jpg",
-  },
-  {
-    name: "Zhandos Sembay, MS",
-    role: "Systems Administrator",
-    photo: "/members/zhandos-sembay.jpg",
-  },
+// Fallback static member data — used when DB is unavailable
+const staticMembers = [
+  { name: "Huu Phong Nguyen, PhD", role: "Postdoctoral Fellow", photo: "/members/huu-phong-nguyen.jpg" },
+  { name: "Fuad Al Abir", role: "PhD Student, Biomedical Informatics & Data Science", photo: "/members/fuad-al-abir.jpg" },
+  { name: "Delower Hossain", role: "PhD Student, Computer Science", photo: "/members/delower-hossain.jpg" },
+  { name: "John Haoyuan Cheng", role: "Research Staff", photo: "/members/john-haoyuan-cheng.jpg" },
+  { name: "Nikhil Kurmachalam", role: "Research Staff", photo: "/members/nikhil-kurmachalam.png" },
+  { name: "Geetanjali Oishe", role: "PhD Student", photo: "/members/geetanjali-oishe.jpg" },
+  { name: "Zhandos Sembay, MS", role: "Systems Administrator", photo: "/members/zhandos-sembay.jpg" },
 ];
 
 const traineeTypes = [
@@ -333,7 +306,45 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   );
 }
 
+interface DbMember {
+  id: number;
+  name: string;
+  role: string;
+  headshot: string | null;
+  bio: string | null;
+  githubUsername: string | null;
+  orcidId: string | null;
+}
+
 export default function TrainingPage() {
+  const [currentMembers, setCurrentMembers] = useState(
+    staticMembers.map((m) => ({ name: m.name, role: m.role, photo: m.photo as string | null, bio: null as string | null }))
+  );
+
+  useEffect(() => {
+    // Fetch live team data from DB — merges profile photos/bios from member profiles
+    fetch('/api/team')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((dbMembers: DbMember[] | null) => {
+        if (!dbMembers || dbMembers.length === 0) return;
+        // Build dynamic member list from DB, using headshot from DB if available
+        const dynamic = dbMembers.map((m) => {
+          // Try to match with static data for fallback photo
+          const staticMatch = staticMembers.find(
+            (s) => s.name.toLowerCase().includes(m.name.split(' ')[0].toLowerCase())
+          );
+          return {
+            name: m.name,
+            role: m.role,
+            photo: m.headshot || staticMatch?.photo || null,
+            bio: m.bio,
+          };
+        });
+        if (dynamic.length > 0) setCurrentMembers(dynamic);
+      })
+      .catch(() => {}); // Silently fall back to static data
+  }, []);
+
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
@@ -437,6 +448,11 @@ export default function TrainingPage() {
               <p className="mt-1 text-center text-sm text-slate-500 dark:text-slate-400">
                 {member.role}
               </p>
+              {member.bio && (
+                <p className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500 line-clamp-2">
+                  {member.bio}
+                </p>
+              )}
             </motion.div>
           ))}
         </div>

@@ -117,6 +117,7 @@ async function createPublicRecord(contentType: string, data: Record<string, unkn
           tags: (data.tags as string) || null,
           researchLineage: (data.researchLineage as string) || null,
           articleType: (data.articleType as string) || null,
+          curationStatus: "VERIFIED", // Admin-approved submissions are verified
         },
       })
       break

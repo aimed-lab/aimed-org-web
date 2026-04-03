@@ -17,6 +17,8 @@ import {
   Check,
   Edit3,
   Target,
+  Send,
+  Mail,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -117,6 +119,11 @@ export default function AdminMembersPage() {
   const [editingMember, setEditingMember] = useState<Member | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [newMemberCode, setNewMemberCode] = useState<{ name: string; code: string; email: string } | null>(null);
+  const [showInvite, setShowInvite] = useState(false);
+  const [inviteEmails, setInviteEmails] = useState('');
+  const [inviteLoading, setInviteLoading] = useState(false);
+  const [inviteResults, setInviteResults] = useState<{ email: string; status: string; error?: string }[] | null>(null);
+  const [showAddDropdown, setShowAddDropdown] = useState(false);
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -253,6 +260,34 @@ export default function AdminMembersPage() {
     setTimeout(() => setCopiedCode(null), 2000);
   }
 
+  async function handleSendInvites() {
+    const emails = inviteEmails
+      .split(/[\n,;]+/)
+      .map((e) => e.trim())
+      .filter((e) => e && e.includes('@'));
+    if (emails.length === 0) return;
+    setInviteLoading(true);
+    setInviteResults(null);
+    try {
+      const res = await fetch('/api/admin/invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ emails }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setInviteResults(data.results);
+        fetchMembers();
+      } else {
+        alert(data.error || 'Failed to send invitations');
+      }
+    } catch {
+      alert('Network error');
+    } finally {
+      setInviteLoading(false);
+    }
+  }
+
   async function handleAddGoal(e: FormEvent<HTMLFormElement>, memberId: number) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
@@ -326,13 +361,37 @@ export default function AdminMembersPage() {
       <div className="mx-auto max-w-5xl space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Members</h2>
-          <button
-            onClick={() => setShowAddMember(true)}
-            className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800"
-          >
-            <Plus className="h-4 w-4" />
-            Add Member
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowAddDropdown(!showAddDropdown)}
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+            >
+              <Plus className="h-4 w-4" />
+              Add
+              <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            {showAddDropdown && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setShowAddDropdown(false)} />
+                <div className="absolute right-0 top-full z-20 mt-1 w-52 rounded-lg border border-slate-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
+                  <button
+                    onClick={() => { setShowAddMember(true); setShowAddDropdown(false); }}
+                    className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-zinc-700"
+                  >
+                    <Plus className="h-4 w-4 text-slate-400" />
+                    Direct Add
+                  </button>
+                  <button
+                    onClick={() => { setShowInvite(true); setShowAddDropdown(false); }}
+                    className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-zinc-700"
+                  >
+                    <Send className="h-4 w-4 text-slate-400" />
+                    Send Invitation
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Tab Filter */}
@@ -680,6 +739,108 @@ export default function AdminMembersPage() {
                     Save Changes
                   </button>
                 </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Send Invitation Modal */}
+        <AnimatePresence>
+          {showInvite && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+              onClick={() => { setShowInvite(false); setInviteResults(null); setInviteEmails(''); }}
+            >
+              <motion.div
+                initial={{ scale: 0.95 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.95 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-lg dark:border-zinc-800 dark:bg-zinc-900"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <Mail className="h-5 w-5 text-emerald-700" />
+                    Send Invitations
+                  </h3>
+                  <button onClick={() => { setShowInvite(false); setInviteResults(null); setInviteEmails(''); }} className="rounded p-1 text-slate-500 hover:bg-slate-100 dark:hover:bg-zinc-800">
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                {!inviteResults ? (
+                  <div className="space-y-4">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      Enter email addresses to invite. Each person will receive an email with a link to self-register.
+                    </p>
+                    <textarea
+                      value={inviteEmails}
+                      onChange={(e) => setInviteEmails(e.target.value)}
+                      placeholder={"one@uab.edu\ntwo@uab.edu\nthree@uab.edu"}
+                      rows={5}
+                      className={inputClass + ' font-mono text-xs'}
+                    />
+                    <p className="text-xs text-slate-400 dark:text-slate-500">
+                      One email per line, or separated by commas / semicolons.
+                    </p>
+                    <button
+                      onClick={handleSendInvites}
+                      disabled={inviteLoading || !inviteEmails.trim()}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 disabled:opacity-60"
+                    >
+                      {inviteLoading ? (
+                        <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4" />
+                          Send Invitations
+                        </>
+                      )}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      {inviteResults.map((r, i) => (
+                        <div key={i} className="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 dark:border-zinc-800 dark:bg-zinc-800/50">
+                          <span className="text-sm text-slate-700 dark:text-slate-300 truncate mr-2">{r.email}</span>
+                          {r.status === 'sent' && (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/40 dark:text-green-300">
+                              <Check className="h-3 w-3" /> Sent
+                            </span>
+                          )}
+                          {r.status === 'exists' && (
+                            <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">
+                              Already exists
+                            </span>
+                          )}
+                          {r.status === 'error' && (
+                            <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-300" title={r.error}>
+                              Error
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => { setInviteResults(null); setInviteEmails(''); }}
+                        className="flex-1 rounded-lg border border-slate-200 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800"
+                      >
+                        Invite More
+                      </button>
+                      <button
+                        onClick={() => { setShowInvite(false); setInviteResults(null); setInviteEmails(''); }}
+                        className="flex-1 rounded-lg bg-emerald-700 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </motion.div>
           )}

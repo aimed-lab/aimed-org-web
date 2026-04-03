@@ -17,6 +17,7 @@ import {
   Users,
   UserPlus,
   FileCheck,
+  BookOpen,
   LogOut,
   Menu,
   X,
@@ -47,6 +48,7 @@ const memberNav: NavItem[] = [
 const adminNav: NavItem[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: ShieldCheck },
   { label: 'Members', href: '/admin/members', icon: Users },
+  { label: 'Publications', href: '/admin/publications', icon: BookOpen },
   { label: 'Recruits', href: '/admin/recruits', icon: UserPlus },
   { label: 'Content Review', href: '/admin/content', icon: FileCheck },
 ];

@@ -65,6 +65,8 @@ model Publication {
   researchLineage String?
   articleType     String?
   featured        Boolean  @default(false)
+  curationStatus  String   @default("VERIFIED") // PROVISIONAL, VERIFIED
+  sourceCV        String?  // filename of CV this was parsed from
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -117,15 +119,16 @@ model Honor {
 }
 
 model SoftwareResource {
-  id            Int      @id @default(autoincrement())
-  name          String
-  description   String?
-  url           String?
-  githubUrl     String?
-  screenshotUrl String?
-  relatedPapers String?
-  category      String?
-  featured      Boolean  @default(false)
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String?
+  url            String?
+  githubUrl      String?
+  screenshotUrl  String?
+  relatedPapers  String?
+  category       String?
+  featured       Boolean  @default(false)
+  curationStatus String   @default("VERIFIED") // PROVISIONAL, VERIFIED
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -314,39 +317,41 @@ model MemberPaper {
 }
 
 model MemberDataset {
-  id          Int       @id @default(autoincrement())
-  memberId    Int
-  member      LabMember @relation(fields: [memberId], references: [id])
-  name        String
-  description String?
-  source      String    @default("LOCAL") // LOCAL, DOI, MCP_SERVER, URL
-  doi         String?
-  url         String?
-  filePath    String?
-  mcpServer   String?
-  format      String?
-  size        String?
-  tags        String?   // JSON array
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             Int       @id @default(autoincrement())
+  memberId       Int
+  member         LabMember @relation(fields: [memberId], references: [id])
+  name           String
+  description    String?
+  source         String    @default("LOCAL") // LOCAL, DOI, MCP_SERVER, URL
+  doi            String?
+  url            String?
+  filePath       String?
+  mcpServer      String?
+  format         String?
+  size           String?
+  tags           String?   // JSON array
+  curationStatus String    @default("PROVISIONAL") // PROVISIONAL, VERIFIED
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model MemberTool {
-  id          Int       @id @default(autoincrement())
-  memberId    Int
-  member      LabMember @relation(fields: [memberId], references: [id])
-  name        String
-  description String?
-  toolType    String    @default("GITHUB") // GITHUB, JUPYTER, WEB_APP, API, MCP_SERVER, VM, DOCKER, OTHER
-  url         String?
-  githubRepo  String?
-  dockerImage String?
-  apiEndpoint String?
-  mcpServer   String?
-  status      String    @default("ACTIVE") // ACTIVE, ARCHIVED, IN_DEVELOPMENT
-  tags        String?   // JSON array
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             Int       @id @default(autoincrement())
+  memberId       Int
+  member         LabMember @relation(fields: [memberId], references: [id])
+  name           String
+  description    String?
+  toolType       String    @default("GITHUB") // GITHUB, JUPYTER, WEB_APP, API, MCP_SERVER, VM, DOCKER, OTHER
+  url            String?
+  githubRepo     String?
+  dockerImage    String?
+  apiEndpoint    String?
+  mcpServer      String?
+  status         String    @default("ACTIVE") // ACTIVE, ARCHIVED, IN_DEVELOPMENT
+  tags           String?   // JSON array
+  curationStatus String    @default("PROVISIONAL") // PROVISIONAL, VERIFIED
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model MemberCompliance {

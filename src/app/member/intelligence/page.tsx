@@ -21,6 +21,8 @@ import {
   Clock,
   BarChart3,
   Info,
+  Play,
+  ExternalLink,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -111,6 +113,8 @@ export default function IntelligencePage() {
   const [notes, setNotes] = useState('');
   const [enabled, setEnabled] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [checkingId, setCheckingId] = useState<number | null>(null);
+  const [checkResults, setCheckResults] = useState<{ watchId: number; results: Record<string, unknown>[] } | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -194,6 +198,33 @@ export default function IntelligencePage() {
       const res = await fetch(`/api/member/watches/${id}`, { method: 'DELETE' });
       if (res.ok) setWatches((prev) => prev.filter((w) => w.id !== id));
     } catch { /* ignore */ }
+  }
+
+  async function checkNow(watch: Watch) {
+    setCheckingId(watch.id);
+    setCheckResults(null);
+    try {
+      const res = await fetch(`/api/member/watches/${watch.id}/check`, { method: 'POST' });
+      if (res.ok) {
+        const data = await res.json();
+        setCheckResults({ watchId: watch.id, results: data.results || [] });
+        // Update the watch in state
+        setWatches((prev) =>
+          prev.map((w) =>
+            w.id === watch.id
+              ? { ...w, lastChecked: new Date().toISOString(), resultCount: data.resultCount || 0 }
+              : w
+          )
+        );
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Check failed');
+      }
+    } catch {
+      alert('Network error');
+    } finally {
+      setCheckingId(null);
+    }
   }
 
   const activeCount = watches.filter((w) => w.enabled).length;
@@ -310,6 +341,19 @@ export default function IntelligencePage() {
                       )}
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
+                      {/* Check Now */}
+                      <button
+                        onClick={() => checkNow(watch)}
+                        disabled={checkingId === watch.id}
+                        title="Check now"
+                        className="rounded p-1.5 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                      >
+                        {checkingId === watch.id ? (
+                          <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+                        ) : (
+                          <Play className="h-4 w-4" />
+                        )}
+                      </button>
                       {/* Toggle */}
                       <button
                         onClick={() => toggleEnabled(watch)}
@@ -330,21 +374,53 @@ export default function IntelligencePage() {
                       </button>
                     </div>
                   </div>
+                {/* Check Results */}
+                {checkResults?.watchId === watch.id && checkResults.results.length > 0 && (
+                  <div className="mt-3 rounded-lg border border-blue-100 bg-blue-50 p-3 dark:border-blue-800/30 dark:bg-blue-900/10">
+                    <p className="text-xs font-semibold text-blue-700 dark:text-blue-300 mb-2">
+                      {checkResults.results.length} results found
+                    </p>
+                    <div className="space-y-1.5 max-h-60 overflow-y-auto">
+                      {checkResults.results.slice(0, 10).map((r, ri) => (
+                        <div key={ri} className="rounded bg-white p-2 text-xs dark:bg-zinc-800">
+                          <p className="font-medium text-slate-900 dark:text-slate-100 line-clamp-1">
+                            {(r as Record<string, string>).title || (r as Record<string, string>).name || 'Untitled'}
+                          </p>
+                          {((r as Record<string, string>).authors || (r as Record<string, string>).description) && (
+                            <p className="text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                              {(r as Record<string, string>).authors || (r as Record<string, string>).description}
+                            </p>
+                          )}
+                          {((r as Record<string, string>).url || (r as Record<string, string>).link) && (
+                            <a
+                              href={(r as Record<string, string>).url || (r as Record<string, string>).link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-blue-600 hover:underline mt-0.5"
+                            >
+                              <ExternalLink className="h-3 w-3" /> View
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 </motion.div>
               );
             })
           )}
         </div>
 
-        {/* Future note */}
+        {/* Info note */}
         <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
           <div className="flex items-start gap-3">
             <Info className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Automated monitoring coming soon</p>
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Live Monitoring</p>
               <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                Currently serves as a tracking list for your research interests.
-                Automated monitoring with alerts will be available in a future release.
+                Click the play button on any watch to check for new results from PubMed, arXiv, or GitHub.
+                Results are fetched in real-time from external APIs.
               </p>
             </div>
           </div>

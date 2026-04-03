@@ -22,6 +22,8 @@ interface Publication {
   year: number;
   journal: string | null;
   doi: string | null;
+  matchConfidence?: 'exact' | 'high' | 'partial';
+  coAuthorName?: string;
 }
 
 interface Patent {
@@ -144,12 +146,12 @@ export default function AchievementsPage() {
 
         {/* Lab Contributions header */}
         <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-900/20">
-          <h3 className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">Lab Contributions</h3>
+          <h3 className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">Verified Lab Contributions</h3>
           <p className="mt-1 text-xs text-emerald-700 dark:text-emerald-300">
-            These achievements are auto-matched from the lab&apos;s public database based on your name.
-            Publications link to the lab&apos;s{' '}
-            <a href="/publications" className="underline hover:text-emerald-900 dark:hover:text-emerald-100">publications page</a>,
-            patents to the lab records, and software to the{' '}
+            Only verified (published) achievements appear here. These are ready for the public site.
+            Publications link to the{' '}
+            <a href="/publications" className="underline hover:text-emerald-900 dark:hover:text-emerald-100">publications page</a>
+            {' '}and software to the{' '}
             <a href="/software" className="underline hover:text-emerald-900 dark:hover:text-emerald-100">software page</a>.
           </p>
         </div>
@@ -204,7 +206,18 @@ export default function AchievementsPage() {
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-slate-900 dark:text-slate-100">{pub.title}</p>
                         <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{pub.authors}</p>
-                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                        <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 flex-wrap">
+                          {pub.coAuthorName && (
+                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                              pub.matchConfidence === 'exact'
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
+                                : pub.matchConfidence === 'high'
+                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
+                                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+                            }`}>
+                              Co-author: {pub.coAuthorName}
+                            </span>
+                          )}
                           {pub.journal && <span>{pub.journal}</span>}
                           <span>{pub.year}</span>
                           {pub.doi && (

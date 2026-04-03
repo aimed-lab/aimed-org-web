@@ -95,6 +95,8 @@ export default function PapersPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitToLabId, setSubmitToLabId] = useState<number | null>(null);
   const [submitToLabSuccess, setSubmitToLabSuccess] = useState<number | null>(null);
+  const [labPubs, setLabPubs] = useState<{ id: number; title: string; authors: string; year: number; journal: string | null; doi: string | null; matchConfidence: string }[]>([]);
+  const [showLabPubs, setShowLabPubs] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -108,6 +110,8 @@ export default function PapersPage() {
         }
         setMember(m);
         setPapers(p || []);
+        // Fetch co-authored lab publications
+        fetch('/api/member/publications').then(r => r.ok ? r.json() : []).then(setLabPubs).catch(() => {});
       })
       .catch(() => setError('Failed to load data'))
       .finally(() => setLoading(false));
@@ -303,6 +307,66 @@ export default function PapersPage() {
             Add Paper
           </button>
         </div>
+
+        {/* Lab Publications Banner */}
+        {labPubs.length > 0 && (
+          <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800/50 dark:bg-emerald-900/10">
+            <button
+              onClick={() => setShowLabPubs(!showLabPubs)}
+              className="flex w-full items-center justify-between"
+            >
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
+                <span className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">
+                  Your Lab Publications ({labPubs.length})
+                </span>
+              </div>
+              <span className="text-xs text-emerald-600 dark:text-emerald-400">
+                {showLabPubs ? 'Hide' : 'Show'}
+              </span>
+            </button>
+            {showLabPubs && (
+              <div className="mt-3 space-y-2">
+                {labPubs.map((pub) => (
+                  <div key={pub.id} className="flex items-start justify-between gap-2 rounded-lg bg-white p-3 dark:bg-zinc-800">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-slate-900 dark:text-slate-100 line-clamp-1">{pub.title}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                        {pub.authors?.substring(0, 80)}{(pub.authors?.length || 0) > 80 ? '...' : ''} &middot; {pub.year} &middot; {pub.journal || ''}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      {pub.doi && (
+                        <a
+                          href={`https://doi.org/${pub.doi}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-zinc-700"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                        pub.matchConfidence === 'exact'
+                          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                          : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                      }`}>
+                        {pub.matchConfidence === 'exact' ? 'Co-author' : 'Possible'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+                <a
+                  href="/publications"
+                  target="_blank"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400"
+                >
+                  View all lab publications <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Search */}
         <div className="relative mb-4">
