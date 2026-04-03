@@ -2,26 +2,20 @@ import { Resend } from "resend"
 
 const FROM_EMAIL = process.env.EMAIL_FROM || "AI.MED Lab <noreply@aimed-lab.org>"
 
-function getResendClient(): Resend | null {
-  const key = process.env.RESEND_API_KEY
-  if (!key) return null
-  return new Resend(key)
-}
-
 /**
  * Send a 6-digit magic login code to the given email address.
  */
 export async function sendMagicCode(email: string, code: string): Promise<{ success: boolean; error?: string }> {
-  const resend = getResendClient()
+  const apiKey = process.env.RESEND_API_KEY
 
-  // In development without RESEND_API_KEY, log to console
-  if (!resend) {
-    console.log(`[DEV] Magic code for ${email}: ${code}`)
-    return { success: true }
+  if (!apiKey) {
+    console.error("[EMAIL] RESEND_API_KEY is not set — cannot send email")
+    return { success: false, error: "Email service not configured. Please contact the administrator." }
   }
 
   try {
-    const { error } = await resend.emails.send({
+    const resend = new Resend(apiKey)
+    const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: "AI.MED Lab — Your Login Code",
@@ -46,13 +40,14 @@ export async function sendMagicCode(email: string, code: string): Promise<{ succ
     })
 
     if (error) {
-      console.error("Email send error:", error)
+      console.error("[EMAIL] Resend API error:", error)
       return { success: false, error: error.message }
     }
 
+    console.log(`[EMAIL] Sent magic code to ${email}, Resend ID: ${data?.id}`)
     return { success: true }
   } catch (err) {
-    console.error("Email send failed:", err)
+    console.error("[EMAIL] Send failed:", err)
     return { success: false, error: "Failed to send email" }
   }
 }
