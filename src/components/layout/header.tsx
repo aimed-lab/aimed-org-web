@@ -23,7 +23,7 @@ const externalLinks = [
   { label: "Google Scholar", href: "https://scholar.google.com/citations?user=VM9ziaEAAAAJ" },
   { label: "ORCID", href: "https://orcid.org/0000-0001-8829-7504" },
   { label: "GitHub", href: "https://github.com/aimed-lab" },
-  { label: "LinkedIn", href: "https://linkedin.com/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jakechen/" },
   { label: "NIH Biosketch (PDF)", href: "https://www.ncbi.nlm.nih.gov/labs/sciencv/1863846/" },
 ]
 
