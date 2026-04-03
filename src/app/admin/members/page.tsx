@@ -61,12 +61,15 @@ interface Member {
 type TabFilter = 'ACTIVE' | 'ALUMNI' | 'ALL';
 
 const ROLES = [
-  'PhD Student',
+  'Principal Investigator',
   'Postdoc',
+  'PhD Student',
   'Research Staff',
   'Intern',
   'Visiting Scholar',
+  'Undergraduate Researcher',
   'Systems Administrator',
+  'Other',
 ];
 
 const GOAL_STATUSES = ['IN_PROGRESS', 'COMPLETED', 'DEFERRED', 'CANCELLED'];

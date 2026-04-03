@@ -30,22 +30,35 @@ const lineage = [
   { institution: "University of Alabama at Birmingham", location: "Birmingham, AL", period: "Faculty / Center Director (current)" },
 ];
 
-const piMember = {
+// Fallback PI data — used when DB is unavailable
+const staticPi = {
   name: "Jake Y. Chen, PhD",
   role: "Principal Investigator",
   photo: "/jake-chen-headshot.jpg",
+  bio: "Triton Endowed Professor. Founding Director, SPARC.",
 };
 
-// Fallback static member data — used when DB is unavailable
+// Fallback member data — used when DB is unavailable
 const staticMembers = [
-  { name: "Huu Phong Nguyen, PhD", role: "Postdoctoral Fellow", photo: "/members/huu-phong-nguyen.jpg" },
-  { name: "Fuad Al Abir", role: "PhD Student, Biomedical Informatics & Data Science", photo: "/members/fuad-al-abir.jpg" },
-  { name: "Delower Hossain", role: "PhD Student, Computer Science", photo: "/members/delower-hossain.jpg" },
+  { name: "Huu Phong Nguyen, PhD", role: "Postdoc", photo: "/members/huu-phong-nguyen.jpg" },
+  { name: "Fuad Al Abir", role: "PhD Student", photo: "/members/fuad-al-abir.jpg" },
+  { name: "Delower Hossain", role: "PhD Student", photo: "/members/delower-hossain.jpg" },
   { name: "John Haoyuan Cheng", role: "Research Staff", photo: "/members/john-haoyuan-cheng.jpg" },
   { name: "Nikhil Kurmachalam", role: "Research Staff", photo: "/members/nikhil-kurmachalam.png" },
   { name: "Geetanjali Oishe", role: "PhD Student", photo: "/members/geetanjali-oishe.jpg" },
   { name: "Zhandos Sembay, MS", role: "Systems Administrator", photo: "/members/zhandos-sembay.jpg" },
-];
+
+  // Static photo lookup for DB members without headshots
+] as const;
+
+/** Map first names to static photos for fallback */
+function findStaticPhoto(name: string): string | null {
+  const firstName = name.split(" ")[0].toLowerCase();
+  const match = staticMembers.find((s) =>
+    s.name.toLowerCase().startsWith(firstName)
+  );
+  return match?.photo ?? null;
+}
 
 const traineeTypes = [
   {
@@ -306,41 +319,78 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   );
 }
 
+interface TeamMember {
+  name: string;
+  role: string;
+  photo: string | null;
+  bio: string | null;
+}
+
 interface DbMember {
   id: number;
   name: string;
   role: string;
   headshot: string | null;
   bio: string | null;
-  githubUsername: string | null;
-  orcidId: string | null;
+  status: string;
+}
+
+function dbToMember(m: DbMember): TeamMember {
+  return {
+    name: m.name,
+    role: m.role,
+    photo: m.headshot || findStaticPhoto(m.name),
+    bio: m.bio,
+  };
 }
 
 export default function TrainingPage() {
-  const [currentMembers, setCurrentMembers] = useState(
-    staticMembers.map((m) => ({ name: m.name, role: m.role, photo: m.photo as string | null, bio: null as string | null }))
+  // PI — from DB or static fallback
+  const [piMember, setPiMember] = useState<TeamMember>({
+    name: staticPi.name,
+    role: staticPi.role,
+    photo: staticPi.photo,
+    bio: staticPi.bio,
+  });
+
+  // Current (ACTIVE, non-PI) members
+  const [currentMembers, setCurrentMembers] = useState<TeamMember[]>(
+    staticMembers.map((m) => ({ name: m.name, role: m.role, photo: m.photo as string | null, bio: null }))
   );
 
+  // Alumni members (only shown when fetched from DB)
+  const [alumniMembers, setAlumniMembers] = useState<TeamMember[]>([]);
+
   useEffect(() => {
-    // Fetch live team data from DB — merges profile photos/bios from member profiles
-    fetch('/api/team')
+    fetch('/api/team?alumni=true')
       .then((r) => (r.ok ? r.json() : null))
-      .then((dbMembers: DbMember[] | null) => {
-        if (!dbMembers || dbMembers.length === 0) return;
-        // Build dynamic member list from DB, using headshot from DB if available
-        const dynamic = dbMembers.map((m) => {
-          // Try to match with static data for fallback photo
-          const staticMatch = staticMembers.find(
-            (s) => s.name.toLowerCase().includes(m.name.split(' ')[0].toLowerCase())
-          );
-          return {
-            name: m.name,
-            role: m.role,
-            photo: m.headshot || staticMatch?.photo || null,
-            bio: m.bio,
-          };
-        });
-        if (dynamic.length > 0) setCurrentMembers(dynamic);
+      .then((data: { current: DbMember[]; alumni: DbMember[] } | null) => {
+        if (!data) return;
+
+        const { current, alumni } = data;
+
+        if (current && current.length > 0) {
+          // Find PI in the current members
+          const pi = current.find((m) => m.role === "Principal Investigator");
+          if (pi) {
+            setPiMember({
+              name: pi.name,
+              role: pi.role,
+              photo: pi.headshot || staticPi.photo,
+              bio: pi.bio || staticPi.bio,
+            });
+          }
+
+          // Everyone else is a regular current member
+          const others = current
+            .filter((m) => m.role !== "Principal Investigator")
+            .map(dbToMember);
+          if (others.length > 0) setCurrentMembers(others);
+        }
+
+        if (alumni && alumni.length > 0) {
+          setAlumniMembers(alumni.map(dbToMember));
+        }
       })
       .catch(() => {}); // Silently fall back to static data
   }, []);
@@ -398,13 +448,19 @@ export default function TrainingPage() {
           className="mx-auto mb-12 flex max-w-md flex-col items-center rounded-2xl border-2 border-emerald-200 bg-gradient-to-b from-emerald-50 to-white p-8 shadow-md dark:border-emerald-800 dark:from-emerald-950/40 dark:to-zinc-900"
         >
           <div className="mb-4 h-36 w-36 overflow-hidden rounded-full border-4 border-emerald-200 bg-slate-100 dark:border-emerald-800 dark:bg-zinc-800">
-            <Image
-              src={piMember.photo}
-              alt={piMember.name}
-              width={144}
-              height={144}
-              className="h-full w-full object-cover"
-            />
+            {piMember.photo ? (
+              <Image
+                src={piMember.photo}
+                alt={piMember.name}
+                width={144}
+                height={144}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-4xl font-bold text-slate-300 dark:text-zinc-600">
+                {piMember.name.split(" ").map((n) => n[0]).join("")}
+              </div>
+            )}
           </div>
           <h3 className="text-center text-xl font-bold text-slate-900 dark:text-slate-100">
             {piMember.name}
@@ -412,9 +468,11 @@ export default function TrainingPage() {
           <p className="mt-1 text-center text-sm font-medium text-emerald-700 dark:text-emerald-400">
             {piMember.role}
           </p>
-          <p className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
-            Triton Endowed Professor &middot; Founding Director, SPARC
-          </p>
+          {piMember.bio && (
+            <p className="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
+              {piMember.bio}
+            </p>
+          )}
         </motion.div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -457,6 +515,67 @@ export default function TrainingPage() {
           ))}
         </div>
       </section>
+
+      {/* Alumni Members (from DB) */}
+      {alumniMembers.length > 0 && (
+        <section className="bg-slate-50 py-20 dark:bg-zinc-900/50">
+          <div className="mx-auto max-w-6xl px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="mb-2 text-center text-3xl font-bold text-slate-900 dark:text-slate-100">
+                Past Lab Members
+              </h2>
+              <p className="mb-12 text-center text-slate-600 dark:text-slate-400">
+                Researchers who have moved on to new opportunities
+              </p>
+            </motion.div>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {alumniMembers.map((member, i) => (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                >
+                  <div className="mb-3 h-20 w-20 overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
+                    {member.photo ? (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        width={80}
+                        height={80}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-xl font-bold text-slate-300 dark:text-zinc-600">
+                        {member.name.split(" ").map((n) => n[0]).join("")}
+                      </div>
+                    )}
+                  </div>
+                  <h3 className="text-center text-sm font-bold text-slate-900 dark:text-slate-100">
+                    {member.name}
+                  </h3>
+                  <p className="mt-1 text-center text-xs text-slate-500 dark:text-slate-400">
+                    {member.role}
+                  </p>
+                  {member.bio && (
+                    <p className="mt-1 text-center text-xs text-slate-400 dark:text-slate-500 line-clamp-2">
+                      {member.bio}
+                    </p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Institutional Lineage of the Lab Director */}
       <section className="mx-auto max-w-6xl px-6 py-20">
