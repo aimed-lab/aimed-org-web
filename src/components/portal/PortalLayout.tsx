@@ -35,6 +35,7 @@ interface NavItem {
 
 const memberNav: NavItem[] = [
   { label: 'Dashboard', href: '/member/dashboard', icon: LayoutDashboard },
+  { label: 'Onboarding', href: '/member/onboarding', icon: BookOpen },
   { label: 'Projects', href: '/member/projects', icon: FolderKanban },
   { label: 'Papers', href: '/member/papers', icon: FileText },
   { label: 'Datasets', href: '/member/datasets', icon: Database },

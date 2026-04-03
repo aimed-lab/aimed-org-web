@@ -236,6 +236,7 @@ model LabMember {
   compliance      MemberCompliance[]
   watches         MemberWatch[]
   submissions     ContentSubmission[]
+  onboarding      OnboardingProgress[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -404,4 +405,20 @@ model ContentSubmission {
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+// ─── Onboarding Progress ──────────────────────────────────────────────────
+
+model OnboardingProgress {
+  id          Int       @id @default(autoincrement())
+  memberId    Int
+  member      LabMember @relation(fields: [memberId], references: [id])
+  moduleId    String    // lab-history, it-tools, ip-policy, ethics, reporting
+  score       Int       // percentage 0-100
+  passed      Boolean   @default(false) // true if score >= 80
+  attempts    Int       @default(1)
+  completedAt DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([memberId, moduleId])
 }

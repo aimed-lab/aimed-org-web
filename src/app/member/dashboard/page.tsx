@@ -12,7 +12,10 @@ import {
   Award,
   ExternalLink,
   ShieldAlert,
+  GraduationCap,
+  ArrowRight,
 } from 'lucide-react';
+import Link from 'next/link';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
 interface Goal {
@@ -65,16 +68,32 @@ export default function MemberDashboardPage() {
   const [member, setMember] = useState<Member | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [onboarding, setOnboarding] = useState<{
+    completedCount: number;
+    totalCount: number;
+    allComplete: boolean;
+  } | null>(null);
 
   useEffect(() => {
-    fetch('/api/member/profile')
-      .then(async (res) => {
-        if (!res.ok) {
+    Promise.all([
+      fetch('/api/member/profile').then(async (res) => {
+        if (!res.ok) return null;
+        return res.json();
+      }),
+      fetch('/api/member/onboarding').then(async (res) => {
+        if (!res.ok) return null;
+        return res.json();
+      }),
+    ])
+      .then(([profileData, onboardingData]) => {
+        if (!profileData) {
           setError('Not authenticated');
           return;
         }
-        const data = await res.json();
-        setMember(data);
+        setMember(profileData);
+        if (onboardingData) {
+          setOnboarding(onboardingData);
+        }
       })
       .catch(() => setError('Failed to load profile'))
       .finally(() => setLoading(false));
@@ -154,6 +173,45 @@ export default function MemberDashboardPage() {
             </div>
           </div>
         </motion.div>
+
+        {/* Onboarding Banner */}
+        {onboarding && !onboarding.allComplete && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="rounded-xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900 dark:bg-amber-950/30"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40">
+                  <GraduationCap className="h-5 w-5 text-amber-700 dark:text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-200">
+                    Complete Your Onboarding
+                  </h3>
+                  <p className="text-xs text-amber-700 dark:text-amber-400">
+                    {onboarding.completedCount} of {onboarding.totalCount} training modules completed
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/member/onboarding"
+                className="flex items-center gap-1.5 rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700 transition-colors shrink-0"
+              >
+                Continue
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-amber-200/60 dark:bg-amber-900/40">
+              <div
+                className="h-full rounded-full bg-amber-500 transition-all duration-500"
+                style={{ width: `${onboarding.totalCount > 0 ? (onboarding.completedCount / onboarding.totalCount) * 100 : 0}%` }}
+              />
+            </div>
+          </motion.div>
+        )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
