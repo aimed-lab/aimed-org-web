@@ -14,6 +14,12 @@ import {
   ShieldAlert,
   GraduationCap,
   ArrowRight,
+  Camera,
+  BookOpen,
+  Code2,
+  FileText,
+  Link as LinkIcon,
+  Wrench,
 } from 'lucide-react';
 import Link from 'next/link';
 import { PortalLayout } from '@/components/portal/PortalLayout';
@@ -23,6 +29,7 @@ interface Goal {
   quarter: string;
   title: string;
   description: string | null;
+  url: string | null;
   status: string;
   notes: string | null;
 }
@@ -34,6 +41,14 @@ interface ProjectTask {
   priority: string;
   dueDate: string | null;
   category: string | null;
+  year: string | null;
+  period: string | null;
+}
+
+interface Achievement {
+  publications: number;
+  software: number;
+  patents: number;
 }
 
 interface Member {
@@ -68,6 +83,8 @@ export default function MemberDashboardPage() {
   const [member, setMember] = useState<Member | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [achievements, setAchievements] = useState<Achievement>({ publications: 0, software: 0, patents: 0 });
   const [onboarding, setOnboarding] = useState<{
     completedCount: number;
     totalCount: number;
@@ -76,28 +93,45 @@ export default function MemberDashboardPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/member/profile').then(async (res) => {
-        if (!res.ok) return null;
-        return res.json();
-      }),
-      fetch('/api/member/onboarding').then(async (res) => {
-        if (!res.ok) return null;
-        return res.json();
-      }),
+      fetch('/api/member/profile').then(async (res) => res.ok ? res.json() : null),
+      fetch('/api/member/onboarding').then(async (res) => res.ok ? res.json() : null),
+      fetch('/api/member/achievements').then(async (res) => res.ok ? res.json() : null),
     ])
-      .then(([profileData, onboardingData]) => {
+      .then(([profileData, onboardingData, achievementsData]) => {
         if (!profileData) {
           setError('Not authenticated');
           return;
         }
         setMember(profileData);
-        if (onboardingData) {
-          setOnboarding(onboardingData);
+        if (onboardingData) setOnboarding(onboardingData);
+        if (achievementsData) {
+          setAchievements({
+            publications: achievementsData.publications?.length || 0,
+            software: achievementsData.software?.length || 0,
+            patents: achievementsData.patents?.length || 0,
+          });
         }
       })
       .catch(() => setError('Failed to load profile'))
       .finally(() => setLoading(false));
   }, []);
+
+  async function handlePhotoUpload(file: File) {
+    setUploadingPhoto(true);
+    try {
+      const fd = new FormData();
+      fd.append('photo', file);
+      const res = await fetch('/api/member/upload-photo', { method: 'POST', body: fd });
+      if (res.ok) {
+        const data = await res.json();
+        setMember((prev) => prev ? { ...prev, headshot: data.headshot } : prev);
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to upload photo');
+      }
+    } catch { alert('Upload failed'); }
+    finally { setUploadingPhoto(false); }
+  }
 
   if (loading) {
     return (
@@ -150,17 +184,36 @@ export default function MemberDashboardPage() {
           className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
         >
           <div className="flex items-start gap-5">
-            {member.headshot ? (
-              <img
-                src={member.headshot}
-                alt={member.name}
-                className="h-16 w-16 rounded-full object-cover border-2 border-slate-200 dark:border-zinc-700"
-              />
-            ) : (
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
-                <User className="h-8 w-8 text-emerald-700 dark:text-emerald-400" />
-              </div>
-            )}
+            {/* Photo with upload */}
+            <div className="relative group shrink-0">
+              {member.headshot ? (
+                <img
+                  src={member.headshot}
+                  alt={member.name}
+                  className="h-16 w-16 rounded-full object-cover border-2 border-slate-200 dark:border-zinc-700"
+                />
+              ) : (
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
+                  <User className="h-8 w-8 text-emerald-700 dark:text-emerald-400" />
+                </div>
+              )}
+              <label className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                {uploadingPhoto ? (
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                ) : (
+                  <Camera className="h-5 w-5 text-white" />
+                )}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="sr-only"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handlePhotoUpload(file);
+                  }}
+                />
+              </label>
+            </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
                 Welcome, {member.name.split(' ')[0]}
@@ -218,8 +271,8 @@ export default function MemberDashboardPage() {
           {[
             { label: 'Active Projects', value: activeProjects, icon: FolderKanban, color: 'text-blue-600 dark:text-blue-400' },
             { label: `Goals (${currentQuarter})`, value: quarterGoals, icon: Target, color: 'text-emerald-600 dark:text-emerald-400' },
-            { label: 'Publications', value: '--', icon: Trophy, color: 'text-purple-600 dark:text-purple-400' },
-            { label: 'Awards', value: '--', icon: Award, color: 'text-amber-600 dark:text-amber-400' },
+            { label: 'Publications', value: achievements.publications, icon: BookOpen, color: 'text-purple-600 dark:text-purple-400' },
+            { label: 'Software & Patents', value: achievements.software + achievements.patents, icon: Code2, color: 'text-amber-600 dark:text-amber-400' },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -260,17 +313,24 @@ export default function MemberDashboardPage() {
                     key={goal.id}
                     className="rounded-lg border border-slate-100 bg-slate-50 p-3 dark:border-zinc-800 dark:bg-zinc-800/50"
                   >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                          {goal.title}
-                        </p>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                            {goal.title}
+                          </p>
+                          {goal.url && (
+                            <a href={goal.url} target="_blank" rel="noopener noreferrer" className="shrink-0 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400" title="Open document">
+                              <LinkIcon className="h-3.5 w-3.5" />
+                            </a>
+                          )}
+                        </div>
                         <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                          {goal.quarter}
+                          {goal.quarter}{goal.description ? ` — ${goal.description}` : ''}
                         </p>
                       </div>
                       <span
-                        className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
+                        className={`shrink-0 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
                           statusColors[goal.status] || 'bg-slate-100 text-slate-600'
                         }`}
                       >
@@ -329,11 +389,46 @@ export default function MemberDashboardPage() {
           </motion.div>
         </div>
 
-        {/* Quick Links */}
+        {/* Digital Assets & Portal Navigation */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
+          className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+        >
+          <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+            <Trophy className="h-4 w-4 text-amber-500" />
+            Your Digital Assets
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: 'Publications', href: '/member/papers', icon: BookOpen, count: achievements.publications, color: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20' },
+              { label: 'Software & Tools', href: '/member/tools', icon: Wrench, count: achievements.software, color: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' },
+              { label: 'Datasets', href: '/member/datasets', icon: FileText, count: 0, color: 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20' },
+              { label: 'Achievements', href: '/member/achievements', icon: Award, count: achievements.publications + achievements.software + achievements.patents, color: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20' },
+            ].map((asset, i) => (
+              <Link
+                key={asset.label}
+                href={asset.href}
+                className="flex items-center gap-3 rounded-lg border border-slate-100 p-3 transition-colors hover:bg-slate-50 dark:border-zinc-800 dark:hover:bg-zinc-800/50"
+              >
+                <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${asset.color}`}>
+                  <asset.icon className="h-4 w-4" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{asset.label}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{asset.count} items</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Quick Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
           className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
         >
           <h3 className="mb-3 text-sm font-semibold text-slate-900 dark:text-slate-100">
@@ -341,46 +436,26 @@ export default function MemberDashboardPage() {
           </h3>
           <div className="flex flex-wrap gap-3">
             {member.boxFolderUrl && (
-              <a
-                href={member.boxFolderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Box Folder
+              <a href={member.boxFolderUrl} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800">
+                <ExternalLink className="h-4 w-4" /> Box Folder
               </a>
             )}
             {member.notionPageUrl && (
-              <a
-                href={member.notionPageUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Notion
+              <a href={member.notionPageUrl} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800">
+                <ExternalLink className="h-4 w-4" /> Notion
               </a>
             )}
             {member.githubUsername && (
-              <a
-                href={`https://github.com/${member.githubUsername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800"
-              >
-                <ExternalLink className="h-4 w-4" />
-                GitHub
+              <a href={`https://github.com/${member.githubUsername}`} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800">
+                <ExternalLink className="h-4 w-4" /> GitHub
               </a>
             )}
-            <a
-              href="https://aimed-lab.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Lab Website
+            <a href="https://aimed-lab.org" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-300 dark:hover:bg-zinc-800">
+              <ExternalLink className="h-4 w-4" /> Lab Website
             </a>
           </div>
         </motion.div>
