@@ -19,6 +19,10 @@ import {
   Target,
   Send,
   Mail,
+  Camera,
+  Upload,
+  Link as LinkIcon,
+  FolderKanban,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -34,8 +38,20 @@ interface Goal {
   quarter: string;
   title: string;
   description: string | null;
+  url: string | null;
   status: string;
   notes: string | null;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  description: string | null;
+  status: string;
+  priority: string;
+  category: string | null;
+  year: string | null;
+  period: string | null;
 }
 
 interface Member {
@@ -56,6 +72,7 @@ interface Member {
   _count?: { goals: number };
   activationCode?: ActivationCode | null;
   goals?: Goal[];
+  projects?: Project[];
 }
 
 type TabFilter = 'ACTIVE' | 'ALUMNI' | 'ALL';
@@ -127,6 +144,7 @@ export default function AdminMembersPage() {
   const [inviteLoading, setInviteLoading] = useState(false);
   const [inviteResults, setInviteResults] = useState<{ email: string; status: string; error?: string }[] | null>(null);
   const [showAddDropdown, setShowAddDropdown] = useState(false);
+  const [uploadingPhoto, setUploadingPhoto] = useState<number | null>(null);
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -291,6 +309,24 @@ export default function AdminMembersPage() {
     }
   }
 
+  async function handleUploadPhoto(memberId: number, file: File) {
+    setUploadingPhoto(memberId);
+    try {
+      const fd = new FormData();
+      fd.append('memberId', String(memberId));
+      fd.append('photo', file);
+      const res = await fetch('/api/admin/members/upload-photo', { method: 'POST', body: fd });
+      if (res.ok) {
+        fetchMembers();
+        if (expandedMember === memberId) fetchMemberDetail(memberId);
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to upload photo');
+      }
+    } catch { alert('Upload failed'); }
+    finally { setUploadingPhoto(null); }
+  }
+
   async function handleAddGoal(e: FormEvent<HTMLFormElement>, memberId: number) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
@@ -298,6 +334,7 @@ export default function AdminMembersPage() {
       quarter: fd.get('quarter')?.toString(),
       title: fd.get('title')?.toString().trim(),
       description: fd.get('description')?.toString().trim() || undefined,
+      url: fd.get('url')?.toString().trim() || undefined,
     };
     try {
       const res = await fetch(`/api/admin/members/${memberId}/goals`, {
@@ -438,11 +475,18 @@ export default function AdminMembersPage() {
                     onClick={() => toggleMemberExpand(m.id)}
                   >
                     <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
                         {expandedMember === m.id ? (
-                          <ChevronDown className="h-4 w-4 text-slate-400" />
+                          <ChevronDown className="h-4 w-4 shrink-0 text-slate-400" />
                         ) : (
-                          <ChevronRight className="h-4 w-4 text-slate-400" />
+                          <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
+                        )}
+                        {m.headshot ? (
+                          <img src={m.headshot} alt="" className="h-8 w-8 shrink-0 rounded-full object-cover border border-slate-200 dark:border-zinc-700" />
+                        ) : (
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-400 dark:bg-zinc-800 dark:text-zinc-500">
+                            {m.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                          </div>
                         )}
                         <span className="font-medium text-slate-900 dark:text-slate-100">{m.name}</span>
                       </div>
@@ -480,23 +524,59 @@ export default function AdminMembersPage() {
                           </div>
                         ) : (
                           <div className="space-y-4">
-                            {/* Links */}
-                            <div className="flex flex-wrap gap-2">
-                              {memberDetail.boxFolderUrl && (
-                                <a href={memberDetail.boxFolderUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded border border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-300">
-                                  <ExternalLink className="h-3 w-3" /> Box
-                                </a>
-                              )}
-                              {memberDetail.notionPageUrl && (
-                                <a href={memberDetail.notionPageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded border border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-300">
-                                  <ExternalLink className="h-3 w-3" /> Notion
-                                </a>
-                              )}
-                              {memberDetail.githubUsername && (
-                                <a href={`https://github.com/${memberDetail.githubUsername}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded border border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-300">
-                                  <ExternalLink className="h-3 w-3" /> GitHub
-                                </a>
-                              )}
+                            {/* Photo & Links Row */}
+                            <div className="flex flex-wrap gap-4 items-start">
+                              {/* Photo Upload */}
+                              <div className="flex flex-col items-center gap-2">
+                                <div className="relative group">
+                                  {memberDetail.headshot ? (
+                                    <img src={memberDetail.headshot} alt={memberDetail.name} className="h-20 w-20 rounded-full object-cover border-2 border-slate-200 dark:border-zinc-700" />
+                                  ) : (
+                                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 text-xl font-bold text-slate-300 dark:bg-zinc-800 dark:text-zinc-600">
+                                      {memberDetail.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
+                                    </div>
+                                  )}
+                                  <label className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                                    {uploadingPhoto === m.id ? (
+                                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                    ) : (
+                                      <Camera className="h-5 w-5 text-white" />
+                                    )}
+                                    <input
+                                      type="file"
+                                      accept="image/jpeg,image/png,image/webp"
+                                      className="sr-only"
+                                      onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) handleUploadPhoto(m.id, file);
+                                      }}
+                                    />
+                                  </label>
+                                </div>
+                                <span className="text-[10px] text-slate-400">Hover to upload</span>
+                              </div>
+
+                              {/* Links */}
+                              <div className="flex flex-wrap gap-2 flex-1 pt-2">
+                                {memberDetail.boxFolderUrl && (
+                                  <a href={memberDetail.boxFolderUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded border border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-300">
+                                    <ExternalLink className="h-3 w-3" /> Box
+                                  </a>
+                                )}
+                                {memberDetail.notionPageUrl && (
+                                  <a href={memberDetail.notionPageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded border border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-300">
+                                    <ExternalLink className="h-3 w-3" /> Notion
+                                  </a>
+                                )}
+                                {memberDetail.githubUsername && (
+                                  <a href={`https://github.com/${memberDetail.githubUsername}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded border border-slate-200 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-zinc-700 dark:text-slate-300">
+                                    <ExternalLink className="h-3 w-3" /> GitHub
+                                  </a>
+                                )}
+                                {memberDetail.bio && (
+                                  <p className="w-full mt-1 text-xs text-slate-500 dark:text-slate-400">{memberDetail.bio}</p>
+                                )}
+                              </div>
                             </div>
 
                             {/* Activation Code */}
@@ -545,12 +625,19 @@ export default function AdminMembersPage() {
                               {memberDetail.goals && memberDetail.goals.length > 0 && (
                                 <div className="space-y-2 mb-3">
                                   {memberDetail.goals.map((goal) => (
-                                    <div key={goal.id} className="flex items-center justify-between rounded border border-slate-100 bg-slate-50 p-2 dark:border-zinc-800 dark:bg-zinc-800/50">
-                                      <div>
-                                        <p className="text-xs font-medium text-slate-900 dark:text-slate-100">{goal.title}</p>
-                                        <p className="text-[10px] text-slate-500">{goal.quarter}</p>
+                                    <div key={goal.id} className="flex items-center justify-between gap-2 rounded border border-slate-100 bg-slate-50 p-2 dark:border-zinc-800 dark:bg-zinc-800/50">
+                                      <div className="min-w-0 flex-1">
+                                        <div className="flex items-center gap-1.5">
+                                          <p className="text-xs font-medium text-slate-900 dark:text-slate-100 truncate">{goal.title}</p>
+                                          {goal.url && (
+                                            <a href={goal.url} target="_blank" rel="noopener noreferrer" className="shrink-0 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400" title="Open document">
+                                              <LinkIcon className="h-3 w-3" />
+                                            </a>
+                                          )}
+                                        </div>
+                                        <p className="text-[10px] text-slate-500">{goal.quarter}{goal.description ? ` — ${goal.description}` : ''}</p>
                                       </div>
-                                      <div className="flex items-center gap-2">
+                                      <div className="flex items-center gap-2 shrink-0">
                                         <select
                                           value={goal.status}
                                           onChange={(e) => handleUpdateGoalStatus(m.id, goal.id, e.target.value)}
@@ -572,18 +659,50 @@ export default function AdminMembersPage() {
                                 </div>
                               )}
                               {/* Add goal form */}
-                              <form onSubmit={(e) => handleAddGoal(e, m.id)} className="flex flex-wrap gap-2">
-                                <select name="quarter" className="rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100">
-                                  {getQuarterOptions().map((q) => (
-                                    <option key={q} value={q}>{q}</option>
-                                  ))}
-                                </select>
-                                <input name="title" placeholder="Goal title" required className="flex-1 min-w-[150px] rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100" />
-                                <input name="description" placeholder="Description (optional)" className="flex-1 min-w-[150px] rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100" />
-                                <button type="submit" className="rounded bg-emerald-700 px-3 py-1 text-xs font-medium text-white hover:bg-emerald-800">
-                                  Add Goal
-                                </button>
+                              <form onSubmit={(e) => handleAddGoal(e, m.id)} className="space-y-2">
+                                <div className="flex flex-wrap gap-2">
+                                  <select name="quarter" className="rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100">
+                                    {getQuarterOptions().map((q) => (
+                                      <option key={q} value={q}>{q}</option>
+                                    ))}
+                                  </select>
+                                  <input name="title" placeholder="Goal title" required className="flex-1 min-w-[150px] rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100" />
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                  <input name="url" placeholder="Doc URL (Google Doc, Drive, Box)" className="flex-1 min-w-[200px] rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100" />
+                                  <input name="description" placeholder="Description (optional)" className="flex-1 min-w-[150px] rounded border border-slate-200 bg-white px-2 py-1 text-xs dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100" />
+                                  <button type="submit" className="rounded bg-emerald-700 px-3 py-1 text-xs font-medium text-white hover:bg-emerald-800">
+                                    Add Goal
+                                  </button>
+                                </div>
                               </form>
+                            </div>
+
+                            {/* Projects */}
+                            <div className="rounded-lg border border-slate-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-900">
+                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1 mb-2">
+                                <FolderKanban className="h-3.5 w-3.5" />
+                                Projects
+                              </h4>
+                              {memberDetail.projects && memberDetail.projects.length > 0 && (
+                                <div className="space-y-2 mb-3">
+                                  {memberDetail.projects.map((proj) => (
+                                    <div key={proj.id} className="flex items-center justify-between gap-2 rounded border border-slate-100 bg-slate-50 p-2 dark:border-zinc-800 dark:bg-zinc-800/50">
+                                      <div className="min-w-0 flex-1">
+                                        <p className="text-xs font-medium text-slate-900 dark:text-slate-100 truncate">{proj.title}</p>
+                                        <div className="flex items-center gap-2 text-[10px] text-slate-500">
+                                          {proj.year && <span>{proj.year}{proj.period ? `-${proj.period}` : ''}</span>}
+                                          {proj.category && <span className="rounded bg-slate-200 px-1.5 py-0.5 dark:bg-zinc-700">{proj.category}</span>}
+                                          <StatusBadge status={proj.status} />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                              {(!memberDetail.projects || memberDetail.projects.length === 0) && (
+                                <p className="text-[10px] text-slate-400 dark:text-slate-500">No projects assigned yet. Members can add projects from their portal.</p>
+                              )}
                             </div>
                           </div>
                         )}
@@ -635,8 +754,8 @@ export default function AdminMembersPage() {
                   <input name="joinDate" type="date" className={inputClass} />
                   <input name="githubUsername" placeholder="GitHub username" className={inputClass} />
                   <input name="notionPageUrl" placeholder="Notion page URL" className={inputClass} />
-                  <input name="headshot" placeholder="Headshot URL" className={inputClass} />
-                  <textarea name="bio" placeholder="Bio" rows={2} className={inputClass} />
+                  <input name="headshot" placeholder="Headshot URL (can upload photo after creation)" className={inputClass} />
+                  <textarea name="bio" placeholder="Bio (shown on public site)" rows={2} className={inputClass} />
                   <button type="submit" className="w-full rounded-lg bg-emerald-700 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800">
                     Create Member
                   </button>
@@ -723,8 +842,45 @@ export default function AdminMembersPage() {
                   </button>
                 </div>
                 <form onSubmit={handleEditMember} className="space-y-3">
-                  <input name="name" defaultValue={editingMember.name} required className={inputClass} />
-                  <input name="email" type="email" defaultValue={editingMember.email} required className={inputClass} />
+                  {/* Photo upload area */}
+                  <div className="flex items-center gap-4">
+                    <div className="relative group">
+                      {editingMember.headshot ? (
+                        <img src={editingMember.headshot} alt="" className="h-16 w-16 rounded-full object-cover border-2 border-slate-200 dark:border-zinc-700" />
+                      ) : (
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-lg font-bold text-slate-300 dark:bg-zinc-800">
+                          {editingMember.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                        </div>
+                      )}
+                      <label className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                        <Upload className="h-4 w-4 text-white" />
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          className="sr-only"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              await handleUploadPhoto(editingMember.id, file);
+                              // Refresh member data to update headshot in modal
+                              const res = await fetch(`/api/admin/members/${editingMember.id}`);
+                              if (res.ok) {
+                                const updated = await res.json();
+                                setEditingMember(updated);
+                              }
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                    <div className="flex-1 text-xs text-slate-500 dark:text-slate-400">
+                      <p className="font-medium text-slate-700 dark:text-slate-300">Profile Photo</p>
+                      <p>Hover photo to upload. JPEG, PNG, or WebP, max 5MB.</p>
+                    </div>
+                  </div>
+
+                  <input name="name" defaultValue={editingMember.name} required className={inputClass} placeholder="Full Name" />
+                  <input name="email" type="email" defaultValue={editingMember.email} required className={inputClass} placeholder="Email" />
                   <select name="role" defaultValue={editingMember.role} required className={inputClass}>
                     {ROLES.map((r) => (<option key={r} value={r}>{r}</option>))}
                   </select>
@@ -736,8 +892,8 @@ export default function AdminMembersPage() {
                   <input name="joinDate" type="date" defaultValue={editingMember.joinDate?.split('T')[0]} className={inputClass} />
                   <input name="githubUsername" defaultValue={editingMember.githubUsername || ''} placeholder="GitHub username" className={inputClass} />
                   <input name="notionPageUrl" defaultValue={editingMember.notionPageUrl || ''} placeholder="Notion URL" className={inputClass} />
-                  <input name="headshot" defaultValue={editingMember.headshot || ''} placeholder="Headshot URL" className={inputClass} />
-                  <textarea name="bio" defaultValue={editingMember.bio || ''} placeholder="Bio" rows={2} className={inputClass} />
+                  <input name="headshot" defaultValue={editingMember.headshot || ''} placeholder="Headshot URL (or upload above)" className={inputClass} />
+                  <textarea name="bio" defaultValue={editingMember.bio || ''} placeholder="Bio (shown on public site)" rows={2} className={inputClass} />
                   <button type="submit" className="w-full rounded-lg bg-emerald-700 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800">
                     Save Changes
                   </button>

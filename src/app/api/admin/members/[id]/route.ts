@@ -22,6 +22,7 @@ export async function GET(
       where: { id: memberId },
       include: {
         goals: { orderBy: { createdAt: "desc" } },
+        projects: { orderBy: { updatedAt: "desc" } },
         activationCode: true,
       },
     })

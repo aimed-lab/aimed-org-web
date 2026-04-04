@@ -252,6 +252,8 @@ model ProjectTask {
   priority    String    @default("MEDIUM") // HIGH, MEDIUM, LOW
   dueDate     DateTime?
   category    String?   // Research, Writing, Code, Admin, etc.
+  year        String?   // e.g. "2026"
+  period      String?   // Q1, Q2, Q3, Q4, S1, S2, S3, S4
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -287,6 +289,7 @@ model QuarterlyGoal {
   quarter     String    // e.g. "2026-Q1"
   title       String
   description String?
+  url         String?   // Link to Google Doc, Drive, or Box document
   status      String    @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED, DEFERRED, CANCELLED
   notes       String?
 

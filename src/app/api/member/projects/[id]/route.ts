@@ -25,7 +25,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, status, priority, dueDate, category } = body
+    const { title, description, status, priority, dueDate, category, year, period } = body
 
     const updated = await prisma.projectTask.update({
       where: { id: projectId },
@@ -36,6 +36,8 @@ export async function PUT(
         ...(priority !== undefined && { priority }),
         ...(dueDate !== undefined && { dueDate: dueDate ? new Date(dueDate) : null }),
         ...(category !== undefined && { category: category?.trim() || null }),
+        ...(year !== undefined && { year: year?.trim() || null }),
+        ...(period !== undefined && { period: period?.trim() || null }),
       },
     })
 

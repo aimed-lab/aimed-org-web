@@ -19,7 +19,7 @@ export async function PUT(
 
   try {
     const body = await request.json()
-    const { status, notes, title, description, quarter } = body
+    const { status, notes, title, description, quarter, url } = body
 
     const data: Record<string, unknown> = {}
     if (status !== undefined) data.status = status
@@ -27,6 +27,7 @@ export async function PUT(
     if (title !== undefined) data.title = title
     if (description !== undefined) data.description = description
     if (quarter !== undefined) data.quarter = quarter
+    if (url !== undefined) data.url = url
 
     const goal = await prisma.quarterlyGoal.update({
       where: { id: gid },

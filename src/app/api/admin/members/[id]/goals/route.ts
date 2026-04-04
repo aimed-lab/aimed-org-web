@@ -46,7 +46,7 @@ export async function POST(
 
   try {
     const body = await request.json()
-    const { quarter, title, description } = body
+    const { quarter, title, description, url } = body
 
     if (!quarter || !title) {
       return NextResponse.json(
@@ -61,6 +61,7 @@ export async function POST(
         quarter,
         title,
         description: description || null,
+        url: url || null,
         status: "IN_PROGRESS",
       },
     })

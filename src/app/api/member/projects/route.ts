@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { title, description, status, priority, dueDate, category } = body
+    const { title, description, status, priority, dueDate, category, year, period } = body
 
     if (!title?.trim()) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 })
@@ -43,6 +43,8 @@ export async function POST(request: NextRequest) {
         priority: priority || "MEDIUM",
         dueDate: dueDate ? new Date(dueDate) : null,
         category: category?.trim() || null,
+        year: year?.trim() || null,
+        period: period?.trim() || null,
       },
     })
 
