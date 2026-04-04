@@ -18,6 +18,7 @@ import {
   UserPlus,
   FileCheck,
   BookOpen,
+  Upload,
   LogOut,
   Menu,
   X,
@@ -36,7 +37,7 @@ interface NavItem {
 const memberNav: NavItem[] = [
   { label: 'Dashboard', href: '/member/dashboard', icon: LayoutDashboard },
   { label: 'Onboarding', href: '/member/onboarding', icon: BookOpen },
-  { label: 'Projects', href: '/member/projects', icon: FolderKanban },
+  { label: 'CV Updates', href: '/member/cv-updates', icon: FolderKanban },
   { label: 'Papers', href: '/member/papers', icon: FileText },
   { label: 'Datasets', href: '/member/datasets', icon: Database },
   { label: 'Tools', href: '/member/tools', icon: Wrench },
@@ -49,7 +50,7 @@ const memberNav: NavItem[] = [
 const adminNav: NavItem[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: ShieldCheck },
   { label: 'Members', href: '/admin/members', icon: Users },
-  { label: 'Publications', href: '/admin/publications', icon: BookOpen },
+  { label: 'CV Upload', href: '/admin/cv-upload', icon: Upload },
   { label: 'Recruits', href: '/admin/recruits', icon: UserPlus },
   { label: 'Content Review', href: '/admin/content', icon: FileCheck },
 ];

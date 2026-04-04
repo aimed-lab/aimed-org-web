@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
 import { verifyMemberToken } from "@/lib/member-auth"
-import { writeFile, mkdir } from "fs/promises"
-import path from "path"
 
 export const dynamic = "force-dynamic"
 
@@ -10,6 +8,7 @@ export const dynamic = "force-dynamic"
  * POST /api/member/upload-photo
  * Members can upload their own headshot photo.
  * Accepts multipart/form-data with field: photo (file)
+ * Stores as base64 data URL in the database (works on Vercel).
  */
 export async function POST(request: NextRequest) {
   const auth = await verifyMemberToken()
@@ -41,27 +40,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Member not found" }, { status: 404 })
     }
 
-    const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : file.type === "image/gif" ? "gif" : "jpg"
-    const slug = member.name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-    const filename = `${slug}.${ext}`
-
-    const publicDir = path.join(process.cwd(), "public", "members")
-    await mkdir(publicDir, { recursive: true })
-    const filePath = path.join(publicDir, filename)
-
+    // Convert to base64 data URL — works on Vercel's read-only filesystem
     const buffer = Buffer.from(await file.arrayBuffer())
-    await writeFile(filePath, buffer)
+    const base64 = buffer.toString("base64")
+    const dataUrl = `data:${file.type};base64,${base64}`
 
-    const headshotUrl = `/members/${filename}`
     await prisma.labMember.update({
       where: { id: auth.memberId },
-      data: { headshot: headshotUrl },
+      data: { headshot: dataUrl },
     })
 
-    return NextResponse.json({ success: true, headshot: headshotUrl })
+    return NextResponse.json({ success: true, headshot: dataUrl })
   } catch (error) {
     console.error("Failed to upload photo:", error)
     return NextResponse.json({ error: "Failed to upload photo" }, { status: 500 })
