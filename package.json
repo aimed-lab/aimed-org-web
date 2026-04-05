@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "cp aimed-lab.db aimed-lab.db.bak 2>/dev/null; prisma generate; cp aimed-lab.db.bak aimed-lab.db 2>/dev/null; rm -f aimed-lab.db.bak; next build",
+    "build": "DATABASE_URL=file:./prisma-gen-dummy.db prisma generate && rm -f prisma-gen-dummy.db && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "cp aimed-lab.db aimed-lab.db.bak 2>/dev/null; prisma generate; cp aimed-lab.db.bak aimed-lab.db 2>/dev/null; rm -f aimed-lab.db.bak"
+    "postinstall": "DATABASE_URL=file:./prisma-gen-dummy.db prisma generate && rm -f prisma-gen-dummy.db"
   },
   "dependencies": {
     "@libsql/client": "^0.17.2",
