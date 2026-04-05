@@ -7,7 +7,7 @@
     "build": "PRISMA_GENERATE_NO_DB=1 prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "PRISMA_GENERATE_NO_DB=1 prisma generate"
+    "postinstall": "echo 'Skipping prisma generate in postinstall (runs in build with PRISMA_GENERATE_NO_DB=1)'"
   },
   "dependencies": {
     "@libsql/client": "^0.17.2",
