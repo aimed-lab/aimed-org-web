@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "DATABASE_URL=file:./prisma-gen-dummy.db prisma generate && rm -f prisma-gen-dummy.db && next build",
+    "build": "PRISMA_GENERATE_NO_DB=1 prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "DATABASE_URL=file:./prisma-gen-dummy.db prisma generate && rm -f prisma-gen-dummy.db"
+    "postinstall": "PRISMA_GENERATE_NO_DB=1 prisma generate"
   },
   "dependencies": {
     "@libsql/client": "^0.17.2",
