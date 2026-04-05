@@ -9,18 +9,6 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./aimed-lab.db"],
   },
-  // Copy db to a location the serverless function can find
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      const CopyPlugin = require("copy-webpack-plugin");
-      config.plugins.push(
-        new CopyPlugin({
-          patterns: [{ from: "aimed-lab.db", to: "aimed-lab.db" }],
-        })
-      );
-    }
-    return config;
-  },
 };
 
 export default nextConfig;

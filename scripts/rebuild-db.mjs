@@ -77,6 +77,11 @@ async function main() {
   }
 
   client.close();
+
+  // Verify the file on disk
+  const { statSync } = await import('fs');
+  const stat = statSync(DB_FILE);
+  console.log(`[rebuild-db] File: ${DB_FILE}, size: ${stat.size} bytes`);
 }
 
 main().catch(err => {
