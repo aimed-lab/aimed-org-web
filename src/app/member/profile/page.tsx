@@ -9,6 +9,13 @@ import {
   Save,
   CheckCircle2,
   ShieldAlert,
+  ExternalLink,
+  BookOpen,
+  Globe,
+  GitFork,
+  GraduationCap,
+  Link2,
+  BarChart3,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -46,7 +53,7 @@ export default function ProfilePage() {
     fetch('/api/member/profile')
       .then(async (res) => {
         if (!res.ok) {
-          setError('Not authenticated');
+          router.push('/member/activate');
           return;
         }
         const data = await res.json();
@@ -91,17 +98,10 @@ export default function ProfilePage() {
     );
   }
 
-  if (error || !member) {
+  if (!member) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6">
-        <ShieldAlert className="h-12 w-12 text-red-500" />
-        <p className="text-red-600 dark:text-red-400">Authentication required.</p>
-        <button
-          onClick={() => router.push('/admin')}
-          className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
-        >
-          Go to Login
-        </button>
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400">Redirecting...</p>
       </div>
     );
   }
@@ -154,6 +154,85 @@ export default function ProfilePage() {
               </p>
             </div>
           </div>
+        </motion.div>
+
+        {/* Scholar Connections */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+        >
+          <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+            <BarChart3 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            Scholar Profile & Citations
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[
+              {
+                label: 'ORCID',
+                value: member.orcidId,
+                href: member.orcidId ? `https://orcid.org/${member.orcidId}` : null,
+                icon: Globe,
+                color: 'text-green-600 dark:text-green-400',
+                bgColor: 'bg-green-50 dark:bg-green-900/20',
+              },
+              {
+                label: 'Google Scholar',
+                value: null,
+                href: null,
+                icon: GraduationCap,
+                color: 'text-blue-600 dark:text-blue-400',
+                bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+              },
+              {
+                label: 'GitHub',
+                value: member.githubUsername,
+                href: member.githubUsername ? `https://github.com/${member.githubUsername}` : null,
+                icon: GitFork,
+                color: 'text-slate-700 dark:text-slate-300',
+                bgColor: 'bg-slate-100 dark:bg-zinc-800',
+              },
+              {
+                label: 'Semantic Scholar',
+                value: null,
+                href: null,
+                icon: BookOpen,
+                color: 'text-indigo-600 dark:text-indigo-400',
+                bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
+              },
+            ].map((link) => {
+              const Icon = link.icon;
+              return (
+                <div
+                  key={link.label}
+                  className="flex items-center gap-3 rounded-lg border border-slate-100 p-3 dark:border-zinc-800"
+                >
+                  <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${link.bgColor}`}>
+                    <Icon className={`h-4 w-4 ${link.color}`} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{link.label}</p>
+                    {link.value ? (
+                      <a
+                        href={link.href!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:underline dark:text-emerald-400"
+                      >
+                        {link.value} <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ) : (
+                      <p className="text-xs text-slate-400 dark:text-slate-500 italic">Not configured</p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-[10px] text-slate-400 dark:text-slate-500">
+            Scholar profiles are linked through the Talent knowledge graph for citation tracking and collaboration discovery.
+          </p>
         </motion.div>
 
         {/* Editable form */}

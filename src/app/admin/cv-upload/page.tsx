@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Upload,
@@ -16,6 +16,17 @@ import {
   ChevronDown,
   ChevronUp,
   Sparkles,
+  RefreshCw,
+  Layers,
+  Replace,
+  Send,
+  Bot,
+  BookOpen,
+  PenLine,
+  Globe,
+  CheckCircle2,
+  Clock,
+  Eye,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -100,17 +111,27 @@ interface ParseResultData {
   summary: ParseSummary;
 }
 
+interface SiteCounts {
+  publications: number;
+  talks: number;
+  honors: number;
+  software: number;
+  patents: number;
+}
+
 /* ── Category Config ── */
 
 const categories = [
-  { key: 'publications', label: 'Publications', icon: FileText, color: 'blue' },
-  { key: 'talks', label: 'Talks & Presentations', icon: Mic, color: 'violet' },
-  { key: 'honors', label: 'Honors & Awards', icon: Award, color: 'amber' },
-  { key: 'software', label: 'Software & Tools', icon: Code2, color: 'emerald' },
-  { key: 'patents', label: 'Patents', icon: ScrollText, color: 'rose' },
+  { key: 'publications', label: 'Publications', icon: FileText, color: 'blue', siteLabel: 'Published' },
+  { key: 'talks', label: 'Talks & Presentations', icon: Mic, color: 'violet', siteLabel: 'Listed' },
+  { key: 'honors', label: 'Honors & Awards', icon: Award, color: 'amber', siteLabel: 'Listed' },
+  { key: 'software', label: 'Software & Tools', icon: Code2, color: 'emerald', siteLabel: 'Listed' },
+  { key: 'patents', label: 'Patents', icon: ScrollText, color: 'rose', siteLabel: 'Listed' },
 ] as const;
 
 type CategoryKey = (typeof categories)[number]['key'];
+type ImportMode = 'append' | 'override' | 'refresh';
+type ItemBin = 'extracted' | 'curation' | 'published';
 
 const colorMap: Record<string, { bg: string; text: string; border: string; badge: string }> = {
   blue: { bg: 'bg-blue-50 dark:bg-blue-900/20', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200 dark:border-blue-800', badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' },
@@ -118,6 +139,12 @@ const colorMap: Record<string, { bg: string; text: string; border: string; badge
   amber: { bg: 'bg-amber-50 dark:bg-amber-900/20', text: 'text-amber-700 dark:text-amber-300', border: 'border-amber-200 dark:border-amber-800', badge: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300' },
   emerald: { bg: 'bg-emerald-50 dark:bg-emerald-900/20', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200 dark:border-emerald-800', badge: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' },
   rose: { bg: 'bg-rose-50 dark:bg-rose-900/20', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200 dark:border-rose-800', badge: 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300' },
+};
+
+const binConfig: Record<ItemBin, { label: string; icon: typeof Eye; color: string }> = {
+  extracted: { label: 'Extracted', icon: Sparkles, color: 'text-slate-500 bg-slate-100 dark:bg-zinc-700 dark:text-slate-300' },
+  curation: { label: 'In Curation', icon: PenLine, color: 'text-amber-600 bg-amber-100 dark:bg-amber-900/40 dark:text-amber-300' },
+  published: { label: 'Published', icon: Globe, color: 'text-green-700 bg-green-100 dark:bg-green-900/40 dark:text-green-300' },
 };
 
 /* ── Main Page ── */
@@ -138,10 +165,40 @@ export default function AdminCVUploadPage() {
   const [importResult, setImportResult] = useState<Record<string, number> | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [importMode, setImportMode] = useState<ImportMode>('append');
+  const [itemBins, setItemBins] = useState<Record<CategoryKey, Record<number, ItemBin>>>({
+    publications: {}, talks: {}, honors: {}, software: {}, patents: {},
+  });
+  const [sendingSection, setSendingSection] = useState<CategoryKey | null>(null);
+  const [sentSections, setSentSections] = useState<Set<CategoryKey>>(new Set());
+  const [siteCounts, setSiteCounts] = useState<SiteCounts>({
+    publications: 0, talks: 0, honors: 0, software: 0, patents: 0,
+  });
+  const [loadingCounts, setLoadingCounts] = useState(true);
+
+  // Fetch current site counts on mount
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/publications').then(r => r.ok ? r.json() : []),
+      fetch('/api/talks').then(r => r.ok ? r.json() : []),
+      fetch('/api/honors').then(r => r.ok ? r.json() : []),
+      fetch('/api/software').then(r => r.ok ? r.json() : []),
+      fetch('/api/patents').then(r => r.ok ? r.json() : []),
+    ]).then(([pubs, talks, honors, sw, patents]) => {
+      setSiteCounts({
+        publications: Array.isArray(pubs) ? pubs.length : (pubs?.publications?.length || 0),
+        talks: Array.isArray(talks) ? talks.length : (talks?.talks?.length || 0),
+        honors: Array.isArray(honors) ? honors.length : (honors?.honors?.length || 0),
+        software: Array.isArray(sw) ? sw.length : (sw?.software?.length || 0),
+        patents: Array.isArray(patents) ? patents.length : (patents?.patents?.length || 0),
+      });
+    }).catch(() => {}).finally(() => setLoadingCounts(false));
+  }, [importResult]);
 
   const handleUpload = useCallback(async (file: File) => {
-    if (file.type !== 'application/pdf') {
-      setError('Only PDF files are supported.');
+    const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'];
+    if (!allowedTypes.includes(file.type)) {
+      setError('Only PDF and Word (.docx) files are supported.');
       return;
     }
 
@@ -149,12 +206,12 @@ export default function AdminCVUploadPage() {
     setResult(null);
     setImportResult(null);
     setParsing(true);
+    setSentSections(new Set());
 
     const formData = new FormData();
     formData.append('cv', file);
 
     try {
-      // Use public (non-auth) endpoint
       const res = await fetch('/api/cv-parse', { method: 'POST', body: formData });
       const data = await res.json();
 
@@ -165,22 +222,28 @@ export default function AdminCVUploadPage() {
 
       setResult(data);
 
-      // Auto-select all new (non-duplicate) items
+      // Auto-select all new (non-duplicate) items and bin them
       const newSelected: Record<CategoryKey, Set<number>> = {
-        publications: new Set(),
-        talks: new Set(),
-        honors: new Set(),
-        software: new Set(),
-        patents: new Set(),
+        publications: new Set(), talks: new Set(), honors: new Set(), software: new Set(), patents: new Set(),
+      };
+      const newBins: Record<CategoryKey, Record<number, ItemBin>> = {
+        publications: {}, talks: {}, honors: {}, software: {}, patents: {},
       };
 
-      data.publications?.forEach((p: ParsedPub, i: number) => { if (!p.isDuplicate) newSelected.publications.add(i); });
-      data.talks?.forEach((t: ParsedTalk, i: number) => { if (!t.isDuplicate) newSelected.talks.add(i); });
-      data.honors?.forEach((h: ParsedHonor, i: number) => { if (!h.isDuplicate) newSelected.honors.add(i); });
-      data.software?.forEach((s: ParsedSoftware, i: number) => { if (!s.isDuplicate) newSelected.software.add(i); });
-      data.patents?.forEach((p: ParsedPatent, i: number) => { if (!p.isDuplicate) newSelected.patents.add(i); });
+      (Object.keys(newSelected) as CategoryKey[]).forEach((key) => {
+        const items = data[key] as Array<{ isDuplicate: boolean }> | undefined;
+        items?.forEach((item, i) => {
+          if (!item.isDuplicate) {
+            newSelected[key].add(i);
+            newBins[key][i] = 'extracted';
+          } else {
+            newBins[key][i] = 'published';
+          }
+        });
+      });
 
       setSelected(newSelected);
+      setItemBins(newBins);
 
       const toExpand = new Set<CategoryKey>();
       if (data.publications?.length) toExpand.add('publications');
@@ -203,7 +266,62 @@ export default function AdminCVUploadPage() {
     if (file) handleUpload(file);
   }, [handleUpload]);
 
-  const handleImport = async () => {
+  const handleFinalizeSection = async (key: CategoryKey) => {
+    if (!result) return;
+
+    setSendingSection(key);
+    setError(null);
+
+    const payload: Record<string, unknown> = { sourceFilename: result.sourceFilename };
+
+    // Only send items that are selected and in 'curation' or 'extracted' bin
+    const items = result[key] as Array<{ isDuplicate: boolean; duplicateOf: DuplicateRef | null }>;
+    const selectedItems = items
+      .map((item, i) => ({ item, i }))
+      .filter(({ i }) => selected[key].has(i) && itemBins[key][i] !== 'published')
+      .map(({ item }) => {
+        const { isDuplicate, duplicateOf, ...rest } = item;
+        return rest;
+      });
+
+    if (selectedItems.length === 0) {
+      setSendingSection(null);
+      return;
+    }
+
+    payload[key] = selectedItems;
+
+    try {
+      const res = await fetch('/api/cv-parse', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || `Failed to import ${key}`);
+        return;
+      }
+
+      // Mark items as published
+      setItemBins((prev) => {
+        const next = { ...prev, [key]: { ...prev[key] } };
+        items.forEach((_, i) => {
+          if (selected[key].has(i)) next[key][i] = 'published';
+        });
+        return next;
+      });
+
+      setSentSections((prev) => new Set([...prev, key]));
+    } catch {
+      setError(`Network error importing ${key}.`);
+    } finally {
+      setSendingSection(null);
+    }
+  };
+
+  const handleImportAll = async () => {
     if (!result) return;
 
     setImporting(true);
@@ -211,15 +329,15 @@ export default function AdminCVUploadPage() {
 
     const payload: Record<string, unknown> = { sourceFilename: result.sourceFilename };
 
-    payload.publications = result.publications.filter((_, i) => selected.publications.has(i))
+    payload.publications = result.publications.filter((_, i) => selected.publications.has(i) && itemBins.publications[i] !== 'published')
       .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.talks = result.talks.filter((_, i) => selected.talks.has(i))
+    payload.talks = result.talks.filter((_, i) => selected.talks.has(i) && itemBins.talks[i] !== 'published')
       .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.honors = result.honors.filter((_, i) => selected.honors.has(i))
+    payload.honors = result.honors.filter((_, i) => selected.honors.has(i) && itemBins.honors[i] !== 'published')
       .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.software = result.software.filter((_, i) => selected.software.has(i))
+    payload.software = result.software.filter((_, i) => selected.software.has(i) && itemBins.software[i] !== 'published')
       .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.patents = result.patents.filter((_, i) => selected.patents.has(i))
+    payload.patents = result.patents.filter((_, i) => selected.patents.has(i) && itemBins.patents[i] !== 'published')
       .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
 
     try {
@@ -260,6 +378,13 @@ export default function AdminCVUploadPage() {
     });
   };
 
+  const setItemBin = (category: CategoryKey, index: number, bin: ItemBin) => {
+    setItemBins((prev) => ({
+      ...prev,
+      [category]: { ...prev[category], [index]: bin },
+    }));
+  };
+
   const toggleSection = (key: CategoryKey) => {
     setExpandedSections((prev) => {
       const next = new Set(prev);
@@ -281,6 +406,34 @@ export default function AdminCVUploadPage() {
             Upload your latest CV (PDF) to automatically extract and import publications, talks, honors, software, and patents into the website database.
           </p>
         </div>
+
+        {/* Site Counts Dashboard */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+        >
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Current Public Site Content
+          </h3>
+          <div className="grid grid-cols-5 gap-3">
+            {categories.map(({ key, label, icon: Icon, color }) => {
+              const count = siteCounts[key];
+              const colors = colorMap[color];
+              return (
+                <div key={key} className={`rounded-lg border ${colors.border} p-3 ${colors.bg}`}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Icon className={`h-4 w-4 ${colors.text}`} />
+                    <span className={`text-xs font-medium ${colors.text}`}>{label.split(' ')[0]}</span>
+                  </div>
+                  <p className={`text-2xl font-bold ${colors.text}`}>
+                    {loadingCounts ? '...' : count}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
 
         {/* Upload zone */}
         {!result && !importResult && (
@@ -316,9 +469,37 @@ export default function AdminCVUploadPage() {
                     Drop your CV here or click to upload
                   </p>
                   <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                    PDF format supported. AI will parse all sections automatically.
+                    PDF and Word (.docx) formats supported. AI will parse all sections automatically.
                   </p>
                 </div>
+
+                {/* Import Mode Selector */}
+                <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 p-1 dark:border-zinc-700 dark:bg-zinc-800">
+                  {([
+                    { mode: 'append' as const, label: 'Append', icon: Layers, desc: 'Add new items only' },
+                    { mode: 'override' as const, label: 'Override', icon: Replace, desc: 'Replace existing items' },
+                    { mode: 'refresh' as const, label: 'Refresh', icon: RefreshCw, desc: 'Full sync from CV' },
+                  ]).map(({ mode, label, icon: ModeIcon }) => (
+                    <button
+                      key={mode}
+                      onClick={() => setImportMode(mode)}
+                      className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                        importMode === mode
+                          ? 'bg-white text-slate-900 shadow-sm dark:bg-zinc-700 dark:text-slate-100'
+                          : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                      }`}
+                    >
+                      <ModeIcon className="h-3.5 w-3.5" />
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-400 dark:text-slate-500">
+                  {importMode === 'append' && 'Only adds new items not already in the database.'}
+                  {importMode === 'override' && 'Replaces existing items with updated CV data.'}
+                  {importMode === 'refresh' && 'Full re-sync: removes items not in CV, adds new ones.'}
+                </p>
+
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   className="mt-2 inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-700"
@@ -329,7 +510,7 @@ export default function AdminCVUploadPage() {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".pdf"
+                  accept=".pdf,.docx,.doc"
                   className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
@@ -377,7 +558,7 @@ export default function AdminCVUploadPage() {
               New items are marked as &ldquo;Provisional&rdquo; and can be reviewed in the database.
             </p>
             <button
-              onClick={() => { setResult(null); setImportResult(null); }}
+              onClick={() => { setResult(null); setImportResult(null); setSentSections(new Set()); }}
               className="mt-6 inline-flex items-center gap-2 rounded-lg border border-emerald-300 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-900/30"
             >
               <Upload className="h-4 w-4" />
@@ -389,21 +570,52 @@ export default function AdminCVUploadPage() {
         {/* Parse results */}
         {result && !importResult && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-            {/* Summary bar */}
-            <div className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                Parsed from <span className="font-semibold">{result.sourceFilename}</span>:
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {categories.map(({ key, label, color }) => {
+            {/* Summary bar with counts */}
+            <div className="rounded-lg border border-slate-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Parsed from <span className="font-semibold">{result.sourceFilename}</span>
+                </span>
+                <span className="text-xs text-slate-400 dark:text-slate-500">
+                  Mode: <span className="font-medium text-slate-600 dark:text-slate-300 capitalize">{importMode}</span>
+                </span>
+              </div>
+              <div className="grid grid-cols-5 gap-2">
+                {categories.map(({ key, label, icon: Icon, color }) => {
                   const s = result.summary[key];
-                  if (!s || s.total === 0) return null;
+                  const colors = colorMap[color];
+                  const sectionSent = sentSections.has(key);
                   return (
-                    <span key={key} className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${colorMap[color].badge}`}>
-                      {s.new} new / {s.total} {label.toLowerCase()}
-                    </span>
+                    <div key={key} className={`rounded-lg border p-2.5 text-center ${sectionSent ? 'border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-900/20' : colors.border + ' ' + colors.bg}`}>
+                      <Icon className={`h-4 w-4 mx-auto mb-1 ${sectionSent ? 'text-green-600 dark:text-green-400' : colors.text}`} />
+                      <p className={`text-lg font-bold ${sectionSent ? 'text-green-700 dark:text-green-300' : colors.text}`}>{s?.new || 0}</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                        new / {s?.total || 0} total
+                      </p>
+                      {sectionSent && (
+                        <span className="inline-flex items-center gap-0.5 text-[9px] font-medium text-green-600 dark:text-green-400 mt-1">
+                          <CheckCircle2 className="h-3 w-3" /> Sent
+                        </span>
+                      )}
+                    </div>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* AI Curation Assistant */}
+            <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-4 dark:border-indigo-800 dark:bg-indigo-900/20">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
+                  <Bot className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-semibold text-indigo-800 dark:text-indigo-200">AI Curation Assistant</h4>
+                  <p className="mt-0.5 text-xs text-indigo-700 dark:text-indigo-300">
+                    Items are extracted from the CV and can be moved between bins: <strong>Extracted</strong> (raw from CV), <strong>In Curation</strong> (being reviewed/enriched), and <strong>Published</strong> (on public site).
+                    The AI assistant can enrich items with DOIs, PubMed IDs, and additional metadata.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -415,20 +627,40 @@ export default function AdminCVUploadPage() {
               const isExpanded = expandedSections.has(key);
               const selectedCount = selected[key].size;
               const colors = colorMap[color];
+              const sectionSent = sentSections.has(key);
+
+              // Count bins
+              const binCounts = { extracted: 0, curation: 0, published: 0 };
+              items.forEach((_, i) => {
+                const bin = itemBins[key]?.[i] || 'extracted';
+                binCounts[bin]++;
+              });
 
               return (
-                <div key={key} className={`rounded-xl border ${colors.border} overflow-hidden`}>
+                <div key={key} className={`rounded-xl border ${sectionSent ? 'border-green-300 dark:border-green-800' : colors.border} overflow-hidden`}>
                   <button
                     onClick={() => toggleSection(key)}
-                    className={`flex w-full items-center gap-3 px-5 py-3.5 text-left ${colors.bg} transition-colors hover:opacity-90`}
+                    className={`flex w-full items-center gap-3 px-5 py-3.5 text-left ${sectionSent ? 'bg-green-50 dark:bg-green-900/20' : colors.bg} transition-colors hover:opacity-90`}
                   >
-                    <Icon className={`h-5 w-5 ${colors.text}`} />
-                    <span className={`flex-1 text-sm font-semibold ${colors.text}`}>
+                    <Icon className={`h-5 w-5 ${sectionSent ? 'text-green-600 dark:text-green-400' : colors.text}`} />
+                    <span className={`flex-1 text-sm font-semibold ${sectionSent ? 'text-green-700 dark:text-green-300' : colors.text}`}>
                       {label}
                       <span className="ml-2 font-normal opacity-70">
                         ({items.length} found, {selectedCount} selected)
                       </span>
                     </span>
+                    {/* Bin counts */}
+                    <div className="hidden sm:flex items-center gap-1.5 mr-2">
+                      {Object.entries(binCounts).map(([bin, count]) => {
+                        if (count === 0) return null;
+                        const cfg = binConfig[bin as ItemBin];
+                        return (
+                          <span key={bin} className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-medium ${cfg.color}`}>
+                            {count} {cfg.label}
+                          </span>
+                        );
+                      })}
+                    </div>
                     {isExpanded ? <ChevronUp className={`h-4 w-4 ${colors.text}`} /> : <ChevronDown className={`h-4 w-4 ${colors.text}`} />}
                   </button>
 
@@ -441,13 +673,34 @@ export default function AdminCVUploadPage() {
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden"
                       >
-                        <div className="flex items-center gap-2 border-b border-slate-100 px-5 py-2 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+                        {/* Toolbar */}
+                        <div className="flex items-center justify-between gap-2 border-b border-slate-100 px-5 py-2 bg-white dark:border-zinc-800 dark:bg-zinc-900">
                           <button
                             onClick={() => toggleAll(key, items)}
                             className="text-xs font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
                           >
                             Select / Deselect All New
                           </button>
+                          <div className="flex items-center gap-2">
+                            {!sectionSent && (
+                              <button
+                                onClick={() => handleFinalizeSection(key)}
+                                disabled={sendingSection === key || selectedCount === 0}
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                                {sendingSection === key ? (
+                                  <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Sending...</>
+                                ) : (
+                                  <><Send className="h-3.5 w-3.5" /> Finalize & Send</>
+                                )}
+                              </button>
+                            )}
+                            {sectionSent && (
+                              <span className="inline-flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
+                                <CheckCircle2 className="h-3.5 w-3.5" /> Imported
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         <div className="divide-y divide-slate-100 dark:divide-zinc-800 bg-white dark:bg-zinc-900">
@@ -460,6 +713,9 @@ export default function AdminCVUploadPage() {
                               isSelected={selected[key].has(idx)}
                               onToggle={() => toggleItem(key, idx)}
                               color={color}
+                              bin={itemBins[key]?.[idx] || 'extracted'}
+                              onBinChange={(bin) => setItemBin(key, idx, bin)}
+                              sectionSent={sectionSent}
                             />
                           ))}
                         </div>
@@ -470,28 +726,28 @@ export default function AdminCVUploadPage() {
               );
             })}
 
-            {/* Import button bar */}
+            {/* Import All button bar */}
             <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
               <div className="text-sm text-slate-600 dark:text-slate-400">
                 <span className="font-semibold text-slate-800 dark:text-slate-200">{totalSelected}</span>{' '}
-                items selected for import
+                items selected across all sections
               </div>
               <div className="flex gap-3">
                 <button
-                  onClick={() => { setResult(null); setSelected({ publications: new Set(), talks: new Set(), honors: new Set(), software: new Set(), patents: new Set() }); }}
+                  onClick={() => { setResult(null); setSelected({ publications: new Set(), talks: new Set(), honors: new Set(), software: new Set(), patents: new Set() }); setSentSections(new Set()); }}
                   className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-zinc-700 dark:text-slate-400 dark:hover:bg-zinc-800"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleImport}
+                  onClick={handleImportAll}
                   disabled={totalSelected === 0 || importing}
                   className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {importing ? (
-                    <><Loader2 className="h-4 w-4 animate-spin" /> Importing...</>
+                    <><Loader2 className="h-4 w-4 animate-spin" /> Importing All...</>
                   ) : (
-                    <><Check className="h-4 w-4" /> Import Selected</>
+                    <><Check className="h-4 w-4" /> Import All Selected</>
                   )}
                 </button>
               </div>
@@ -512,6 +768,9 @@ function ItemRow({
   isSelected,
   onToggle,
   color,
+  bin,
+  onBinChange,
+  sectionSent,
 }: {
   item: Record<string, unknown> & { isDuplicate: boolean; duplicateOf: DuplicateRef | null };
   category: CategoryKey;
@@ -519,8 +778,12 @@ function ItemRow({
   isSelected: boolean;
   onToggle: () => void;
   color: string;
+  bin: ItemBin;
+  onBinChange: (bin: ItemBin) => void;
+  sectionSent: boolean;
 }) {
   const colors = colorMap[color];
+  const binCfg = binConfig[bin];
 
   let title = '';
   let subtitle = '';
@@ -577,24 +840,35 @@ function ItemRow({
   }
 
   return (
-    <div className={`flex items-start gap-3 px-5 py-3 transition-colors ${item.isDuplicate ? 'opacity-50' : isSelected ? 'bg-slate-50 dark:bg-zinc-800/50' : ''}`}>
+    <div className={`flex items-start gap-3 px-5 py-3 transition-colors ${
+      item.isDuplicate ? 'opacity-50' :
+      sectionSent ? 'bg-green-50/30 dark:bg-green-900/5' :
+      isSelected ? 'bg-slate-50 dark:bg-zinc-800/50' : ''
+    }`}>
       <button
         onClick={onToggle}
-        disabled={item.isDuplicate}
+        disabled={item.isDuplicate || sectionSent}
         className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
-          item.isDuplicate
+          item.isDuplicate || sectionSent
             ? 'border-slate-200 bg-slate-100 cursor-not-allowed dark:border-zinc-700 dark:bg-zinc-800'
             : isSelected
             ? `${colors.badge} border-transparent`
             : 'border-slate-300 hover:border-slate-400 dark:border-zinc-600 dark:hover:border-zinc-500'
         }`}
       >
-        {isSelected && <Check className="h-3.5 w-3.5" />}
+        {(isSelected || sectionSent) && <Check className="h-3.5 w-3.5" />}
       </button>
       <div className="flex-1 min-w-0">
-        <p className={`text-sm font-medium ${item.isDuplicate ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-slate-200'}`}>
-          {title}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className={`text-sm font-medium ${item.isDuplicate ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-slate-200'}`}>
+            {title}
+          </p>
+          {/* Bin badge */}
+          <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-medium ${binCfg.color}`}>
+            <binCfg.icon className="h-2.5 w-2.5" />
+            {binCfg.label}
+          </span>
+        </div>
         {subtitle && <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 truncate">{subtitle}</p>}
         {meta && <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{meta}</p>}
         {item.isDuplicate && (
@@ -604,6 +878,29 @@ function ItemRow({
           </p>
         )}
       </div>
+      {/* Bin selector */}
+      {!item.isDuplicate && !sectionSent && (
+        <div className="flex items-center gap-0.5 shrink-0">
+          {(Object.keys(binConfig) as ItemBin[]).map((b) => {
+            const cfg = binConfig[b];
+            const BinIcon = cfg.icon;
+            return (
+              <button
+                key={b}
+                onClick={() => onBinChange(b)}
+                title={cfg.label}
+                className={`rounded p-1 transition-colors ${
+                  bin === b
+                    ? cfg.color
+                    : 'text-slate-300 hover:text-slate-500 dark:text-zinc-600 dark:hover:text-zinc-400'
+                }`}
+              >
+                <BinIcon className="h-3.5 w-3.5" />
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

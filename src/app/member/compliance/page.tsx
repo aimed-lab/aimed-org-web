@@ -131,7 +131,7 @@ export default function CompliancePage() {
       fetch('/api/member/compliance').then((r) => (r.ok ? r.json() : null)),
     ])
       .then(([m, d]) => {
-        if (!m) { setError('Not authenticated'); return; }
+        if (!m) { router.push('/member/activate'); return; }
         setMember(m);
         setDocs(d || []);
       })
@@ -220,12 +220,10 @@ export default function CompliancePage() {
     );
   }
 
-  if (error || !member) {
+  if (!member) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6">
-        <ShieldAlert className="h-12 w-12 text-red-500" />
-        <p className="text-red-600 dark:text-red-400">Authentication required.</p>
-        <button onClick={() => router.push('/admin')} className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800">Go to Login</button>
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400">Redirecting...</p>
       </div>
     );
   }
@@ -345,6 +343,50 @@ export default function CompliancePage() {
             })
           )}
         </div>
+
+        {/* Templates & Resources */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+        >
+          <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+            <FileCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            Templates & Reference Documents
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[
+              { title: 'IRB Protocol Template', desc: 'Standard IRB submission template for human subjects research', icon: Shield, color: 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20' },
+              { title: 'Copyright Transfer Form', desc: 'Publisher copyright assignment template', icon: FileSignature, color: 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20' },
+              { title: 'OSDD2 Agreement', desc: 'Open-source drug discovery data sharing agreement', icon: Scale, color: 'text-purple-600 bg-purple-50 dark:text-purple-400 dark:bg-purple-900/20' },
+              { title: 'Data Use Agreement', desc: 'Template for institutional data sharing agreements', icon: KeyRound, color: 'text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-900/20' },
+              { title: 'NDA Template', desc: 'Non-disclosure agreement for collaborations', icon: FileWarning, color: 'text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20' },
+              { title: 'CITI Training Link', desc: 'Collaborative Institutional Training Initiative portal', icon: GraduationCap, color: 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20' },
+            ].map((tmpl) => {
+              const Icon = tmpl.icon;
+              return (
+                <a
+                  key={tmpl.title}
+                  href="#"
+                  className="flex items-start gap-3 rounded-lg border border-slate-100 p-3 transition-colors hover:bg-slate-50 dark:border-zinc-800 dark:hover:bg-zinc-800/50"
+                  title="Link will be configured by admin"
+                >
+                  <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${tmpl.color}`}>
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 flex items-center gap-1">
+                      {tmpl.title}
+                      <ExternalLink className="h-3 w-3 text-slate-300 dark:text-slate-600" />
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{tmpl.desc}</p>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </motion.div>
 
         {/* Add/Edit Modal */}
         <AnimatePresence>

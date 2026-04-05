@@ -12,6 +12,10 @@ import {
   ShieldAlert,
   Send,
   CheckCircle,
+  Award,
+  Camera,
+  Image,
+  Newspaper,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -56,7 +60,7 @@ export default function AchievementsPage() {
   const [software, setSoftware] = useState<Software[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState<'publications' | 'software' | 'patents'>('publications');
+  const [activeTab, setActiveTab] = useState<'publications' | 'software' | 'patents' | 'awards'>('publications');
   const [submittingId, setSubmittingId] = useState<string | null>(null);
   const [submittedId, setSubmittedId] = useState<string | null>(null);
 
@@ -90,7 +94,7 @@ export default function AchievementsPage() {
     ])
       .then(([m, a]) => {
         if (!m) {
-          setError('Not authenticated');
+          router.push('/member/activate');
           return;
         }
         setMember(m);
@@ -112,17 +116,10 @@ export default function AchievementsPage() {
     );
   }
 
-  if (error || !member) {
+  if (!member) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6">
-        <ShieldAlert className="h-12 w-12 text-red-500" />
-        <p className="text-red-600 dark:text-red-400">Authentication required.</p>
-        <button
-          onClick={() => router.push('/admin')}
-          className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
-        >
-          Go to Login
-        </button>
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400">Redirecting...</p>
       </div>
     );
   }
@@ -131,6 +128,7 @@ export default function AchievementsPage() {
     { key: 'publications' as const, label: 'Publications', icon: BookOpen, count: publications.length },
     { key: 'software' as const, label: 'Software', icon: Code2, count: software.length },
     { key: 'patents' as const, label: 'Patents', icon: FileText, count: patents.length },
+    { key: 'awards' as const, label: 'Awards & News', icon: Award, count: 0 },
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -383,6 +381,40 @@ export default function AchievementsPage() {
                 );
               })
             )}
+          </motion.div>
+        )}
+
+        {/* Awards & News */}
+        {activeTab === 'awards' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="space-y-4"
+          >
+            <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20">
+              <div className="flex items-start gap-3">
+                <Award className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-800 dark:text-amber-200">
+                    Poster & Paper Awards
+                  </h4>
+                  <p className="mt-0.5 text-xs text-amber-700 dark:text-amber-300">
+                    Awards, honors, and recognition from conferences, competitions, and publications.
+                    Upload photos and share news with the group.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center dark:border-zinc-700 dark:bg-zinc-900">
+              <Camera className="mx-auto h-10 w-10 text-slate-300 dark:text-zinc-600" />
+              <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+                No awards or news items yet.
+              </p>
+              <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+                Share your poster awards, best paper recognitions, and conference photos here.
+              </p>
+            </div>
           </motion.div>
         )}
       </div>

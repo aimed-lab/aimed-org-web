@@ -278,24 +278,24 @@ export default function ResearchPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl"
           >
-            Research Program
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
-          >
-            Our research weaves five interconnected lineages -- from AI-driven drug discovery
-            to translational data infrastructure -- into a unified effort to make artificial
-            intelligence truly useful in medicine.
-          </motion.p>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-4 py-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
+              <Network className="h-4 w-4" />
+              Five interconnected lineages
+            </div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+              Research Program
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
+              Our research weaves five interconnected lineages &mdash; from AI-driven drug discovery
+              to translational data infrastructure &mdash; into a unified effort to make artificial
+              intelligence truly useful in medicine.
+            </p>
+          </motion.div>
         </div>
         <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] dark:opacity-[0.04]" />
       </section>

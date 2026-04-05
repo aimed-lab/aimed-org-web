@@ -92,7 +92,7 @@ export default function DatasetsPage() {
       fetch('/api/member/datasets').then((r) => (r.ok ? r.json() : null)),
     ])
       .then(([m, d]) => {
-        if (!m) { setError('Not authenticated'); return; }
+        if (!m) { router.push('/member/activate'); return; }
         setMember(m);
         setDatasets(d || []);
       })
@@ -171,12 +171,10 @@ export default function DatasetsPage() {
     );
   }
 
-  if (error || !member) {
+  if (!member) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6">
-        <ShieldAlert className="h-12 w-12 text-red-500" />
-        <p className="text-red-600 dark:text-red-400">Authentication required.</p>
-        <button onClick={() => router.push('/admin')} className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800">Go to Login</button>
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400">Redirecting...</p>
       </div>
     );
   }

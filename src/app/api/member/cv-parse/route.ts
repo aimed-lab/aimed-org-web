@@ -12,6 +12,19 @@ async function parsePdf(buffer: Buffer): Promise<string> {
   return result.text
 }
 
+async function parseDocx(buffer: Buffer): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const mammoth = require("mammoth") as { extractRawText: (opts: { buffer: Buffer }) => Promise<{ value: string }> }
+  const result = await mammoth.extractRawText({ buffer })
+  return result.value
+}
+
+const ALLOWED_TYPES = [
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/msword",
+]
+
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? ""
 const GEMINI_MODEL = "gemini-2.5-flash"
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`
@@ -88,19 +101,27 @@ export async function POST(request: NextRequest) {
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
     }
-    if (file.type !== "application/pdf") {
-      return NextResponse.json({ error: "Only PDF files are supported" }, { status: 400 })
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return NextResponse.json({ error: "Only PDF and Word (.docx) files are supported" }, { status: 400 })
     }
 
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    const pdfText = await parsePdf(buffer)
 
-    if (!pdfText || pdfText.trim().length < 100) {
+    let extractedText: string
+    if (file.type === "application/pdf") {
+      extractedText = await parsePdf(buffer)
+    } else {
+      extractedText = await parseDocx(buffer)
+    }
+
+    if (!extractedText || extractedText.trim().length < 100) {
       return NextResponse.json({
-        error: "Could not extract enough text from the PDF. It may be a scanned image.",
+        error: "Could not extract enough text from the file. It may be a scanned image or empty document.",
       }, { status: 400 })
     }
+
+    const pdfText = extractedText
 
     const truncatedText = pdfText.substring(0, 50000)
 

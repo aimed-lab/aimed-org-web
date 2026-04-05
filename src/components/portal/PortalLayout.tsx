@@ -24,7 +24,12 @@ import {
   X,
   ChevronLeft,
   ArrowLeftRight,
+  Sun,
+  Moon,
+  Lightbulb,
+  Package,
 } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 export type PortalRole = 'member' | 'admin';
 
@@ -37,9 +42,12 @@ interface NavItem {
 const memberNav: NavItem[] = [
   { label: 'Dashboard', href: '/member/dashboard', icon: LayoutDashboard },
   { label: 'Onboarding', href: '/member/onboarding', icon: BookOpen },
+  { label: 'divider-assets', href: '', icon: Package },
+  { label: 'Problems', href: '/member/problems', icon: Lightbulb },
   { label: 'Papers', href: '/member/papers', icon: FileText },
   { label: 'Datasets', href: '/member/datasets', icon: Database },
   { label: 'Tools', href: '/member/tools', icon: Wrench },
+  { label: 'divider-more', href: '', icon: Shield },
   { label: 'Ethics & Legal', href: '/member/compliance', icon: Shield },
   { label: 'Intelligence', href: '/member/intelligence', icon: Radar },
   { label: 'Achievements', href: '/member/achievements', icon: Trophy },
@@ -67,6 +75,12 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'admin' | 'member'>(role === 'admin' ? 'admin' : 'member');
+  const { resolvedTheme, setTheme } = useTheme();
+  const [themeMounted, setThemeMounted] = useState(false);
+
+  useEffect(() => {
+    setThemeMounted(true);
+  }, []);
 
   // Close mobile sidebar on route change
   useEffect(() => {
@@ -183,6 +197,22 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
             </div>
           </div>
           <div className="flex items-center gap-3">
+            {/* Theme toggle */}
+            <button
+              aria-label="Toggle theme"
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            >
+              {themeMounted ? (
+                resolvedTheme === 'dark' ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )
+              ) : (
+                <Sun className="h-4 w-4 opacity-0" />
+              )}
+            </button>
             {/* Role Switcher — admin only */}
             {role === 'admin' && (
               <button
@@ -267,9 +297,21 @@ function SidebarContent({
       {/* Nav items */}
       <nav className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
         {navItems.map((item, idx) => {
-          if (item.label === 'divider') {
+          if (item.label === 'divider' || item.label.startsWith('divider-')) {
+            const sectionLabels: Record<string, string> = {
+              'divider-assets': 'Assets',
+              'divider-more': '',
+            };
+            const sectionLabel = sectionLabels[item.label];
             return (
-              <div key={`divider-${idx}`} className="my-2 border-t border-slate-200 dark:border-zinc-800" />
+              <div key={`divider-${idx}`} className="mt-3 mb-1">
+                <div className="border-t border-slate-200 dark:border-zinc-800" />
+                {sectionLabel && sidebarOpen && (
+                  <p className="mt-2 px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                    {sectionLabel}
+                  </p>
+                )}
+              </div>
             );
           }
 

@@ -14,6 +14,11 @@ import {
   XCircle,
   ArrowRight,
   ShieldAlert,
+  ExternalLink,
+  FileText,
+  FolderOpen,
+  Video,
+  Presentation,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -52,7 +57,7 @@ export default function OnboardingPage() {
     ])
       .then(([me, data]) => {
         if (!me) {
-          setError('Not authenticated');
+          router.push('/member/activate');
           return;
         }
         setMemberInfo(me);
@@ -72,17 +77,10 @@ export default function OnboardingPage() {
     );
   }
 
-  if (error || !memberInfo) {
+  if (!memberInfo) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6">
-        <ShieldAlert className="h-12 w-12 text-red-500" />
-        <p className="text-red-600 dark:text-red-400">Authentication required.</p>
-        <button
-          onClick={() => router.push('/admin')}
-          className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
-        >
-          Go to Login
-        </button>
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-sm text-slate-500 dark:text-slate-400">Redirecting...</p>
       </div>
     );
   }
@@ -222,6 +220,56 @@ export default function OnboardingPage() {
             );
           })}
         </div>
+
+        {/* Document Library */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+              <FolderOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              Document Library
+            </h3>
+            <span className="text-xs text-slate-400 dark:text-slate-500">Notion-hosted resources</span>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[
+              { title: 'Lab Handbook', desc: 'Policies, expectations, and lab culture guide', icon: BookOpen, color: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20' },
+              { title: 'Computing Resources', desc: 'HPC access, cloud compute, GPU allocation', icon: Monitor, color: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' },
+              { title: 'Publication Guide', desc: 'Authorship policy, journal selection, submission workflow', icon: FileText, color: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20' },
+              { title: 'Presentation Templates', desc: 'Slide decks, poster templates, lab branding', icon: Presentation, color: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20' },
+              { title: 'IRB & Ethics Guides', desc: 'IRB submission process, CITI training, data handling', icon: ShieldCheck, color: 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20' },
+              { title: 'Tutorial Videos', desc: 'Recorded walkthroughs of lab tools and workflows', icon: Video, color: 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' },
+            ].map((doc, i) => {
+              const Icon = doc.icon;
+              return (
+                <a
+                  key={doc.title}
+                  href="#"
+                  className="flex items-start gap-3 rounded-lg border border-slate-100 p-3 transition-colors hover:bg-slate-50 dark:border-zinc-800 dark:hover:bg-zinc-800/50"
+                  title="Opens in Notion (link will be configured by admin)"
+                >
+                  <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${doc.color}`}>
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 flex items-center gap-1">
+                      {doc.title}
+                      <ExternalLink className="h-3 w-3 text-slate-300 dark:text-slate-600" />
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{doc.desc}</p>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-[10px] text-slate-400 dark:text-slate-500 text-center">
+            Documents are maintained in Notion. Contact your advisor to add or update resources.
+          </p>
+        </motion.div>
       </div>
     </PortalLayout>
   );
