@@ -37,7 +37,6 @@ interface NavItem {
 const memberNav: NavItem[] = [
   { label: 'Dashboard', href: '/member/dashboard', icon: LayoutDashboard },
   { label: 'Onboarding', href: '/member/onboarding', icon: BookOpen },
-  { label: 'CV Updates', href: '/member/cv-updates', icon: FolderKanban },
   { label: 'Papers', href: '/member/papers', icon: FileText },
   { label: 'Datasets', href: '/member/datasets', icon: Database },
   { label: 'Tools', href: '/member/tools', icon: Wrench },
@@ -173,7 +172,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
               {sidebarOpen ? <ChevronLeft className="h-5 w-5 hidden lg:block" /> : <Menu className="h-5 w-5 hidden lg:block" />}
               <Menu className="h-5 w-5 lg:hidden" />
             </button>
-            <a href="/" className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
               <span className="text-lg font-extrabold tracking-tight">
                 <span className="text-slate-800 dark:text-slate-100">ai</span>
                 <span className="text-emerald-600">.</span>
@@ -181,7 +180,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
               </span>
               <span className="text-slate-400 dark:text-slate-500">|</span>
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Lab Portal</span>
-            </a>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             {/* Role Switcher — admin only */}
@@ -249,19 +248,19 @@ function SidebarContent({
       <div className={`flex items-center border-b border-slate-200 dark:border-zinc-800 h-14 px-4 shrink-0`}>
         {sidebarOpen ? (
           <div className="flex items-center gap-2 truncate">
-            <span className="text-lg font-extrabold tracking-tight shrink-0">
+            <a href="/" className="text-lg font-extrabold tracking-tight shrink-0 hover:opacity-80 transition-opacity" title="Back to public site">
               <span className="text-slate-800 dark:text-slate-100">ai</span>
               <span className="text-emerald-600">.</span>
               <span className="text-emerald-600">med</span>
-            </span>
+            </a>
             <span className="text-xs font-medium text-slate-400 dark:text-slate-500 truncate">
               {portalLabel}
             </span>
           </div>
         ) : (
-          <span className="text-sm font-extrabold text-emerald-600 mx-auto" title={portalLabel}>
+          <a href="/" className="text-sm font-extrabold text-emerald-600 mx-auto hover:opacity-80 transition-opacity" title="Back to public site">
             ai
-          </span>
+          </a>
         )}
       </div>
 
