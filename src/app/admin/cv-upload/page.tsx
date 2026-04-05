@@ -179,18 +179,18 @@ export default function AdminCVUploadPage() {
   // Fetch current site counts on mount
   useEffect(() => {
     Promise.all([
-      fetch('/api/publications').then(r => r.ok ? r.json() : []),
-      fetch('/api/talks').then(r => r.ok ? r.json() : []),
-      fetch('/api/honors').then(r => r.ok ? r.json() : []),
-      fetch('/api/software').then(r => r.ok ? r.json() : []),
-      fetch('/api/patents').then(r => r.ok ? r.json() : []),
+      fetch('/api/publications?limit=1').then(r => r.ok ? r.json() : null),
+      fetch('/api/talks').then(r => r.ok ? r.json() : null),
+      fetch('/api/honors').then(r => r.ok ? r.json() : null),
+      fetch('/api/software').then(r => r.ok ? r.json() : null),
+      fetch('/api/patents').then(r => r.ok ? r.json() : null),
     ]).then(([pubs, talks, honors, sw, patents]) => {
       setSiteCounts({
-        publications: Array.isArray(pubs) ? pubs.length : (pubs?.publications?.length || 0),
-        talks: Array.isArray(talks) ? talks.length : (talks?.talks?.length || 0),
-        honors: Array.isArray(honors) ? honors.length : (honors?.honors?.length || 0),
-        software: Array.isArray(sw) ? sw.length : (sw?.software?.length || 0),
-        patents: Array.isArray(patents) ? patents.length : (patents?.patents?.length || 0),
+        publications: pubs?.total ?? 0,
+        talks: talks?.total ?? 0,
+        honors: honors?.total ?? 0,
+        software: sw?.total ?? 0,
+        patents: patents?.total ?? 0,
       });
     }).catch(() => {}).finally(() => setLoadingCounts(false));
   }, [importResult]);
