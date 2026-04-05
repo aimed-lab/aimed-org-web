@@ -1,0 +1,3 @@
+id	name	email	role	joinDate	status	resumeUrl	boxFolderId	boxFolderUrl	notionPageUrl	githubUsername	headshot	bio	passwordHash	emailVerified	orcidId	createdAt	updatedAt
+1	Jake Y. Chen	jakechen@uab.edu	Principal Investigator	2026-04-01T06:56:21.374+00:00	ACTIVE									0		2026-04-01T06:56:21.374+00:00	2026-04-01T06:56:21.367+00:00
+2	Test Student	teststudent@uab.edu	PhD Student	2026-04-01T07:30:28.104+00:00	ACTIVE									0		2026-04-01T07:30:28.108+00:00	2026-04-01T07:30:28.108+00:00

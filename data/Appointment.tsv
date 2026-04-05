@@ -1,0 +1,16 @@
+id	institution	role	department	startYear	endYear	type	location	sortOrder	createdAt	updatedAt
+266	Peking University	B.S. in Biochemistry & Molecular Biology	Department of Biochemistry & Molecular Biology, College of Life Sciences	1995	1995	EDUCATION	Peking University	1	2026-03-30T12:25:47.359+00:00	2026-03-30T12:25:47.359+00:00
+267	University of Minnesota	M.S. in Computer Science & Engineering	Department of Computer Science & Engineering	1997	1997	EDUCATION	Minneapolis, MN	3	2026-03-30T12:25:47.361+00:00	2026-03-30T12:25:47.361+00:00
+268	University of Minnesota	Ph.D. in Computer Science & Engineering	Department of Computer Science & Engineering	2001	2001	EDUCATION	Minneapolis, MN	4	2026-03-30T12:25:47.362+00:00	2026-03-30T12:25:47.362+00:00
+269	Affymetrix Inc.	Bioinformatics Computer Scientist		1998	2002	INDUSTRY	Santa Clara, CA	5	2026-03-30T12:25:47.363+00:00	2026-03-30T12:25:47.363+00:00
+270	Myriad Proteomics	Head of Computational Proteomics		2002	2003	INDUSTRY	Salt Lake City, UT	6	2026-03-30T12:25:47.364+00:00	2026-03-30T12:25:47.364+00:00
+271	Purdue University	Visiting Assistant Professor of Computer Science	Department of Computer Science	2004	2004	FACULTY	Indianapolis, IN	7	2026-03-30T12:25:47.364+00:00	2026-03-30T12:25:47.364+00:00
+272	Indiana University School of Informatics / Purdue	Assistant Professor		2004	2010	FACULTY	Indianapolis, IN	8	2026-03-30T12:25:47.365+00:00	2026-03-30T12:25:47.365+00:00
+273	Indiana University School of Informatics / Purdue	Associate Professor (tenured)		2010	2016	FACULTY	Indianapolis, IN	9	2026-03-30T12:25:47.365+00:00	2026-03-30T12:25:47.365+00:00
+274	IU-Purdue	Founding Director, Indiana Center for Systems Biology and Personalized Medicine		2007	2016	FACULTY	Indianapolis, IN	10	2026-03-30T12:25:47.366+00:00	2026-03-30T12:25:47.366+00:00
+275	UAB	Professor (with tenure), Dept of Genetics	Department of Genetics	2016	2023	FACULTY	Birmingham, AL	11	2026-03-30T12:25:47.366+00:00	2026-03-30T12:25:47.366+00:00
+276	UAB	Associate Director & Chief Bioinformatics Officer, Informatics Institute	Informatics Institute	2016	2023	FACULTY	Birmingham, AL	12	2026-03-30T12:25:47.367+00:00	2026-03-30T12:25:47.367+00:00
+277	UAB	Professor (secondary), Computer and Information Sciences	Department of Computer and Information Sciences	2017		FACULTY	Birmingham, AL	13	2026-03-30T12:25:47.367+00:00	2026-03-30T12:25:47.367+00:00
+278	UAB	Professor (secondary), Biomedical Engineering	Department of Biomedical Engineering	2018		FACULTY	Birmingham, AL	14	2026-03-30T12:25:47.368+00:00	2026-03-30T12:25:47.368+00:00
+279	UAB	Triton Endowed Professor, Biomedical Informatics and Data Science	Department of Biomedical Informatics and Data Science	2023		FACULTY	Birmingham, AL	15	2026-03-30T12:25:47.369+00:00	2026-03-30T12:25:47.369+00:00
+280	UAB	Founding Director, SPARC	Systems Pharmacology AI Research Center	2023		FACULTY	Birmingham, AL	16	2026-03-30T12:25:47.369+00:00	2026-03-30T12:25:47.369+00:00
