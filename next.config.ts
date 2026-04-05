@@ -5,9 +5,9 @@ const nextConfig: NextConfig = {
   env: {
     RESEND_API_KEY: process.env.RESEND_API_KEY || "re_SdwvLog6_FJTMRwPmHr48G6eTupFQtoxC",
   },
-  // Include dev.db in all serverless function bundles for Vercel deployment
+  // Include database in all serverless function bundles for Vercel deployment
   outputFileTracingIncludes: {
-    "/*": ["./dev.db"],
+    "/*": ["./aimed-lab.db", "./dev.db"],
   },
 };
 

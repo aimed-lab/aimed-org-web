@@ -8,40 +8,29 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function findDbPath(): string {
-  // Try multiple candidate paths for the SQLite database
+  // Try aimed-lab.db first (avoids Vercel caching conflicts with dev.db)
+  // then fall back to dev.db for local development
   const candidates = [
+    resolve(process.cwd(), "aimed-lab.db"),
+    join(__dirname, "..", "..", "aimed-lab.db"),
+    join(__dirname, "..", "..", "..", "aimed-lab.db"),
     resolve(process.cwd(), "dev.db"),
     join(__dirname, "..", "..", "dev.db"),
     join(__dirname, "..", "..", "..", "dev.db"),
-    join(__dirname, "..", "..", "..", "..", "dev.db"),
-    "/var/task/dev.db",
-    "/var/task/user/dev.db",
   ]
   for (const p of candidates) {
     if (existsSync(p)) {
-      console.log(`[db] Using database at: ${p}`)
       return p
     }
   }
-  console.log(`[db] No database found, tried: ${candidates.join(", ")}. Falling back to cwd.`)
-  // Fallback to cwd-based path
   return resolve(process.cwd(), "dev.db")
 }
 
 // Export for diagnostics
 export function getDbDiagnostics() {
-  const candidates = [
-    resolve(process.cwd(), "dev.db"),
-    join(__dirname, "..", "..", "dev.db"),
-    join(__dirname, "..", "..", "..", "dev.db"),
-    join(__dirname, "..", "..", "..", "..", "dev.db"),
-    "/var/task/dev.db",
-    "/var/task/user/dev.db",
-  ]
   return {
     cwd: process.cwd(),
     dirname: __dirname,
-    candidates: candidates.map(p => ({ path: p, exists: existsSync(p) })),
     activePath: findDbPath(),
   }
 }
