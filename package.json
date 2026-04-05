@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "cp aimed-lab.db aimed-lab.db.bak 2>/dev/null; prisma generate; cp aimed-lab.db.bak aimed-lab.db 2>/dev/null; rm -f aimed-lab.db.bak; next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "cp aimed-lab.db aimed-lab.db.bak 2>/dev/null; prisma generate; cp aimed-lab.db.bak aimed-lab.db 2>/dev/null; rm -f aimed-lab.db.bak"
   },
   "dependencies": {
     "@libsql/client": "^0.17.2",
