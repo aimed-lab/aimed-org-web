@@ -185,20 +185,20 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 to-teal-800 py-16 sm:py-20 md:py-24 text-white">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
-        </div>
-        <div className="relative mx-auto max-w-6xl px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <Newspaper className="mx-auto mb-4 h-12 w-12 opacity-80" />
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">News &amp; Updates</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/40 px-4 py-2 text-sm font-medium text-blue-800 dark:text-blue-300">
+              <Newspaper className="h-4 w-4" />
+              Latest updates
+            </div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">News &amp; Updates</h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
               Lab milestones, research highlights, and the latest in AI-driven drug discovery.
             </p>
           </motion.div>
         </div>
+        <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] dark:opacity-[0.04]" />
       </section>
 
       <div className="mx-auto max-w-4xl px-6 py-16 space-y-12">

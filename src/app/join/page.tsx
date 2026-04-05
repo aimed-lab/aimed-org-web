@@ -185,26 +185,27 @@ export default function JoinPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 to-teal-800 py-16 sm:py-20 md:py-24 text-white">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-white/20 blur-3xl" />
-        </div>
-        <div className="relative mx-auto max-w-6xl px-6 text-center">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
+        <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Opportunities at AI.MED</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-teal-100 dark:bg-teal-900/40 px-4 py-2 text-sm font-medium text-teal-800 dark:text-teal-300">
+              <Users className="h-4 w-4" />
+              Join the team
+            </div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">Opportunities at AI.MED</h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
               AI.MED attracts exceptional talent committed to advancing biomedical AI at the
-              highest level. We set a high bar for excellence -- only a select number of
+              highest level. We set a high bar for excellence — only a select number of
               positions are available each year for interns, volunteers, visiting scholars,
               PhD students, postdocs, staff, and collaborators.
             </p>
           </motion.div>
         </div>
+        <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] dark:opacity-[0.04]" />
       </section>
 
       {/* Pathways */}

@@ -123,30 +123,27 @@ export default function SoftwarePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-emerald-800 to-teal-900 py-16 sm:py-20 md:py-24 text-white">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute left-1/4 top-1/3 h-64 w-64 rounded-full bg-white blur-3xl" />
-          <div className="absolute right-1/3 bottom-1/4 h-48 w-48 rounded-full bg-white blur-3xl" />
-        </div>
-        <div className="relative mx-auto max-w-6xl px-6 text-center">
+      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white dark:from-zinc-900 dark:to-zinc-950 py-16 sm:py-20 md:py-36">
+        <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium backdrop-blur-sm">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-cyan-100 dark:bg-cyan-900/40 px-4 py-2 text-sm font-medium text-cyan-800 dark:text-cyan-300">
               <Code2 className="h-4 w-4" />
               Tools for biomedicine
             </div>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
               Software &amp; Resources
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
               {tools.length} research tools, databases, and platforms developed
               across two decades of biomedical informatics research.
             </p>
           </motion.div>
         </div>
+        <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02] dark:opacity-[0.04]" />
       </section>
 
       {/* Tools */}
