@@ -8,24 +8,23 @@ import { ChatWidget } from '@/components/chatbot/ChatWidget';
 
 /**
  * Conditionally renders the public site chrome (Header, Footer, ChatWidget)
- * based on the current route. Portal pages (member/*, admin/dashboard, admin/members,
- * admin/recruits) get a bare layout since they use PortalLayout internally.
+ * based on the current route. Portal pages get a bare layout since they use
+ * PortalLayout internally.
+ *
+ * Public chrome is HIDDEN for:
+ *   /member/* (except /member/activate which is a standalone page)
+ *   /admin/*  (except /admin which is the login page)
  */
 export function LayoutWrapper({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   const isPortalRoute =
-    pathname.startsWith('/member/dashboard') ||
-    pathname.startsWith('/member/projects') ||
-    pathname.startsWith('/member/planning') ||
-    pathname.startsWith('/member/data') ||
-    pathname.startsWith('/member/achievements') ||
-    pathname.startsWith('/member/honors') ||
-    pathname.startsWith('/member/profile') ||
-    pathname.startsWith('/admin/dashboard') ||
-    pathname.startsWith('/admin/members') ||
-    pathname.startsWith('/admin/recruits') ||
-    pathname.startsWith('/admin/content');
+    // All member sub-pages (dashboard, projects, papers, datasets, tools, etc.)
+    // but NOT /member/activate (standalone login page)
+    (pathname.startsWith('/member/') && pathname !== '/member/activate') ||
+    // All admin sub-pages (dashboard, members, recruits, content, etc.)
+    // but NOT /admin itself (login page)
+    (pathname.startsWith('/admin/'));
 
   if (isPortalRoute) {
     return <main className="flex-1">{children}</main>;

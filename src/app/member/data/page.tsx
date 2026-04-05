@@ -133,10 +133,10 @@ export default function DataPage() {
         <ShieldAlert className="h-12 w-12 text-red-500" />
         <p className="text-red-600 dark:text-red-400">Authentication required.</p>
         <button
-          onClick={() => router.push('/member/activate')}
+          onClick={() => router.push('/admin')}
           className="rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
         >
-          Go to Activation
+          Go to Login
         </button>
       </div>
     );

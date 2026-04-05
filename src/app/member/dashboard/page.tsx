@@ -157,10 +157,10 @@ export default function MemberDashboardPage() {
             Please activate your account to access this page.
           </p>
           <button
-            onClick={() => router.push('/member/activate')}
+            onClick={() => router.push('/admin')}
             className="mt-2 rounded-lg bg-emerald-700 px-6 py-2.5 text-sm font-medium text-white hover:bg-emerald-800"
           >
-            Go to Activation
+            Go to Login
           </button>
         </motion.div>
       </div>
