@@ -13,13 +13,37 @@ function findDbPath(): string {
     resolve(process.cwd(), "dev.db"),
     join(__dirname, "..", "..", "dev.db"),
     join(__dirname, "..", "..", "..", "dev.db"),
+    join(__dirname, "..", "..", "..", "..", "dev.db"),
     "/var/task/dev.db",
+    "/var/task/user/dev.db",
   ]
   for (const p of candidates) {
-    if (existsSync(p)) return p
+    if (existsSync(p)) {
+      console.log(`[db] Using database at: ${p}`)
+      return p
+    }
   }
+  console.log(`[db] No database found, tried: ${candidates.join(", ")}. Falling back to cwd.`)
   // Fallback to cwd-based path
   return resolve(process.cwd(), "dev.db")
+}
+
+// Export for diagnostics
+export function getDbDiagnostics() {
+  const candidates = [
+    resolve(process.cwd(), "dev.db"),
+    join(__dirname, "..", "..", "dev.db"),
+    join(__dirname, "..", "..", "..", "dev.db"),
+    join(__dirname, "..", "..", "..", "..", "dev.db"),
+    "/var/task/dev.db",
+    "/var/task/user/dev.db",
+  ]
+  return {
+    cwd: process.cwd(),
+    dirname: __dirname,
+    candidates: candidates.map(p => ({ path: p, exists: existsSync(p) })),
+    activePath: findDbPath(),
+  }
 }
 
 function createPrismaClient() {

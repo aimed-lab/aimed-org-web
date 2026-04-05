@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/db"
+import { prisma, getDbDiagnostics } from "@/lib/db"
 
 export async function GET(request: NextRequest) {
   try {
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error("Failed to fetch publications:", msg)
     return NextResponse.json(
-      { error: "Failed to fetch publications", detail: msg },
+      { error: "Failed to fetch publications", detail: msg, db: getDbDiagnostics() },
       { status: 500 }
     )
   }
