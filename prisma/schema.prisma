@@ -225,6 +225,8 @@ model LabMember {
   githubUsername  String?  // GitHub handle
   headshot        String?  // URL to headshot image
   bio             String?
+  passwordHash    String?  // scrypt hash, null until account setup complete
+  emailVerified   Boolean  @default(false)
   orcidId         String?  // ORCID identifier
 
   goals           QuarterlyGoal[]

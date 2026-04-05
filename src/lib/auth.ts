@@ -1,62 +1,56 @@
 import { cookies } from "next/headers"
 import { NextRequest } from "next/server"
+import { scryptSync, randomBytes } from "crypto"
 
 // ─── Admin Role Hierarchy ──────────────────────────────────────────────────
-// Owner: permanent, cannot be revoked
-// Admin: revokable by owner
-// Member: regular lab member
-
 export type AdminRole = "owner" | "admin" | null
 
 const OWNER_EMAILS = ["jakechen@gmail.com"]
 const REVOKABLE_ADMIN_EMAILS = ["zsembay8@uab.edu", "jakechen@uab.edu"]
 
-// Build full admin list from env or defaults
 const ENV_ADMINS = process.env.ADMIN_EMAILS
 const ALL_ADMIN_EMAILS = ENV_ADMINS
   ? ENV_ADMINS.split(",").map((e) => e.trim().toLowerCase())
   : [...OWNER_EMAILS, ...REVOKABLE_ADMIN_EMAILS].map((e) => e.toLowerCase())
 
-// Default passcode for magic link flow
 const DEFAULT_PASSCODE = process.env.ADMIN_ACTIVATION_CODE || "AIMED2026"
 
-/**
- * Check if an email is any kind of admin (owner or revokable)
- */
 export function isAdminEmail(email: string): boolean {
   return ALL_ADMIN_EMAILS.includes(email.toLowerCase())
 }
 
-/**
- * Get the admin role for an email
- */
 export function getAdminRole(email: string): AdminRole {
   const e = email.toLowerCase()
   if (OWNER_EMAILS.map((o) => o.toLowerCase()).includes(e)) return "owner"
-  if (REVOKABLE_ADMIN_EMAILS.map((a) => a.toLowerCase()).includes(e)) return "admin"
   if (ALL_ADMIN_EMAILS.includes(e)) return "admin"
   return null
 }
 
-/**
- * Check if an email is a recognized user (admin or lab member).
- * Lab members are checked against the database.
- */
-export function isRecognizedAdmin(email: string): boolean {
-  return isAdminEmail(email)
-}
-
-/**
- * Validate the shared passcode for magic link flow.
- * All users (admin and member) use this same passcode + email to request a magic code.
- */
 export function validatePasscode(passcode: string): boolean {
   return passcode === DEFAULT_PASSCODE
 }
 
-/**
- * Generate a random 6-digit numeric magic code.
- */
+// ─── Password Hashing (scrypt, no external deps) ──────────────────────────
+
+export function hashPassword(password: string): string {
+  const salt = randomBytes(16).toString("hex")
+  const hash = scryptSync(password, salt, 64).toString("hex")
+  return `${salt}:${hash}`
+}
+
+export function verifyPassword(password: string, stored: string): boolean {
+  try {
+    const [salt, hash] = stored.split(":")
+    if (!salt || !hash) return false
+    const test = scryptSync(password, salt, 64).toString("hex")
+    return hash === test
+  } catch {
+    return false
+  }
+}
+
+// ─── Code Generation ───────────────────────────────────────────────────────
+
 export function generateMagicCode(): string {
   const bytes = new Uint8Array(4)
   crypto.getRandomValues(bytes)
@@ -64,9 +58,6 @@ export function generateMagicCode(): string {
   return num.toString().padStart(6, "0")
 }
 
-/**
- * Generate a random 8-character alphanumeric activation code.
- */
 export function generateActivationCode(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
   let code = ""
@@ -78,11 +69,8 @@ export function generateActivationCode(): string {
   return code
 }
 
-/**
- * Verify the admin_token cookie.
- * Token format: base64("email:timestamp") — set by /api/auth POST.
- * Returns the decoded email if valid (within 24 h), otherwise null.
- */
+// ─── Token Verification ────────────────────────────────────────────────────
+
 export async function verifyAdminToken(
   _request?: NextRequest
 ): Promise<string | null> {
@@ -96,12 +84,7 @@ export async function verifyAdminToken(
     const timestamp = Number(timestampStr)
 
     if (!email || !timestamp || isNaN(timestamp)) return null
-
-    // Token expires after 24 hours
-    const age = Date.now() - timestamp
-    if (age > 24 * 60 * 60 * 1000) return null
-
-    // Must be an admin email
+    if (Date.now() - timestamp > 24 * 60 * 60 * 1000) return null
     if (!isAdminEmail(email)) return null
 
     return email
@@ -110,9 +93,6 @@ export async function verifyAdminToken(
   }
 }
 
-/**
- * Returns true when the request carries a valid admin session cookie.
- */
 export async function isAdmin(request?: NextRequest): Promise<boolean> {
   const email = await verifyAdminToken(request)
   return email !== null

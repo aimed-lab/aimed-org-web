@@ -4,247 +4,52 @@ import { createHmac } from "crypto"
 import {
   isAdminEmail,
   getAdminRole,
-  validatePasscode,
   generateMagicCode,
+  hashPassword,
+  verifyPassword,
 } from "@/lib/auth"
-import { sendMagicCode } from "@/lib/email"
+import { sendVerificationCode } from "@/lib/email"
 import { prisma } from "@/lib/db"
 
-// Secret for signing magic codes — uses RESEND_API_KEY as entropy + fallback
 const HMAC_SECRET = process.env.HMAC_SECRET || process.env.RESEND_API_KEY || "dev-secret-change-me"
 
 function signCode(email: string, code: string, expiresAt: number): string {
-  const payload = `${email}:${code}:${expiresAt}`
-  return createHmac("sha256", HMAC_SECRET).update(payload).digest("hex")
+  return createHmac("sha256", HMAC_SECRET).update(`${email}:${code}:${expiresAt}`).digest("hex")
 }
 
-/**
- * POST /api/auth
- * Body: { action, ... }
- *
- * Actions:
- *   "send-magic-code"  — { email, passcode } → validate passcode, send 6-digit code by email
- *   "verify-magic-code" — { email, code }     → verify 6-digit code → set cookie & login
- *   "login-code"        — { email, code }     → legacy activation code login (lab members)
- */
-export async function POST(request: NextRequest) {
+async function setAuthCookies(email: string) {
+  const cookieStore = await cookies()
+  const isAdmin = isAdminEmail(email)
+
+  if (isAdmin) {
+    const token = Buffer.from(`${email}:${Date.now()}`).toString("base64")
+    cookieStore.set("admin_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    })
+  }
+
+  // Also set member token for portal access
   try {
-    const body = await request.json()
-    const action = body.action || "send-magic-code"
-
-    // ── Step 1: Send Magic Code (email + passcode → 6-digit code by email) ──
-    if (action === "send-magic-code") {
-      const { email, passcode } = body
-      if (!email || !passcode) {
-        return NextResponse.json({ error: "Email and passcode are required" }, { status: 400 })
-      }
-
-      const normalizedEmail = email.toLowerCase().trim()
-
-      // Validate the shared passcode
-      if (!validatePasscode(passcode)) {
-        return NextResponse.json({ error: "Invalid passcode" }, { status: 401 })
-      }
-
-      // Check if this is a recognized user (admin or lab member)
-      const isRecognized = isAdminEmail(normalizedEmail)
-      let isMember = false
-      if (!isRecognized) {
-        try {
-          const member = await prisma.labMember.findUnique({
-            where: { email: normalizedEmail },
-          })
-          isMember = !!member
-        } catch {
-          // DB may not be available in production — admin emails still work
-        }
-      }
-
-      if (!isRecognized && !isMember) {
-        return NextResponse.json(
-          { error: "This email is not registered. Please contact the lab admin." },
-          { status: 401 }
-        )
-      }
-
-      // Generate 6-digit code with 10-minute expiry
-      const code = generateMagicCode()
-      const expiresAt = Date.now() + 10 * 60 * 1000
-
-      // Sign the code (HMAC) so we can verify it without database storage
-      const signature = signCode(normalizedEmail, code, expiresAt)
-
-      // Send via email
-      const result = await sendMagicCode(normalizedEmail, code)
-      if (!result.success) {
-        return NextResponse.json(
-          { error: result.error || "Failed to send email" },
-          { status: 500 }
-        )
-      }
-
-      // Store the signed code in a httpOnly cookie for verification
-      const cookieStore = await cookies()
-      cookieStore.set("magic_pending", JSON.stringify({
-        email: normalizedEmail,
-        expiresAt,
-        sig: signature,
-      }), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 600, // 10 minutes
-        path: "/",
-      })
-
-      return NextResponse.json({
-        success: true,
-        message: "A 6-digit code has been sent to your email.",
+    let member = await prisma.labMember.findUnique({ where: { email } })
+    if (!member && isAdmin) {
+      member = await prisma.labMember.create({
+        data: {
+          name: email.split("@")[0],
+          email,
+          role: "PI / Admin",
+          status: "ACTIVE",
+          emailVerified: true,
+          updatedAt: new Date(),
+        },
       })
     }
-
-    // ── Step 2: Verify Magic Code (6-digit code → login) ────────────────────
-    if (action === "verify-magic-code") {
-      const { email, code } = body
-      if (!email || !code) {
-        return NextResponse.json({ error: "Email and code are required" }, { status: 400 })
-      }
-
-      const normalizedEmail = email.toLowerCase().trim()
-      const cookieStore = await cookies()
-
-      // Read the pending magic code from cookie
-      const pendingRaw = cookieStore.get("magic_pending")?.value
-      if (!pendingRaw) {
-        return NextResponse.json({ error: "No pending code. Please request a new one." }, { status: 401 })
-      }
-
-      let pending: { email: string; expiresAt: number; sig: string }
-      try {
-        pending = JSON.parse(pendingRaw)
-      } catch {
-        return NextResponse.json({ error: "Invalid session. Please request a new code." }, { status: 401 })
-      }
-
-      // Check email matches
-      if (pending.email !== normalizedEmail) {
-        return NextResponse.json({ error: "Email mismatch. Please request a new code." }, { status: 401 })
-      }
-
-      // Check expiry
-      if (Date.now() > pending.expiresAt) {
-        cookieStore.delete("magic_pending")
-        return NextResponse.json({ error: "Code has expired. Please request a new one." }, { status: 401 })
-      }
-
-      // Verify HMAC signature
-      const expectedSig = signCode(normalizedEmail, code.trim(), pending.expiresAt)
-      if (expectedSig !== pending.sig) {
-        return NextResponse.json({ error: "Invalid code. Please try again." }, { status: 401 })
-      }
-
-      // Code is valid — clear the pending cookie
-      cookieStore.delete("magic_pending")
-
-      // Determine role and set appropriate cookie
-      if (isAdminEmail(normalizedEmail)) {
-        const token = Buffer.from(`${normalizedEmail}:${Date.now()}`).toString("base64")
-        cookieStore.set("admin_token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
-          maxAge: 60 * 60 * 24,
-          path: "/",
-        })
-        const role = getAdminRole(normalizedEmail)
-        return NextResponse.json({
-          success: true,
-          redirect: "/admin/dashboard",
-          role: role || "admin",
-        })
-      }
-
-      // Regular lab member
-      try {
-        const member = await prisma.labMember.findUnique({
-          where: { email: normalizedEmail },
-        })
-
-        if (!member) {
-          return NextResponse.json({ error: "Member not found" }, { status: 401 })
-        }
-
-        const memberToken = Buffer.from(
-          JSON.stringify({ memberId: member.id, email: member.email, ts: Date.now() })
-        ).toString("base64")
-        cookieStore.set("member_token", memberToken, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
-          maxAge: 60 * 60 * 24 * 7,
-          path: "/",
-        })
-
-        return NextResponse.json({
-          success: true,
-          redirect: "/member/dashboard",
-          role: "member",
-        })
-      } catch {
-        return NextResponse.json({ error: "Database unavailable" }, { status: 500 })
-      }
-    }
-
-    // ── Legacy: Login via Activation Code (for backward compat) ─────────────
-    if (action === "login-code") {
-      const { email, code } = body
-      if (!email || !code) {
-        return NextResponse.json({ error: "Email and activation code required" }, { status: 400 })
-      }
-
-      const normalizedEmail = email.toLowerCase().trim()
-
-      const member = await prisma.labMember.findUnique({
-        where: { email: normalizedEmail },
-        include: { activationCode: true },
-      })
-
-      if (!member || !member.activationCode) {
-        return NextResponse.json({ error: "Invalid email or code" }, { status: 401 })
-      }
-
-      const ac = member.activationCode
-      if (ac.code !== code) {
-        return NextResponse.json({ error: "Invalid activation code" }, { status: 401 })
-      }
-      if (ac.used) {
-        return NextResponse.json({ error: "This code has already been used. Please use the magic link login instead." }, { status: 401 })
-      }
-      if (new Date() > new Date(ac.expiresAt)) {
-        return NextResponse.json({ error: "This code has expired. Please use the magic link login instead." }, { status: 401 })
-      }
-
-      await prisma.activationCode.update({
-        where: { id: ac.id },
-        data: { used: true, usedAt: new Date() },
-      })
-
-      const cookieStore = await cookies()
-
-      if (isAdminEmail(normalizedEmail)) {
-        const token = Buffer.from(`${normalizedEmail}:${Date.now()}`).toString("base64")
-        cookieStore.set("admin_token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
-          maxAge: 60 * 60 * 24,
-          path: "/",
-        })
-        return NextResponse.json({ success: true, redirect: "/admin/dashboard", role: "admin" })
-      }
-
+    if (member) {
       const memberToken = Buffer.from(
-        JSON.stringify({ memberId: member.id, email: member.email, ts: Date.now() })
+        JSON.stringify({ memberId: member.id, email, ts: Date.now() })
       ).toString("base64")
       cookieStore.set("member_token", memberToken, {
         httpOnly: true,
@@ -253,8 +58,287 @@ export async function POST(request: NextRequest) {
         maxAge: 60 * 60 * 24 * 7,
         path: "/",
       })
+    }
+  } catch {
+    // DB may not be available — admin still gets admin_token
+  }
 
-      return NextResponse.json({ success: true, redirect: "/member/dashboard", role: "member" })
+  const role = isAdmin ? (getAdminRole(email) || "admin") : "member"
+  const redirect = isAdmin ? "/admin/dashboard" : "/member/dashboard"
+  return { role, redirect }
+}
+
+/**
+ * POST /api/auth
+ * Actions: signup, verify-email, set-password, login, forgot-password, reset-password
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const action = body.action || "login"
+
+    // ── Sign Up ────────────────────────────────────────────────
+    // Step 1: User enters email + optional invitation code → send confirmation code
+    if (action === "signup") {
+      const email = (body.email || "").toLowerCase().trim()
+      const invitationCode = (body.invitationCode || "").trim()
+
+      if (!email) return NextResponse.json({ error: "Email is required" }, { status: 400 })
+
+      // Check if already registered with password
+      const existing = await prisma.labMember.findUnique({ where: { email } }).catch(() => null)
+      if (existing?.passwordHash) {
+        return NextResponse.json({ error: "This email is already registered. Please sign in." }, { status: 409 })
+      }
+
+      // If invitation code provided, validate it
+      if (invitationCode) {
+        const ac = await prisma.activationCode.findUnique({
+          where: { code: invitationCode },
+          include: { member: true },
+        }).catch(() => null)
+
+        if (!ac) return NextResponse.json({ error: "Invalid invitation code." }, { status: 401 })
+        if (ac.used) return NextResponse.json({ error: "This invitation code has already been used." }, { status: 401 })
+        if (new Date() > new Date(ac.expiresAt)) return NextResponse.json({ error: "This invitation code has expired." }, { status: 401 })
+
+        // Code is valid — member exists via the code's relation
+      } else {
+        // No invitation code — check if email is admin or pre-registered member
+        const isAdmin = isAdminEmail(email)
+        if (!isAdmin && !existing) {
+          return NextResponse.json({
+            error: "This email is not pre-registered. Please provide an invitation code or contact the lab admin.",
+          }, { status: 401 })
+        }
+      }
+
+      // Send confirmation code
+      const code = generateMagicCode()
+      const expiresAt = Date.now() + 10 * 60 * 1000
+      const sig = signCode(email, code, expiresAt)
+
+      const result = await sendVerificationCode(email, code, "signup")
+      if (!result.success) {
+        return NextResponse.json({ error: result.error || "Failed to send email" }, { status: 500 })
+      }
+
+      const cookieStore = await cookies()
+      cookieStore.set("auth_pending", JSON.stringify({
+        email, expiresAt, sig, action: "signup", invitationCode: invitationCode || null,
+      }), {
+        httpOnly: true, secure: process.env.NODE_ENV === "production",
+        sameSite: "lax", maxAge: 600, path: "/",
+      })
+
+      return NextResponse.json({ success: true, message: "Confirmation code sent to your email." })
+    }
+
+    // ── Verify Email ───────────────────────────────────────────
+    // Step 2: User enters 6-digit code to confirm email
+    if (action === "verify-email") {
+      const email = (body.email || "").toLowerCase().trim()
+      const code = (body.code || "").trim()
+
+      const cookieStore = await cookies()
+      const pendingRaw = cookieStore.get("auth_pending")?.value
+      if (!pendingRaw) return NextResponse.json({ error: "No pending verification. Please start over." }, { status: 401 })
+
+      let pending: { email: string; expiresAt: number; sig: string; action: string; invitationCode?: string }
+      try { pending = JSON.parse(pendingRaw) } catch {
+        return NextResponse.json({ error: "Invalid session." }, { status: 401 })
+      }
+
+      if (pending.email !== email) return NextResponse.json({ error: "Email mismatch." }, { status: 401 })
+      if (Date.now() > pending.expiresAt) {
+        cookieStore.delete("auth_pending")
+        return NextResponse.json({ error: "Code expired. Please request a new one." }, { status: 401 })
+      }
+
+      const expectedSig = signCode(email, code, pending.expiresAt)
+      if (expectedSig !== pending.sig) return NextResponse.json({ error: "Invalid code." }, { status: 401 })
+
+      // Mark email as verified
+      try {
+        await prisma.labMember.updateMany({ where: { email }, data: { emailVerified: true } })
+      } catch { /* may not exist yet for admin */ }
+
+      // If invitation code was used, mark it
+      if (pending.invitationCode) {
+        try {
+          await prisma.activationCode.updateMany({
+            where: { code: pending.invitationCode },
+            data: { used: true, usedAt: new Date() },
+          })
+        } catch { /* ignore */ }
+      }
+
+      // Update cookie to allow password setting
+      cookieStore.set("auth_pending", JSON.stringify({
+        ...pending, verified: true,
+      }), {
+        httpOnly: true, secure: process.env.NODE_ENV === "production",
+        sameSite: "lax", maxAge: 600, path: "/",
+      })
+
+      return NextResponse.json({ success: true, message: "Email verified. Please set your password." })
+    }
+
+    // ── Set Password ───────────────────────────────────────────
+    // Step 3: User sets password (enter twice) after email verification
+    if (action === "set-password") {
+      const email = (body.email || "").toLowerCase().trim()
+      const password = body.password || ""
+      const confirmPassword = body.confirmPassword || ""
+
+      if (!password || password.length < 6) {
+        return NextResponse.json({ error: "Password must be at least 6 characters." }, { status: 400 })
+      }
+      if (password !== confirmPassword) {
+        return NextResponse.json({ error: "Passwords do not match." }, { status: 400 })
+      }
+
+      const cookieStore = await cookies()
+      const pendingRaw = cookieStore.get("auth_pending")?.value
+      if (!pendingRaw) return NextResponse.json({ error: "Session expired. Please start over." }, { status: 401 })
+
+      let pending: { email: string; verified?: boolean }
+      try { pending = JSON.parse(pendingRaw) } catch {
+        return NextResponse.json({ error: "Invalid session." }, { status: 401 })
+      }
+
+      if (pending.email !== email || !pending.verified) {
+        return NextResponse.json({ error: "Email not verified." }, { status: 401 })
+      }
+
+      const hashed = hashPassword(password)
+
+      // Update or create the member record
+      let member = await prisma.labMember.findUnique({ where: { email } }).catch(() => null)
+      if (member) {
+        await prisma.labMember.update({
+          where: { email },
+          data: { passwordHash: hashed, emailVerified: true },
+        })
+      } else if (isAdminEmail(email)) {
+        member = await prisma.labMember.create({
+          data: {
+            name: email.split("@")[0],
+            email,
+            role: "PI / Admin",
+            status: "ACTIVE",
+            passwordHash: hashed,
+            emailVerified: true,
+            updatedAt: new Date(),
+          },
+        })
+      } else {
+        return NextResponse.json({ error: "Account not found." }, { status: 404 })
+      }
+
+      // Clear pending cookie and auto-login
+      cookieStore.delete("auth_pending")
+      const { role, redirect } = await setAuthCookies(email)
+
+      return NextResponse.json({ success: true, role, redirect })
+    }
+
+    // ── Login ──────────────────────────────────────────────────
+    if (action === "login") {
+      const email = (body.email || "").toLowerCase().trim()
+      const password = body.password || ""
+
+      if (!email || !password) {
+        return NextResponse.json({ error: "Email and password are required." }, { status: 400 })
+      }
+
+      // Check LabMember password
+      const member = await prisma.labMember.findUnique({ where: { email } }).catch(() => null)
+      if (member?.passwordHash && verifyPassword(password, member.passwordHash)) {
+        const { role, redirect } = await setAuthCookies(email)
+        return NextResponse.json({ success: true, role, redirect })
+      }
+
+      return NextResponse.json({ error: "Invalid email or password." }, { status: 401 })
+    }
+
+    // ── Forgot Password ────────────────────────────────────────
+    if (action === "forgot-password") {
+      const email = (body.email || "").toLowerCase().trim()
+      if (!email) return NextResponse.json({ error: "Email is required." }, { status: 400 })
+
+      // Check if account exists
+      const member = await prisma.labMember.findUnique({ where: { email } }).catch(() => null)
+      const isAdmin = isAdminEmail(email)
+      if (!member && !isAdmin) {
+        // Don't reveal whether email exists — still send success
+        return NextResponse.json({ success: true, message: "If this email is registered, a reset code has been sent." })
+      }
+
+      const code = generateMagicCode()
+      const expiresAt = Date.now() + 10 * 60 * 1000
+      const sig = signCode(email, code, expiresAt)
+
+      await sendVerificationCode(email, code, "reset")
+
+      const cookieStore = await cookies()
+      cookieStore.set("auth_pending", JSON.stringify({
+        email, expiresAt, sig, action: "reset",
+      }), {
+        httpOnly: true, secure: process.env.NODE_ENV === "production",
+        sameSite: "lax", maxAge: 600, path: "/",
+      })
+
+      return NextResponse.json({ success: true, message: "If this email is registered, a reset code has been sent." })
+    }
+
+    // ── Reset Password ─────────────────────────────────────────
+    // Verify code + set new password in one step
+    if (action === "reset-password") {
+      const email = (body.email || "").toLowerCase().trim()
+      const code = (body.code || "").trim()
+      const password = body.password || ""
+      const confirmPassword = body.confirmPassword || ""
+
+      if (!code) return NextResponse.json({ error: "Verification code is required." }, { status: 400 })
+      if (!password || password.length < 6) return NextResponse.json({ error: "Password must be at least 6 characters." }, { status: 400 })
+      if (password !== confirmPassword) return NextResponse.json({ error: "Passwords do not match." }, { status: 400 })
+
+      const cookieStore = await cookies()
+      const pendingRaw = cookieStore.get("auth_pending")?.value
+      if (!pendingRaw) return NextResponse.json({ error: "Session expired. Please start over." }, { status: 401 })
+
+      let pending: { email: string; expiresAt: number; sig: string; action: string }
+      try { pending = JSON.parse(pendingRaw) } catch {
+        return NextResponse.json({ error: "Invalid session." }, { status: 401 })
+      }
+
+      if (pending.email !== email || pending.action !== "reset") return NextResponse.json({ error: "Invalid session." }, { status: 401 })
+      if (Date.now() > pending.expiresAt) {
+        cookieStore.delete("auth_pending")
+        return NextResponse.json({ error: "Code expired." }, { status: 401 })
+      }
+
+      const expectedSig = signCode(email, code, pending.expiresAt)
+      if (expectedSig !== pending.sig) return NextResponse.json({ error: "Invalid code." }, { status: 401 })
+
+      // Update password
+      const hashed = hashPassword(password)
+      try {
+        await prisma.labMember.update({ where: { email }, data: { passwordHash: hashed } })
+      } catch {
+        if (isAdminEmail(email)) {
+          await prisma.labMember.create({
+            data: { name: email.split("@")[0], email, role: "PI / Admin", status: "ACTIVE", passwordHash: hashed, emailVerified: true, updatedAt: new Date() },
+          })
+        } else {
+          return NextResponse.json({ error: "Account not found." }, { status: 404 })
+        }
+      }
+
+      cookieStore.delete("auth_pending")
+      const { role, redirect } = await setAuthCookies(email)
+      return NextResponse.json({ success: true, role, redirect })
     }
 
     return NextResponse.json({ error: "Unknown action" }, { status: 400 })
@@ -268,6 +352,6 @@ export async function DELETE() {
   const cookieStore = await cookies()
   cookieStore.delete("admin_token")
   cookieStore.delete("member_token")
-  cookieStore.delete("magic_pending")
+  cookieStore.delete("auth_pending")
   return NextResponse.json({ success: true })
 }

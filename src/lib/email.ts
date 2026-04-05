@@ -5,7 +5,32 @@ const FROM_EMAIL = process.env.EMAIL_FROM || "AI.MED Lab <noreply@aimed-lab.org>
 /**
  * Send a 6-digit magic login code to the given email address.
  */
+export async function sendVerificationCode(
+  email: string,
+  code: string,
+  purpose: "login" | "signup" | "reset" = "login"
+): Promise<{ success: boolean; error?: string }> {
+  const titles = {
+    login: { subject: "Your Login Code", heading: "Login Verification Code", action: "log in" },
+    signup: { subject: "Confirm Your Email", heading: "Email Confirmation Code", action: "confirm your email" },
+    reset: { subject: "Password Reset Code", heading: "Password Reset Code", action: "reset your password" },
+  }
+  const t = titles[purpose]
+  return sendCodeEmail(email, code, t.subject, t.heading, t.action)
+}
+
+/** @deprecated Use sendVerificationCode instead */
 export async function sendMagicCode(email: string, code: string): Promise<{ success: boolean; error?: string }> {
+  return sendVerificationCode(email, code, "login")
+}
+
+async function sendCodeEmail(
+  email: string,
+  code: string,
+  subject: string,
+  heading: string,
+  action: string
+): Promise<{ success: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY
 
   if (!apiKey) {
@@ -18,15 +43,15 @@ export async function sendMagicCode(email: string, code: string): Promise<{ succ
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
-      subject: "AI.MED Lab — Your Login Code",
+      subject: `AI.MED Lab — ${subject}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 20px;">
           <div style="text-align: center; margin-bottom: 32px;">
             <h1 style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">AI.MED Lab</h1>
-            <p style="color: #64748b; font-size: 14px; margin-top: 4px;">Login Verification Code</p>
+            <p style="color: #64748b; font-size: 14px; margin-top: 4px;">${heading}</p>
           </div>
           <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 32px; text-align: center;">
-            <p style="color: #475569; font-size: 14px; margin: 0 0 16px;">Your one-time login code is:</p>
+            <p style="color: #475569; font-size: 14px; margin: 0 0 16px;">Your one-time code to ${action} is:</p>
             <div style="font-size: 36px; font-weight: 700; letter-spacing: 8px; color: #047857; font-family: 'SF Mono', Monaco, monospace; margin: 16px 0;">
               ${code}
             </div>
