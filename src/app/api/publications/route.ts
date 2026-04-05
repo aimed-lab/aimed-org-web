@@ -43,9 +43,10 @@ export async function GET(request: NextRequest) {
       totalPages: Math.ceil(total / limit),
     })
   } catch (error) {
-    console.error("Failed to fetch publications:", error)
+    const msg = error instanceof Error ? error.message : String(error)
+    console.error("Failed to fetch publications:", msg)
     return NextResponse.json(
-      { error: "Failed to fetch publications" },
+      { error: "Failed to fetch publications", detail: msg },
       { status: 500 }
     )
   }
