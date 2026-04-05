@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   // Include database in all serverless function bundles for Vercel deployment
   outputFileTracingIncludes: {
-    "/*": ["./aimed-lab.db", "./dev.db"],
+    "/*": ["./aimed-lab.db"],
   },
 };
 
