@@ -19,6 +19,10 @@ export function isAdminEmail(email: string): boolean {
   return ALL_ADMIN_EMAILS.includes(email.toLowerCase())
 }
 
+export function isOwnerEmail(email: string): boolean {
+  return OWNER_EMAILS.map((o) => o.toLowerCase()).includes(email.toLowerCase())
+}
+
 export function getAdminRole(email: string): AdminRole {
   const e = email.toLowerCase()
   if (OWNER_EMAILS.map((o) => o.toLowerCase()).includes(e)) return "owner"

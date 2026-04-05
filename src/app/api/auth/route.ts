@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import { createHmac } from "crypto"
 import {
   isAdminEmail,
+  isOwnerEmail,
   getAdminRole,
   generateMagicCode,
   hashPassword,
@@ -113,7 +114,20 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // Send confirmation code
+      // Owner can skip email verification — go straight to password setup
+      if (isOwnerEmail(email)) {
+        const cookieStore = await cookies()
+        cookieStore.set("auth_pending", JSON.stringify({
+          email, expiresAt: Date.now() + 600000, sig: "", action: "signup",
+          invitationCode: invitationCode || null, verified: true,
+        }), {
+          httpOnly: true, secure: process.env.NODE_ENV === "production",
+          sameSite: "lax", maxAge: 600, path: "/",
+        })
+        return NextResponse.json({ success: true, ownerBypass: true, message: "Owner recognized. Set your password." })
+      }
+
+      // Send confirmation code for non-owner users
       const code = generateMagicCode()
       const expiresAt = Date.now() + 10 * 60 * 1000
       const sig = signCode(email, code, expiresAt)

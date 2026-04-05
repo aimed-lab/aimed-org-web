@@ -48,7 +48,17 @@ export default function AuthPage() {
     setLoading(true);
     try {
       const { res, data } = await api({ action: 'signup', email, invitationCode: invCode });
-      if (res.ok && data.success) { setInfo(data.message); setMode('signup-verify'); setLoading(false); }
+      if (res.ok && data.success) {
+        if (data.ownerBypass) {
+          // Owner skips email verification
+          setInfo('Owner recognized. Set your password.');
+          setMode('signup-password');
+        } else {
+          setInfo(data.message);
+          setMode('signup-verify');
+        }
+        setLoading(false);
+      }
       else { setError(data.error || 'Sign up failed.'); setLoading(false); }
     } catch { setError('Request failed.'); setLoading(false); }
   }
