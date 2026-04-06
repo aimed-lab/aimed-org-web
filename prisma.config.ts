@@ -3,16 +3,12 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-// Use a dummy in-memory URL for prisma generate — the real adapter
-// connection is configured at runtime in src/lib/db.ts
-const url = process.env["PRISMA_GENERATE_NO_DB"] === "1"
-  ? "file::memory:"
-  : (process.env["DATABASE_URL"] || "file:./dev.db");
-
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
-  datasource: { url },
+  datasource: {
+    url: process.env["DATABASE_URL"] || "file:./aimed-lab.db",
+  },
 });
