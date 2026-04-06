@@ -1,21 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma, getDbDiagnostics } from "@/lib/db"
-import { statSync, readdirSync } from "fs"
-import { resolve, join } from "path"
+import { prisma } from "@/lib/db"
 
 export async function GET(request: NextRequest) {
-  // Debug: try a raw query first
-  const { searchParams: sp } = new URL(request.url)
-  if (sp.get("debug") === "1") {
-    try {
-      const raw = await prisma.$queryRawUnsafe("SELECT COUNT(*) as cnt FROM Publication") as Array<{cnt: number}>
-      const cols = await prisma.$queryRawUnsafe("PRAGMA table_info(Publication)") as Array<Record<string, unknown>>
-      return NextResponse.json({ rawCount: raw, columns: cols })
-    } catch (e) {
-      return NextResponse.json({ debugError: e instanceof Error ? e.message : String(e) })
-    }
-  }
-
   try {
     const { searchParams } = new URL(request.url)
     const search = searchParams.get("search") || ""
@@ -25,9 +11,7 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "20")
 
-    const where: Record<string, unknown> = {
-      curationStatus: "VERIFIED",
-    }
+    const where: Record<string, unknown> = {}
 
     if (search) {
       where.OR = [
@@ -46,6 +30,12 @@ export async function GET(request: NextRequest) {
         orderBy: { year: "desc" },
         skip: (page - 1) * limit,
         take: limit,
+        select: {
+          id: true, title: true, authors: true, year: true, journal: true,
+          abstract: true, doi: true, pubmedId: true, arxivId: true, pdfUrl: true,
+          tags: true, researchLineage: true, articleType: true, featured: true,
+          createdAt: true, updatedAt: true,
+        },
       }),
       prisma.publication.count({ where }),
     ])
@@ -59,15 +49,8 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error("Failed to fetch publications:", msg)
-    // Debug: check what db files exist on disk
-    const dbPath = getDbDiagnostics().activePath
-    let fileSize = 0
-    try { fileSize = statSync(dbPath).size } catch {}
-    let cwdFiles: string[] = []
-    try { cwdFiles = readdirSync(process.cwd()).filter(f => f.includes('.db') || f.includes('aimed')) } catch {}
-
     return NextResponse.json(
-      { error: "Failed to fetch publications", detail: msg, db: { ...getDbDiagnostics(), fileSize, cwdFiles } },
+      { error: "Failed to fetch publications", detail: msg },
       { status: 500 }
     )
   }
