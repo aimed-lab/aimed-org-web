@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { KeyRound, Mail, ShieldCheck } from 'lucide-react';
+import { KeyRound, Mail, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export default function MemberActivatePage() {
   const router = useRouter();
@@ -12,12 +12,21 @@ export default function MemberActivatePage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Check if already authenticated
+  useEffect(() => {
+    fetch('/api/member/me')
+      .then((r) => {
+        if (r.ok) router.push('/member/dashboard');
+      })
+      .catch(() => {});
+  }, []);
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
 
-    if (!email.trim() || !code.trim()) {
-      setError('Please enter both email and activation code.');
+    if (!email.trim()) {
+      setError('Please enter your email address.');
       return;
     }
 
@@ -27,13 +36,14 @@ export default function MemberActivatePage() {
       const res = await fetch('/api/member/activate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), code: code.trim() }),
+        body: JSON.stringify({ email: email.trim(), code: code.trim() || undefined }),
       });
+
+      const data = await res.json();
 
       if (res.ok) {
         router.push('/member/dashboard');
       } else {
-        const data = await res.json();
         setError(data.error || 'Activation failed.');
         setLoading(false);
       }
@@ -57,10 +67,10 @@ export default function MemberActivatePage() {
               <ShieldCheck className="h-7 w-7 text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              Member Activation
+              Member Sign In
             </h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              Enter the activation code provided by your admin.
+              Sign in to access the AI.MED Lab Portal.
             </p>
           </div>
 
@@ -92,10 +102,13 @@ export default function MemberActivatePage() {
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter activation code"
-                  maxLength={12}
+                  maxLength={20}
                   className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm font-mono tracking-widest text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-500">
+                Admin &amp; PI accounts sign in with email only (no code needed).
+              </p>
             </div>
 
             {error && (
@@ -116,14 +129,17 @@ export default function MemberActivatePage() {
               {loading ? (
                 <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
               ) : (
-                'Activate Account'
+                <>
+                  Sign In
+                  <ArrowRight className="h-4 w-4" />
+                </>
               )}
             </button>
           </form>
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
-          Lab members only. Contact your admin if you need a code.
+          Lab members only. Ask your PI or admin for the activation code.
         </p>
       </motion.div>
     </div>
