@@ -4,6 +4,18 @@ import { statSync, readdirSync } from "fs"
 import { resolve, join } from "path"
 
 export async function GET(request: NextRequest) {
+  // Debug: try a raw query first
+  const { searchParams: sp } = new URL(request.url)
+  if (sp.get("debug") === "1") {
+    try {
+      const raw = await prisma.$queryRawUnsafe("SELECT COUNT(*) as cnt FROM Publication") as Array<{cnt: number}>
+      const cols = await prisma.$queryRawUnsafe("PRAGMA table_info(Publication)") as Array<Record<string, unknown>>
+      return NextResponse.json({ rawCount: raw, columns: cols })
+    } catch (e) {
+      return NextResponse.json({ debugError: e instanceof Error ? e.message : String(e) })
+    }
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const search = searchParams.get("search") || ""
