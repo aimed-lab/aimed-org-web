@@ -10,6 +10,6 @@ export default defineConfig({
   },
   datasource: {
     // Use a dummy name that won't conflict with the production database
-    url: process.env["DATABASE_URL"] || "file:./prisma-schema-only.db",
+    url: process.env["DATABASE_URL"] || "file:./aimeddata.db",
   },
 });
