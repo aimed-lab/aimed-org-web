@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/rebuild-db.mjs && prisma generate && next build",
+    "build": "prisma generate && node scripts/rebuild-db.mjs && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "echo 'Skipping prisma generate in postinstall (runs in build with PRISMA_GENERATE_NO_DB=1)'"
