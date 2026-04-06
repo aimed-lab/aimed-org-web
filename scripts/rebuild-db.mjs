@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, existsSync, unlinkSync, statSync } from 'fs'
 import { join } from 'path';
 import { createClient } from '@libsql/client';
 
-const DB_FILE = 'aimed-v2.db';
+const DB_FILE = 'aimeddata.db';
 const DATA_DIR = 'data';
 const SCHEMA_FILE = join(DATA_DIR, 'schema.sql');
 

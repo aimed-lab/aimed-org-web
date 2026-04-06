@@ -8,18 +8,18 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function findDbPath(): string {
-  // Only use aimed-v2.db — this is rebuilt from TSV data on every deploy
+  // Only use aimeddata.db — this is rebuilt from TSV data on every deploy
   const candidates = [
-    resolve(process.cwd(), "aimed-v2.db"),
-    join(__dirname, "..", "..", "aimed-v2.db"),
-    join(__dirname, "..", "..", "..", "aimed-v2.db"),
+    resolve(process.cwd(), "aimeddata.db"),
+    join(__dirname, "..", "..", "aimeddata.db"),
+    join(__dirname, "..", "..", "..", "aimeddata.db"),
   ]
   for (const p of candidates) {
     if (existsSync(p)) {
       return p
     }
   }
-  return resolve(process.cwd(), "aimed-v2.db")
+  return resolve(process.cwd(), "aimeddata.db")
 }
 
 // Export for diagnostics
