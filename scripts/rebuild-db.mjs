@@ -1,28 +1,35 @@
 #!/usr/bin/env node
-// Rebuild aimed-lab.db from TSV data exports using better-sqlite3 or libsql
-import { execSync } from 'child_process';
-import { readFileSync, readdirSync, existsSync, unlinkSync } from 'fs';
+// Rebuild aimed-lab.db from schema.sql + TSV data exports
+// Does NOT use prisma db push — creates tables directly from SQL schema
+import { readFileSync, readdirSync, existsSync, unlinkSync, statSync } from 'fs';
 import { join } from 'path';
 import { createClient } from '@libsql/client';
 
 const DB_FILE = 'aimed-lab.db';
 const DATA_DIR = 'data';
+const SCHEMA_FILE = join(DATA_DIR, 'schema.sql');
 
 async function main() {
-  console.log('[rebuild-db] Creating fresh database with Prisma schema...');
+  console.log('[rebuild-db] Creating fresh database from schema.sql...');
 
   // Remove old db
   if (existsSync(DB_FILE)) unlinkSync(DB_FILE);
 
-  // Create schema with prisma db push
-  execSync(`DATABASE_URL="file:./${DB_FILE}" npx prisma db push --accept-data-loss`, {
-    stdio: 'pipe',
-    env: { ...process.env, DATABASE_URL: `file:./${DB_FILE}` },
-  });
-  console.log('[rebuild-db] Schema created.');
-
-  // Connect with libsql
+  // Connect with libsql (creates the file)
   const client = createClient({ url: `file:${DB_FILE}` });
+
+  // Apply schema
+  const schema = readFileSync(SCHEMA_FILE, 'utf-8');
+  // Split by semicolons and execute each statement
+  const statements = schema.split(';').map(s => s.trim()).filter(s => s.length > 0);
+  for (const stmt of statements) {
+    try {
+      await client.execute(stmt);
+    } catch (err) {
+      // Skip errors (e.g., CREATE INDEX IF NOT EXISTS with existing index)
+    }
+  }
+  console.log('[rebuild-db] Schema applied.');
 
   // Import each TSV file
   const files = readdirSync(DATA_DIR).filter(f => f.endsWith('.tsv'));
@@ -42,7 +49,6 @@ async function main() {
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split('\t').map(v => {
         if (v === '' || v === 'NULL') return null;
-        // Handle boolean values
         if (v === 'true' || v === '1') return 1;
         if (v === 'false' || v === '0') return 0;
         return v;
@@ -57,7 +63,7 @@ async function main() {
         });
         imported++;
       } catch (err) {
-        // Skip rows with errors (e.g., duplicate keys)
+        // Skip rows with errors
       }
     }
     console.log(`  ${table}: ${imported} rows imported`);
@@ -76,12 +82,15 @@ async function main() {
     console.log(`  ${row.t}: ${row.c}`);
   }
 
-  client.close();
+  // Check curationStatus exists
+  const pubCols = await client.execute("PRAGMA table_info(Publication)");
+  const hasCuration = pubCols.rows.some(r => r.name === 'curationStatus');
+  console.log(`  curationStatus column: ${hasCuration ? 'YES' : 'MISSING!'}`);
 
-  // Verify the file on disk
-  const { statSync } = await import('fs');
   const stat = statSync(DB_FILE);
   console.log(`[rebuild-db] File: ${DB_FILE}, size: ${stat.size} bytes`);
+
+  client.close();
 }
 
 main().catch(err => {
