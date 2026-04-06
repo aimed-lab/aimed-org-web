@@ -9,6 +9,7 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"] || "file:./aimed-v2.db",
+    // Use a dummy name that won't conflict with the production database
+    url: process.env["DATABASE_URL"] || "file:./prisma-schema-only.db",
   },
 });

@@ -45,5 +45,6 @@ next-env.d.ts
 
 # database
 dev.db
+prisma-schema-only.db
 *.db-journal
 /uploads/
