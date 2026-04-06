@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma, getDbDiagnostics } from "@/lib/db"
+import { statSync, readdirSync } from "fs"
+import { resolve, join } from "path"
 
 export async function GET(request: NextRequest) {
   try {
@@ -45,8 +47,15 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error("Failed to fetch publications:", msg)
+    // Debug: check what db files exist on disk
+    const dbPath = getDbDiagnostics().activePath
+    let fileSize = 0
+    try { fileSize = statSync(dbPath).size } catch {}
+    let cwdFiles: string[] = []
+    try { cwdFiles = readdirSync(process.cwd()).filter(f => f.includes('.db') || f.includes('aimed')) } catch {}
+
     return NextResponse.json(
-      { error: "Failed to fetch publications", detail: msg, db: getDbDiagnostics() },
+      { error: "Failed to fetch publications", detail: msg, db: { ...getDbDiagnostics(), fileSize, cwdFiles } },
       { status: 500 }
     )
   }
