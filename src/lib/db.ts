@@ -8,22 +8,18 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function findDbPath(): string {
-  // Try aimed-lab.db first (avoids Vercel caching conflicts with dev.db)
-  // then fall back to dev.db for local development
+  // Only use aimed-lab.db — this is rebuilt from TSV data on every deploy
   const candidates = [
     resolve(process.cwd(), "aimed-lab.db"),
     join(__dirname, "..", "..", "aimed-lab.db"),
     join(__dirname, "..", "..", "..", "aimed-lab.db"),
-    resolve(process.cwd(), "dev.db"),
-    join(__dirname, "..", "..", "dev.db"),
-    join(__dirname, "..", "..", "..", "dev.db"),
   ]
   for (const p of candidates) {
     if (existsSync(p)) {
       return p
     }
   }
-  return resolve(process.cwd(), "dev.db")
+  return resolve(process.cwd(), "aimed-lab.db")
 }
 
 // Export for diagnostics
