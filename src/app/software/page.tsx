@@ -117,8 +117,11 @@ export default function SoftwarePage() {
     fetchData();
   }, [fetchData]);
 
-  const categories = ["All", ...Array.from(new Set(tools.map((t) => t.category).filter(Boolean))) as string[]];
-  const filtered = filter === "All" ? tools : tools.filter((t) => t.category === filter);
+  // Only surface tools that have a working link (live website or GitHub repo).
+  // Tools whose legacy host is dead and have no public repo are hidden until a link is restored.
+  const linked = tools.filter((t) => (t.url && t.url.trim()) || (t.githubUrl && t.githubUrl.trim()));
+  const categories = ["All", ...Array.from(new Set(linked.map((t) => t.category).filter(Boolean))) as string[]];
+  const filtered = filter === "All" ? linked : linked.filter((t) => t.category === filter);
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
@@ -138,7 +141,7 @@ export default function SoftwarePage() {
               Software &amp; Resources
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
-              {tools.length} research tools, databases, and platforms developed
+              {linked.length} research tools, databases, and platforms developed
               across two decades of biomedical informatics research.
             </p>
           </motion.div>
