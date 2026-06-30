@@ -41,7 +41,7 @@ interface Publication {
 }
 
 const allTopics = ["Drug Discovery", "AI/ML", "Bioinformatics", "Systems Biology", "Knowledge Networks", "Multi-omics", "Precision Medicine", "Cancer", "Neurodegenerative Diseases", "Immunology", "Visualization"];
-const allTypes = ["Journal Article", "Preprint", "Conference"];
+const allTypes = ["Journal Article", "Conference", "Book Chapter", "Edited Volume", "Editorial", "Book", "Preprint"];
 // Derived from the current year so newly-added years (e.g. 2026) appear automatically.
 const years = Array.from({ length: new Date().getFullYear() - 1999 }, (_, i) => new Date().getFullYear() - i);
 
