@@ -15,7 +15,7 @@ Section detection is by header text, so it tolerates line-number drift between C
 versions. Title/venue are split at the first sentence boundary; DOIs/arXiv IDs are
 extracted when present. Review the dry-run before --apply.
 """
-import re, sys, csv, argparse, datetime
+import re, sys, csv, json, argparse, datetime
 
 PUB_TSV = "data/Publication.tsv"
 
@@ -30,6 +30,33 @@ SECTIONS = [
 ]
 # Any header that ends a section (the next section, or these hard stops)
 STOP = re.compile(r"^(Refereed|Books$|Editorial Articles|Edited Conference|Non-Refereed|SOFTWARE AND PATENTS|INVITED TALKS|HONORS)", re.I)
+
+
+# Topic vocabulary used by the /publications "By Topic" filter (allTopics in
+# src/app/publications/page.tsx). The API matches `tags contains <topic>`, so every
+# publication needs ≥1 of these in its tags or it won't sort into any topic.
+TOPIC_KEYWORDS = [
+    ("Drug Discovery", r"drug|inhibitor|antibod|antigen|\bBRD4\b|\bRIPK3\b|hERG|conjugate|\bADC\b|ligand|pharmac|compound|cardiotox|de novo|target(ing|ed)?|synthesis|arsenical|affinity"),
+    ("AI/ML", r"\bAI\b|A\.I\.|artificial intelligence|\bagent|\bLLM|large language model|generative|deep learning|machine learning|neural|diffusion|foundation[- ]model|neuro-symbolic|reasoning|\bGPT|llama|embedding"),
+    ("Bioinformatics", r"bioinformatic|gene[- ]set|gene[- ]signature|pathway|genomic|data mining|BIOKDD|computational biolog|sequence|enrichment|ranking|classification|annotat|networks?\b|in silico"),
+    ("Systems Biology", r"systems biolog|interactome|signaling|regulatory|multi-?scale network|network biolog|network simulation|protein-protein|gene regulat"),
+    ("Knowledge Networks", r"knowledge graph|knowledge network|talent knowledge|teaming|ontolog|semantic|super gene set"),
+    ("Multi-omics", r"multi-?omic|proteomic|transcriptom|single-?cell|spatial|\bomics|metabolom|genomics"),
+    ("Precision Medicine", r"precision medicine|clinical|diagnos|biomarker|\bEHR\b|health record|digital twin|personalized|diabet|glucose|COVID|epidemic|outbreak|real-world"),
+    ("Cancer", r"cancer|tumou?r|oncolog|glioma|glioblastoma|leukemia|melanoma|carcinoma|metasta"),
+    ("Neurodegenerative Diseases", r"alzheimer|neurodegener|neuron|parkinson|cognitive|\bbrain\b|emotional"),
+    ("Immunology", r"immun|antibod|antigen|inflammat|vaccine|\bT cell"),
+    ("Visualization", r"visuali|graph visualization|geneterrain|terrain|rendering|interactive graph|mondrian"),
+]
+_TOPIC_RX = [(t, re.compile(p, re.I)) for t, p in TOPIC_KEYWORDS]
+
+
+def classify_topics(title, journal):
+    """Assign 1–4 topics from the vocabulary by keyword match on title+journal.
+    Falls back to Bioinformatics so every publication sorts into at least one topic."""
+    text = (title or "") + " " + (journal or "")
+    tags = [t for t, rx in _TOPIC_RX if rx.search(text)]
+    return (tags or ["Bioinformatics"])[:4]
 
 
 def norm(s):
@@ -144,6 +171,8 @@ def main():
         if "arxivId" in ci:
             row[ci["arxivId"]] = r["arxiv"]
         row[ci["articleType"]] = r["atype"]
+        if "tags" in ci:
+            row[ci["tags"]] = json.dumps(classify_topics(r["title"], r["journal"]))
         if "featured" in ci:
             row[ci["featured"]] = "0"
         row[ci["curationStatus"]] = "VERIFIED"
