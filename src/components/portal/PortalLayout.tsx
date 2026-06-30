@@ -28,6 +28,7 @@ import {
   Moon,
   Lightbulb,
   Package,
+  Cpu,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -41,6 +42,7 @@ interface NavItem {
 
 const memberNav: NavItem[] = [
   { label: 'Dashboard', href: '/member/dashboard', icon: LayoutDashboard },
+  { label: 'Lab OS', href: '/member/os', icon: Cpu },
   { label: 'Onboarding', href: '/member/onboarding', icon: BookOpen },
   { label: 'divider-assets', href: '', icon: Package },
   { label: 'Problems', href: '/member/problems', icon: Lightbulb },
