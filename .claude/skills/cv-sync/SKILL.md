@@ -70,6 +70,22 @@ rebuild — so **the only durable place to add CV content is the TSV files.**
    git push origin dev
    ```
 
+7. **Merge to `main`** (after the user reviews the local preview): `gh pr merge`.
+
+8. **Push the data to PRODUCTION (Turso) — REQUIRED, easy to miss.**
+   Production reads a hosted **Turso** (remote libSQL) DB, NOT the committed file
+   (see `src/lib/db.ts`: it uses `TURSO_DATABASE_URL` when set). So merging + the
+   Vercel build's `rebuild-db` only update the LOCAL/committed DB — **production data
+   does not change until you sync Turso:**
+   ```bash
+   TURSO_DATABASE_URL=libsql://<db>.turso.io TURSO_AUTH_TOKEN=<token> \
+     node scripts/sync-turso.mjs
+   ```
+   Credentials are in the Vercel project env (Settings → Environment Variables) or the
+   Turso dashboard. Verify live: `curl https://www.aimed-lab.org/api/publications?limit=1`
+   (or the `aimed-org-web.vercel.app` alias) should show the new total. **If the live
+   total doesn't change after a deploy, this step was skipped.**
+
 ## Notes on publication types
 `Publication.articleType` values in use: `Journal Article`, `Conference`,
 `Book Chapter`, `Edited Volume`, `Editorial`, `Book`, `Preprint`. The CV sections map:
