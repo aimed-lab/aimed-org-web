@@ -31,9 +31,18 @@ function coerce(v) {
   return v;
 }
 
+// ONLY these tables are synced from the TSV. They are CV/curation-driven and their
+// row ids in Turso are aligned with data/*.tsv (so the id-based UPSERT updates in
+// place). Tables managed directly in production — LabMember, NewsItem, Patent,
+// Appointment (team roster, news, patents) — are intentionally EXCLUDED: their Turso
+// ids differ from the TSV, so syncing them would insert duplicates. Do not add them
+// here without first aligning ids.
+const SYNC_TABLES = new Set(['Publication', 'Talk', 'Honor', 'SoftwareResource']);
+
 async function main() {
   const client = createClient({ url, authToken });
   console.log(`[sync-turso] target: ${url.replace(/\/\/.*@/, '//')}`);
+  console.log(`[sync-turso] syncing tables: ${[...SYNC_TABLES].join(', ')}`);
 
   // Apply schema (idempotent CREATE TABLE/INDEX IF NOT EXISTS).
   const schema = readFileSync(join(DATA_DIR, 'schema.sql'), 'utf-8');
@@ -44,22 +53,43 @@ async function main() {
   const files = readdirSync(DATA_DIR).filter(f => f.endsWith('.tsv'));
   for (const file of files) {
     const table = file.replace('.tsv', '');
+    if (!SYNC_TABLES.has(table)) continue;
     const lines = readFileSync(join(DATA_DIR, file), 'utf-8').split('\n').filter(l => l.trim());
     if (lines.length < 2) continue;
     const headers = lines[0].split('\t');
+
+    // Add any columns present in the TSV but missing on the (older) Turso table.
+    // CREATE TABLE IF NOT EXISTS won't alter an existing table, so migrate here.
+    try {
+      const info = await client.execute(`PRAGMA table_info("${table}")`);
+      const have = new Set(info.rows.map(r => r.name));
+      for (const col of headers.filter(h => !have.has(h))) {
+        try { await client.execute(`ALTER TABLE "${table}" ADD COLUMN "${col}" TEXT`); console.log(`  ${table}: +column ${col}`); }
+        catch (e) { console.log(`  ${table}: ALTER ${col} failed — ${e.message}`); }
+      }
+    } catch { /* table will be created by schema above */ }
     const cols = headers.map(h => `"${h}"`).join(', ');
     const ph = headers.map(() => '?').join(', ');
+    // True UPSERT on the `id` primary key: update the row IN PLACE on conflict.
+    // (Avoids DELETE/REPLACE, which would trip Turso's FK enforcement on parent
+    // tables like LabMember that have child rows referencing them.) The TSV is
+    // additive/authoritative for the rows it contains; rows removed from the TSV are
+    // NOT pruned from Turso — handle a true deletion manually if ever needed.
+    const setClause = headers.filter(h => h !== 'id')
+      .map(h => `"${h}"=excluded."${h}"`).join(', ');
+    const upsert = `INSERT INTO "${table}" (${cols}) VALUES (${ph}) ` +
+      (setClause ? `ON CONFLICT("id") DO UPDATE SET ${setClause}` : `ON CONFLICT("id") DO NOTHING`);
 
-    // Atomic per-table replace: DELETE all + re-insert from TSV.
-    const stmts = [{ sql: `DELETE FROM "${table}"`, args: [] }];
+    const stmts = [];
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split('\t').map(coerce);
       if (values.length !== headers.length) continue;
-      stmts.push({ sql: `INSERT INTO "${table}" (${cols}) VALUES (${ph})`, args: values });
+      stmts.push({ sql: upsert, args: values });
     }
+    if (!stmts.length) continue;
     try {
       await client.batch(stmts, 'write');
-      console.log(`  ${table}: ${stmts.length - 1} rows synced`);
+      console.log(`  ${table}: ${stmts.length} rows synced`);
     } catch (err) {
       console.error(`  ${table}: FAILED — ${err.message}`);
       throw err;
