@@ -18,9 +18,18 @@ import { createClient } from '@libsql/client';
 
 const url = process.env.TURSO_DATABASE_URL;
 const authToken = process.env.TURSO_AUTH_TOKEN;
+
+// Build-safe guards — this runs inside `npm run build` (see package.json), so it must
+// never break a build that legitimately isn't a production Turso deploy:
+//  - On Vercel preview/development builds, skip (don't clobber the prod DB).
+//  - With no TURSO_DATABASE_URL (local file-mode build), skip quietly.
+if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== 'production') {
+  console.log(`[sync-turso] VERCEL_ENV=${process.env.VERCEL_ENV} (not production) — skipping.`);
+  process.exit(0);
+}
 if (!url) {
-  console.error('ERROR: set TURSO_DATABASE_URL (and TURSO_AUTH_TOKEN) to the production Turso DB.');
-  process.exit(1);
+  console.log('[sync-turso] TURSO_DATABASE_URL not set — skipping (local/file mode).');
+  process.exit(0);
 }
 const DATA_DIR = 'data';
 

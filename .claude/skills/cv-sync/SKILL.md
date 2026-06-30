@@ -72,19 +72,25 @@ rebuild — so **the only durable place to add CV content is the TSV files.**
 
 7. **Merge to `main`** (after the user reviews the local preview): `gh pr merge`.
 
-8. **Push the data to PRODUCTION (Turso) — REQUIRED, easy to miss.**
-   Production reads a hosted **Turso** (remote libSQL) DB, NOT the committed file
-   (see `src/lib/db.ts`: it uses `TURSO_DATABASE_URL` when set). So merging + the
-   Vercel build's `rebuild-db` only update the LOCAL/committed DB — **production data
-   does not change until you sync Turso:**
+8. **Production (Turso) syncs AUTOMATICALLY on merge to `main` — no manual step.**
+   Production reads a hosted **Turso** (remote libSQL) DB, not the committed file
+   (`src/lib/db.ts` uses `TURSO_DATABASE_URL`). The Vercel **production** build runs
+   `scripts/sync-turso.mjs` (wired into `package.json` `build`), which pushes the
+   allow-listed tables (Publication, Talk, Honor, SoftwareResource) from `data/*.tsv`
+   into Turso using Vercel's own `TURSO_*` env vars. So merging to `main` → Vercel
+   builds → data is live. Preview/local builds skip the sync (guarded by `VERCEL_ENV`).
+
+   Verify after the deploy finishes:
+   `curl https://aimed-org-web.vercel.app/api/publications?limit=1` should show the new
+   total. **Manual fallback** (only if you ever need to push without a deploy):
    ```bash
    TURSO_DATABASE_URL=libsql://<db>.turso.io TURSO_AUTH_TOKEN=<token> \
-     node scripts/sync-turso.mjs
+     node scripts/sync-turso.mjs   # creds: Vercel env / Turso dashboard
    ```
-   Credentials are in the Vercel project env (Settings → Environment Variables) or the
-   Turso dashboard. Verify live: `curl https://www.aimed-lab.org/api/publications?limit=1`
-   (or the `aimed-org-web.vercel.app` alias) should show the new total. **If the live
-   total doesn't change after a deploy, this step was skipped.**
+   Caveats baked into the script: it only syncs those 4 tables (their Turso ids are
+   id-aligned with the TSV); it UPSERTs by id (never DELETE — Turso enforces FKs);
+   it auto-adds missing columns. Do NOT add LabMember/NewsItem/Patent/Appointment to
+   the allow-list — those are production-managed and their ids are not TSV-aligned.
 
 ## Notes on publication types
 `Publication.articleType` values in use: `Journal Article`, `Conference`,
