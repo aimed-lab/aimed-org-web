@@ -5,6 +5,10 @@ import { KeyRound, ShieldAlert, Crown, Check, Loader2 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
 const ALL_ROLES = ['ADMIN', 'DEVELOPER', 'USER', 'INTERN'] as const;
+// Local rank mirror of src/lib/rbac.ts (rbac is server-only). Used to offer only the
+// roles the current actor may assign: strictly below their own, and only for members
+// currently below them.
+const RANK: Record<string, number> = { INTERN: 0, USER: 1, DEVELOPER: 2, ADMIN: 3, OWNER: 4 };
 
 const ROLE_BLURB: Record<string, string> = {
   OWNER: 'PI · permanent, full control',
@@ -55,15 +59,13 @@ export default function RolesPage() {
     load();
   }, [load]);
 
-  // Which roles the current actor can assign to a given member.
+  // Which roles the current actor can assign to a given member (cascade rule):
+  // only roles strictly below the actor, and only for members currently below them.
   function optionsFor(m: Member): string[] {
     if (m.isOwner) return [];
-    return ALL_ROLES.filter((r) => {
-      if (r === 'ADMIN') return actorRole === 'OWNER'; // only owner grants/revokes admin
-      // demoting an existing admin is also owner-only
-      if (m.resolvedRole === 'ADMIN' && actorRole !== 'OWNER') return false;
-      return true;
-    });
+    const ar = RANK[actorRole] ?? 0;
+    if (ar <= (RANK[m.resolvedRole] ?? 0)) return []; // can't manage peers/superiors
+    return ALL_ROLES.filter((r) => RANK[r] < ar);
   }
 
   async function setRole(m: Member, newRole: string) {

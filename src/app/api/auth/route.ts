@@ -8,6 +8,8 @@ import {
   generateMagicCode,
   hashPassword,
   verifyPassword,
+  makeAdminToken,
+  makeMemberToken,
 } from "@/lib/auth"
 import { sendVerificationCode } from "@/lib/email"
 import { prisma } from "@/lib/db"
@@ -23,7 +25,7 @@ async function setAuthCookies(email: string) {
   const isAdmin = isAdminEmail(email)
 
   if (isAdmin) {
-    const token = Buffer.from(`${email}:${Date.now()}`).toString("base64")
+    const token = makeAdminToken(email)
     cookieStore.set("admin_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -49,9 +51,7 @@ async function setAuthCookies(email: string) {
       })
     }
     if (member) {
-      const memberToken = Buffer.from(
-        JSON.stringify({ memberId: member.id, email, ts: Date.now() })
-      ).toString("base64")
+      const memberToken = makeMemberToken(member.id, email)
       cookieStore.set("member_token", memberToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

@@ -54,6 +54,7 @@ const memberNav: NavItem[] = [
   { label: 'Datasets', href: '/member/datasets', icon: Database, perm: 'full_features' },
   { label: 'Tools', href: '/member/tools', icon: Wrench, perm: 'full_features' },
   { label: 'Connectors', href: '/member/connectors', icon: Plug, perm: 'manage_connectors' },
+  { label: 'Join Requests', href: '/member/requests', icon: UserPlus, perm: 'manage_roles' },
   { label: 'divider-more', href: '', icon: Shield },
   { label: 'Ethics & Legal', href: '/member/compliance', icon: Shield },
   { label: 'Intelligence', href: '/member/intelligence', icon: Radar, perm: 'full_features' },

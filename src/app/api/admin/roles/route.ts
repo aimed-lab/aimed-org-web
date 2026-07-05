@@ -5,6 +5,7 @@ import { isOwnerEmail } from "@/lib/auth"
 import {
   can,
   canAssignRole,
+  canManageMemberAt,
   resolveAccessRole,
   ACCESS_ROLES,
   type AccessRole,
@@ -64,13 +65,14 @@ export async function PATCH(request: NextRequest) {
   if (isOwnerEmail(target.email)) {
     return NextResponse.json({ error: "The owner role is permanent and cannot be changed." }, { status: 403 })
   }
-  // Only the OWNER may grant OR revoke ADMIN.
+  // Cascade: you can only manage people strictly below your own role…
   const targetCurrent = resolveAccessRole(target.email, target.accessRole)
-  if ((newRole === "ADMIN" || targetCurrent === "ADMIN") && actor.accessRole !== "OWNER") {
-    return NextResponse.json({ error: "Only the owner can assign or revoke the admin role." }, { status: 403 })
+  if (!canManageMemberAt(actor.accessRole, targetCurrent)) {
+    return NextResponse.json({ error: "You can only manage members with a role below your own." }, { status: 403 })
   }
+  // …and only assign a role strictly below your own.
   if (!canAssignRole(actor.accessRole, newRole)) {
-    return NextResponse.json({ error: "You cannot assign that role." }, { status: 403 })
+    return NextResponse.json({ error: "You can only assign roles below your own." }, { status: 403 })
   }
 
   const updated = await prisma.labMember.update({

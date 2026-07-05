@@ -1,6 +1,53 @@
 import { cookies } from "next/headers"
 import { NextRequest } from "next/server"
-import { scryptSync, randomBytes } from "crypto"
+import { scryptSync, randomBytes, createHmac, timingSafeEqual } from "crypto"
+
+// ─── Signed session tokens ─────────────────────────────────────────────────
+// Tokens are HMAC-signed so they cannot be forged. Format: base64url(payload).sig
+// where sig = HMAC-SHA256(payload) with the server secret. WITHOUT this signature a
+// base64("email:timestamp") string could be minted by anyone — a full auth bypass.
+const AUTH_SECRET =
+  process.env.AUTH_SECRET || process.env.HMAC_SECRET || "dev-secret-change-me"
+
+if (process.env.NODE_ENV === "production" && AUTH_SECRET === "dev-secret-change-me") {
+  console.error(
+    "[auth] SECURITY: AUTH_SECRET is not set in production — set a strong random AUTH_SECRET env var."
+  )
+}
+
+function hmac(body: string): string {
+  return createHmac("sha256", AUTH_SECRET).update(body).digest("base64url")
+}
+
+export function signToken(payload: string): string {
+  const body = Buffer.from(payload, "utf-8").toString("base64url")
+  return `${body}.${hmac(body)}`
+}
+
+/** Returns the verified payload string, or null if the signature is invalid/absent. */
+export function verifySignedToken(token: string): string | null {
+  const dot = token.lastIndexOf(".")
+  if (dot <= 0) return null
+  const body = token.slice(0, dot)
+  const sig = token.slice(dot + 1)
+  const expected = hmac(body)
+  const a = Buffer.from(sig)
+  const b = Buffer.from(expected)
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return null
+  try {
+    return Buffer.from(body, "base64url").toString("utf-8")
+  } catch {
+    return null
+  }
+}
+
+export function makeAdminToken(email: string): string {
+  return signToken(`${email}:${Date.now()}`)
+}
+
+export function makeMemberToken(memberId: number, email: string): string {
+  return signToken(JSON.stringify({ memberId, email, ts: Date.now() }))
+}
 
 // ─── Admin Role Hierarchy ──────────────────────────────────────────────────
 export type AdminRole = "owner" | "admin" | null
@@ -47,7 +94,9 @@ export function verifyPassword(password: string, stored: string): boolean {
     const [salt, hash] = stored.split(":")
     if (!salt || !hash) return false
     const test = scryptSync(password, salt, 64).toString("hex")
-    return hash === test
+    const a = Buffer.from(hash)
+    const b = Buffer.from(test)
+    return a.length === b.length && timingSafeEqual(a, b)
   } catch {
     return false
   }
@@ -83,7 +132,9 @@ export async function verifyAdminToken(
     const token = cookieStore.get("admin_token")?.value
     if (!token) return null
 
-    const decoded = Buffer.from(token, "base64").toString("utf-8")
+    // Verify the HMAC signature — reject forged/unsigned tokens.
+    const decoded = verifySignedToken(token)
+    if (!decoded) return null
     const [email, timestampStr] = decoded.split(":")
     const timestamp = Number(timestampStr)
 

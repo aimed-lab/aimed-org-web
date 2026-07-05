@@ -1,5 +1,5 @@
 import { cookies } from "next/headers"
-import { verifyAdminToken } from "@/lib/auth"
+import { verifyAdminToken, verifySignedToken } from "@/lib/auth"
 import { prisma } from "@/lib/db"
 import { resolveAccessRole, type AccessRole } from "@/lib/rbac"
 
@@ -23,8 +23,9 @@ export async function verifyMemberToken(): Promise<MemberAuth | null> {
     const cookieStore = await cookies()
     const token = cookieStore.get("member_token")?.value
 
-    if (token) {
-      const payload = JSON.parse(Buffer.from(token, "base64").toString("utf-8"))
+    const decoded = token ? verifySignedToken(token) : null
+    if (decoded) {
+      const payload = JSON.parse(decoded)
       if (payload.memberId && payload.email) {
         // Check token age (30 days)
         if (!payload.ts || Date.now() - payload.ts <= 30 * 24 * 60 * 60 * 1000) {

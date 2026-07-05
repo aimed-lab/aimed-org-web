@@ -45,7 +45,9 @@ const MIN_ROLE: Record<Permission, AccessRole> = {
   manage_connectors: "DEVELOPER",
   manage_content: "ADMIN",
   manage_members: "ADMIN",
-  manage_roles: "ADMIN",
+  // Anyone above INTERN may assign/approve people into roles strictly below their own
+  // (owner→admin, admin→developer, developer→user, user→intern). Interns cannot invite.
+  manage_roles: "USER",
   manage_admins: "OWNER",
 }
 
@@ -78,15 +80,23 @@ export function resolveAccessRole(email: string, storedRole?: string | null): Ac
 }
 
 /**
- * Can `actor` assign `target` role to someone?
- * - OWNER is never assignable/removable through the UI (permanent).
- * - Only the OWNER may grant or revoke ADMIN.
- * - ADMINs may assign DEVELOPER/USER/INTERN.
+ * Can `actor` assign the `target` role to someone?
+ * Cascading rule: an actor may grant only roles STRICTLY BELOW their own
+ * (owner→admin-or-below, admin→developer-or-below, developer→user-or-below,
+ * user→intern only, intern→nothing). OWNER is permanent and never assignable.
  */
 export function canAssignRole(actor: AccessRole, target: AccessRole): boolean {
   if (target === "OWNER") return false
-  if (target === "ADMIN") return actor === "OWNER"
-  return can(actor, "manage_roles")
+  return RANK[actor] > RANK[target]
+}
+
+/**
+ * Can `actor` manage (change/approve) a person who currently holds `targetCurrent`?
+ * You can only manage people strictly below you — so an admin can't touch another
+ * admin or the owner, a developer can't touch an admin, etc.
+ */
+export function canManageMemberAt(actor: AccessRole, targetCurrent: AccessRole): boolean {
+  return RANK[actor] > RANK[targetCurrent]
 }
 
 /** Assignable roles for an actor, for building the admin UI dropdown. */
