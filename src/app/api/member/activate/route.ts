@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import { prisma } from "@/lib/db"
-import { isAdminEmail, isOwnerEmail } from "@/lib/auth"
+import { isAdminEmail, isOwnerEmail, verifyPassword, makeAdminToken, makeMemberToken } from "@/lib/auth"
 
 const SHARED_ACTIVATION_CODE = process.env.MEMBER_ACTIVATION_CODE || process.env.ADMIN_ACTIVATION_CODE || "AIMED2026"
 
 async function setMemberCookie(memberId: number, email: string) {
-  const token = Buffer.from(
-    JSON.stringify({ memberId, email, ts: Date.now() })
-  ).toString("base64")
+  const token = makeMemberToken(memberId, email)
 
   const cookieStore = await cookies()
   cookieStore.set("member_token", token, {
@@ -22,7 +20,7 @@ async function setMemberCookie(memberId: number, email: string) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, code } = await request.json()
+    const { email, code, password } = await request.json()
 
     if (!email) {
       return NextResponse.json(
@@ -33,28 +31,23 @@ export async function POST(request: NextRequest) {
 
     const normalizedEmail = email.trim().toLowerCase()
 
-    // Admin/owner bypass: no code needed, auto-authenticate
+    // Admin/owner path: skip the activation code, but STILL require the password.
+    // (Previously this granted an admin session on email alone — a full auth bypass.)
     if (isAdminEmail(normalizedEmail) || isOwnerEmail(normalizedEmail)) {
-      // Find or create member record
-      let member = await prisma.labMember.findUnique({
+      const member = await prisma.labMember.findUnique({
         where: { email: normalizedEmail },
       })
-      if (!member) {
-        member = await prisma.labMember.create({
-          data: {
-            name: normalizedEmail.split("@")[0],
-            email: normalizedEmail,
-            role: "PI / Admin",
-            status: "ACTIVE",
-            updatedAt: new Date(),
-          },
-        })
+      if (!member?.passwordHash || !password || !verifyPassword(password, member.passwordHash)) {
+        return NextResponse.json(
+          { error: "Invalid credentials. Please sign in at /admin." },
+          { status: 401 }
+        )
       }
 
       await setMemberCookie(member.id, normalizedEmail)
 
-      // Also set admin token for full access
-      const adminToken = Buffer.from(`${normalizedEmail}:${Date.now()}`).toString("base64")
+      // Also set a signed admin token for full access
+      const adminToken = makeAdminToken(normalizedEmail)
       const cookieStore = await cookies()
       cookieStore.set("admin_token", adminToken, {
         httpOnly: true,

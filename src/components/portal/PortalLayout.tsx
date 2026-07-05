@@ -28,6 +28,8 @@ import {
   Moon,
   Lightbulb,
   Package,
+  Plug,
+  KeyRound,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -37,6 +39,10 @@ interface NavItem {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  // Optional RBAC permission required to see this item. Matched against the
+  // server-computed permission map from /api/member/me. Undefined = visible to all
+  // authenticated users. (Plain string, not the rbac type, to keep this a client module.)
+  perm?: string;
 }
 
 const memberNav: NavItem[] = [
@@ -45,21 +51,24 @@ const memberNav: NavItem[] = [
   { label: 'divider-assets', href: '', icon: Package },
   { label: 'Problems', href: '/member/problems', icon: Lightbulb },
   { label: 'Papers', href: '/member/papers', icon: FileText },
-  { label: 'Datasets', href: '/member/datasets', icon: Database },
-  { label: 'Tools', href: '/member/tools', icon: Wrench },
+  { label: 'Datasets', href: '/member/datasets', icon: Database, perm: 'full_features' },
+  { label: 'Tools', href: '/member/tools', icon: Wrench, perm: 'full_features' },
+  { label: 'Connectors', href: '/member/connectors', icon: Plug, perm: 'manage_connectors' },
+  { label: 'Join Requests', href: '/member/requests', icon: UserPlus, perm: 'manage_roles' },
   { label: 'divider-more', href: '', icon: Shield },
   { label: 'Ethics & Legal', href: '/member/compliance', icon: Shield },
-  { label: 'Intelligence', href: '/member/intelligence', icon: Radar },
+  { label: 'Intelligence', href: '/member/intelligence', icon: Radar, perm: 'full_features' },
   { label: 'Achievements', href: '/member/achievements', icon: Trophy },
   { label: 'Profile', href: '/member/profile', icon: UserCircle },
 ];
 
 const adminNav: NavItem[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: ShieldCheck },
-  { label: 'Members', href: '/admin/members', icon: Users },
-  { label: 'CV Upload', href: '/admin/cv-upload', icon: Upload },
-  { label: 'Recruits', href: '/admin/recruits', icon: UserPlus },
-  { label: 'Content Review', href: '/admin/content', icon: FileCheck },
+  { label: 'Members', href: '/admin/members', icon: Users, perm: 'manage_members' },
+  { label: 'Roles', href: '/admin/roles', icon: KeyRound, perm: 'manage_roles' },
+  { label: 'CV Upload', href: '/admin/cv-upload', icon: Upload, perm: 'manage_content' },
+  { label: 'Recruits', href: '/admin/recruits', icon: UserPlus, perm: 'manage_members' },
+  { label: 'Content Review', href: '/admin/content', icon: FileCheck, perm: 'manage_content' },
 ];
 
 interface PortalLayoutProps {
@@ -77,21 +86,49 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
   const [viewMode, setViewMode] = useState<'admin' | 'member'>(role === 'admin' ? 'admin' : 'member');
   const { resolvedTheme, setTheme } = useTheme();
   const [themeMounted, setThemeMounted] = useState(false);
+  const [perms, setPerms] = useState<Record<string, boolean> | null>(null);
+  const [accessRole, setAccessRole] = useState<string>('');
 
   useEffect(() => {
     setThemeMounted(true);
   }, []);
+
+  // Load the current user's resolved role + permission map for nav gating.
+  useEffect(() => {
+    let active = true;
+    fetch('/api/member/me')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (active && d) {
+          setPerms(d.permissions || {});
+          setAccessRole(d.accessRole || '');
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Show an item when it has no permission gate, or the user holds that permission.
+  // Before /me loads, optimistically show member items (full_features) but keep
+  // elevated items (connectors/roles/admin) hidden until confirmed.
+  const canSee = (item: NavItem) =>
+    !item.perm || (perms ? !!perms[item.perm] : item.perm === 'full_features');
 
   // Close mobile sidebar on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  const navItems = role === 'admin'
+  const rawNav = role === 'admin'
     ? viewMode === 'admin'
       ? [...adminNav, { label: 'divider', href: '', icon: LayoutDashboard }, ...memberNav]
       : memberNav
     : memberNav;
+  const navItems = rawNav.filter(
+    (item) => item.label === 'divider' || item.label.startsWith('divider-') || canSee(item)
+  );
 
   function handleLogout() {
     if (role === 'admin') {
@@ -223,6 +260,14 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
                 <ArrowLeftRight className="h-3.5 w-3.5" />
                 {viewMode === 'admin' ? 'Member View' : 'Admin View'}
               </button>
+            )}
+            {accessRole && (
+              <span
+                className="hidden sm:inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:border-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-400"
+                title="Your access role"
+              >
+                {accessRole}
+              </span>
             )}
             {(userName || userEmail) && (
               <span className="hidden sm:inline text-sm text-slate-600 dark:text-slate-400">

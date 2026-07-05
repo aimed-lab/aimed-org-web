@@ -1,28 +1,43 @@
 import { cookies } from "next/headers"
-import { verifyAdminToken } from "@/lib/auth"
+import { verifyAdminToken, verifySignedToken } from "@/lib/auth"
 import { prisma } from "@/lib/db"
+import { resolveAccessRole, type AccessRole } from "@/lib/rbac"
+
+export type MemberAuth = {
+  memberId: number
+  email: string
+  accessRole: AccessRole
+}
 
 /**
  * Verify the member_token cookie and return the payload if valid.
  * Also accepts admin_token — admins can access member pages without activation code.
  * If admin, looks up or auto-creates a LabMember record for the admin email.
- * Returns null if not authenticated.
+ * The returned `accessRole` is the resolved RBAC role (OWNER from the PI email,
+ * otherwise the stored LabMember.accessRole, with an ADMIN fallback for bootstrap
+ * admin emails). Returns null if not authenticated.
  */
-export async function verifyMemberToken(): Promise<{
-  memberId: number
-  email: string
-} | null> {
+export async function verifyMemberToken(): Promise<MemberAuth | null> {
   // First, try member_token
   try {
     const cookieStore = await cookies()
     const token = cookieStore.get("member_token")?.value
 
-    if (token) {
-      const payload = JSON.parse(Buffer.from(token, "base64").toString("utf-8"))
+    const decoded = token ? verifySignedToken(token) : null
+    if (decoded) {
+      const payload = JSON.parse(decoded)
       if (payload.memberId && payload.email) {
         // Check token age (30 days)
         if (!payload.ts || Date.now() - payload.ts <= 30 * 24 * 60 * 60 * 1000) {
-          return { memberId: payload.memberId, email: payload.email }
+          const member = await prisma.labMember.findUnique({
+            where: { id: payload.memberId },
+            select: { accessRole: true },
+          })
+          return {
+            memberId: payload.memberId,
+            email: payload.email,
+            accessRole: resolveAccessRole(payload.email, member?.accessRole),
+          }
         }
       }
     }
@@ -45,11 +60,16 @@ export async function verifyMemberToken(): Promise<{
             email: adminEmail,
             role: "PI / Admin",
             status: "ACTIVE",
+            accessRole: "ADMIN",
             updatedAt: new Date(),
           },
         })
       }
-      return { memberId: member.id, email: adminEmail }
+      return {
+        memberId: member.id,
+        email: adminEmail,
+        accessRole: resolveAccessRole(adminEmail, member.accessRole),
+      }
     }
   } catch {
     // Fall through

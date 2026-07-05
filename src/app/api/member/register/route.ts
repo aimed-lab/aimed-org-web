@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import { prisma } from "@/lib/db"
-import { isAdminEmail } from "@/lib/auth"
+import { isAdminEmail, makeAdminToken, makeMemberToken } from "@/lib/auth"
 
 /**
  * POST /api/member/register
@@ -92,9 +92,7 @@ export async function POST(request: NextRequest) {
 
       // Set member cookie (log them in)
       const cookieStore = await cookies()
-      const memberToken = Buffer.from(
-        JSON.stringify({ memberId: member.id, email: normalizedEmail, ts: Date.now() })
-      ).toString("base64")
+      const memberToken = makeMemberToken(member.id, normalizedEmail)
       cookieStore.set("member_token", memberToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -105,7 +103,7 @@ export async function POST(request: NextRequest) {
 
       // If admin email, also set admin cookie
       if (isAdminEmail(normalizedEmail)) {
-        const adminToken = Buffer.from(`${normalizedEmail}:${Date.now()}`).toString("base64")
+        const adminToken = makeAdminToken(normalizedEmail)
         cookieStore.set("admin_token", adminToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",

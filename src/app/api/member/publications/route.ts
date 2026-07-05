@@ -1,17 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
-import { cookies } from "next/headers"
+import { verifyMemberToken } from "@/lib/member-auth"
 
 async function getMemberId(): Promise<number | null> {
-  const cookieStore = await cookies()
-  const token = cookieStore.get("member_token")?.value
-  if (!token) return null
-  try {
-    const decoded = JSON.parse(Buffer.from(token, "base64").toString())
-    return decoded.memberId || null
-  } catch {
-    return null
-  }
+  // Use the shared verifier (validates the HMAC signature) instead of re-parsing
+  // the cookie inline — an inline base64 parse trusts a forged token.
+  const auth = await verifyMemberToken()
+  return auth?.memberId ?? null
 }
 
 /**
