@@ -133,6 +133,7 @@ Return ONLY the JSON array. No markdown fences, no explanations.`
       generationConfig: {
         temperature: 0.1,
         maxOutputTokens: 8000,
+        responseMimeType: "application/json",
       },
     }
 
@@ -151,11 +152,15 @@ Return ONLY the JSON array. No markdown fences, no explanations.`
     const geminiData = await geminiRes.json()
     const rawText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? ""
 
-    // Strip markdown fences if present
-    const jsonText = rawText
+    // Strip fences, then extract the JSON array/object (bracket-aware) so stray prose can't break parsing.
+    let jsonText = rawText
       .replace(/^```(?:json)?\s*/i, "")
       .replace(/\s*```$/i, "")
       .trim()
+    const starts = [jsonText.indexOf("["), jsonText.indexOf("{")].filter((i) => i >= 0)
+    const s = starts.length ? Math.min(...starts) : -1
+    const e = Math.max(jsonText.lastIndexOf("]"), jsonText.lastIndexOf("}"))
+    if (s >= 0 && e > s) jsonText = jsonText.slice(s, e + 1)
 
     let parsed: ParsedPublication[]
     try {
