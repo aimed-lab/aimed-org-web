@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
 import { verifyMemberToken } from "@/lib/member-auth"
+import { can } from "@/lib/rbac"
 
 const VALID_CONTENT_TYPES = ["PUBLICATION", "HONOR", "SOFTWARE", "PATENT", "NEWS"]
 
@@ -8,6 +9,14 @@ export async function POST(request: NextRequest) {
   const member = await verifyMemberToken()
   if (!member) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+  // Sharing content to the public site requires the share_content permission.
+  // Interns can view and manage their own work but cannot share/submit.
+  if (!can(member.accessRole, "share_content")) {
+    return NextResponse.json(
+      { error: "Your role does not permit sharing content. Ask an admin to upgrade your access." },
+      { status: 403 }
+    )
   }
 
   try {

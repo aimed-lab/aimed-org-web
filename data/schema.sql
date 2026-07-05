@@ -325,6 +325,7 @@ CREATE TABLE IF NOT EXISTS "LabMember" (
     "passwordHash" TEXT,
     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
     "orcidId" TEXT,
+    "accessRole" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );

@@ -228,6 +228,7 @@ model LabMember {
   passwordHash    String?  // scrypt hash, null until account setup complete
   emailVerified   Boolean  @default(false)
   orcidId         String?  // ORCID identifier
+  accessRole      String?  // RBAC: ADMIN|DEVELOPER|USER|INTERN (null = unset → resolves via email allow-list; OWNER is code-derived from PI email)
 
   goals           QuarterlyGoal[]
   projects        ProjectTask[]
