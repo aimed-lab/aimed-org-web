@@ -203,6 +203,7 @@ Return ONLY the JSON object. No markdown fences, no explanations.`
       generationConfig: {
         temperature: 0.1,
         maxOutputTokens: 16000,
+        responseMimeType: "application/json",
       },
     }
 
@@ -221,10 +222,12 @@ Return ONLY the JSON object. No markdown fences, no explanations.`
     const geminiData = await geminiRes.json()
     const rawText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? ""
 
-    const jsonText = rawText
+    let jsonText = rawText
       .replace(/^```(?:json)?\s*/i, "")
       .replace(/\s*```$/i, "")
       .trim()
+    const fb = jsonText.indexOf("{"), lb = jsonText.lastIndexOf("}")
+    if (fb >= 0 && lb > fb) jsonText = jsonText.slice(fb, lb + 1)
 
     let parsed: ParseResult
     try {

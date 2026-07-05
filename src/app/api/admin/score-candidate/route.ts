@@ -72,7 +72,9 @@ RESPOND IN THIS EXACT JSON FORMAT:
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       generationConfig: {
         temperature: 0.3,
-        maxOutputTokens: 1500,
+        maxOutputTokens: 2048,
+        // Force pure JSON output — avoids markdown fences / stray prose that broke parsing.
+        responseMimeType: "application/json",
       },
     }
 
@@ -92,11 +94,15 @@ RESPOND IN THIS EXACT JSON FORMAT:
     const rawText =
       geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? ""
 
-    // Strip markdown fences if present
-    const jsonText = rawText
+    // Robustly extract the JSON object: strip any fences, then take from the first
+    // "{" to the last "}" so stray prose (which broke real candidates) can't fail us.
+    let jsonText = rawText
       .replace(/^```(?:json)?\s*/i, "")
       .replace(/\s*```$/i, "")
       .trim()
+    const first = jsonText.indexOf("{")
+    const last = jsonText.lastIndexOf("}")
+    if (first >= 0 && last > first) jsonText = jsonText.slice(first, last + 1)
 
     let parsed: {
       scores: {
