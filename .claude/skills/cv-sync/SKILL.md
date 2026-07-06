@@ -81,7 +81,7 @@ rebuild — so **the only durable place to add CV content is the TSV files.**
    builds → data is live. Preview/local builds skip the sync (guarded by `VERCEL_ENV`).
 
    Verify after the deploy finishes:
-   `curl https://aimed-org-web.vercel.app/api/publications?limit=1` should show the new
+   `curl https://aimed-lab.org/api/publications?limit=1` should show the new
    total. **Manual fallback** (only if you ever need to push without a deploy):
    ```bash
    TURSO_DATABASE_URL=libsql://<db>.turso.io TURSO_AUTH_TOKEN=<token> \
