@@ -101,13 +101,19 @@ function StatusBadge({ status }: { status: string }) {
     DEFERRED: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
     CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
   };
+  // Friendly public-visibility labels for membership status.
+  const labels: Record<string, string> = {
+    ACTIVE: 'Current',
+    ALUMNI: 'Past',
+    INACTIVE: 'Hidden',
+  };
   return (
     <span
       className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
         styles[status] ?? 'bg-slate-100 text-slate-600'
       }`}
     >
-      {status.replace(/_/g, ' ')}
+      {labels[status] ?? status.replace(/_/g, ' ')}
     </span>
   );
 }
@@ -446,7 +452,7 @@ export default function AdminMembersPage() {
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
               }`}
             >
-              {tab === 'ALL' ? 'All' : tab === 'ACTIVE' ? 'Current' : 'Alumni'}
+              {tab === 'ALL' ? 'All' : tab === 'ACTIVE' ? 'Current' : 'Past'}
               <span className="ml-1 text-xs text-slate-400">
                 ({tab === 'ALL' ? members.length : members.filter((m) => m.status === tab).length})
               </span>
@@ -884,10 +890,13 @@ export default function AdminMembersPage() {
                   <select name="role" defaultValue={editingMember.role} required className={inputClass}>
                     {ROLES.map((r) => (<option key={r} value={r}>{r}</option>))}
                   </select>
+                  <label className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    Public visibility (controls the public Team page)
+                  </label>
                   <select name="status" defaultValue={editingMember.status} className={inputClass}>
-                    <option value="ACTIVE">Active</option>
-                    <option value="ALUMNI">Alumni</option>
-                    <option value="INACTIVE">Inactive</option>
+                    <option value="ACTIVE">Current — shown on the public Team page</option>
+                    <option value="ALUMNI">Past — shown under Alumni</option>
+                    <option value="INACTIVE">Hidden — not shown publicly</option>
                   </select>
                   <input name="joinDate" type="date" defaultValue={editingMember.joinDate?.split('T')[0]} className={inputClass} />
                   <input name="githubUsername" defaultValue={editingMember.githubUsername || ''} placeholder="GitHub username" className={inputClass} />
