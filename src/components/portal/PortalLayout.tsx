@@ -88,10 +88,25 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
   const [themeMounted, setThemeMounted] = useState(false);
   const [perms, setPerms] = useState<Record<string, boolean> | null>(null);
   const [accessRole, setAccessRole] = useState<string>('');
+  const [unread, setUnread] = useState(0);
 
   useEffect(() => {
     setThemeMounted(true);
   }, []);
+
+  // Unread (NEW) inquiry count for the Recruits badge — refresh on nav + every 60s.
+  useEffect(() => {
+    if (role !== 'admin') return;
+    let active = true;
+    const load = () =>
+      fetch('/api/admin/inquiries/unread')
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => { if (active && d) setUnread(d.count || 0); })
+        .catch(() => {});
+    load();
+    const t = setInterval(load, 60000);
+    return () => { active = false; clearInterval(t); };
+  }, [role, pathname]);
 
   // Load the current user's resolved role + permission map for nav gating.
   useEffect(() => {
@@ -172,6 +187,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
           role={role}
           viewMode={viewMode}
           onNavigate={(href) => router.push(href)}
+          unread={unread}
         />
       </aside>
 
@@ -200,6 +216,7 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
               role={role}
               viewMode={viewMode}
               onNavigate={(href) => router.push(href)}
+          unread={unread}
             />
           </motion.aside>
         )}
@@ -302,6 +319,7 @@ function SidebarContent({
   role,
   viewMode,
   onNavigate,
+  unread = 0,
 }: {
   navItems: NavItem[];
   isActive: (href: string) => boolean;
@@ -309,6 +327,7 @@ function SidebarContent({
   role: PortalRole;
   viewMode: 'admin' | 'member';
   onNavigate: (href: string) => void;
+  unread?: number;
 }) {
   const portalLabel = role === 'admin'
     ? viewMode === 'admin' ? 'Admin Portal' : 'Member View'
@@ -376,6 +395,14 @@ function SidebarContent({
             >
               <Icon className={`h-5 w-5 shrink-0 ${active ? 'text-emerald-600 dark:text-emerald-400' : ''}`} />
               {sidebarOpen && <span className="truncate">{item.label}</span>}
+              {item.href === '/admin/recruits' && unread > 0 && (
+                <span
+                  className="ml-auto inline-flex min-w-[18px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white"
+                  title={`${unread} unread ${unread === 1 ? 'inquiry' : 'inquiries'}`}
+                >
+                  {unread > 99 ? '99+' : unread}
+                </span>
+              )}
             </button>
           );
         })}

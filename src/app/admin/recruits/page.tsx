@@ -316,6 +316,19 @@ export default function AdminRecruitsPage() {
             <option value="aiScore">Sort: AI Score</option>
             <option value="manualScore">Sort: Manual Score</option>
           </select>
+
+          {pendingCount > 0 && (
+            <button
+              onClick={async () => {
+                await fetch('/api/admin/inquiries/unread', { method: 'POST' }).catch(() => {});
+                await fetchInquiries();
+              }}
+              className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700"
+              title="Mark all unread inquiries as read"
+            >
+              Mark all read ({pendingCount})
+            </button>
+          )}
         </div>
 
         {/* Candidate Cards */}
