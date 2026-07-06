@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
+import { sendAdminNotification } from "@/lib/email"
+
+function esc(s: string) {
+  return String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c] as string))
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,6 +28,20 @@ export async function POST(request: NextRequest) {
         status: "NEW",
       },
     })
+
+    // Alert all admins (best-effort — never fails the submission).
+    try {
+      await sendAdminNotification(
+        `New inquiry from ${esc(name)}`,
+        `<p><strong>Name:</strong> ${esc(name)}</p>
+         <p><strong>Email:</strong> ${esc(email)}</p>
+         <p><strong>Role:</strong> ${esc(role || "Other")} &middot; <strong>Interest:</strong> ${esc(interestArea || "Other")}</p>
+         <p><strong>Message:</strong></p><p>${esc(message)}</p>
+         <p style="margin-top:16px"><a href="https://aimed-lab.org/admin/recruits">Review in Recruits →</a></p>`
+      )
+    } catch (e) {
+      console.error("Admin notification (inquiry) failed:", e)
+    }
 
     return NextResponse.json({ success: true, id: inquiry.id }, { status: 201 })
   } catch (error) {

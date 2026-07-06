@@ -66,6 +66,11 @@ export function isAdminEmail(email: string): boolean {
   return ALL_ADMIN_EMAILS.includes(email.toLowerCase())
 }
 
+/** All admin/owner email addresses (for notifications). */
+export function getAdminEmails(): string[] {
+  return [...ALL_ADMIN_EMAILS]
+}
+
 export function isOwnerEmail(email: string): boolean {
   return OWNER_EMAILS.map((o) => o.toLowerCase()).includes(email.toLowerCase())
 }

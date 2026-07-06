@@ -25,7 +25,7 @@ const GREETING: Message = {
   id: "greeting",
   role: "assistant",
   content:
-    "Hi! I'm the AI.MED Lab assistant. I can help you find publications, learn about our research, or answer questions about the lab. What would you like to know?",
+    "Hi! I'm the AI.MED Lab assistant. I can help you find publications, learn about our research, or answer questions about the lab.\n\n**Tip:** type **/issue** followed by a description (and paste a screenshot) to report a bug or request a feature — it's filed to our tracker and the admins are notified.",
 };
 
 function renderMarkdown(text: string) {
@@ -99,6 +99,31 @@ export function ChatWidget() {
       setInput("");
       setPastedImage(null);
       setLoading(true);
+
+      // /issue command — file a GitHub issue (text + optional screenshot).
+      const trimmed = text.trim();
+      if (trimmed.toLowerCase().startsWith("/issue")) {
+        const issueText = trimmed.slice("/issue".length).trim();
+        try {
+          const res = await fetch("/api/issue", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: issueText || "(no description provided)", image }),
+          });
+          const data = await res.json();
+          const reply = res.ok
+            ? data.url
+              ? `✅ Issue filed and the lab admins were notified: [${data.url}](${data.url})`
+              : `✅ ${data.note || "Your request was sent to the lab admins."}`
+            : `⚠️ ${data.error || "Sorry, I couldn't file that issue."}`;
+          setMessages((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: reply }]);
+        } catch {
+          setMessages((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: "⚠️ Network error filing the issue. Please try again." }]);
+        } finally {
+          setLoading(false);
+        }
+        return;
+      }
 
       try {
         const res = await fetch("/api/chat", {

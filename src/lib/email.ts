@@ -139,3 +139,51 @@ export async function sendInvitationEmail(email: string, activationCode: string)
     return { success: false, error: "Failed to send invitation" }
   }
 }
+
+/**
+ * Send a notification to all lab admins (new inquiry, new issue, etc.).
+ * `attachments` are optional Resend attachments: { filename, content(base64) }.
+ * Fire-and-forget safe — returns success:false rather than throwing.
+ */
+export async function sendAdminNotification(
+  subject: string,
+  bodyHtml: string,
+  attachments?: { filename: string; content: string }[]
+): Promise<{ success: boolean; error?: string }> {
+  const apiKey = process.env.RESEND_API_KEY
+  const { getAdminEmails } = await import("@/lib/auth")
+  const to = getAdminEmails()
+  if (!apiKey) {
+    console.error("[EMAIL] RESEND_API_KEY not set — cannot send admin notification")
+    return { success: false, error: "Email service not configured" }
+  }
+  if (!to.length) return { success: false, error: "No admin recipients" }
+  try {
+    const resend = new Resend(apiKey)
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: `AI.MED Lab — ${subject}`,
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 32px 20px;">
+          <h1 style="font-size: 20px; font-weight: 700; color: #1e293b; margin: 0 0 4px;">AI.MED Lab · Admin alert</h1>
+          <p style="color: #64748b; font-size: 13px; margin: 0 0 20px;">${subject}</p>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; color: #334155; font-size: 14px; line-height: 1.6;">
+            ${bodyHtml}
+          </div>
+          <p style="color: #94a3b8; font-size: 11px; margin-top: 20px;">Sent to lab admins. Manage members and content at https://aimed-lab.org/admin</p>
+        </div>
+      `,
+      attachments,
+    })
+    if (error) {
+      console.error("[EMAIL] Admin notification error:", error)
+      return { success: false, error: error.message }
+    }
+    console.log(`[EMAIL] Admin notification sent to ${to.length} admin(s), Resend ID: ${data?.id}`)
+    return { success: true }
+  } catch (err) {
+    console.error("[EMAIL] Admin notification failed:", err)
+    return { success: false, error: "Failed to send" }
+  }
+}
