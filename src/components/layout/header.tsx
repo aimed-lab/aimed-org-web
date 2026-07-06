@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
-import { Search, Sun, Moon, Menu, X, ExternalLink, ChevronDown } from "lucide-react"
+import { Search, Sun, Moon, Menu, X, ExternalLink, ChevronDown, LogIn } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -138,6 +138,15 @@ export function Header() {
             )}
           </div>
 
+          {/* Member log in */}
+          <Link
+            href="/member/activate"
+            className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-md bg-emerald-600 px-3 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
+          >
+            <LogIn className="h-4 w-4" />
+            Log in
+          </Link>
+
           {/* Mobile hamburger */}
           <button
             aria-label="Toggle menu"
@@ -157,6 +166,16 @@ export function Header() {
         )}
       >
         <nav className="flex flex-col px-4 py-3 space-y-1">
+          {/* Member log in — prominent at top on mobile */}
+          <Link
+            href="/member/activate"
+            onClick={() => setMobileOpen(false)}
+            className="mb-1 flex items-center gap-2 rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
+          >
+            <LogIn className="h-4 w-4" />
+            Member Log in
+          </Link>
+
           {navLinks.map((link) => (
             <Link
               key={link.href}
