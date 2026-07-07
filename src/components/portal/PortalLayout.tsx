@@ -145,14 +145,16 @@ export function PortalLayout({ children, role, userName, userEmail }: PortalLayo
     (item) => item.label === 'divider' || item.label.startsWith('divider-') || canSee(item)
   );
 
-  function handleLogout() {
-    if (role === 'admin') {
-      document.cookie = 'admin_token=; path=/; max-age=0';
-      router.push('/admin');
-    } else {
-      document.cookie = 'member_token=; path=/; max-age=0';
-      router.push('/member/activate');
+  async function handleLogout() {
+    // Tokens are httpOnly, so document.cookie can't clear them — the server
+    // DELETE endpoint clears admin_token + member_token + auth_pending.
+    try {
+      await fetch('/api/auth', { method: 'DELETE' });
+    } catch {
+      /* fall through to redirect regardless */
     }
+    router.push(role === 'admin' ? '/admin' : '/member/activate');
+    router.refresh();
   }
 
   function isActive(href: string) {
