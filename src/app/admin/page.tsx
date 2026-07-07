@@ -3,9 +3,9 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Mail, KeyRound, Hash, ArrowLeft, Ticket, ShieldCheck, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, KeyRound, Hash, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
-type AuthMode = 'signin' | 'signup' | 'signup-verify' | 'signup-password' | 'forgot' | 'forgot-verify';
+type AuthMode = 'signin' | 'forgot' | 'forgot-verify';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -13,7 +13,6 @@ export default function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
-  const [invCode, setInvCode] = useState('');
   const [verifyCode, setVerifyCode] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
@@ -39,53 +38,6 @@ export default function AuthPage() {
       if (res.ok && data.success) { router.push(data.redirect || '/member/dashboard'); }
       else { setError(data.error || 'Invalid credentials.'); setLoading(false); }
     } catch { setError('Login failed.'); setLoading(false); }
-  }
-
-  // ── Sign Up Step 1: email + optional invitation code ─────
-  async function handleSignUp(e: FormEvent) {
-    e.preventDefault(); reset();
-    if (!email.trim()) { setError('Please enter your email.'); return; }
-    setLoading(true);
-    try {
-      const { res, data } = await api({ action: 'signup', email, invitationCode: invCode });
-      if (res.ok && data.success) {
-        if (data.ownerBypass) {
-          // Owner skips email verification
-          setInfo('Owner recognized. Set your password.');
-          setMode('signup-password');
-        } else {
-          setInfo(data.message);
-          setMode('signup-verify');
-        }
-        setLoading(false);
-      }
-      else { setError(data.error || 'Sign up failed.'); setLoading(false); }
-    } catch { setError('Request failed.'); setLoading(false); }
-  }
-
-  // ── Sign Up Step 2: verify email code ────────────────────
-  async function handleVerifyEmail(e: FormEvent) {
-    e.preventDefault(); reset();
-    if (verifyCode.length < 6) { setError('Please enter the 6-digit code.'); return; }
-    setLoading(true);
-    try {
-      const { res, data } = await api({ action: 'verify-email', email, code: verifyCode });
-      if (res.ok && data.success) { setInfo('Email verified! Set your password.'); setMode('signup-password'); setLoading(false); }
-      else { setError(data.error || 'Verification failed.'); setLoading(false); }
-    } catch { setError('Verification failed.'); setLoading(false); }
-  }
-
-  // ── Sign Up Step 3: set password ─────────────────────────
-  async function handleSetPassword(e: FormEvent) {
-    e.preventDefault(); reset();
-    if (password.length < 6) { setError('Password must be at least 6 characters.'); return; }
-    if (password !== confirmPw) { setError('Passwords do not match.'); return; }
-    setLoading(true);
-    try {
-      const { res, data } = await api({ action: 'set-password', email, password, confirmPassword: confirmPw });
-      if (res.ok && data.success) { router.push(data.redirect || '/member/dashboard'); }
-      else { setError(data.error || 'Failed.'); setLoading(false); }
-    } catch { setError('Failed.'); setLoading(false); }
   }
 
   // ── Forgot Password Step 1: send code ────────────────────
@@ -122,9 +74,6 @@ export default function AuthPage() {
 
   const titles: Record<AuthMode, { h: string; sub: string }> = {
     signin: { h: 'Sign In', sub: 'AI.MED Lab Portal' },
-    signup: { h: 'Sign Up', sub: 'Create your lab account' },
-    'signup-verify': { h: 'Confirm Email', sub: 'Enter the code sent to your email' },
-    'signup-password': { h: 'Set Password', sub: 'Choose a secure password' },
     forgot: { h: 'Reset Password', sub: 'We\'ll send a code to your email' },
     'forgot-verify': { h: 'Reset Password', sub: 'Enter code and new password' },
   };
@@ -168,79 +117,9 @@ export default function AuthPage() {
                 {error && <p className="text-sm text-red-500">{error}</p>}
                 <button type="submit" disabled={loading} className={btn}>{loading ? spinner : 'Sign In'}</button>
                 <div className="flex justify-between text-xs">
-                  <button type="button" onClick={() => switchMode('signup')} className="text-emerald-700 hover:underline dark:text-emerald-400">Create account</button>
+                  <button type="button" onClick={() => router.push('/member/register')} className="text-emerald-700 hover:underline dark:text-emerald-400">Create account</button>
                   <button type="button" onClick={() => switchMode('forgot')} className="text-slate-500 hover:underline dark:text-slate-400">Forgot password?</button>
                 </div>
-              </motion.form>
-            )}
-
-            {/* ── SIGN UP (email + invitation code) ── */}
-            {mode === 'signup' && (
-              <motion.form key="signup" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleSignUp} className="space-y-5">
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Institutional Email</label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@institution.edu" className={ic} />
-                  </div>
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Invitation Code <span className="text-slate-400 font-normal">(optional)</span>
-                  </label>
-                  <div className="relative">
-                    <Ticket className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input type="text" value={invCode} onChange={e => setInvCode(e.target.value)} placeholder="Enter code if you have one" className={ic + ' font-mono'} />
-                  </div>
-                  <p className="mt-1 text-xs text-slate-400">Invitation codes are emailed by the lab admin. Pre-registered and admin members can sign up without one.</p>
-                </div>
-                {error && <p className="text-sm text-red-500">{error}</p>}
-                <button type="submit" disabled={loading} className={btn}>{loading ? spinner : 'Continue'}</button>
-                <button type="button" onClick={() => switchMode('signin')} className="flex w-full items-center justify-center gap-1 text-sm text-slate-500 hover:text-emerald-700 dark:text-slate-400">
-                  <ArrowLeft className="h-3.5 w-3.5" /> Back to Sign In
-                </button>
-              </motion.form>
-            )}
-
-            {/* ── SIGN UP: verify code ────── */}
-            {mode === 'signup-verify' && (
-              <motion.form key="verify" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleVerifyEmail} className="space-y-5">
-                {info && <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800 dark:bg-emerald-900/20"><p className="text-xs text-emerald-800 dark:text-emerald-300">{info}</p></div>}
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Confirmation Code</label>
-                  <div className="relative">
-                    <Hash className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input type="text" value={verifyCode} onChange={e => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="000000" maxLength={6} autoFocus className={ic + ' font-mono text-center text-lg tracking-[0.5em]'} />
-                  </div>
-                  <p className="mt-1 text-xs text-slate-400">Check your email. Code expires in 10 minutes.</p>
-                </div>
-                {error && <p className="text-sm text-red-500">{error}</p>}
-                <button type="submit" disabled={loading || verifyCode.length < 6} className={btn}>{loading ? spinner : 'Verify Email'}</button>
-                <button type="button" onClick={() => switchMode('signup')} className="flex w-full items-center justify-center gap-1 text-sm text-slate-500 hover:text-emerald-700"><ArrowLeft className="h-3.5 w-3.5" /> Back</button>
-              </motion.form>
-            )}
-
-            {/* ── SIGN UP: set password ───── */}
-            {mode === 'signup-password' && (
-              <motion.form key="setpw" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleSetPassword} className="space-y-5">
-                {info && <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800 dark:bg-emerald-900/20"><p className="text-xs text-emerald-800 dark:text-emerald-300"><ShieldCheck className="inline h-3.5 w-3.5 mr-1" />{info}</p></div>}
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                  <div className="relative">
-                    <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input type={showPw ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 6 characters" className={ic + ' pr-10'} />
-                    <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"><Eye className="h-4 w-4" /></button>
-                  </div>
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Confirm Password</label>
-                  <div className="relative">
-                    <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} placeholder="Enter again" className={ic} />
-                  </div>
-                </div>
-                {error && <p className="text-sm text-red-500">{error}</p>}
-                <button type="submit" disabled={loading} className={btn}>{loading ? spinner : 'Create Account & Login'}</button>
               </motion.form>
             )}
 

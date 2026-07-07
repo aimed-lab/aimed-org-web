@@ -811,7 +811,7 @@ export default function AdminMembersPage() {
                   </button>
                 </div>
                 <p className="mt-3 text-xs text-slate-400 dark:text-slate-500">
-                  They can log in at <span className="font-mono">/member/activate</span> with their email and this code. Code expires in 7 days.
+                  They register at <span className="font-mono">/member/register</span> with their email and this code (they&apos;ll verify their email, then set a password). Code expires in 7 days.
                 </p>
                 <button
                   onClick={() => setNewMemberCode(null)}
