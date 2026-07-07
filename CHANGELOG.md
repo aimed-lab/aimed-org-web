@@ -2,9 +2,11 @@
 
 All notable changes to the AI.MED Lab website (`aimed-lab.org`) are documented
 here. This project follows [Semantic Versioning](https://semver.org/) and the
-[Keep a Changelog](https://keepachangelog.com/) format.
+[Keep a Changelog](https://keepachangelog.com/) format. This file was introduced
+at v2.1.0; release history through **v2.0.0** lives in
+[GitHub Releases](https://github.com/aimed-lab/aimed-org-web/releases).
 
-## [1.8.0] — 2026-07-07
+## [2.1.0] — 2026-07-07
 
 ### Added
 - **Unified registration flow.** A single registration page at `/member/register`
