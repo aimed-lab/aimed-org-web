@@ -3,15 +3,12 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { KeyRound, Mail, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
+import { Mail, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
 
-export default function MemberActivatePage() {
+export default function MemberSignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [code, setCode] = useState('');
-  // 'password' = returning/activated member or admin/PI; 'code' = first-time activation.
-  const [mode, setMode] = useState<'password' | 'code'>('password');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -26,30 +23,17 @@ export default function MemberActivatePage() {
     e.preventDefault();
     setError('');
     if (!email.trim()) { setError('Please enter your email address.'); return; }
+    if (!password) { setError('Please enter your password.'); return; }
     setLoading(true);
-
     try {
-      if (mode === 'code') {
-        // First-time activation with an admin-issued code.
-        const res = await fetch('/api/member/activate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email.trim(), code: code.trim() || undefined }),
-        });
-        const data = await res.json();
-        if (res.ok) { router.push('/member/dashboard'); return; }
-        setError(data.error || 'Activation failed.');
-      } else {
-        // Returning member / admin / PI: sign in with password (the DB remembers you).
-        const res = await fetch('/api/auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'login', email: email.trim(), password }),
-        });
-        const data = await res.json();
-        if (res.ok && data.success) { router.push(data.redirect || '/member/dashboard'); return; }
-        setError(data.error || 'Invalid email or password.');
-      }
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', email: email.trim(), password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) { router.push(data.redirect || '/member/dashboard'); return; }
+      setError(data.error || 'Invalid email or password.');
     } catch {
       setError('Network error. Please try again.');
     }
@@ -69,14 +53,8 @@ export default function MemberActivatePage() {
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-700">
               <ShieldCheck className="h-7 w-7 text-white" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              {mode === 'code' ? 'Activate Your Account' : 'Member Sign In'}
-            </h1>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              {mode === 'code'
-                ? 'First time? Enter the activation code from your PI or admin.'
-                : 'Sign in to access the AI.MED Lab Portal.'}
-            </p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Member Sign In</h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Sign in to access the AI.MED Lab Portal.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -94,48 +72,25 @@ export default function MemberActivatePage() {
               </div>
             </div>
 
-            {mode === 'password' ? (
-              <div>
-                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                    className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
-                  />
-                </div>
-                <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-500">
-                  First time here?{' '}
-                  <button type="button" onClick={() => { setMode('code'); setError(''); }} className="font-medium text-emerald-600 hover:underline">
-                    Use an activation code
-                  </button>
-                </p>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
+                />
               </div>
-            ) : (
-              <div>
-                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Activation Code</label>
-                <div className="relative">
-                  <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="text"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Enter activation code"
-                    maxLength={20}
-                    className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm font-mono tracking-widest text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100"
-                  />
-                </div>
-                <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-500">
-                  Already activated?{' '}
-                  <button type="button" onClick={() => { setMode('password'); setError(''); }} className="font-medium text-emerald-600 hover:underline">
-                    Sign in with your password
-                  </button>
-                </p>
-              </div>
-            )}
+              <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-500">
+                First time here?{' '}
+                <a href="/member/register" className="font-medium text-emerald-600 hover:underline">
+                  Register with your invitation code
+                </a>
+              </p>
+            </div>
 
             {error && (
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-red-500">
@@ -151,10 +106,7 @@ export default function MemberActivatePage() {
               {loading ? (
                 <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
               ) : (
-                <>
-                  {mode === 'code' ? 'Activate' : 'Sign In'}
-                  <ArrowRight className="h-4 w-4" />
-                </>
+                <>Sign In<ArrowRight className="h-4 w-4" /></>
               )}
             </button>
 

@@ -1,19 +1,21 @@
 'use client';
 
-import { useState, FormEvent, useEffect, Suspense } from 'react';
+import { useState, FormEvent, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { UserPlus, Mail, KeyRound, Check } from 'lucide-react';
+import { UserPlus, Mail, KeyRound, Lock, ShieldCheck, Check } from 'lucide-react';
 
-const ROLES = [
-  'PhD Student',
-  'Postdoc',
-  'Research Staff',
-  'Intern',
-  'Visiting Scholar',
-  'Undergraduate Researcher',
-  'Other',
-];
+type Step = 'details' | 'verify' | 'password' | 'done';
+
+async function auth(payload: Record<string, unknown>) {
+  const res = await fetch('/api/auth', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  return { res, data };
+}
 
 export default function MemberRegisterPage() {
   return (
@@ -22,50 +24,48 @@ export default function MemberRegisterPage() {
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-700 border-t-transparent" />
       </div>
     }>
-      <MemberRegisterContent />
+      <RegisterContent />
     </Suspense>
   );
 }
 
-function MemberRegisterContent() {
+function RegisterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [step, setStep] = useState<'verify' | 'profile' | 'done'>('verify');
+  const [step, setStep] = useState<Step>('details');
   const [email, setEmail] = useState(searchParams.get('email') || '');
-  const [code, setCode] = useState(searchParams.get('code') || '');
+  const [invite, setInvite] = useState(searchParams.get('code') || '');
+  const [emailCode, setEmailCode] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
   const [loading, setLoading] = useState(false);
-  const [memberId, setMemberId] = useState<number | null>(null);
+  const autoStarted = useRef(false);
 
-  // Auto-verify if email and code are in the URL
-  useEffect(() => {
-    if (searchParams.get('email') && searchParams.get('code')) {
-      handleVerify();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  async function handleVerify(e?: FormEvent) {
+  // Step 1 — validate invite code + email, send the email verification code.
+  async function startVerification(e?: FormEvent) {
     if (e) e.preventDefault();
     setError('');
-    if (!email.trim() || !code.trim()) {
-      setError('Please enter your email and activation code.');
+    if (!email.trim() || !invite.trim()) {
+      setError('Please enter both your email and the invitation code from your email.');
       return;
     }
     setLoading(true);
     try {
-      const res = await fetch('/api/member/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'verify', email: email.trim(), code: code.trim() }),
-      });
-      const data = await res.json();
-      if (res.ok && data.memberId) {
-        setMemberId(data.memberId);
-        setStep('profile');
-      } else {
-        setError(data.error || 'Invalid email or code.');
+      const { res, data } = await auth({ action: 'signup', email: email.trim(), invitationCode: invite.trim() });
+      if (!res.ok) {
+        // e.g. invalid/used/expired code, or email not eligible
+        setError(data.error || 'Account cannot be activated — the code or email is invalid.');
+        return;
       }
+      if (data.ownerBypass) {
+        setInfo('Email recognized. Set your password.');
+        setStep('password');
+        return;
+      }
+      setInfo(`A 6-digit verification code was sent to ${email.trim()}.`);
+      setStep('verify');
     } catch {
       setError('Network error. Please try again.');
     } finally {
@@ -73,39 +73,46 @@ function MemberRegisterContent() {
     }
   }
 
-  async function handleProfile(e: FormEvent<HTMLFormElement>) {
+  // Auto-start when arriving from the invite email link (?email=&code=).
+  useEffect(() => {
+    if (!autoStarted.current && searchParams.get('email') && searchParams.get('code')) {
+      autoStarted.current = true;
+      startVerification();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Step 2 — confirm the emailed 6-digit code (proves the email is theirs).
+  async function verifyEmail(e: FormEvent) {
     e.preventDefault();
     setError('');
-    const fd = new FormData(e.currentTarget);
-    const name = fd.get('name')?.toString().trim();
-    if (!name) {
-      setError('Name is required.');
-      return;
-    }
+    if (emailCode.trim().length < 6) { setError('Enter the 6-digit code from your email.'); return; }
     setLoading(true);
     try {
-      const res = await fetch('/api/member/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'complete',
-          memberId,
-          email: email.trim(),
-          code: code.trim(),
-          name,
-          role: fd.get('role')?.toString() || 'Other',
-          bio: fd.get('bio')?.toString().trim() || undefined,
-          githubUsername: fd.get('githubUsername')?.toString().trim() || undefined,
-          orcidId: fd.get('orcidId')?.toString().trim() || undefined,
-        }),
-      });
-      const data = await res.json();
+      const { res, data } = await auth({ action: 'verify-email', email: email.trim(), code: emailCode.trim() });
+      if (res.ok && data.success) { setInfo('Email verified. Set your password.'); setStep('password'); }
+      else setError(data.error || 'That code is incorrect or has expired.');
+    } catch {
+      setError('Network error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Step 3 — set the password twice, creating the account and logging in.
+  async function setPasswordSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError('');
+    if (password.length < 8) { setError('Password must be at least 8 characters.'); return; }
+    if (password !== confirm) { setError('Passwords do not match.'); return; }
+    setLoading(true);
+    try {
+      const { res, data } = await auth({ action: 'set-password', email: email.trim(), password, confirmPassword: confirm });
       if (res.ok && data.success) {
         setStep('done');
-        // Auto-redirect to member dashboard after 2 seconds
-        setTimeout(() => router.push('/member/dashboard'), 2000);
+        setTimeout(() => router.push('/member/onboarding'), 1500);
       } else {
-        setError(data.error || 'Registration failed.');
+        setError(data.error || 'Could not set the password. Please try again.');
       }
     } catch {
       setError('Network error. Please try again.');
@@ -115,139 +122,106 @@ function MemberRegisterContent() {
   }
 
   const inputClass =
-    'w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-3 pr-4 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100';
+    'w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-slate-100';
+
+  const heading = {
+    details: 'Join AI.MED Lab',
+    verify: 'Verify Your Email',
+    password: 'Set Your Password',
+    done: 'Welcome!',
+  }[step];
+  const sub = {
+    details: 'Enter your email and the invitation code your PI sent you.',
+    verify: 'Enter the 6-digit code we just emailed you.',
+    password: 'Choose a password (used to sign in from now on).',
+    done: "You're all set — taking you to your onboarding.",
+  }[step];
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 dark:bg-zinc-950">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
-      >
+      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-md">
         <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          {/* Header */}
           <div className="mb-6 text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-700">
-              {step === 'done' ? (
-                <Check className="h-7 w-7 text-white" />
-              ) : (
-                <UserPlus className="h-7 w-7 text-white" />
-              )}
+              {step === 'done' ? <Check className="h-7 w-7 text-white" /> : step === 'verify' ? <ShieldCheck className="h-7 w-7 text-white" /> : <UserPlus className="h-7 w-7 text-white" />}
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              {step === 'verify' && 'Join AI.MED Lab'}
-              {step === 'profile' && 'Complete Your Profile'}
-              {step === 'done' && 'Welcome!'}
-            </h1>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              {step === 'verify' && 'Verify your invitation to get started'}
-              {step === 'profile' && 'Tell us a bit about yourself'}
-              {step === 'done' && 'You\'re all set. Redirecting to your dashboard...'}
-            </p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{heading}</h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{sub}</p>
           </div>
 
-          {/* Step 1: Verify invitation */}
+          {/* progress dots */}
+          {step !== 'done' && (
+            <div className="mb-5 flex items-center justify-center gap-2">
+              {(['details', 'verify', 'password'] as Step[]).map((s, i) => (
+                <span key={s} className={`h-1.5 rounded-full transition-all ${step === s ? 'w-6 bg-emerald-600' : (['details', 'verify', 'password'].indexOf(step) > i ? 'w-6 bg-emerald-300' : 'w-3 bg-slate-200 dark:bg-zinc-700')}`} />
+              ))}
+            </div>
+          )}
+
+          {info && step !== 'done' && <p className="mb-3 rounded-lg bg-emerald-50 px-3 py-2 text-xs text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300">{info}</p>}
+
+          {step === 'details' && (
+            <form onSubmit={startVerification} className="space-y-4">
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" className={inputClass} required />
+              </div>
+              <div className="relative">
+                <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input type="text" value={invite} onChange={(e) => setInvite(e.target.value)} placeholder="Invitation code" maxLength={12} className={inputClass + ' font-mono tracking-wider'} required />
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60">
+                {loading ? <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> : 'Continue'}
+              </button>
+            </form>
+          )}
+
           {step === 'verify' && (
-            <form onSubmit={handleVerify} className="space-y-4">
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className={inputClass + ' pl-10'}
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Activation Code</label>
-                <div className="relative">
-                  <KeyRound className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="text"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Enter your code"
-                    maxLength={12}
-                    className={inputClass + ' pl-10 font-mono tracking-wider'}
-                    required
-                  />
-                </div>
+            <form onSubmit={verifyEmail} className="space-y-4">
+              <div className="relative">
+                <ShieldCheck className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input type="text" inputMode="numeric" value={emailCode} onChange={(e) => setEmailCode(e.target.value.replace(/\D/g, ''))} placeholder="6-digit code" maxLength={6} className={inputClass + ' text-center font-mono text-lg tracking-[0.4em]'} required />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60"
-              >
-                {loading ? (
-                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                ) : (
-                  'Verify & Continue'
-                )}
+              <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60">
+                {loading ? <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> : 'Verify'}
+              </button>
+              <button type="button" onClick={() => startVerification()} className="w-full text-center text-xs text-slate-400 hover:text-emerald-600">Didn&apos;t get it? Resend code</button>
+            </form>
+          )}
+
+          {step === 'password' && (
+            <form onSubmit={setPasswordSubmit} className="space-y-4">
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (min 8 chars)" className={inputClass} required />
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Confirm password" className={inputClass} required />
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <button type="submit" disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60">
+                {loading ? <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> : 'Create account'}
               </button>
             </form>
           )}
 
-          {/* Step 2: Complete profile */}
-          {step === 'profile' && (
-            <form onSubmit={handleProfile} className="space-y-4">
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Full Name <span className="text-red-500">*</span>
-                </label>
-                <input name="name" placeholder="Your full name" required className={inputClass} />
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Role</label>
-                <select name="role" className={inputClass}>
-                  {ROLES.map((r) => (
-                    <option key={r} value={r}>{r}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Bio</label>
-                <textarea name="bio" placeholder="Brief description of your research interests" rows={3} className={inputClass} />
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">GitHub Username</label>
-                <input name="githubUsername" placeholder="e.g. johndoe" className={inputClass} />
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">ORCID ID</label>
-                <input name="orcidId" placeholder="e.g. 0000-0002-1234-5678" className={inputClass} />
-              </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:opacity-60"
-              >
-                {loading ? (
-                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                ) : (
-                  'Complete Registration'
-                )}
-              </button>
-            </form>
-          )}
-
-          {/* Step 3: Done */}
           {step === 'done' && (
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
                 <Check className="h-8 w-8 text-green-600" />
               </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                Redirecting to your dashboard...
-              </p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Account created. Opening your onboarding…</p>
             </div>
+          )}
+
+          {step === 'details' && (
+            <p className="mt-5 text-center text-xs text-slate-400">
+              Already have an account? <a href="/member/activate" className="font-medium text-emerald-600 hover:underline">Sign in</a>
+              {' · '}No invite? <a href="/apply" className="font-medium text-emerald-600 hover:underline">Request to join</a>
+            </p>
           )}
         </div>
       </motion.div>
