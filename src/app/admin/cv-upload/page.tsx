@@ -19,7 +19,6 @@ import {
   RefreshCw,
   Layers,
   Replace,
-  Send,
   Bot,
   BookOpen,
   PenLine,
@@ -27,6 +26,10 @@ import {
   CheckCircle2,
   Clock,
   Eye,
+  ExternalLink,
+  GitBranch,
+  ThumbsUp,
+  ThumbsDown,
 } from 'lucide-react';
 import { PortalLayout } from '@/components/portal/PortalLayout';
 
@@ -119,6 +122,16 @@ interface SiteCounts {
   patents: number;
 }
 
+interface PreviewInfo {
+  url: string | null;
+  state: string; // pending | success | failure | in_progress | unknown
+}
+
+interface StagedState {
+  sourceFilename: string;
+  counts: Record<string, number>;
+}
+
 /* ── Category Config ── */
 
 const categories = [
@@ -151,7 +164,6 @@ const binConfig: Record<ItemBin, { label: string; icon: typeof Eye; color: strin
 
 export default function AdminCVUploadPage() {
   const [parsing, setParsing] = useState(false);
-  const [importing, setImporting] = useState(false);
   const [result, setResult] = useState<ParseResultData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<Record<CategoryKey, Set<number>>>({
@@ -169,12 +181,52 @@ export default function AdminCVUploadPage() {
   const [itemBins, setItemBins] = useState<Record<CategoryKey, Record<number, ItemBin>>>({
     publications: {}, talks: {}, honors: {}, software: {}, patents: {},
   });
-  const [sendingSection, setSendingSection] = useState<CategoryKey | null>(null);
   const [sentSections, setSentSections] = useState<Set<CategoryKey>>(new Set());
   const [siteCounts, setSiteCounts] = useState<SiteCounts>({
     publications: 0, talks: 0, honors: 0, software: 0, patents: 0,
   });
   const [loadingCounts, setLoadingCounts] = useState(true);
+
+  // ── CV staging / preview / review state ──
+  const [staging, setStaging] = useState(false);
+  const [staged, setStaged] = useState<StagedState | null>(null);
+  const [preview, setPreview] = useState<PreviewInfo | null>(null);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewAction, setReviewAction] = useState<'accept' | 'revise' | 'reject' | null>(null);
+  const [accepted, setAccepted] = useState(false);
+  const [stagingConfigured, setStagingConfigured] = useState<boolean | null>(null);
+
+  // On mount, detect an existing staged branch (e.g. admin returning later to review)
+  useEffect(() => {
+    fetch('/api/admin/cv-staging')
+      .then((r) => r.json().then((d) => ({ ok: r.ok, status: r.status, d })))
+      .then(({ status, d }) => {
+        if (status === 501 || d?.configured === false) {
+          setStagingConfigured(false);
+          return;
+        }
+        setStagingConfigured(true);
+        if (d?.staged && d?.manifest) {
+          setStaged({ sourceFilename: d.manifest.sourceCV, counts: d.manifest.counts || {} });
+          setPreview(d.preview || null);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Poll the preview build status while a preview is still building
+  useEffect(() => {
+    if (!staged || accepted) return;
+    const pending = !preview || ['pending', 'in_progress', 'queued', 'unknown'].includes(preview.state);
+    if (!pending) return;
+    const timer = setInterval(() => {
+      fetch('/api/admin/cv-staging')
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => { if (d?.preview) setPreview(d.preview); })
+        .catch(() => {});
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [staged, preview, accepted]);
 
   // Fetch current site counts on mount
   useEffect(() => {
@@ -266,95 +318,99 @@ export default function AdminCVUploadPage() {
     if (file) handleUpload(file);
   }, [handleUpload]);
 
-  const handleFinalizeSection = async (key: CategoryKey) => {
+
+  // Collect the currently-selected, not-yet-published items per section.
+  const collectSelections = useCallback((): Record<string, unknown[]> => {
+    if (!result) return {};
+    const pick = (key: CategoryKey) =>
+      (result[key] as Array<{ isDuplicate: boolean; duplicateOf: DuplicateRef | null }>)
+        .filter((_, i) => selected[key].has(i) && itemBins[key][i] !== 'published')
+        .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
+    return {
+      publications: pick('publications'),
+      talks: pick('talks'),
+      honors: pick('honors'),
+      software: pick('software'),
+      patents: pick('patents'),
+    };
+  }, [result, selected, itemBins]);
+
+  // Stage the selected items to the cv-staging branch → builds a live preview.
+  const handleStageAndPreview = async () => {
     if (!result) return;
-
-    setSendingSection(key);
+    setStaging(true);
     setError(null);
-
-    const payload: Record<string, unknown> = { sourceFilename: result.sourceFilename };
-
-    // Only send items that are selected and in 'curation' or 'extracted' bin
-    const items = result[key] as Array<{ isDuplicate: boolean; duplicateOf: DuplicateRef | null }>;
-    const selectedItems = items
-      .map((item, i) => ({ item, i }))
-      .filter(({ i }) => selected[key].has(i) && itemBins[key][i] !== 'published')
-      .map(({ item }) => {
-        const { isDuplicate, duplicateOf, ...rest } = item;
-        return rest;
-      });
-
-    if (selectedItems.length === 0) {
-      setSendingSection(null);
-      return;
-    }
-
-    payload[key] = selectedItems;
-
     try {
-      const res = await fetch('/api/cv-parse', {
-        method: 'PUT',
+      const res = await fetch('/api/admin/cv-staging', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ sourceFilename: result.sourceFilename, selections: collectSelections() }),
       });
       const data = await res.json();
-
       if (!res.ok) {
-        setError(data.error || `Failed to import ${key}`);
+        setError(data.error || 'Failed to stage changes');
         return;
       }
-
-      // Mark items as published
-      setItemBins((prev) => {
-        const next = { ...prev, [key]: { ...prev[key] } };
-        items.forEach((_, i) => {
-          if (selected[key].has(i)) next[key][i] = 'published';
-        });
-        return next;
-      });
-
-      setSentSections((prev) => new Set([...prev, key]));
+      setStaged({ sourceFilename: result.sourceFilename, counts: data.staged || {} });
+      setPreview(data.preview || null);
     } catch {
-      setError(`Network error importing ${key}.`);
+      setError('Network error while staging.');
     } finally {
-      setSendingSection(null);
+      setStaging(false);
     }
   };
 
-  const handleImportAll = async () => {
-    if (!result) return;
-
-    setImporting(true);
+  // Accept / Revise / Reject the staged changes.
+  const handleReview = async (action: 'accept' | 'revise' | 'reject') => {
+    if (action === 'revise' && !reviewComment.trim()) {
+      setError('Please add a change comment before revising.');
+      return;
+    }
+    setReviewAction(action);
     setError(null);
-
-    const payload: Record<string, unknown> = { sourceFilename: result.sourceFilename };
-
-    payload.publications = result.publications.filter((_, i) => selected.publications.has(i) && itemBins.publications[i] !== 'published')
-      .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.talks = result.talks.filter((_, i) => selected.talks.has(i) && itemBins.talks[i] !== 'published')
-      .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.honors = result.honors.filter((_, i) => selected.honors.has(i) && itemBins.honors[i] !== 'published')
-      .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.software = result.software.filter((_, i) => selected.software.has(i) && itemBins.software[i] !== 'published')
-      .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-    payload.patents = result.patents.filter((_, i) => selected.patents.has(i) && itemBins.patents[i] !== 'published')
-      .map(({ isDuplicate, duplicateOf, ...rest }) => rest);
-
     try {
-      const res = await fetch('/api/cv-parse', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const body: Record<string, unknown> = { action, comment: reviewComment.trim() };
+      if (action === 'revise') {
+        body.selections = collectSelections();
+        body.sourceFilename = staged?.sourceFilename;
+      }
+      const res = await fetch('/api/admin/cv-staging', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
       const data = await res.json();
-
       if (!res.ok) {
-        setError(data.error || 'Import failed');
+        setError(data.error || `Failed to ${action}`);
         return;
       }
-
-      setImportResult(data.imported);
+      if (action === 'accept') {
+        setAccepted(true);
+      } else if (action === 'reject') {
+        setStaged(null);
+        setPreview(null);
+        setReviewComment('');
+      } else if (action === 'revise') {
+        setStaged({ sourceFilename: staged?.sourceFilename || result?.sourceFilename || 'CV', counts: data.staged || {} });
+        setPreview(data.preview || null);
+        setReviewComment('');
+      }
     } catch {
-      setError('Network error during import.');
+      setError(`Network error during ${action}.`);
     } finally {
-      setImporting(false);
+      setReviewAction(null);
     }
+  };
+
+  const resetAll = () => {
+    setResult(null);
+    setImportResult(null);
+    setStaged(null);
+    setPreview(null);
+    setAccepted(false);
+    setReviewComment('');
+    setSentSections(new Set());
+    setSelected({ publications: new Set(), talks: new Set(), honors: new Set(), software: new Set(), patents: new Set() });
   };
 
   const toggleItem = (category: CategoryKey, index: number) => {
@@ -436,7 +492,7 @@ export default function AdminCVUploadPage() {
         </motion.div>
 
         {/* Upload zone */}
-        {!result && !importResult && (
+        {!result && !importResult && !staged && !accepted && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -567,8 +623,147 @@ export default function AdminCVUploadPage() {
           </motion.div>
         )}
 
+        {/* Staging not configured notice */}
+        {stagingConfigured === false && (
+          <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20">
+            <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+            <p className="text-sm text-amber-800 dark:text-amber-300">
+              <span className="font-semibold">Preview publishing isn&apos;t set up yet.</span> Add a{' '}
+              <code className="rounded bg-amber-100 px-1 dark:bg-amber-900/40">GITHUB_TOKEN</code> environment variable
+              in Vercel (see <code className="rounded bg-amber-100 px-1 dark:bg-amber-900/40">CV-WORKFLOW.md</code>) to
+              enable the upload → preview → accept flow.
+            </p>
+          </div>
+        )}
+
+        {/* Accepted success */}
+        {accepted && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="rounded-xl border border-emerald-200 bg-emerald-50 p-8 text-center dark:border-emerald-800 dark:bg-emerald-900/20"
+          >
+            <div className="flex h-16 w-16 mx-auto items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30">
+              <Check className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <h2 className="mt-4 text-xl font-bold text-emerald-800 dark:text-emerald-200">Accepted &amp; Publishing</h2>
+            <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
+              The changes were merged into the live site. Vercel is now rebuilding
+              <span className="font-medium"> www.aimed-lab.org</span> — it typically goes live in 1–2 minutes.
+            </p>
+            <button
+              onClick={resetAll}
+              className="mt-6 inline-flex items-center gap-2 rounded-lg border border-emerald-300 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-900/30"
+            >
+              <Upload className="h-4 w-4" />
+              Upload Another CV
+            </button>
+          </motion.div>
+        )}
+
+        {/* Review bar — appears once changes are staged to a preview */}
+        {staged && !accepted && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-800 dark:bg-indigo-900/20"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
+                <GitBranch className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-semibold text-indigo-900 dark:text-indigo-100">
+                  Staged for preview{staged.sourceFilename ? ` — ${staged.sourceFilename}` : ''}
+                </h3>
+                <p className="mt-0.5 text-xs text-indigo-700 dark:text-indigo-300">
+                  {Object.entries(staged.counts || {}).filter(([, c]) => (c as number) > 0).map(([k, c]) => `${c} ${k}`).join(', ') || 'No new items'}
+                  {' '}— review the live preview, then accept, revise, or reject.
+                </p>
+
+                {/* Preview status + link */}
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  {(() => {
+                    const st = preview?.state || 'pending';
+                    const ready = st === 'success';
+                    const failed = st === 'failure' || st === 'error';
+                    return (
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
+                        ready ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300'
+                        : failed ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300'
+                        : 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+                      }`}>
+                        {ready ? <CheckCircle2 className="h-3.5 w-3.5" /> : failed ? <X className="h-3.5 w-3.5" /> : <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                        {ready ? 'Preview ready' : failed ? 'Preview build failed' : 'Building preview…'}
+                      </span>
+                    );
+                  })()}
+                  {preview?.url && (
+                    <a
+                      href={preview.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-indigo-700"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" /> Open preview site
+                    </a>
+                  )}
+                </div>
+
+                {/* Change comment */}
+                <div className="mt-4">
+                  <label className="block text-xs font-medium text-indigo-800 dark:text-indigo-300">
+                    Change comment {reviewComment.trim() ? '' : '(required to revise)'}
+                  </label>
+                  <textarea
+                    value={reviewComment}
+                    onChange={(e) => setReviewComment(e.target.value)}
+                    rows={2}
+                    placeholder="e.g. Drop the duplicate 2019 review; fix the journal name on the CAR-NK paper."
+                    className="mt-1 w-full rounded-lg border border-indigo-200 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none dark:border-indigo-800 dark:bg-zinc-900 dark:text-slate-200"
+                  />
+                  {result && (
+                    <p className="mt-1 text-[11px] text-indigo-600 dark:text-indigo-400">
+                      To revise: adjust the selections below, add a comment, then click Revise — the preview rebuilds.
+                    </p>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => handleReview('accept')}
+                    disabled={reviewAction !== null}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50"
+                  >
+                    {reviewAction === 'accept' ? <Loader2 className="h-4 w-4 animate-spin" /> : <ThumbsUp className="h-4 w-4" />}
+                    Accept &amp; Publish
+                  </button>
+                  <button
+                    onClick={() => handleReview('revise')}
+                    disabled={reviewAction !== null || !result}
+                    title={!result ? 'Upload the CV again to revise selections' : 'Re-stage with your changes'}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-300 bg-white px-4 py-2 text-sm font-medium text-indigo-700 transition-colors hover:bg-indigo-50 disabled:opacity-50 dark:border-indigo-700 dark:bg-zinc-900 dark:text-indigo-300 dark:hover:bg-indigo-900/30"
+                  >
+                    {reviewAction === 'revise' ? <Loader2 className="h-4 w-4 animate-spin" /> : <PenLine className="h-4 w-4" />}
+                    Revise
+                  </button>
+                  <button
+                    onClick={() => handleReview('reject')}
+                    disabled={reviewAction !== null}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50 dark:border-red-800 dark:bg-zinc-900 dark:text-red-300 dark:hover:bg-red-900/20"
+                  >
+                    {reviewAction === 'reject' ? <Loader2 className="h-4 w-4 animate-spin" /> : <ThumbsDown className="h-4 w-4" />}
+                    Reject
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Parse results */}
-        {result && !importResult && (
+        {result && !importResult && !accepted && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
             {/* Summary bar with counts */}
             <div className="rounded-lg border border-slate-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
@@ -681,26 +876,9 @@ export default function AdminCVUploadPage() {
                           >
                             Select / Deselect All New
                           </button>
-                          <div className="flex items-center gap-2">
-                            {!sectionSent && (
-                              <button
-                                onClick={() => handleFinalizeSection(key)}
-                                disabled={sendingSection === key || selectedCount === 0}
-                                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                              >
-                                {sendingSection === key ? (
-                                  <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Sending...</>
-                                ) : (
-                                  <><Send className="h-3.5 w-3.5" /> Finalize & Send</>
-                                )}
-                              </button>
-                            )}
-                            {sectionSent && (
-                              <span className="inline-flex items-center gap-1 text-xs font-medium text-green-600 dark:text-green-400">
-                                <CheckCircle2 className="h-3.5 w-3.5" /> Imported
-                              </span>
-                            )}
-                          </div>
+                          <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                            {selectedCount} selected — staged together via <span className="font-medium">Stage &amp; Preview</span> below
+                          </span>
                         </div>
 
                         <div className="divide-y divide-slate-100 dark:divide-zinc-800 bg-white dark:bg-zinc-900">
@@ -740,14 +918,16 @@ export default function AdminCVUploadPage() {
                   Cancel
                 </button>
                 <button
-                  onClick={handleImportAll}
-                  disabled={totalSelected === 0 || importing}
-                  className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleStageAndPreview}
+                  disabled={totalSelected === 0 || staging}
+                  className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {importing ? (
-                    <><Loader2 className="h-4 w-4 animate-spin" /> Importing All...</>
+                  {staging ? (
+                    <><Loader2 className="h-4 w-4 animate-spin" /> Staging &amp; building preview…</>
+                  ) : staged ? (
+                    <><Eye className="h-4 w-4" /> Update Preview</>
                   ) : (
-                    <><Check className="h-4 w-4" /> Import All Selected</>
+                    <><Eye className="h-4 w-4" /> Stage &amp; Preview Changes</>
                   )}
                 </button>
               </div>

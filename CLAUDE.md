@@ -56,7 +56,18 @@ Default credentials (change in production via env vars):
 Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` environment variables to override.
 
 ## Content Update Workflow
-1. Log in at `/admin`
-2. Upload updated CV (PDF/DOCX) via the dashboard
-3. News items can be added via the dashboard
-4. For structural changes, use GitHub issues to track trouble tickets
+The site's content lives in `data/*.tsv` (rebuilt into the DB on every deploy by
+`scripts/rebuild-db.mjs`) — those TSV files are the source of truth, and the
+production DB is read-only/ephemeral. Update content via the staged CV flow:
+
+1. Log in at `/admin` and go to `/admin/cv-upload`.
+2. Upload the updated CV (PDF/DOCX). AI extracts publications, talks, honors,
+   patents, and software; select what to include.
+3. Click **Stage & Preview** — this commits the chosen items to `data/*.tsv` on a
+   `cv-staging` branch, which Vercel builds into a live preview deployment.
+4. Review the preview, then **Accept** (merge to `main` → production rebuilds),
+   **Revise** (re-stage with a change comment), or **Reject** (discard).
+
+Requires a `GITHUB_TOKEN` env var (Contents: read/write) in Vercel. Full details
+and one-time setup: see `CV-WORKFLOW.md`. News items can still be added via the
+dashboard. For structural changes, use GitHub issues to track trouble tickets.
